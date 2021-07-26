@@ -1,0 +1,3463 @@
+Swtich to Uart mode.
+TEST
+
+Change To HDMI
+
+Enter CModeHandler
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0E; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0E; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0xD3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x4A; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x59; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x5C; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1B; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xA2; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x7C; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE7; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xDB; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF6; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xA9; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x05; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x72; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xAD; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x0C; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xED; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x74; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter bSourceVideo
+Enter CModeSetFreeRun
+Enter CMiscDisableDoubleBuffer
+Scaler READ from 0x10, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x10,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustDPLL
+CAdjustDPLL =00, 6A 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xBF,  AutoInc is ENABLED,  Data: 0x68; 0x26; 0x81; 0x17; 
+Scaler READ from 0xC3, AutoInc is ENABLED,  Data: 0x16; 
+Scaler WRITE to 0xC3,  AutoInc is ENABLED,  Data: 0x16; 
+Scaler READ from 0xC0, AutoInc is ENABLED,  Data: 0x26; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x01; 
+Enter CAdjustDclkOffset
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xC4, AutoInc is ENABLED,  Data: 0x17; 
+Scaler WRITE to 0xC4,  AutoInc is ENABLED,  Data: 0x17; 
+Scaler WRITE to 0xC5,  AutoInc is ENABLED,  Data: 0xC9; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x04; 
+Scaler READ from 0x28, AutoInc is ENABLED,  Data: 0x23; 
+Scaler WRITE to 0x28,  AutoInc is ENABLED,  Data: 0x23; 
+Scaler WRITE to 0x2A,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x2B,  AutoInc is DISABLED, Data: 0x05; 0xA8; 0x10; 0x00; 0x20; 0x00; 0x20; 0x04; 0x20; 0x04; 0x20; 
+Scaler WRITE to 0x2A,  AutoInc is ENABLED,  Data: 0x0B; 
+Scaler WRITE to 0x2B,  AutoInc is DISABLED, Data: 0x02; 0x7B; 0x03; 0x00; 0x0C; 0x00; 0x0C; 0x02; 0x64; 0x02; 0x64; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xC7,  AutoInc is ENABLED,  Data: 0x52; 0x7B; 0xAC; 
+Scaler WRITE to 0x2A,  AutoInc is ENABLED,  Data: 0x21; 
+Scaler WRITE to 0x2B,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0x2A,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x8B,  AutoInc is ENABLED,  Data: 0xA0; 
+Scaler WRITE to 0x8C,  AutoInc is ENABLED,  Data: 0x30; 
+Scaler READ from 0x28, AutoInc is ENABLED,  Data: 0x23; 
+Scaler WRITE to 0x28,  AutoInc is ENABLED,  Data: 0x23; 
+Scaler READ from 0x28, AutoInc is ENABLED,  Data: 0x23; 
+Scaler WRITE to 0x28,  AutoInc is ENABLED,  Data: 0x23; 
+Scaler READ from 0x28, AutoInc is ENABLED,  Data: 0x23; 
+Scaler WRITE to 0x28,  AutoInc is ENABLED,  Data: 0xA3; 
+Scaler READ from 0x28, AutoInc is ENABLED,  Data: 0xA3; 
+Scaler WRITE to 0x28,  AutoInc is ENABLED,  Data: 0x23; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CSetPWM
+Scaler READ from 0x1E, AutoInc is ENABLED,  Data: 
+Enter CAdjustVPosition
+Enter CAdjustEnableWatchDog
+Enter bCNoCheckSyncMode
+Enter CAdjustIVSDelay
+Scaler READ from 0x1E, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x1E,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x1C,  AutoInc is ENABLED,  Data: 0x7B; 
+Enter CMiscApplyDoubleBuffer
+Scaler READ from 0x10, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustEnableWatchDog
+Enter bCNoCheckSyncMode
+Scaler READ from 0x14, AutoInc is ENABLED,  Data: 0x00; 0x00; 
+Scaler READ from 0x1D, AutoInc is ENABLED,  Data: 0x00; 0x00; 
+Enter CAdjustHPosition
+
+ CAdjustPhase !Enter CAdjustEnableWatchDog
+Enter bCNoCheckSyncMode
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xB1, AutoInc is ENABLED,  Data: 0x45; 
+Scaler WRITE to 0xB1,  AutoInc is ENABLED,  Data: 0x45; 
+Scaler READ from 0xB4, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xB4,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustIHSDelay
+Scaler READ from 0x1E, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x1E,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x1D,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler READ from 0x12, AutoInc is ENABLED,  Data: 0xC0; 
+Scaler WRITE to 0x12,  AutoInc is ENABLED,  Data: 0xC8; 
+Enter CMiscApplyDoubleBuffer
+Scaler READ from 0x10, AutoInc is ENABLED,  Data: 0x00; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustEnableWatchDog
+Enter bCNoCheckSyncMode
+Scaler READ from 0x7A, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x7A,  AutoInc is ENABLED,  Data: 0x94; 
+Enter bSourceVideo
+Scaler WRITE to 0x70,  AutoInc is ENABLED,  Data: 0x5D; 0x70; 0xC4; 0x4E; 0x89; 0x1C; 
+Scaler WRITE to 0x7D,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x7A, AutoInc is ENABLED,  Data: 0x94; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Scaler READ from 0x7D, AutoInc is DISABLED, Data: 0x21; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x38; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0E; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0E; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0xD3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x4A; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xC0; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x27; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x90; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1A; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x44; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF6; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x4F; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x05; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x58; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xAD; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1D; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xED; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x9C; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CSyncHandler
+Enter CSourceHandler
+Enter CGetSourcePortType
+Enter CSourceScanInputPort
+Enter CSourceScanInputPortDVI
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x00; 
+Scaler READ from 0xA4, AutoInc is DISABLED, Data: 0x00; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x70; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler READ from 0xB5, AutoInc is ENABLED,  Data: 0x58; 
+Scaler WRITE to 0xB5,  AutoInc is ENABLED,  Data: 0xD8; 
+Scaler READ from 0x16, AutoInc is ENABLED,  Data: 0x08; 
+Scaler WRITE to 0x16,  AutoInc is ENABLED,  Data: 0x08; 
+Enter CGetSourcePortType
+Scaler READ from 0xA2, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xA2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xC2, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xC2,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xC0, AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0xC0,  AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xB6, AutoInc is DISABLED, Data: 0x00; 
+Exit CSourceScanInputPortDVI: FALSE 2Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x03; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x12; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x58; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x04; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE8; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x21; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xCC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x04; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x15; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3C; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x0C; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x90; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CSyncHandler
+Enter CSourceHandler
+Enter CGetSourcePortType
+Enter CSourceScanInputPort
+Enter CSourceScanInputPortDVI
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x00; 
+Scaler READ from 0xA4, AutoInc is DISABLED, Data: 0x00; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler READ from 0xB5, AutoInc is ENABLED,  Data: 0xD8; 
+Scaler WRITE to 0xB5,  AutoInc is ENABLED,  Data: 0xD8; 
+Scaler READ from 0x16, AutoInc is ENABLED,  Data: 0x08; 
+Scaler WRITE to 0x16,  AutoInc is ENABLED,  Data: 0x08; 
+Enter CGetSourcePortType
+Scaler READ from 0xA2, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xA2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xC2, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xC2,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xC0, AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0xC0,  AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xB6, AutoInc is DISABLED, Data: 0x00; 
+Exit CSourceScanInputPortDVI: FALSE 2Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x03; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x12; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x58; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x04; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE8; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x21; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xCC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x04; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x15; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3C; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x0C; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x90; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CSyncHandler
+Enter CSourceHandler
+Enter CGetSourcePortType
+Enter CSourceScanInputPort
+Enter CSourceScanInputPortDVI
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x00; 
+Scaler READ from 0xA4, AutoInc is DISABLED, Data: 0x00; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler READ from 0xB5, AutoInc is ENABLED,  Data: 0xD8; 
+Scaler WRITE to 0xB5,  AutoInc is ENABLED,  Data: 0xD8; 
+Scaler READ from 0x16, AutoInc is ENABLED,  Data: 0x08; 
+Scaler WRITE to 0x16,  AutoInc is ENABLED,  Data: 0x08; 
+Enter CGetSourcePortType
+Scaler READ from 0xA2, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xA2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xC2, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xC2,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xC0, AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0xC0,  AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xB6, AutoInc is DISABLED, Data: 0x00; 
+Exit CSourceScanInputPortDVI: FALSE 2Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x03; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x12; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x58; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x04; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE8; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x21; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xCC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x04; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x15; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3C; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x0C; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x90; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CSyncHandler
+Enter CSourceHandler
+Enter CGetSourcePortType
+Enter CSourceScanInputPort
+Enter CSourceScanInputPortDVI
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x00; 
+Scaler READ from 0xA4, AutoInc is DISABLED, Data: 0x00; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler READ from 0xB5, AutoInc is ENABLED,  Data: 0xD8; 
+Scaler WRITE to 0xB5,  AutoInc is ENABLED,  Data: 0xD8; 
+Scaler READ from 0x16, AutoInc is ENABLED,  Data: 0x08; 
+Scaler WRITE to 0x16,  AutoInc is ENABLED,  Data: 0x08; 
+Enter CGetSourcePortType
+Scaler READ from 0xA2, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xA2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xC2, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xC2,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xC0, AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0xC0,  AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xB6, AutoInc is DISABLED, Data: 0x00; 
+Exit CSourceScanInputPortDVI: FALSE 2Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x03; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x12; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x58; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x04; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE8; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x21; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xCC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x04; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x15; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3C; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x0C; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x90; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CSyncHandler
+Enter CSourceHandler
+Enter CGetSourcePortType
+Enter CSourceScanInputPort
+Enter CSourceScanInputPortDVI
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x00; 
+Scaler READ from 0xA4, AutoInc is DISABLED, Data: 0x00; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler READ from 0xB5, AutoInc is ENABLED,  Data: 0xD8; 
+Scaler WRITE to 0xB5,  AutoInc is ENABLED,  Data: 0xD8; 
+Scaler READ from 0x16, AutoInc is ENABLED,  Data: 0x08; 
+Scaler WRITE to 0x16,  AutoInc is ENABLED,  Data: 0x08; 
+Enter CGetSourcePortType
+Scaler READ from 0xA2, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xA2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xC2, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xC2,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xC0, AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0xC0,  AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xB6, AutoInc is DISABLED, Data: 0x30; 
+Scaler WRITE to 0xAE,  AutoInc is ENABLED,  Data: 0x30; 
+Scaler WRITE to 0xB8,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xAA, AutoInc is ENABLED,  Data: 0x70; 
+Scaler WRITE to 0xAA,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xA4,  AutoInc is ENABLED,  Data: 0xF8; 
+Scaler READ from 0xA4, AutoInc is DISABLED, Data: 0xF8; 
+Scaler READ from 0xB6, AutoInc is DISABLED, Data: 0x30; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x27; 
+Enter CHdmiVideoSetting
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x10; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x12; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x27; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x51; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x44; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x51; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x44; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC3,  AutoInc is ENABLED,  Data: 0x40; 
+Scaler WRITE to 0xC4,  AutoInc is ENABLED,  Data: 0x91; 
+Scaler WRITE to 0xC3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xCB, AutoInc is ENABLED,  Data: 0x27; 
+Scaler WRITE to 0xCB,  AutoInc is ENABLED,  Data: 0x2F; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CAdjustDisableHDMIWatchDog
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x30; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x68; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x30; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x68; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustEnableHDMIWatchDog
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xCC, AutoInc is DISABLED, Data: 0x00; 
+Scaler READ from 0xCC, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xCC,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xCD,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xCE, AutoInc is DISABLED, Data: 0x00; 
+Scaler WRITE to 0xCD,  AutoInc is ENABLED,  Data: 0x04; 
+Scaler READ from 0xCE, AutoInc is DISABLED, Data: 0x02; 0x28; 
+Scaler WRITE to 0x9C,  AutoInc is ENABLED,  Data: 0x00; 
+Exit CSourceScanInputPortDVI: TRUE 4Enter CSyncMeasureSyncType
+Enter CGetSourcePortType
+Enter CSyncSearchSyncTypeDVI
+Scaler WRITE to 0x13,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Scaler READ from 0x16, AutoInc is ENABLED,  Data: 0x08; 
+Scaler WRITE to 0x16,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x32, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x32,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x4C, AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0x4C,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xAF, AutoInc is ENABLED,  Data: 0x09; 
+Scaler WRITE to 0xAF,  AutoInc is ENABLED,  Data: 0x09; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x38; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x38; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Enter CSourceScanInputPortDVI
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Scaler READ from 0xA4, AutoInc is DISABLED, Data: 0xF8; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler READ from 0xB5, AutoInc is ENABLED,  Data: 0xD8; 
+Scaler WRITE to 0xB5,  AutoInc is ENABLED,  Data: 0xD8; 
+Scaler READ from 0x16, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x16,  AutoInc is ENABLED,  Data: 0x08; 
+Enter CGetSourcePortType
+Scaler READ from 0xA2, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xA2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xC2, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xC2,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xC0, AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0xC0,  AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Scaler WRITE to 0xA7,  AutoInc is ENABLED,  Data: 0x6F; 
+Scaler READ from 0xB6, AutoInc is DISABLED, Data: 0x30; 
+Scaler WRITE to 0xAE,  AutoInc is ENABLED,  Data: 0x30; 
+Scaler WRITE to 0xB8,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xAA, AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xAA,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xA4,  AutoInc is ENABLED,  Data: 0xF8; 
+Scaler READ from 0xA4, AutoInc is DISABLED, Data: 0xF8; 
+Scaler READ from 0xB6, AutoInc is DISABLED, Data: 0x30; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CHdmiVideoSetting
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x12; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x12; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Scaler READ from 0xAB, AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xAB,  AutoInc is ENABLED,  Data: 0x73; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x51; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x44; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x51; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x44; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC3,  AutoInc is ENABLED,  Data: 0x40; 
+Scaler WRITE to 0xC4,  AutoInc is ENABLED,  Data: 0x91; 
+Scaler WRITE to 0xC3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xCB, AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xCB,  AutoInc is ENABLED,  Data: 0x2F; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CAdjustDisableHDMIWatchDog
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x30; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x68; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x30; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x68; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustEnableHDMIWatchDog
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xCC, AutoInc is DISABLED, Data: 0x00; 
+Scaler READ from 0xCC, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xCC,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xCD,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xCE, AutoInc is DISABLED, Data: 0x00; 
+Scaler WRITE to 0xCD,  AutoInc is ENABLED,  Data: 0x04; 
+Scaler READ from 0xCE, AutoInc is DISABLED, Data: 0x02; 0x28; 
+Scaler WRITE to 0x9C,  AutoInc is ENABLED,  Data: 0x00; 
+Exit CSourceScanInputPortDVI: TRUE 4Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x20; 
+Enter CMiscModeMeasurePollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x00; 
+Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x40; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x00; 0x00; 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x40; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CSyncModifyPolarityVGA
+Scaler READ from 0x11, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x11,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CModeDetect
+Enter CModeDetectCommon
+Enter CModeMeasureReady
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CMiscModeMeasurePollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x41; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CSyncModifyPolarityVGA
+Scaler READ from 0x11, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x11,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x05; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x2E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x62; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x03; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CSyncHandler
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Enter CModeDetect
+Enter CModeDetectCommon
+Enter CModeMeasureReady
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CMiscModeMeasurePollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x41; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 0x8F; 0xC4; 0x64; 0x01; 0x07; 
+Enter CSyncModifyPolarityVGA
+Scaler READ from 0x11, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x11,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x05; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x2E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x62; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x03; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CSyncHandler
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Enter CModeDetect
+Enter CModeDetectCommon
+Enter CModeMeasureReady
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CMiscModeMeasurePollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x41; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CSyncModifyPolarityVGA
+Scaler READ from 0x11, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x11,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x05; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x2E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x62; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x03; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CSyncHandler
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Enter CModeDetect
+Enter CModeDetectCommon
+Enter CModeMeasureReady
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CMiscModeMeasurePollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x41; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CSyncModifyPolarityVGA
+Scaler READ from 0x11, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x11,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x05; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x2E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x62; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x03; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CSyncHandler
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Enter CModeDetect
+Enter CModeDetectCommon
+Enter CModeMeasureReady
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CMiscModeMeasurePollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x41; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CSyncModifyPolarityVGA
+Scaler READ from 0x11, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x11,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CModeStableCountDownEvent
+Enter CModeInterlaceCheck
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x40; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler READ from 0xCA, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeSearchDisplayMode
+Enter CModeSearchModeDVI
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x61; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CMiscModeMeasurePollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x41; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x08; 0x97; 0x84; 0x37; 0x70; 0x7F; 
+
+ stModeInfo.IHWidth=07,80
+ stModeInfo.IVHeight=04,38Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Enter CModeCompareModeDVI
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x6C, AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x6C, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x6C,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CModeDisplayActiveMode
+Enter CModeSetupModeDVI
+Enter CModeStartUpDVI
+Scaler READ from 0x1E, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x1E,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x10, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x10,  AutoInc is ENABLED,  Data: 0x05; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x39; 
+Scaler WRITE to 0x70,  AutoInc is ENABLED,  Data: 0x08; 0x02; 0x96; 0x04; 0x02; 0x62; 0x00; 0x00; 0x00; 0x00; 0x03; 0x00; 0x00; 0x81; 
+Enter CMiscAutoMeasurePollingEvent
+Scaler READ from 0x7D, AutoInc is ENABLED,  Data: 0x80; 
+Scaler READ from 0x7E, AutoInc is ENABLED,  Data: 0x04; 0x28; 0x5F; 0x08; 0xBF; 0x3E; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xA7, AutoInc is ENABLED,  Data: 0x6F; 
+Enter CModeSetupDisplay
+Enter CModeGetScaleSetting
+Enter CCalcRatio
+Enter CCalcPanelWdith
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CCheckHDMIMode
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xCD,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler READ from 0xCE, AutoInc is DISABLED, Data: 0x10; 
+Enter CModeSetCaptureWindow
+Enter CAdjustIVS2DVSDelay
+Scaler READ from 0x32, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x32,  AutoInc is ENABLED,  Data: 0x10; 
+Scaler READ from 0x43, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x43,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x40,  AutoInc is ENABLED,  Data: 0x35; 
+Scaler WRITE to 0x41,  AutoInc is ENABLED,  Data: 0x26; 
+Scaler READ from 0x14, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x14,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x15,  AutoInc is ENABLED,  Data: 0xBE; 
+Scaler READ from 0x16, AutoInc is ENABLED,  Data: 0x08; 
+Scaler WRITE to 0x16,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0x17,  AutoInc is ENABLED,  Data: 0x08; 
+Scaler READ from 0x18, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x18,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x19,  AutoInc is ENABLED,  Data: 0x12; 
+Scaler READ from 0x1A, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x1A,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0x1B,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustIHSDelay
+Scaler READ from 0x1E, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x1E,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x1D,  AutoInc is ENABLED,  Data: 0x3C; 
+Enter CAdjustIVSDelay
+Scaler READ from 0x1E, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x1E,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x1C,  AutoInc is ENABLED,  Data: 0x37; 
+Enter CModeSetScaling
+Scaler READ from 0xE3, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xE3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x30,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x31,  AutoInc is DISABLED, Data: 0x42; 0x00; 0x58; 
+Enter CAdjustSharpnessForScaleUp
+Enter CAdjustSetSharpnessTable
+Enter CAdjustSharpnessForScaleDown
+Enter CAdjustSetSharpnessTable
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x06; 
+Scaler READ from 0xE3, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xE3,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xE3, AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xE3,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler READ from 0x32, AutoInc is ENABLED,  Data: 0x30; 
+Scaler WRITE to 0x32,  AutoInc is ENABLED,  Data: 0x30; 
+Scaler READ from 0x32, AutoInc is ENABLED,  Data: 0x30; 
+Scaler WRITE to 0x32,  AutoInc is ENABLED,  Data: 0x30; 
+Scaler READ from 0xE4, AutoInc is ENABLED,  Data: 0x40; 
+Scaler WRITE to 0xE4,  AutoInc is ENABLED,  Data: 0x48; 
+Scaler READ from 0xE3, AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xE3,  AutoInc is ENABLED,  Data: 0x13; 
+Scaler READ from 0xE3, AutoInc is ENABLED,  Data: 0x13; 
+Scaler WRITE to 0xE3,  AutoInc is ENABLED,  Data: 0x13; 
+Scaler READ from 0xE3, AutoInc is ENABLED,  Data: 0x13; 
+Scaler WRITE to 0xE3,  AutoInc is ENABLED,  Data: 0x13; 
+Scaler READ from 0xE4, AutoInc is ENABLED,  Data: 0x48; 
+Scaler WRITE to 0xE4,  AutoInc is ENABLED,  Data: 0x48; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x7B; 
+Scaler WRITE to 0xE5,  AutoInc is ENABLED,  Data: 0x1C; 0x20; 0x00; 0x1B; 0x03; 0x69; 
+Scaler WRITE to 0xEB,  AutoInc is ENABLED,  Data: 0x00; 0x00; 0x00; 0x00; 0x04; 0x00; 0xFF; 0x99; 
+Scaler WRITE to 0x33,  AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0x34,  AutoInc is DISABLED, Data: 0x0F; 0xFF; 0xFF; 0x0F; 0xFF; 0xFF; 
+Scaler WRITE to 0x33,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CModeSetDisplay
+Enter CAdjustSpreadSpectrumRange
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x04; 
+Enter CAdjustDPLL
+CAdjustDPLL =00, 93 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xBF,  AutoInc is ENABLED,  Data: 0x23; 0x06; 0x80; 0x17; 
+Scaler READ from 0xC3, AutoInc is ENABLED,  Data: 0x16; 
+Scaler WRITE to 0xC3,  AutoInc is ENABLED,  Data: 0x16; 
+Scaler READ from 0xC0, AutoInc is ENABLED,  Data: 0x06; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x01; 
+Enter CAdjustDclkOffset
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xC4, AutoInc is ENABLED,  Data: 0x17; 
+Scaler WRITE to 0xC4,  AutoInc is ENABLED,  Data: 0x18; 
+Scaler WRITE to 0xC5,  AutoInc is ENABLED,  Data: 0xA4; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x04; 
+Scaler WRITE to 0x2A,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x2B,  AutoInc is DISABLED, Data: 0x05; 0xA8; 
+Scaler WRITE to 0x2A,  AutoInc is ENABLED,  Data: 0x0B; 
+Scaler WRITE to 0x2B,  AutoInc is DISABLED, Data: 0x02; 0xD9; 
+Enter CCalcRatio
+Enter CCalcPanelWdith
+Enter CCalcPanelDHSta
+Enter CCalcRatio
+Enter CCalcPanelWdith
+Enter CCalcPanelDHEnd
+Scaler WRITE to 0x2A,  AutoInc is ENABLED,  Data: 0x05; 
+Scaler WRITE to 0x2B,  AutoInc is DISABLED, Data: 0x00; 0x20; 0x04; 0x20; 
+Scaler WRITE to 0x2A,  AutoInc is ENABLED,  Data: 0x8E; 
+Scaler WRITE to 0x2B,  AutoInc is DISABLED, Data: 0x00; 0x0C; 0x00; 0x0C; 0x02; 0x64; 0x02; 0x64; 
+Scaler WRITE to 0x2A,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x32, AutoInc is ENABLED,  Data: 0x30; 
+Scaler WRITE to 0x32,  AutoInc is ENABLED,  Data: 0x20; 
+Enter CAdjustIVS2DVSDelay
+Scaler READ from 0x32, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x32,  AutoInc is ENABLED,  Data: 0x10; 
+Scaler READ from 0x43, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x43,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x40,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x41,  AutoInc is ENABLED,  Data: 0x26; 
+Scaler READ from 0x28, AutoInc is ENABLED,  Data: 0x23; 
+Scaler WRITE to 0x28,  AutoInc is ENABLED,  Data: 0x2B; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CModeSetupColorProcess
+Enter CAdjustBrightness
+Enter CAdjustSetBrightness
+Scaler WRITE to 0x64,  AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0x65,  AutoInc is DISABLED, Data: 0x64; 0x64; 0x64; 
+Scaler WRITE to 0x64,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CSetPWM
+Enter CAdjustContrast
+Enter CAdjustSetContrast
+Scaler WRITE to 0x64,  AutoInc is ENABLED,  Data: 0x83; 
+Scaler WRITE to 0x65,  AutoInc is DISABLED, Data: 0x8C; 0x8C; 0x8C; 
+Scaler WRITE to 0x64,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x62,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD8,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CModeSetupColorConversion
+Enter bSourceVideo
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xCD,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler READ from 0xCE, AutoInc is DISABLED, Data: 0x10; 
+Scaler WRITE to 0xCD,  AutoInc is ENABLED,  Data: 0x04; 
+Scaler READ from 0xCE, AutoInc is DISABLED, Data: 0x02; 
+
+Scaler WRITE TABLE:
+LENGTH: 0x01; AUTOINC: DISABLED; ADDRESS: 9C; DATA: 18, 
+LENGTH: 0x12; AUTOINC: DISABLED; ADDRESS: 9D; DATA: 01, 32, 02, 59, 00, 75, FF, 53, FE, AD, 02, 00, 02, 00, FE, 53, FF, AD, 
+LENGTH: 0x01; AUTOINC: DISABLED; ADDRESS: 9C; DATA: 17, 
+LENGTH: 0xFD; 
+Scaler WRITE TABLE:
+LENGTH: 0x01; AUTOINC: DISABLED; ADDRESS: 9F; DATA: 07, 
+LENGTH: 0x01; AUTOINC: DISABLED; ADDRESS: BF; DATA: 02, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: 0C, 04, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: 1C, 00, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: 2C, 05, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: 3C, 9B, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: 4C, 01, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: 5C, 56, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: 6C, 02, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: 7C, DB, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: 8C, 07, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: 9C, 16, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: AC, 00, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: BC, 00, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: CC, 00, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: DC, 00, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: EC, 00, 
+LENGTH: 0x02; AUTOINC: ENABLED;  ADDRESS: C0; DATA: FC, 00, 
+LENGTH: 0x01; AUTOINC: DISABLED; ADDRESS: C0; DATA: 0C, 
+LENGTH: 0x01; AUTOINC: DISABLED; ADDRESS: BF; DATA: 07, 
+LENGTH: 0xFD; Enter CSetPWM
+Enter CAdjustPeakingCoding
+Enter CAdjustPeakingFilter
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler READ from 0xA9, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xA9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xA1, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xA1,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x06; 
+Scaler WRITE to 0xD8,  AutoInc is ENABLED,  Data: 0x4A; 
+Scaler WRITE to 0xDB,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustYpbprSaturation
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD8,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustSaturationHue
+Enter CAdjustMatrixMultiply
+Enter CAdjustCosine
+Enter CAdjustSine
+Enter CAdjustMatrixMultiply
+Enter CAdjustMatrixMultiply
+Enter CAdjustSetYpbprRhue
+Scaler READ from 0x62, AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0x62,  AutoInc is ENABLED,  Data: 0x0B; 
+Scaler WRITE to 0x63,  AutoInc is DISABLED, Data: 0x00; 0x00; 0x01; 0xFF; 0x00; 0x00; 
+Enter CAdjustSetYpbprGhue
+Scaler READ from 0x62, AutoInc is ENABLED,  Data: 0x0B; 
+Scaler WRITE to 0x62,  AutoInc is ENABLED,  Data: 0x13; 
+Scaler WRITE to 0x63,  AutoInc is DISABLED, Data: 0x01; 0xFF; 0x01; 0xFE; 0x00; 0x02; 
+Enter CAdjustSetYpbprBhue
+Scaler READ from 0x62, AutoInc is ENABLED,  Data: 0x13; 
+Scaler WRITE to 0x62,  AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0x63,  AutoInc is DISABLED, Data: 0x01; 0xFF; 0x00; 0x00; 0x00; 0x00; 
+Scaler READ from 0x62, AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0x62,  AutoInc is ENABLED,  Data: 0x9B; 
+Enter CAdjustYpbprhue
+Enter CAdjustSaturationHue
+Enter CAdjustMatrixMultiply
+Enter CAdjustCosine
+Enter CAdjustSine
+Enter CAdjustMatrixMultiply
+Enter CAdjustMatrixMultiply
+Enter CAdjustSetYpbprRhue
+Scaler READ from 0x62, AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0x62,  AutoInc is ENABLED,  Data: 0x0B; 
+Scaler WRITE to 0x63,  AutoInc is DISABLED, Data: 0x00; 0x00; 0x01; 0xFF; 0x00; 0x00; 
+Enter CAdjustSetYpbprGhue
+Scaler READ from 0x62, AutoInc is ENABLED,  Data: 0x0B; 
+Scaler WRITE to 0x62,  AutoInc is ENABLED,  Data: 0x13; 
+Scaler WRITE to 0x63,  AutoInc is DISABLED, Data: 0x01; 0xFF; 0x01; 0xFE; 0x00; 0x02; 
+Enter CAdjustSetYpbprBhue
+Scaler READ from 0x62, AutoInc is ENABLED,  Data: 0x13; 
+Scaler WRITE to 0x62,  AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0x63,  AutoInc is DISABLED, Data: 0x01; 0xFF; 0x00; 0x00; 0x00; 0x00; 
+Scaler READ from 0x62, AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0x62,  AutoInc is ENABLED,  Data: 0x9B; 
+Scaler READ from 0x62, AutoInc is ENABLED,  Data: 0x1B; 
+Scaler WRITE to 0x62,  AutoInc is ENABLED,  Data: 0x1F; 
+Enter CAccAdjust
+Scaler WRITE to 0xE6,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xE7,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xE7,  AutoInc is ENABLED,  Data: 0x06; 
+Scaler WRITE to 0xE7,  AutoInc is ENABLED,  Data: 0xCC; 
+Scaler WRITE to 0xE4,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xE5,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler READ from 0xCA, AutoInc is DISABLED, Data: 0x00; 
+Enter CAdjustInterlaceIVS2DVSDelay
+Enter CheckInterLace
+Scaler READ from 0x1A, AutoInc is DISABLED, Data: 0x03; 
+Enter CheckInterLace
+Scaler READ from 0x1A, AutoInc is DISABLED, Data: 0x03; 
+Enter CheckInterLace
+Scaler READ from 0x1A, AutoInc is DISABLED, Data: 0x03; 
+Enter CheckInterLace
+Scaler READ from 0x1A, AutoInc is DISABLED, Data: 0x03; 
+Enter CheckInterLace
+Scaler READ from 0x1A, AutoInc is DISABLED, Data: 0x03; 
+Enter CFrameSyncDo
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xC4, AutoInc is ENABLED,  Data: 0x18; 0xA4; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x01; 
+Enter CAdjustSpreadSpectrumRange
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x04; 
+Enter CFrameSyncFastDo
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x50, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x50,  AutoInc is ENABLED,  Data: 0x10; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x08; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x28; 
+Enter CMiscModeMeasurePollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x08; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x08; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x48; 
+Scaler WRITE to 0x59,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x59, AutoInc is DISABLED, Data: 0x06; 0x2E; 0x96; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xBF, AutoInc is DISABLED, Data: 0x23; 
+Scaler READ from 0xC0, AutoInc is DISABLED, Data: 0x06; 
+Scaler READ from 0x50, AutoInc is ENABLED,  Data: 0x10; 
+Scaler WRITE to 0x50,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CFrameSyncTestSync
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CAdjustDclkOffset
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xC4, AutoInc is ENABLED,  Data: 0x18; 
+Scaler WRITE to 0xC4,  AutoInc is ENABLED,  Data: 0x18; 
+Scaler WRITE to 0xC5,  AutoInc is ENABLED,  Data: 0xFA; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x04; 
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x3F; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x3F; 
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CFrameSyncTestSync
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CAdjustDclkOffset
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xC4, AutoInc is ENABLED,  Data: 0x18; 
+Scaler WRITE to 0xC4,  AutoInc is ENABLED,  Data: 0x19; 
+Scaler WRITE to 0xC5,  AutoInc is ENABLED,  Data: 0x12; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x04; 
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x3F; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x3F; 
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CFrameSyncTestSync
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CAdjustDclkOffset
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xC4, AutoInc is ENABLED,  Data: 0x19; 
+Scaler WRITE to 0xC4,  AutoInc is ENABLED,  Data: 0x18; 
+Scaler WRITE to 0xC5,  AutoInc is ENABLED,  Data: 0xE2; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x04; 
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x3F; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x3F; 
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+
+result = 0x07Enter CFrameSyncLastLineFinetune
+Enter CFrameSyncTestSync
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CAdjustDclkOffset
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xC4, AutoInc is ENABLED,  Data: 0x18; 
+Scaler WRITE to 0xC4,  AutoInc is ENABLED,  Data: 0x18; 
+Scaler WRITE to 0xC5,  AutoInc is ENABLED,  Data: 0xFA; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x04; 
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x3F; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x3F; 
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CFrameSyncSpreadSpectrumFinetune
+Enter CAdjustSpreadSpectrumRange
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x04; 
+Enter CFrameSyncTestSync
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Enter CAdjustSyncProcessorMeasureStart
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x21; 
+Enter CAdjustDclkOffset
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler READ from 0xC4, AutoInc is ENABLED,  Data: 0x18; 
+Scaler WRITE to 0xC4,  AutoInc is ENABLED,  Data: 0x18; 
+Scaler WRITE to 0xC5,  AutoInc is ENABLED,  Data: 0xFA; 
+Scaler READ from 0xC6, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC6,  AutoInc is ENABLED,  Data: 0x04; 
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x3F; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x03, AutoInc is DISABLED, Data: 0x3F; 
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+
+ CFrameSyncDo=00Enter CAdjustInterlaceIVS2DVSProtection
+Scaler READ from 0x1A, AutoInc is DISABLED, Data: 0x03; 
+Enter CAdjustTMDSCaptureCheck
+Enter CAdjustHdmiCbCr422
+Enter CModeSetupEtcs
+Enter CAdjustBackgroundColor
+Scaler READ from 0x6C, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x6C,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x6C, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x6C,  AutoInc is ENABLED,  Data: 0x20; 
+Scaler WRITE to 0x6D,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x6D,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x6D,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x6C, AutoInc is ENABLED,  Data: 0x20; 
+Scaler WRITE to 0x6C,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CMiscEnableDoubleBuffer
+Scaler READ from 0x10, AutoInc is ENABLED,  Data: 0x05; 
+Scaler WRITE to 0x10,  AutoInc is ENABLED,  Data: 0x15; 
+Enter CAdjustDigitalFilter
+Scaler WRITE to 0x98,  AutoInc is ENABLED,  Data: 0x10; 0x08; 
+Scaler WRITE to 0x98,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustDigitalFilter
+Scaler WRITE to 0x98,  AutoInc is ENABLED,  Data: 0x70; 0xF0; 
+Scaler WRITE to 0x98,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustDigitalFilter
+Scaler WRITE to 0x98,  AutoInc is ENABLED,  Data: 0x20; 0x44; 
+Scaler WRITE to 0x98,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustDigitalFilter
+Scaler WRITE to 0x98,  AutoInc is ENABLED,  Data: 0x60; 0x00; 
+Scaler WRITE to 0x98,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x6C, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x6C,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CModeAutoMeasureOn
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x81; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CHdmiAudioFirstTracking
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+Enter CAdjustDisableHDMIWatchDog
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x15; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x10; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0xC8, AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xC8,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x51; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x44; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x51; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x46; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x28; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x28; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x08; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x52; 
+Scaler READ from 0xCA, AutoInc is DISABLED, Data: 0x24; 0x41; 0x40; 0x18; 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x28; 
+Scaler READ from 0xCA, AutoInc is DISABLED, Data: 0x00; 0xBA; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x2D; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x08; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x11; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x0D; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x12; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x84; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x38; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x38; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x10; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x39; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x82; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x3B; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x10; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x38; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x10; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x38; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x10; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x62; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustDisableHDMIWatchDog
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x30; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x68; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x30; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x68; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustEnableHDMIWatchDog
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x15; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0xFE; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x1D; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x05; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x1F; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x9F; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x2D; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x10; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x09; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x09; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x03; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xB7; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF0; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xC0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xB0; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x57; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x40; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x70; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x90; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xC0; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x03; 
+
+ HA Scaler WRITE to 0xCB,  AutoInc is ENABLED,  Data: 0x06; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CSetPWM
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x41; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x41; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x01; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustEnableWatchDog
+Enter bCNoCheckSyncMode
+Scaler WRITE to 0x0C,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x0C, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x0C,  AutoInc is ENABLED,  Data: 0x2E; 
+Enter CHdmiAudioWaitingFlagReadyEven
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+ d Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x62; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0xFF; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x03; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x26; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustEnableHDMIWatchDog
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x32; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x32; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler READ from 0xCA, AutoInc is ENABLED,  Data: 0x80; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x31; 
+Scaler WRITE to 0xCA,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xC9,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiAudioWaitingFlagReadyEven
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiAudioWaitingFlagReadyEven
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiAudioWaitingFlagReadyEven
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiAudioWaitingFlagReadyEven
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x01; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiAudioWaitingFlagReadyEven
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiAudioWaitingFlagReadyEven
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiAudioWaitingFlagReadyEven
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x01; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiAudioWaitingFlagReadyEven
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x01; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CHdmiAudioWaitingFlagReadyEven
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x63; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x01; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CMiscClearStatusRegister
+Scaler WRITE to 0x02,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x03,  AutoInc is ENABLED,  Data: 0x00; 
+Enter CModeHDMITimeoutCountDownEvent
+Scaler READ from 0x28, AutoInc is ENABLED,  Data: 0x2B; 
+Scaler READ from 0x28, AutoInc is ENABLED,  Data: 0x2B; 
+Scaler WRITE to 0x28,  AutoInc is ENABLED,  Data: 0x0B; 
+Enter CHdmiAudioWaitingFlagReadyEven
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler READ from 0x58, AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0x58,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 0x64; 0x00; 0x07; 
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+
+ HA  b Enter CHdmiAudioFIFODetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CSetModeReady
+Enter CHdmiFormatDetect
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x02; 
+Scaler READ from 0xCB, AutoInc is DISABLED, Data: 0x01; 
+Enter CAdjustHueSatSet
+Scaler WRITE to 0x9F,  AutoInc is ENABLED,  Data: 0x07; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD1,  AutoInc is ENABLED,  Data: 0x0F; 
+Scaler WRITE to 0xD2,  AutoInc is ENABLED,  Data: 0x83; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x97; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEE; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x61; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x50; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE3; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x3E; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE0; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x63; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xE6; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x86; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xEC; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xBB; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0xF5; 
+Enter CAdjustColorGammaCal
+Enter CAdjustColorGammaCal
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD3,  AutoInc is ENABLED,  Data: 0x00; 
+Scaler WRITE to 0xD0,  AutoInc is ENABLED,  Data: 0xDC; 
+Enter CModeHandler
+Enter CSyncProcess
+Enter CFrameSyncDetect
+Enter bCNoCheckSyncMode
+Scaler READ from 0x02, AutoInc is DISABLED, Data: 0x00; 
+Enter CModeIsChange
+
+MMD.1. Enter CModeMeasureData
+Scaler READ from 0x47, AutoInc is ENABLED,  Data: 0x60; 
+Scaler WRITE to 0x47,  AutoInc is ENABLED,  Data: 0x60; 
+Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x64; 
+Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x64; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 0x8F; 0xC4; 
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0xE1; 
+Enter CMiscMeasureResultPOPPollingEvent
+Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0xA1; 
+Scal

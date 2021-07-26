@@ -1,0 +1,8 @@
+# Ignore binary output files
+output
+output-debug
+
+# Ignore python temporary files
+__pycache__/
+*.py[cod]
+*$py.class
