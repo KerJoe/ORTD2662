@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        {
+            "name": "sdcc",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Program Files/SDCC/include",
+                "C:/Program Files/SDCC/include/mcs51"
+            ],
+            "defines": [                
+                "__at(_ARG_)=",
+                "__bit=uint8_t",
+                "__code=",
+                "__critical=",
+                "__data=",
+                "__far=",
+                "__idata=",
+                "__interrupt=",
+                "__naked=",                
+                "__near=",
+                "__near=",
+                "__pdata=",
+                "__sbit=uint8_t",
+                "__sfr=uint8_t",
+                "__sfr16=uint16_t",
+                "__sfr32=uint32_t",
+                "__using=",
+                "__xdata="
+            ]
+        }
+    ],
+    "version": 4
+}

@@ -262,10 +262,38 @@ uint8_t CSourceScanInputPortDVI(uint8_t ucPar)
 	return 0;
 }
 
+uint8_t __code ttSCALER_POWERUP_HDMI[] =
+{
+	1,  AUTOINC_DIS,    S_PAGE_SELECT,          2,
+	8,  AUTOINC_ENA,    S2_TMDS_OUTPUT_CONTROL, 0x78, 0x6F, 0x03, 0x00, 0x70, 0x70, 0xe3, 0x24,
+    TABLE_END
+};
+
 void InitHDMI()
 {
-    UploadEDID(HDMI_DDC_NUMBER, testEDID);
-    ScalerWriteTable(tSCALER_POWERUP_HDMI);
+    ScalerWriteBit(S_HOST_CONTROL, 0, BIT_ONE);
+    delayMS(10); // Wait for at least 8ms
+    ScalerWriteBit(S_HOST_CONTROL, 0, BIT_ZERO);
+
+    // TODO: Fix ScalerWriteTable with auto increment: do not update address.
+    //ScalerWriteTable(ttSCALER_POWERUP_HDMI);
+    
+    ScalerWriteByte(S_PAGE_SELECT, 2);
+    EnableScalerAutoIncrement(1);
+    SCALER_ADDRESS = S2_TMDS_OUTPUT_CONTROL;
+    SCALER_DATA = 0x78;
+    SCALER_DATA = 0x6f;
+    SCALER_DATA = 0x03;
+    SCALER_DATA = 0x00;
+    SCALER_DATA = 0x70;
+    SCALER_DATA = 0x70;
+    SCALER_DATA = 0xe3;
+    SCALER_DATA = 0x24;
+    EnableScalerAutoIncrement(0);
+    
+    UploadEDID(HDMI_DDC_NUMBER, testEDID);    
+    /*UploadEDID(HDMI_DDC_NUMBER, testEDID);
+    ScalerWriteTable(ttSCALER_POWERUP_HDMI);
     ScalerWriteBits(S_SYNC_CONTROL, 0, 2, 0b00); // Power on TMDS
 
     ScalerWriteBits(S_IFW_HV_DELAY, 0, 4, 0b0000);
@@ -293,7 +321,7 @@ void InitHDMI()
     ScalerWriteBits(S_IFW_VACT_STA_HI, 6, 2, 0b00); // Video 8 Source - TMDS // ?
 
     CSourceScanInputPortDVI(0);
-
+*/
  /*
 
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRWL_BSU_HI, (((WINDOW_HLEN) >> 8) << 4) | ((WINDOW_VLEN) >> 8));

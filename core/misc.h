@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include "peripherals/sfr.h"
 
 #define FeedWatchdog() WDT_CONTROL = (1 << 6)
 
