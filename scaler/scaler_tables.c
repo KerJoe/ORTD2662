@@ -7,8 +7,8 @@
 
 const uint8_t DisplayInitTable[] =
 {
-    1,  AUTOINC_ENA,    S_VDISP_ADDRESS,    0x00,
-    22, AUTOINC_ENA,    S_VDISP_PORT,       REG16BE(PANEL_HTOTAL),
+    1,  AUTOINC_DIS,    S_VDISP_ADDRESS,    0x00,
+    22, AUTOINC_DIS,    S_VDISP_PORT,       REG16BE(PANEL_HTOTAL),
                                             PANEL_HS_END,
                                             REG16BE(PANEL_HBG_STA),
                                             REG16BE(PANEL_HACT_STA),
@@ -45,7 +45,7 @@ const uint8_t DisplayInitTable[] =
     1,  AUTOINC_DIS,    S_TCON_ADDRESS,     SP_TCON_CONTROL0,
     1,  AUTOINC_DIS,    S_TCON_PORT,        PANEL_TYPE & 1,     // Set display type
     1,  AUTOINC_DIS,    S_TCON_ADDRESS,     SP_LVDS_CONTROL0,
-    2,  AUTOINC_ENA,    S_TCON_PORT,        (0b11 << 4),        // Power up LVDS ports
+    2,  AUTOINC_DIS,    S_TCON_PORT,        (0b11 << 4),        // Power up LVDS ports
                                             (0b11 << 6),        // Inverse BCKPOLARL and DCKPOLARL // TODO: Always inverted... test
 
     TABLE_END

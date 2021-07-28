@@ -100,8 +100,10 @@ void ScalerWriteTable(uint8_t table[])
     while (TABLE_DATA_SIZE != TABLE_END)
     {
         EnableScalerAutoIncrement(TABLE_AUTOINC);
-        for (uint16_t i = 0; i < TABLE_DATA_SIZE; i++)
-            ScalerWriteByte(TABLE_BASE_ADDRESS, TABLE_DATA(i));
+        SCALER_ADDRESS = TABLE_BASE_ADDRESS;
+        for (uint16_t i = 0; i < TABLE_DATA_SIZE; i++)                    
+            SCALER_DATA = TABLE_DATA(i);
+            //ScalerWriteByte(TABLE_BASE_ADDRESS, TABLE_DATA(i));
 
         table = table + 3 + TABLE_DATA_SIZE;
     }
