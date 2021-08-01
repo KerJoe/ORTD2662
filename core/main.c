@@ -62,7 +62,7 @@ void main()
 
     InitComposite(2);
 
-    InitHDMI();
+    //InitHDMI();
 
     int j = 0;
     SetGPIO(GPIO36, 0); SwitchToI2C();
@@ -74,8 +74,9 @@ void main()
 					    
 		printf("udc1 0x%x\n", ScalerReadByte(S2_UP_DOWN_CONTROL1) & 0xf0);        
         printf("count %x\n\n", j);*/
+
         CSourceScanInputPortDVI(0);
-        delayMS(100); j++;
+        delayMS(100); j+=10;
 
         FeedWatchdog();
     }

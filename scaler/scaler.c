@@ -152,10 +152,10 @@ void InitScaler()
     SetPowerMode(POWER_MODE_FULL);
     SetDPLLFrequncy(PANEL_DCLK); // DPLL Settings
 
-    SetVideoContrast(128);
-    SetVideoBrightness(128);
-    SetVideoSaturation(180);
-    SetVideoHue(0);
+    // SetVideoContrast(128);
+    // SetVideoBrightness(128);
+    // SetVideoSaturation(180);
+    // SetVideoHue(0);
 
     ScalerWriteTable(DisplayInitTable);
 }

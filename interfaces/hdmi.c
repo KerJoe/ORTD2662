@@ -300,12 +300,12 @@ void InitHDMI()
     ScalerWriteBits(S_VGIP_CONTROL, 2, 2, 0b01); // Input Format - Digital (TMDS)
     ScalerWriteBit (S_VGIP_CONTROL, 0, 0b1);      // Sampling input pixels enable
 
-    #define WINDOW_HSTA 22
-    #define WINDOW_VSTA 5
-    #define WINDOW_HLEN 2744
-    #define WINDOW_VLEN 232
-    #define WINDOW_HS_DELAY 110
-    #define WINDOW_VS_DELAY 21
+    #define WINDOW_HSTA 2
+    #define WINDOW_VSTA 6
+    #define WINDOW_HS_DELAY 30
+    #define WINDOW_VS_DELAY 30
+    #define WINDOW_HLEN 1024
+    #define WINDOW_VLEN 600
 
     ScalerWriteByte(S_IFW_HACT_STA_HI, (WINDOW_HSTA) >> 8);
     ScalerWriteByte(S_IFW_HACT_STA_LO, WINDOW_HSTA);
@@ -320,7 +320,7 @@ void InitHDMI()
 
     ScalerWriteBits(S_IFW_VACT_STA_HI, 6, 2, 0b00); // Video 8 Source - TMDS // ?
 
-    CSourceScanInputPortDVI(0);
+//    CSourceScanInputPortDVI(0);
 
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRWL_BSU_HI, (((WINDOW_HLEN) >> 8) << 4) | ((WINDOW_VLEN) >> 8));
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRW_BSU_LO,  (WINDOW_HLEN));

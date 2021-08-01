@@ -15,6 +15,7 @@
 // K23: 0 - whole, 10 - fraction;
 // K32: 2 - whole, 10 - fraction
 // Offsets: 4 - whole, 10 - fraction, signed
+// TODO: Awfully washed out colors. Something wrong with the way I setup the YUV to RGB conversion?
 #define FR10(__num) ((__num) * 1024)
 const uint16_t YUV2RGB_CCIR601[] =
 {
@@ -22,16 +23,20 @@ const uint16_t YUV2RGB_CCIR601[] =
     // [R]   [K11   0   K13][Y]    R = K11 * Y + K13 * V
     // [G] = [ 1  -K22 -K23][U] => G = Y - K22 * U - K23 * V
     // [B]   [ 1   K32   0 ][V]    B = Y + K32 * U
+    // TODO: Or is it ???:
+    // [R]   [K11   0   K13][Y]    R = K11 * Y + K13 * V
+    // [G] = [K11 -K22 -K23][U] => G = K11 * Y - K22 * U - K23 * V
+    // [B]   [K11  K32   0 ][V]    B = K11 * Y + K32 * U
 
-    FR10(1.2),  // K11
-    FR10(0.6),  // K13
-    FR10(0.0),  // K22
-    FR10(0.0),  // K23
-    FR10(1.22798),  // K32
+    FR10(0.5596),  // K11
+    FR10(0.9063),  // K13
+    FR10(0.2461),  // K22
+    FR10(0.2793),  // K23
+    FR10(0.6933),  // K32
 
-    0x0000, // Red offset
-    0x0000, // Green offset
-    0x0000, // Blue offset
+    FR10(0),       // Red offset
+    FR10(2.6670),  // Green offset
+    FR10(0),       // Blue offset
 };
 
 void InitComposite(uint8_t videoIn)
@@ -45,7 +50,7 @@ void InitComposite(uint8_t videoIn)
     // #define WINDOW_VS_DELAY 19
     #define WINDOW_HSTA 22
     #define WINDOW_VSTA 5
-    #define WINDOW_HLEN 2744
+    #define WINDOW_HLEN 722
     #define WINDOW_VLEN 232
     #define WINDOW_HS_DELAY 110
     #define WINDOW_VS_DELAY 21
@@ -88,9 +93,11 @@ void InitComposite(uint8_t videoIn)
         ScalerWriteByte(S7_YUV_TO_RGB_PORT, YUV2RGB_CCIR601[i] & 0xFF);
     }
     ScalerWriteByte(S7_YUV_TO_RGB_CONTROL, 0x01);
+    //ScalerWriteByte(S7_YUV_TO_RGB_CONTROL, 0x00);
     //
     ScalerWriteByte(S_PAGE_SELECT, 6);
     ScalerWriteBits(S6_YUV422_TO_YUV444, 5, 3, 0b101); // Enable, format defualt, Swap UV (Y, V, U)
+    
     //ScalerWriteBits(S6_YUV422_TO_YUV444, 5, 3, 0b100); // Enable, format defualt
 
     //InitComposite(PIN_TO_VIDEO_IN(COMPOSITE_VIDEO_0_PIN));
