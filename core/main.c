@@ -61,8 +61,8 @@ void main()
     SetOverlayColor(0x75, 0x18, 0xA1);
     OSDInit();
 
-    const char* entries = { "abc", "dce" };
-    OSDCreateMenu("Main", entries);
+    char* entries[]= { "abc", "dce" };
+    OSDCreateMenu("Main", entries, 2);
 
     //InitComposite(2);
 

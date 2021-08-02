@@ -163,7 +163,7 @@ void OSDSetWindow(OSDWindow* window, uint8_t windowNumber)
                                                       (window->gradientEnable << 6) | (window->gradientDirection << 5) | (window->effectEnable << 4) | (window->effectType << 1) | window->enable);
 }
 
-void OSDSetRow(OSDRow* __xdata row, uint8_t rowNumber)
+void OSDSetRow(OSDRow* row, uint8_t rowNumber)
 {
     OSDWriteTriplet(0x1000 + rowNumber, (row->notStop << 7) | (row->vbiFunction << 6) | (row->charEffect << 2) | (row->charWidth2X << 1) | row->charHeight2X,
                                         (row->height << 3)  | row->width,

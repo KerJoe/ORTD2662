@@ -97,6 +97,6 @@ void SetOSDOffset(uint16_t hor, uint16_t ver);
 void OSDEnable(uint8_t state);
 void SetOSDCharAlignment(uint8_t state);
 void OSDSetWindow(OSDWindow* window, uint8_t windowNumber);
-void OSDSetRow(OSDRow* __xdata row, uint8_t rowNumber);
+void OSDSetRow(OSDRow* row, uint8_t rowNumber);
 void OSDSetChar1(OSDCharacter1* ch1, uint8_t ch1Number);
 void OSDEndRow(uint8_t rowNumber);
