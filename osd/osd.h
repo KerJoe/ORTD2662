@@ -1,7 +1,10 @@
 #pragma once
+#include "stdint.h"
 
-#define OSD_CHAR_ADDRESS    0x1013
-#define OSD_FONT_ADDRESS    0x1300
+#define OSD_CHAR_OFFSET    0x13
+#define OSD_FONT_OFFSET    0x300
+#define OSD_CHAR_ADDRESS   0x1000 + OSD_CHAR_OFFSET
+#define OSD_FONT_ADDRESS   0x1000 + OSD_FONT_OFFSET
 
 #define OSDWriteByte0(__address, __data) OSDWriteByte((__address) | (0b00 << 14), __data)
 #define OSDWriteByte1(__address, __data) OSDWriteByte((__address) | (0b01 << 14), __data)
@@ -12,7 +15,6 @@
 #define OSDReadByte1(__address) OSDReadByte((__address) | (0b01 << 14))
 #define OSDReadByte2(__address) OSDReadByte((__address) | (0b10 << 14))
 #define OSDReadByte012(__address) OSDReadByte((__address) | (0b11 << 14))
-
 
 typedef struct
 {
@@ -84,4 +86,17 @@ typedef struct // One bit color
 
 // TODO: Other bit character bit counts
 
+void OSDWriteByte(uint16_t address, uint8_t data);
+void OSDWriteTriplet(uint16_t address, uint8_t byte0, uint8_t byte1, uint8_t byte2);
+void OSDWriteTriplets(uint16_t address, uint8_t* data, uint16_t count);
+uint8_t OSDReadByte(uint16_t address);
 void OSDInit();
+void UploadColorPallete(uint8_t pallete[][3]);
+void UploadFont_1Bit_8x16(uint8_t font[][16]);
+void SetOSDOffset(uint16_t hor, uint16_t ver);
+void OSDEnable(uint8_t state);
+void SetOSDCharAlignment(uint8_t state);
+void OSDSetWindow(OSDWindow* window, uint8_t windowNumber);
+void OSDSetRow(OSDRow* __xdata row, uint8_t rowNumber);
+void OSDSetChar1(OSDCharacter1* ch1, uint8_t ch1Number);
+void OSDEndRow(uint8_t rowNumber);

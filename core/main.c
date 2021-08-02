@@ -15,6 +15,7 @@
 #include "config/board_config.h"
 
 #include "osd/osd.h"
+#include "osd/osd_ui.h"
 #include "osd/1bit_font.h"
 
 #include "controls/buttons.h"
@@ -37,7 +38,7 @@
 void main()
 {
     // TODO: Write EDID at first apportunity, else some video cards may mark the scaler as unavailable if using cold plug with constant Hot Plug Detection
-    UploadEDID(HDMI_DDC_NUMBER, testEDID);    
+    UploadEDID(HDMI_DDC_NUMBER, testEDID);
 
     for (uint16_t i = 0; i < 0xffff; i++) FeedWatchdog(); // Add grace period to allow I2C Programming before switching to UART
 
@@ -60,19 +61,22 @@ void main()
     SetOverlayColor(0x75, 0x18, 0xA1);
     OSDInit();
 
-    InitComposite(2);
+    const char* entries = { "abc", "dce" };
+    OSDCreateMenu("Main", entries);
+
+    //InitComposite(2);
 
     //InitHDMI();
 
     int j = 0;
     SetGPIO(GPIO36, 0); SwitchToI2C();
     while (1)
-    {        
+    {
         /*ScalerWriteByte(S_PAGE_SELECT, 2);
         ScalerWriteBits(S2_ANALOG_COMMON_CONTROL2, 0, 2, 0b11);
-        ScalerWriteBit(S2_UP_DOWN_CONTROL0, 7, 0b1);        
-					    
-		printf("udc1 0x%x\n", ScalerReadByte(S2_UP_DOWN_CONTROL1) & 0xf0);        
+        ScalerWriteBit(S2_UP_DOWN_CONTROL0, 7, 0b1);
+
+		printf("udc1 0x%x\n", ScalerReadByte(S2_UP_DOWN_CONTROL1) & 0xf0);
         printf("count %x\n\n", j);*/
 
         CSourceScanInputPortDVI(0);

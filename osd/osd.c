@@ -105,16 +105,16 @@ void UploadColorPallete(uint8_t pallete[][3])
 // TODO: Try to find ways to increase speed
 void UploadFont_1Bit_8x16(uint8_t font[][16])
 {
-    ScalerWriteByte(S_OSD_ADDRESS_HI, 0x13 | (0b11 << 6));
+    ScalerWriteByte(S_OSD_ADDRESS_HI, (0x13 >> 0) | (0b11 << 6));
     ScalerWriteByte(S_OSD_ADDRESS_LO, 0x00);
     EnableScalerAutoIncrement(0);
     SCALER_ADDRESS = S_OSD_PORT;
-    for (uint16_t i = 0; i < 256; i++)
-        for (uint8_t k = 0; k < 9; k++)
+    for (uint16_t i = 0; i < 128; i++)
+        for (uint8_t k = 1; k < 19; k+=2)
         {
-            SCALER_DATA = font[i][(k<<1)+1] << 4;
-            SCALER_DATA = font[i][(k<<1)+1] >> 4;
-            SCALER_DATA = font[i][k<<1];
+            SCALER_DATA = font[i][k] << 4;
+            SCALER_DATA = font[i][k] >> 4;
+            SCALER_DATA = font[i][k-1];
         }
 }
 
@@ -146,7 +146,7 @@ void SetOSDCharAlignment(uint8_t state)
     delayMS(4); // HACK: Really crappy solution, find a better way to insure reading of OSD_FRAME_CONTROL0 is done after its double buffer is empty
 }
 
-void SetWindow(OSDWindow* window, uint8_t windowNumber)
+void OSDSetWindow(OSDWindow* window, uint8_t windowNumber)
 {
 
     OSDWriteTriplet(OSD_WINDOW_EFFECT(windowNumber),  (window->effectWidth << 3) | window->effectHeight,
@@ -163,6 +163,25 @@ void SetWindow(OSDWindow* window, uint8_t windowNumber)
                                                       (window->gradientEnable << 6) | (window->gradientDirection << 5) | (window->effectEnable << 4) | (window->effectType << 1) | window->enable);
 }
 
+void OSDSetRow(OSDRow* __xdata row, uint8_t rowNumber)
+{
+    OSDWriteTriplet(0x1000 + rowNumber, (row->notStop << 7) | (row->vbiFunction << 6) | (row->charEffect << 2) | (row->charWidth2X << 1) | row->charHeight2X,
+                                        (row->height << 3)  | row->width,
+                                        row->length);
+}
+
+void OSDEndRow(uint8_t rowNumber)
+{
+    OSDWriteByte0(0x1000 + rowNumber, 0x00);
+}
+
+void OSDSetChar1(OSDCharacter1* ch1, uint8_t ch1Number)
+{
+    OSDWriteTriplet(OSD_CHAR_ADDRESS + ch1Number, (1 << 7) | (ch1->blinking << 6) | ch1->width,
+                                                  ch1->character,
+                                                  (ch1->fgColor << 4) | ch1->bgColor);
+}
+
 void OSDInit()
 {
     UploadColorPallete(palette);
@@ -170,13 +189,20 @@ void OSDInit()
 
     OSDWriteByte(0x1000, 0x00); // Set first row to stop
 
+    UploadFont_1Bit_8x16(font_1bit);
+
+    OSDWriteTriplet(OSD_CHAR_FONT_ADDRESSES, OSD_CHAR_OFFSET + 0x1000,
+                                             (((OSD_CHAR_OFFSET + 0x1000) >> 8) << 4) | ((OSD_FONT_OFFSET + 0x1000) & 0xFF),
+                                             (OSD_FONT_OFFSET + 0x1000) >> 4);
+    SetOSDCharAlignment(ALIGN_LEFT);
+
     OSDWindow tst;
     memcpy(&tst, &defaultWindow, sizeof(OSDWindow));
     tst.horStart = 128;
     tst.verStart = 128;
     tst.horEnd = tst.horStart + 100;
     tst.verEnd = tst.verStart + 100;
-    SetWindow(&tst, 0);
+    OSDSetWindow(&tst, 0);
 
     OSDEnable(1);
 }

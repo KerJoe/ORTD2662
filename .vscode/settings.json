@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "stdio.h": "c",
-        "8052.h": "c"
+        "8052.h": "c",
+        "osd_registers.h": "c"
     }
 }
