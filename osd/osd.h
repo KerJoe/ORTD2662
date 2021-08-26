@@ -71,6 +71,18 @@ typedef struct
     uint8_t length : 8; // Number of characters
 } OSDRow;
 
+typedef struct
+{
+    uint8_t : 6;
+    uint8_t blinking : 1;
+    uint8_t isVisible : 1; // Is character non blank
+
+    uint8_t length : 8; // If isVisible is 1; then this byte sets the size of empty space (not Character.width)
+
+    uint8_t : 4;
+    uint8_t color : 4; // 0 is special for transparent
+} OSDCharacterBlank;
+
 typedef struct // One bit color
 {
     uint8_t width : 4;
@@ -100,3 +112,4 @@ void OSDSetWindow(OSDWindow* window, uint8_t windowNumber);
 void OSDSetRow(OSDRow* row, uint8_t rowNumber);
 void OSDSetChar1(OSDCharacter1* ch1, uint8_t ch1Number);
 void OSDEndRow(uint8_t rowNumber);
+void OSDSetBlank(OSDCharacterBlank* chb, uint8_t chbNumber);

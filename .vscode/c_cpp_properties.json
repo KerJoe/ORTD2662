@@ -1,13 +1,14 @@
 {
     "configurations": [
         {
-            "name": "sdcc",
+            "name": "SDCC",
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:/Program Files/SDCC/include",
                 "C:/Program Files/SDCC/include/mcs51"
             ],
-            "defines": [                
+            "defines": [
+                "__interrupt(_ARG_)=",
                 "__at(_ARG_)=",
                 "__bit=uint8_t",
                 "__code=",
@@ -16,7 +17,7 @@
                 "__far=",
                 "__idata=",
                 "__interrupt=",
-                "__naked=",                
+                "__naked=",
                 "__near=",
                 "__near=",
                 "__pdata=",

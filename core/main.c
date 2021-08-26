@@ -51,6 +51,8 @@ void main()
 
     SetGPIOShare(GPIO36, OPEN_DRAIN_OUT);
     SetGPIO(GPIO36, 0);
+    SetGPIOShare(GPIO35, OPEN_DRAIN_OUT);
+    SetGPIO(GPIO35, 1);
 
     SetGPIOShare(GPIO54, OPEN_DRAIN_OUT);
     SetGPIOShare(GPIO55, OPEN_DRAIN_OUT);
@@ -66,7 +68,7 @@ void main()
 
     //InitComposite(2);
 
-    //InitHDMI();
+    InitHDMI();
 
     int j = 0;
     SetGPIO(GPIO36, 0); SwitchToI2C();
@@ -78,6 +80,12 @@ void main()
 
 		printf("udc1 0x%x\n", ScalerReadByte(S2_UP_DOWN_CONTROL1) & 0xf0);
         printf("count %x\n\n", j);*/
+
+        /*int x = 0;
+        SetGPIO(GPIO36, 0);
+        for (; x < 99; x++) FeedWatchdog();
+        SetGPIO(GPIO36, 1);
+        for (; x < 100; x++) FeedWatchdog();*/
 
         CSourceScanInputPortDVI(0);
         delayMS(100); j+=10;

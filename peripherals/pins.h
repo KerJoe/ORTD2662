@@ -51,8 +51,8 @@
 // 112      P3_5        T1 (0b011), TCON[9] (0b100), SD1 (0b101), SPDIF1 (0b110)
 // 113      P3_6        TCON[1] (0b011), SD2 (0b100), SPDIF2 (0b101), IrDA (0b110)
 // 114      P3_7        TCON[13] (0b011), SD3 (0b100), SPDIF3 (0b101), VCLK (0b110)
-// 121      P7_3        DDCSCL3 (0b00 -> 0b11) // Pass 0b11 to set pin share function to
-// 122      P7_2        DDCSDA3 (0b00 -> 0b11) // Enable DDC I2C
+// 121      P7_3        DDCSCL3 (0b00 -> 0b11) // Pass 0b11 to SetGPIOShare function
+// 122      P7_2        DDCSDA3 (0b00 -> 0b11) // to enable DDC I2C
 // 123      P7_1        DDCSDA2 (0b00 -> 0b11) // Changed for consistency
 // 124      P7_0        DDCSCL2 (0b00 -> 0b11)
 

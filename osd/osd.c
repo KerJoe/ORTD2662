@@ -182,6 +182,13 @@ void OSDSetChar1(OSDCharacter1* ch1, uint8_t ch1Number)
                                                   (ch1->fgColor << 4) | ch1->bgColor);
 }
 
+void OSDSetBlank(OSDCharacterBlank* chb, uint8_t chbNumber)
+{
+    OSDWriteTriplet(OSD_CHAR_ADDRESS + chbNumber, (0 << 7) | (chb->blinking << 6),
+                                                  chb->length,
+                                                  chb->color);
+}
+
 void OSDInit()
 {
     UploadColorPallete(palette);

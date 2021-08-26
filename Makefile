@@ -21,12 +21,12 @@ OUTPUTDIR    = output
 DBGOUTPUTDIR = $(OUTPUTDIR)-debug
 MAINFILE     = main
 
-# Ignore warning 158: overflow in implicit constant conversion because of SDCC bug
-SDCCFLAGS = --disable-warning 158 -mmcs51 --model-large -o$(OUTPUTDIR)/ -I$(CURDIR)
-SDLDFLAGS = --xram-loc 0xFB00 --xram-size 640
+# Ignore warning 158: "overflow in implicit constant conversion" because of SDCC bug where unisgned integers are treates as signed
+SDCC_CFLAGS  = --disable-warning 158 -mmcs51 --model-large -o$(OUTPUTDIR)/ -I$(CURDIR)
+SDCC_LDFLAGS = --xram-loc 0xFB00 --xram-size 640
 
-GCCCFLAGS = -o$(DBGOUTPUTDIR)/ -I$(CURDIR) -DDEBUG
-GCLDFLAGS =
+GCC_CFLAGS   = -o$(DBGOUTPUTDIR)/ -I$(CURDIR) -DDEBUG
+GCC_LDFLAGS  =
 
 #PROGRAMMER 	= cmd \/C ROVATool.lnk -d2660 -ppparallel -w
 PROGRAMMER	= cmd \/C rtdmultiprog.lnk -i lpt -d 888 -w
@@ -59,17 +59,14 @@ clean: $(OUTPUTDIR) $(DBGOUTPUTDIR)
 $(OUTPUTDIR):
 	mkdir $(OUTPUTDIR)
 
-# First create dependency files
-# Then create object files
-# Use sdcc -ooutput/ -IC:\test\ -MD -c ./main/main.c
+# Create dependency files and object files
 $(OUTPUTDIR)/%.rel: %.c
-	sdcc $(SDCCFLAGS) -MMD -MP -c $<
-	$(fix_d_files)
-	sdcc $(SDCCFLAGS) -c $<
+	sdcc $(SDCC_CFLAGS) -MMD -c $<
+	@$(fix_d_files)
 
 # SDCC requires the main file to be passed first
 $(OUTPUTDIR)/firmware.hex: $(OUTPUTDIR)/$(MAINFILE).rel $(filter-out $(OUTPUTDIR)/$(MAINFILE).rel, $(RELFILES))
-	sdcc $(SDCCFLAGS) $(SDLDFLAGS) -o$(OUTPUTDIR)/firmware.hex $^
+	sdcc $(SDCC_CFLAGS) $(SDCC_LDFLAGS) -o$(OUTPUTDIR)/firmware.hex $^
 
 $(OUTPUTDIR)/firmware.bin: $(OUTPUTDIR)/firmware.hex
 	makebin $(OUTPUTDIR)/firmware.hex $(OUTPUTDIR)/firmware.bin
@@ -79,10 +76,10 @@ $(DBGOUTPUTDIR):
 	mkdir $(DBGOUTPUTDIR)
 
 $(DBGOUTPUTDIR)/%.o: %.c %.h
-	gcc $(GCCCFLAGS) -c $<
+	gcc $(GCC_CFLAGS) -c $<
 
 $(DBGOUTPUTDIR)/debug$(EXE): $(DBGOUTPUTDIR)/$(MAINFILE).o $(filter-out $(DBGOUTPUTDIR)/$(MAINFILE).o, $(OFILES))
-	gcc $(GCCCFLAGS) $(GCLDFLAGS) -o$(DBGOUTPUTDIR)/debug$(EXE) $^
+	gcc $(GCC_CFLAGS) $(GCC_LDFLAGS) -o$(DBGOUTPUTDIR)/debug$(EXE) $^
 
 # Include the .d makefiles. The - at the front suppresses the errors of missing
 # Makefiles. Initially, all the .d files will be missing, and we don't want those
