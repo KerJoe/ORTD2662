@@ -2,6 +2,8 @@
     "files.associations": {
         "stdio.h": "c",
         "8052.h": "c",
-        "osd_registers.h": "c"
+        "osd_registers.h": "c",
+        "scaler_access.h": "c",
+        "1bit_font_vlc.h": "c"
     }
 }

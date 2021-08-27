@@ -6,6 +6,7 @@
 #define OSD_CHAR_ADDRESS   0x1000 + OSD_CHAR_OFFSET
 #define OSD_FONT_ADDRESS   0x1000 + OSD_FONT_OFFSET
 
+// TODO: Change magic numbers to osd_0 etc
 #define OSDWriteByte0(__address, __data) OSDWriteByte((__address) | (0b00 << 14), __data)
 #define OSDWriteByte1(__address, __data) OSDWriteByte((__address) | (0b01 << 14), __data)
 #define OSDWriteByte2(__address, __data) OSDWriteByte((__address) | (0b10 << 14), __data)
@@ -105,6 +106,7 @@ uint8_t OSDReadByte(uint16_t address);
 void OSDInit();
 void UploadColorPallete(uint8_t pallete[][3]);
 void UploadFont_1Bit_8x16(uint8_t font[][16]);
+void UploadVLC(uint16_t address, uint8_t* data_array);
 void SetOSDOffset(uint16_t hor, uint16_t ver);
 void OSDEnable(uint8_t state);
 void SetOSDCharAlignment(uint8_t state);

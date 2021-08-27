@@ -8,6 +8,8 @@
 // Auto increment of access port address (not SCALER_ADDRESS)
 //#define EnableScalerAutoIncrement(__state) SCALER_CONTROL = InsertBits8(SCALER_CONTROL, 5, 1, !(__state))
 #define EnableScalerAutoIncrement(__state) SCALER_CONTROL = (SCALER_CONTROL & (~(1 << 5))) | ((!(__state)) << 5)
+#define ScalerWriteAddress(__address) SCALER_ADDRESS = __address
+#define ScalerWriteData(__data) SCALER_DATA = __data
 
 void ScalerWriteByte(uint8_t address, uint8_t data);
 uint8_t ScalerReadByte(uint8_t address);

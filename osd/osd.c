@@ -9,6 +9,7 @@
 #include "peripherals/timer.h"
 
 #include "osd/1bit_font.h"
+#include "osd/1bit_font_vlc.h"
 
 #include "osd/osd_registers.h"
 #include "osd/osd.h"
@@ -72,19 +73,23 @@ void OSDWriteByte(uint16_t address, uint8_t data)
 
 void OSDWriteTriplet(uint16_t address, uint8_t byte0, uint8_t byte1, uint8_t byte2)
 {
+    EnableScalerAutoIncrement(0);
     ScalerWriteByte(S_OSD_ADDRESS_HI, (address | OSD_BYTEALL) >> 8);
     ScalerWriteByte(S_OSD_ADDRESS_LO, address);
-    ScalerWriteByte(S_OSD_PORT, byte0);
-    ScalerWriteByte(S_OSD_PORT, byte1);
-    ScalerWriteByte(S_OSD_PORT, byte2);
+    ScalerWriteAddress(S_OSD_PORT);
+    ScalerWriteData(byte0);
+    ScalerWriteData(byte1);
+    ScalerWriteData(byte2);
 }
 
 void OSDWriteTriplets(uint16_t address, uint8_t* data, uint16_t count)
 {
+    EnableScalerAutoIncrement(0);
     ScalerWriteByte(S_OSD_ADDRESS_HI, (address | OSD_BYTEALL) >> 8);
     ScalerWriteByte(S_OSD_ADDRESS_LO, address);
+    ScalerWriteAddress(S_OSD_PORT);
     for (uint16_t i = 0; i < count; i++)
-        ScalerWriteByte(S_OSD_PORT, *data);
+        ScalerWriteData(*(data++));
 }
 
 uint8_t OSDReadByte(uint16_t address)
@@ -102,12 +107,29 @@ void UploadColorPallete(uint8_t pallete[][3])
             ScalerWriteByte(S_COLOR_LUT_PORT, pallete[i][k]);
 }
 
+// MSN and LSN mean Most Significant Nibble and Least Significant Nibble respectivly
+//
+//    CHARACTER STRUCTURE                            Y
+//
+//    +-------------+-------------+-------------+ -- 0
+//    | Byte 2, MSN | Byte 2, LSN | Byte 1, MSN |
+//    +-------------+-------------+-------------+ -- 1
+//    | Byte 1, MSN | Byte 0, LSN | Byte 0, MSN |
+//    +-------------+-------------+-------------+ -- 2
+//    | Byte 5, MSN | Byte 5, LSN | Byte 4, MSN |
+//    +-------------+-------------+-------------+ -- 3
+//    | Byte 4, MSN | Byte 3, LSN | Byte 3, MSN |
+//    +-------------+-------------+-------------+ -- 4
+//    |                   ...                   |
+//    +-------------+-------------+-------------+ -- 18
+//    |             |             |             |
+// X  0             4             8             12
+//
 // TODO: Try to find ways to increase speed
 void UploadFont_1Bit_8x16(uint8_t font[][16])
 {
     ScalerWriteByte(S_OSD_ADDRESS_HI, (0x13 >> 0) | (0b11 << 6));
     ScalerWriteByte(S_OSD_ADDRESS_LO, 0x00);
-    EnableScalerAutoIncrement(0);
     SCALER_ADDRESS = S_OSD_PORT;
     for (uint16_t i = 0; i < 128; i++)
         for (uint8_t k = 1; k < 19; k+=2)
@@ -116,6 +138,14 @@ void UploadFont_1Bit_8x16(uint8_t font[][16])
             SCALER_DATA = font[i][k] >> 4;
             SCALER_DATA = font[i][k-1];
         }
+}
+void UploadVLC(uint16_t address, uint8_t* data_array)
+{
+    OSDWriteTriplets(OSD_COMPRESSION0, data_array, 8); // Write VLC Codes
+    OSDWriteByte2(OSD_COMPRESSION2, 1); // Enable Compression
+    uint16_t count = (*(data_array + 8) << 8) | (*(data_array + 9)); // Length is MSB
+    OSDWriteTriplets(address, data_array + 10, count); // Write VLC Stream
+    OSDWriteByte2(OSD_COMPRESSION2, 0); // Disable Compression
 }
 
 // Horizontal: Total 1024 steps, 4 pixels per step, minimum 2
@@ -196,20 +226,20 @@ void OSDInit()
 
     OSDWriteByte(0x1000, 0x00); // Set first row to stop
 
-    UploadFont_1Bit_8x16(font_1bit);
+    UploadVLC(OSD_FONT_ADDRESS, font_1bit_vlc);
 
     OSDWriteTriplet(OSD_CHAR_FONT_ADDRESSES, OSD_CHAR_OFFSET + 0x1000,
                                              (((OSD_CHAR_OFFSET + 0x1000) >> 8) << 4) | ((OSD_FONT_OFFSET + 0x1000) & 0xFF),
                                              (OSD_FONT_OFFSET + 0x1000) >> 4);
     SetOSDCharAlignment(ALIGN_LEFT);
 
-    OSDWindow tst;
+    /*OSDWindow tst;
     memcpy(&tst, &defaultWindow, sizeof(OSDWindow));
     tst.horStart = 128;
     tst.verStart = 128;
     tst.horEnd = tst.horStart + 100;
     tst.verEnd = tst.verStart + 100;
-    OSDSetWindow(&tst, 0);
+    OSDSetWindow(&tst, 0);*/
 
     OSDEnable(1);
 }
