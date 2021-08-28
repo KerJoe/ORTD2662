@@ -25,7 +25,6 @@
 
 #include "peripherals/ddc.h"
 
-//__idata uint8_t t000[1];
 
 // TODO: Disable watchdog timer ?
 
@@ -66,7 +65,13 @@ void main()
     char* entries[]= { "abc", "dce" };
     OSDCreateMenu("Main", entries, 2);
 
-    //InitComposite(2);
+    /*InitComposite(2);
+
+    ScalerWriteByte(S_YUV_TO_RGB_CONTROL, 0x00);
+    ScalerWriteByte(S_PAGE_SELECT, 7);
+    ScalerWriteByte(S7_YUV_TO_RGB_CONTROL, 0x00);
+    ScalerWriteByte(S_PAGE_SELECT, 6);
+    ScalerWriteBits(S6_YUV422_TO_YUV444, 5, 3, 0b000);*/
 
     InitHDMI();
 
@@ -74,22 +79,6 @@ void main()
     SetGPIO(GPIO36, 0); SwitchToI2C();
     while (1)
     {
-        /*ScalerWriteByte(S_PAGE_SELECT, 2);
-        ScalerWriteBits(S2_ANALOG_COMMON_CONTROL2, 0, 2, 0b11);
-        ScalerWriteBit(S2_UP_DOWN_CONTROL0, 7, 0b1);
-
-		printf("udc1 0x%x\n", ScalerReadByte(S2_UP_DOWN_CONTROL1) & 0xf0);
-        printf("count %x\n\n", j);*/
-
-        /*int x = 0;
-        SetGPIO(GPIO36, 0);
-        for (; x < 99; x++) FeedWatchdog();
-        SetGPIO(GPIO36, 1);
-        for (; x < 100; x++) FeedWatchdog();*/
-
-        CSourceScanInputPortDVI(0);
-        delayMS(100); j+=10;
-
         FeedWatchdog();
     }
 }

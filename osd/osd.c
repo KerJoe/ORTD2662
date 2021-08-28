@@ -125,7 +125,6 @@ void UploadColorPallete(uint8_t pallete[][3])
 //    |             |             |             |
 // X  0             4             8             12
 //
-// TODO: Try to find ways to increase speed
 void UploadFont_1Bit_8x16(uint8_t font[][16])
 {
     ScalerWriteByte(S_OSD_ADDRESS_HI, (0x13 >> 0) | (0b11 << 6));
@@ -139,13 +138,19 @@ void UploadFont_1Bit_8x16(uint8_t font[][16])
             SCALER_DATA = font[i][k-1];
         }
 }
+// TODO: Try to find ways to increase speed
 void UploadVLC(uint16_t address, uint8_t* data_array)
 {
+#if 1
     OSDWriteTriplets(OSD_COMPRESSION0, data_array, 8); // Write VLC Codes
     OSDWriteByte2(OSD_COMPRESSION2, 1); // Enable Compression
     uint16_t count = (*(data_array + 8) << 8) | (*(data_array + 9)); // Length is MSB
     OSDWriteTriplets(address, data_array + 10, count); // Write VLC Stream
     OSDWriteByte2(OSD_COMPRESSION2, 0); // Disable Compression
+#endif
+#if 0
+    // TODO: Asm VLC loading
+#endif
 }
 
 // Horizontal: Total 1024 steps, 4 pixels per step, minimum 2

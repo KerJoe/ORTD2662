@@ -30,7 +30,7 @@
 // ---- |   +----------------------------------+
 //
 
-// Panel pixel (data) clock (Hz)
+// Panel pixel clock (aka data clock) (Hz)
 #define PANEL_DCLK          52000000UL
 
 // Horizontal timings

@@ -445,7 +445,7 @@ Scaler WRITE to 0x9C,  AutoInc is ENABLED,  Data: 0x00;
 Exit CSourceScanInputPortDVI: TRUE 4
 Scaler READ from 0x49, AutoInc is ENABLED,  Data: 0x00;
 Scaler WRITE to 0x49,  AutoInc is ENABLED,  Data: 0x00;
-Enter CAdjustSyncProcessorMeasureStart
+Enter c
 Scaler READ from 0x52, AutoInc is ENABLED,  Data: 0x00;
 Scaler WRITE to 0x52,  AutoInc is ENABLED,  Data: 0x20;
 Enter CMiscModeMeasurePollingEvent

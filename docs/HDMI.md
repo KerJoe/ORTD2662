@@ -11,6 +11,7 @@
 | 6 | ??? | ??? | ??? |
 | 7 | ??? | ??? | ??? |
 
+# HDMI
 
 #define S2_TMDS_MEAS_SELECT              		0xA1        // TMDS Measure Select
 #define S2_TMDS_MEAS_RESULT0            		0xA2        // TMDS Measure Result0

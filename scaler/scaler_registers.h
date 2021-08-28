@@ -238,6 +238,7 @@
 #define S_PAGE_SELECT                         	0x9F        // Page Selector (CRA0~CRFF)
 
 // TODO: Add addc
+// TODO: Formatting
 
 //--------------------------------------------------
 // Dynamic Contrast Control(Port)
@@ -1327,8 +1328,8 @@
 #define SP2_HDMI_BCHCR                      	0x02        // HDMI BCH Control Register
 #define SP2_HDMI_AFCR                        	0x03        // HDMI Audio FIFO Control Register
 #define SP2_HDMI_AFSR                       	0x04        // HDMI Audio FIFO BIST Start Register
-#define SP2_HDMI_MGCR0                      	0x05        // HDMI Maunal Gain Control Register0
-#define SP2_HDMI_MGCR1                       	0x06        // HDMI Maunal Gain Control Register1
+#define SP2_HDMI_MGCR0                      	0x05        // HDMI Manual Gain Control Register0
+#define SP2_HDMI_MGCR1                       	0x06        // HDMI Manual Gain Control Register1
 //Address: P2-CE-07 ~ P2-CE-0F Reserved
 #define SP2_HDMI_CMCR                        	0x10        // HDMI Input Clock MUX Control Register
 #define SP2_HDMI_MCAPR                       	0x11        // HDMI M code

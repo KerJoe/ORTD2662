@@ -86,8 +86,8 @@ uint8_t CHdmiVideoSetting(void)
             {
                 ///CScalerGetDataPortByte(_P2_HDMI_PSAP_CD, 0x04, 2, pData, _NON_AUTOINC);
                 ///if((bit)(pData[0] & 0x40) != (bit)(pData[0] & 0x20))//For HDMI switch between RGB/YUV
-                uint8_t pack4 = ScalerReadPortByte(S2_HDMI_PACKET_PORT, 0x00);
-                uint8_t pack5 = ScalerReadPortByte(S2_HDMI_PACKET_PORT, 0x00);
+                uint8_t pack4 = ScalerReadPortByte(S2_HDMI_PACKET_PORT, 0x04);
+                uint8_t pack5 = ScalerReadPortByte(S2_HDMI_PACKET_PORT, 0x05);
                 if(((pack4 & 0x40)>0) != ((pack4 & 0x20)>0))//For HDMI switch between RGB/YUV
                 {
 					if((pack4&0x20)==0x20)	//422
@@ -261,49 +261,54 @@ uint8_t CSourceScanInputPortDVI(uint8_t ucPar)
 	printf("Exit CSourceScanInputPortDVI: FALSE 5\n\n", 0);
 	return 0;
 }
-
-uint8_t __code ttSCALER_POWERUP_HDMI[] =
+#if 0
+void CModeStartUpDVI(void)
 {
-	1,  AUTOINC_DIS,    S_PAGE_SELECT,          2,
-	8,  AUTOINC_ENA,    S2_TMDS_OUTPUT_CONTROL, 0x78, 0x6F, 0x03, 0x00, 0x70, 0x70, 0xe3, 0x24,
-    TABLE_END
-};
+    ScalerWriteBits(S_IFW_HV_DELAY, 0, 4, 0b0000);
 
+    ScalerWriteBits(S_VGIP_CONTROL, 0, 3, 0b101)
+
+	//CTimerWaitForEvent(_EVENT_IVS);
+
+	pData[0] = HIBYTE(stModeInfo.IHTotal - 2);
+	pData[1] = 0x02;
+	pData[2] = LOBYTE(stModeInfo.IHTotal - 2);
+	pData[3] = HIBYTE(stModeInfo.IVTotal - 2);
+	pData[4] = 0x02;
+	pData[5] = LOBYTE(stModeInfo.IVTotal - 2);
+	pData[6] = 0x00;
+	pData[7] = 0x00;
+	pData[8] = 0x00;
+	pData[9] = 0x00;
+	pData[10] = 0x03;
+	pData[11] = 0x00;
+	pData[12] = 0x00;
+	pData[13] = 0x81;
+	CScalerWrite(_H_BOUNDARY_H_70, 14, pData, _AUTOINC);
+
+	if (/*CTimerPollingEventProc(255, CMiscAutoMeasurePollingEvent)*/1)
+	{
+		CScalerRead(_V_START_END_H_7E, 6, pData, _AUTOINC);
+
+		// IDEN horizontal Start
+		ScalerWriteByte(S_PAGE_SELECT, 2);
+		stModeInfo.IHStartPos = ((((WORD) pData[3] & 0xf0) << 4) | (WORD) pData[4]) - ((CScalerGetBit(_P2_POWER_ON_OFF_CTRL_A7, _BIT7) == _BIT7) ? 16 - 14 : 18 - 14);
+		// IDEN vertical Start
+		stModeInfo.IVStartPos = (((WORD) pData[0] & 0xf0) << 4) | (WORD) pData[1];
+	}
+	else
+	{
+        ScalerWriteByte(S_AUTO_ADJ_CONTROL1, 0x00);
+        printf("Auto-Measure Failed")
+	}
+}
+#endif
 void InitHDMI()
 {
-    //ScalerWriteBit(S_HOST_CONTROL, 0, BIT_ONE);
-    //delayMS(10); // Wait for at least 8ms
-    //ScalerWriteBit(S_HOST_CONTROL, 0, BIT_ZERO);
-
-    // TODO: Fix ScalerWriteTable with auto increment: do not update address.
-    ScalerWriteTable(ttSCALER_POWERUP_HDMI);
-    
-    /*ScalerWriteByte(S_PAGE_SELECT, 2);
-    EnableScalerAutoIncrement(1);
-    SCALER_ADDRESS = S2_TMDS_OUTPUT_CONTROL;
-    SCALER_DATA = 0x78;
-    SCALER_DATA = 0x6f;
-    SCALER_DATA = 0x03;
-    SCALER_DATA = 0x00;
-    SCALER_DATA = 0x70;
-    SCALER_DATA = 0x70;
-    SCALER_DATA = 0xe3;
-    SCALER_DATA = 0x24;
-    EnableScalerAutoIncrement(0);*/
-    
-//    UploadEDID(HDMI_DDC_NUMBER, testEDID);    
-    //UploadEDID(HDMI_DDC_NUMBER, testEDID);
-    //ScalerWriteTable(ttSCALER_POWERUP_HDMI);
-    ScalerWriteBits(S_SYNC_CONTROL, 0, 2, 0b00); // Power on TMDS
-
-    ScalerWriteBits(S_IFW_HV_DELAY, 0, 4, 0b0000);
-    ScalerWriteBits(S_VGIP_CONTROL, 2, 2, 0b01); // Input Format - Digital (TMDS)
-    ScalerWriteBit (S_VGIP_CONTROL, 0, 0b1);      // Sampling input pixels enable
-
-    #define WINDOW_HSTA 2
-    #define WINDOW_VSTA 6
-    #define WINDOW_HS_DELAY 30
-    #define WINDOW_VS_DELAY 30
+    #define WINDOW_HSTA 0
+    #define WINDOW_VSTA 0
+    #define WINDOW_HS_DELAY 0
+    #define WINDOW_VS_DELAY 0
     #define WINDOW_HLEN 1024
     #define WINDOW_VLEN 600
 
@@ -318,39 +323,21 @@ void InitHDMI()
     ScalerWriteByte(S_IFW_HSYNC_DELAY, WINDOW_HS_DELAY);
     ScalerWriteByte(S_IFW_VSYNC_DELAY, WINDOW_VS_DELAY);
 
-    ScalerWriteBits(S_IFW_VACT_STA_HI, 6, 2, 0b00); // Video 8 Source - TMDS // ?
-
-//    CSourceScanInputPortDVI(0);
-
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRWL_BSU_HI, (((WINDOW_HLEN) >> 8) << 4) | ((WINDOW_VLEN) >> 8));
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRW_BSU_LO,  (WINDOW_HLEN));
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRL_BSU_LO,  (WINDOW_VLEN));
 
+    ScalerWriteBit (S_VGIP_CONTROL, 0, 0b1);  // Sampling input pixels enable
+
+    ScalerWriteBit (S_VDISP_CONTROL, 3, 0b1); // Enable Frame sync
+    ScalerWriteBit (S_VDISP_CONTROL, 5, 0b0); // Disable BG color
+
     ScalerWriteBits(S_VGIP_CONTROL, 2, 2, 0b01); // Input Format - Digital (TMDS)
-    ScalerWriteBit (S_VGIP_CONTROL, 0, 0b1);      // Sampling input pixels enable
-
-    ScalerWriteBit (S_IFW_VACT_STA_HI, 4, 0b0); // Video 8
-    ScalerWriteBits(S_IFW_VACT_STA_HI, 6, 2, 0b00); // Video 8 Source - TMDS // ?
-
-    ScalerWriteBit(S_SYNC_SELECT, 0, 0b1);
-
-
-    ScalerWriteByte(S_PAGE_SELECT, 2);
     ScalerWriteTable(tSCALER_POWERUP_HDMI);
-    ScalerWriteByte(S_PAGE_SELECT, 2);
-
-    ScalerWritePortBits(S2_HDMI_PORT, SP2_HDMI_SCR, 2, 2, 0b10);	//Set HDMI/DVI switch mode(manual,DVI)//Alanli20070801
-    delayMS(200);
-    ScalerWritePortBits(S2_HDMI_PORT, SP2_HDMI_SCR, 2, 2, 0b00);	//Set HDMI/DVI switch mode(auto)
+    CSourceScanInputPortDVI(0);
 
 
-    ScalerWriteBit(S_VGIP_CONTROL, 0, 0b1); // Enable video capture
 
-    ScalerWriteBit (S_VDISP_CONTROL, 3, 0b1);
-    ScalerWriteBit (S_VDISP_CONTROL, 5, 0b0);
-
-    ScalerWriteByte(S_PAGE_SELECT, 8);
-    ScalerWriteBit(S8_VIDEO_RESET, 0, 0b1);
-    delayMS(20);
-    ScalerWriteBit(S8_VIDEO_RESET, 0, 0b0);
+    ScalerWriteBit (S_VGIP_CONTROL, 1, 0b1);
+    CModeStartUpDVI();
 }
