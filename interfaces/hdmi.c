@@ -339,5 +339,5 @@ void InitHDMI()
 
 
     ScalerWriteBit (S_VGIP_CONTROL, 1, 0b1);
-    CModeStartUpDVI();
+    //CModeStartUpDVI();
 }

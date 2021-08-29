@@ -87,26 +87,26 @@ def EnterISPMode():
 
 port_list = [ # List of access port addresses: PAGE, ADDRESS, NAME, PORT RANGES
     # Common page
-    #[ 0, 0x25, "Input Pattern Generator", list(range(0x0D+1)) + list(range(0x10, 0x14+1)) ],
-        [ 0, 0x2B, "Display Format", list(range(0x15+1)) + list(range(0x20, 0x24+1)) ],
-    [ 0, 0x31, "FIFO Window Port", list(range(0x02+1)) ],
-    [ 0, 0x34, "Scaling Factor", list(range(0x11+1)) ], # Need 7th bit set
-        [ 0, 0x5D, "Sync Processor", list(range(0x09+1)) + list(range(0x10, 0x15+1)) ],
-    [ 0, 0x61, "Highlight Window", list(range(0x0D+1)) ],
-    [ 0, 0x65, "Contrast Brightness", list(range(0x0B+1)) ],
-    [ 0, 0x6F, "Color LUT", list(range(0x2F+1)) ],
-        [ 0, 0x8C, "Timer Control", list(range(0xFF+1)) ], # Too fragmented and complicated, easier to just copy the whole address range
+    ##[ 0, 0x25, "Input Pattern Generator", list(range(0x0D+1)) + list(range(0x10, 0x14+1)) ],
+    ##[ 0, 0x2B, "Display Format", list(range(0x15+1)) + list(range(0x20, 0x24+1)) ],
+    ##[ 0, 0x31, "FIFO Window Port", list(range(0x02+1)) ],
+    ##[ 0, 0x34, "Scaling Factor", list(range(0x11+1)) ], # Need 7th bit set
+    ##[ 0, 0x5D, "Sync Processor", list(range(0x09+1)) + list(range(0x10, 0x15+1)) ],
+    ##[ 0, 0x61, "Highlight Window", list(range(0x0D+1)) ],
+    ##[ 0, 0x65, "Contrast Brightness", list(range(0x0B+1)) ],
+    ##[ 0, 0x6F, "Color LUT", list(range(0x2F+1)) ],
+    #[ 0, 0x8C, "Timer Control", list(range(0xFF+1)) ], # Too fragmented and complicated, easier to just copy the whole address range
     #[ 0, 0x92, "On Screen Display", list(range(0xFF+1)) ], # 16 bit address
-    [ 0, 0x9B, "VBI", list(range(0xFF+1)) ],
+    ##[ 0, 0x9B, "VBI", list(range(0xFF+1)) ],
 
     #[ 2, 0xC4, "HDCP", list(range(0xFF+1)) ],
     #[ 2, 0xCA, "HDMI", list(range(0xFF+1)) ],
 
-    [ 7, 0xB9, "Auto Sharpness", list(range(0xFF+1)) ],
-    [ 7, 0xC1, "YUV to RGB LUT", list(range(0xFF+1)) ],
-    [ 7, 0xCA, "DDC", list(range(0xFF+1)) ],
-    [ 7, 0xD3, "ICM", list(range(0xFF+1)) ],
-    [ 7, 0xD7, "Peaking & Coring", list(range(0xFF+1)) ],
+    ##[ 7, 0xB9, "Auto Sharpness", list(range(0xFF+1)) ],
+    ##[ 7, 0xC1, "YUV to RGB LUT", list(range(0xFF+1)) ],
+    ##[ 7, 0xCA, "DDC", list(range(0xFF+1)) ],
+    ##[ 7, 0xD3, "ICM", list(range(0xFF+1)) ],
+    ##[ 7, 0xD7, "Peaking & Coring", list(range(0xFF+1)) ],
 ]
 
 #if __name__ == "__main__":
@@ -154,18 +154,19 @@ RTDWriteRegisters(0xC0, 0x00) # Set pin read control to read pin output state
 #         #writeLineDump("Scaler Port {3} Value {0:#04x} at {1:#04x} Page {2}".format(dataRead, i, l[0], l[2]))
 
 
-ScalerWriteRegisters(0x9F, 7)
-ScalerWriteRegisters(0xbf, 2)
-for i in range (0, 16):
-    ScalerWriteRegisters(0xc0, i << 8)
+# ScalerWriteRegisters(0x9F, 7)
+# ScalerWriteRegisters(0xbf, 2)
+# for i in range (0, 16):
+#     ScalerWriteRegisters(0xc0, i << 8)
 
-sys.exit(0)
+# sys.exit(0)
 
 xsfr = RTDReadRegisters(0x00, 256) # Dump XSFR
 
 com = []
 for i in range(0, 0xA0):
     com.append(ScalerReadRegisters(i, 1, 0)[0]) # Dump common page
+#com[0x28] = com[0x28] & (~(1 << 5)) # 5 R/W Display Output Force to Background Color
 
 #pg = [[0] * 0x9F for i in range(11)] # Dump other pages
 pg = [[] for i in range(12)] # Dump other pages

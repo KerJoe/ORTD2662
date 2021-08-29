@@ -22,6 +22,7 @@
 
 #include "interfaces/composite.h"
 #include "interfaces/hdmi.h"
+#include "interfaces/vga.h"
 
 #include "peripherals/ddc.h"
 
@@ -71,9 +72,11 @@ void main()
     ScalerWriteByte(S_PAGE_SELECT, 7);
     ScalerWriteByte(S7_YUV_TO_RGB_CONTROL, 0x00);
     ScalerWriteByte(S_PAGE_SELECT, 6);
-    ScalerWriteBits(S6_YUV422_TO_YUV444, 5, 3, 0b000);*/
+    ScalerWriteBits(S6_YUV422_TO_YUV444, 5, 3, 0b000);
 
-    InitHDMI();
+    InitHDMI();*/
+
+    InitVGA();
 
     int j = 0;
     SetGPIO(GPIO36, 0); SwitchToI2C();

@@ -4,6 +4,7 @@
         "8052.h": "c",
         "osd_registers.h": "c",
         "scaler_access.h": "c",
-        "1bit_font_vlc.h": "c"
+        "1bit_font_vlc.h": "c",
+        "scaler_tables.h": "c"
     }
 }
