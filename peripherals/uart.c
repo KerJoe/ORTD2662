@@ -5,6 +5,8 @@
 #include "peripherals/pins.h"
 #include "peripherals/uart.h"
 
+#include "config/board_config.h"
+
 #include "core/main.h"
 
 /**
@@ -22,24 +24,19 @@ void InitUART(uint32_t baudRate, uint8_t timerSelect)
 {
     if (timerSelect == UART_TIMER1)
     {
-        uint16_t div16 = UART_DIV_TIMER1(PERIPHERAL_FREQ, baudRate);
-        TMOD  |= 0b00100000; // Timer 1, 8-bit auto reload mode
-        SCON  |= 0b00000101; // UART Mode 1, Reciever enable
-        //TL1   = div16 >> 8; // Load divider value
-        //TH1   = 0//TH1   = div16;
-        TH1   = div16 >> 8; // Load divider value
-        TR1   = 1;          // Start Timer
+        uint16_t div16 = UART_DIV_TIMER1(BOARD_FREQ, baudRate);
+        TMOD  |= 0b00100000;    // Timer 1, 8-bit auto reload mode
+        SCON  |= 0b00000101;    // UART Mode 1, Reciever enable
+        TH1   = div16 >> 8;     // Load divider value
+        TR1   = 1;              // Start Timer
     }
     else
     {
-        uint16_t div16 = UART_DIV_TIMER2(PERIPHERAL_FREQ, baudRate);
-        //T2CON  = 0b00000000;
-        T2CON  = 0b00110000;            // Timer 2,
-        SCON   = 0b01010000;          // UART Mode 1, Reciever enable
+        uint16_t div16 = UART_DIV_TIMER2(BOARD_FREQ, baudRate);
+        T2CON  = 0b00110000;    // Timer 2,
+        SCON   = 0b01010000;    // UART Mode 1, Reciever enable
         RCAP2H = div16 >> 8;    // Load divider value
         RCAP2L = div16;
-        //TH2    = div16 >> 8;    // Load divider value
-        //TL2    = div16;
         TR2    = 1;             // Start Timer
     }
 }

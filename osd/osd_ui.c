@@ -158,7 +158,7 @@ void OSDCreateMenu(char* title, char* menuItems[], uint8_t menuItemsNum)
 
     SetOSDOffset(50, 50);
 
-    OSDWriteCenteredRow(&MenuRow, &MenuBarChar, 0, "Menus");
+    OSDWriteCenteredRow(&MenuRow, &MenuBarChar, 0, "!$~");
     OSDWriteCenteredRow(&MenuRow, &MenuBarChar, 1, "Menu");
     OSDEndRow(2);
 }

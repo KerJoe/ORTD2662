@@ -9,7 +9,7 @@
 #define PANEL_TYPE LVDS
 
 #define PANEL_DOUBLE_PORT 0
-#define PANEL_RGB_18 0
+#define PANEL_RGB_18      0
 
 /**
  * Panel resolution and timings

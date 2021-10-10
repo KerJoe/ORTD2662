@@ -213,7 +213,7 @@ void OSDEndRow(uint8_t rowNumber)
 void OSDSetChar1(OSDCharacter1* ch1, uint8_t ch1Number)
 {
     OSDWriteTriplet(OSD_CHAR_ADDRESS + ch1Number, (1 << 7) | (ch1->blinking << 6) | ch1->width,
-                                                  ch1->character,
+                                                  ch1->character-0x20,
                                                   (ch1->fgColor << 4) | ch1->bgColor);
 }
 

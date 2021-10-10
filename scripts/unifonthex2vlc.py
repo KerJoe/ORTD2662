@@ -1,3 +1,5 @@
+# TODO: Investigate strange bug if size between 0x0479 and 0x047d
+
 import os
 import vlc_encode_decode
 
@@ -34,6 +36,8 @@ for line in fi:
 char_arr = []
 # Read dictionary excluding control characters (0-1F and 7F)
 char_arr.extend([ char_dict[i] for i in range(0x20, 0x7F) ])
+#for i in range(0x00,0x20):
+#    char_arr[i] = char_arr[0x20]
 # TODO: Add pseudo-graphic characters
 
 

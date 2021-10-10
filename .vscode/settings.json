@@ -5,6 +5,9 @@
         "osd_registers.h": "c",
         "scaler_access.h": "c",
         "1bit_font_vlc.h": "c",
-        "scaler_tables.h": "c"
+        "scaler_tables.h": "c",
+        "8051.h": "c",
+        "config_defines.h": "c",
+        "stdbool.h": "c"
     }
 }

@@ -22,3 +22,10 @@
 
 #define ACTIVE_LEVEL_HIGH 1
 #define ACTIVE_LEVEL_LOW  0
+
+#define DDC0 0
+#define DDC1 1
+#define DDC2 2
+
+#define IR_NEC 0
+#define IR_RC5 1
