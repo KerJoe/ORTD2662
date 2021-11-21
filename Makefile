@@ -29,7 +29,7 @@ GCC_CFLAGS   = -o$(DBGOUTPUTDIR)/ -I$(CURDIR) -DDEBUG
 GCC_LDFLAGS  =
 
 #PROGRAMMER 	= cmd \/C ROVATool.lnk -d2660 -ppparallel -w
-PROGRAMMER	= cmd \/C rtdmultiprog.lnk -i lpt -d 888 -w
+PROGRAMMER	= cmd \/C rtdmultiprog.lnk -i lpt_old -d 888 -w
 
 # Add all subdirectories 1 level deep into make search path
 VPATH =  $(wildcard ./*/)

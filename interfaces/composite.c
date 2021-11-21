@@ -7,15 +7,14 @@
 #include "config/board_config.h"
 #include "peripherals/timer.h"
 
-//#define
 // Entry format is fixed-point, each entry has different number of whole and fractional bits:
 // K11: 2 - whole, 10 - fraction;
 // K13: 1 - whole, 10 - fraction;
 // K22: 0 - whole, 10 - fraction;
 // K23: 0 - whole, 10 - fraction;
 // K32: 2 - whole, 10 - fraction
-// Offsets: 4 - whole, 10 - fraction, signed
-// TODO: Awfully washed out colors. Something wrong with the way I setup the YUV to RGB conversion?
+// Offsets: 4 - whole, 10 - fraction, signed // TODO: How are negative numbers passed?
+// TODO: Awfully washed out colors.
 #define FR10(__num) ((__num) * 1024)
 const uint16_t YUV2RGB_CCIR601[] =
 {
@@ -42,12 +41,6 @@ const uint16_t YUV2RGB_CCIR601[] =
 void InitComposite(uint8_t videoIn)
 {
     // TODO: DITHERING
-    // #define WINDOW_HSTA 66
-    // #define WINDOW_VSTA 6
-    // #define WINDOW_HLEN 722
-    // #define WINDOW_VLEN 240
-    // #define WINDOW_HS_DELAY 100
-    // #define WINDOW_VS_DELAY 19
     #define WINDOW_HSTA 22
     #define WINDOW_VSTA 5
     #define WINDOW_HLEN 722
@@ -55,6 +48,7 @@ void InitComposite(uint8_t videoIn)
     #define WINDOW_HS_DELAY 110
     #define WINDOW_VS_DELAY 21
 
+    // Setup capture window
     ScalerWriteByte(S_IFW_HACT_STA_HI, (WINDOW_HSTA) >> 8);
     ScalerWriteByte(S_IFW_HACT_STA_LO, WINDOW_HSTA);
     ScalerWriteByte(S_IFW_HACT_LEN_HI, (WINDOW_HLEN) >> 8);
@@ -66,13 +60,14 @@ void InitComposite(uint8_t videoIn)
     ScalerWriteByte(S_IFW_HSYNC_DELAY, WINDOW_HS_DELAY);
     ScalerWriteByte(S_IFW_VSYNC_DELAY, WINDOW_VS_DELAY);
 
+    // Setup FIFO window
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRWL_BSU_HI, (((WINDOW_HLEN) >> 8) << 4) | ((WINDOW_VLEN) >> 8));
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRW_BSU_LO,  (WINDOW_HLEN));
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRL_BSU_LO,  (WINDOW_VLEN));
 
     ScalerWriteBits(S_VGIP_CONTROL, 2, 2, 0b11);    // Input Format - video decoder input (Video 16)
 
-    ScalerWriteBit (S_IFW_VACT_STA_HI, 4, 0b1); // Video 16
+    ScalerWriteBit (S_IFW_VACT_STA_HI, 4, 0b1);     // Video 16
 
     ScalerWriteByte(S_PAGE_SELECT, 0);
     ScalerWriteBits(S0_VADC0_INPUT_PGA, 3, 3, 0b000);
@@ -93,23 +88,13 @@ void InitComposite(uint8_t videoIn)
         ScalerWriteByte(S7_YUV_TO_RGB_PORT, YUV2RGB_CCIR601[i] & 0xFF);
     }
     ScalerWriteByte(S7_YUV_TO_RGB_CONTROL, 0x01);
-    //ScalerWriteByte(S7_YUV_TO_RGB_CONTROL, 0x00);
-    //
     ScalerWriteByte(S_PAGE_SELECT, 6);
     ScalerWriteBits(S6_YUV422_TO_YUV444, 5, 3, 0b101); // Enable, format defualt, Swap UV (Y, V, U)
-    
-    //ScalerWriteBits(S6_YUV422_TO_YUV444, 5, 3, 0b100); // Enable, format defualt
-
-    //InitComposite(PIN_TO_VIDEO_IN(COMPOSITE_VIDEO_0_PIN));
-
-
 
     ScalerWriteBit(S_VGIP_CONTROL, 0, 0b1); // Enable video capture
 
     ScalerWriteBit (S_VDISP_CONTROL, 3, 0b1);
     ScalerWriteBit (S_VDISP_CONTROL, 5, 0b0);
-
-
 
     ScalerWriteByte(S_PAGE_SELECT, 8);
     ScalerWriteBit(S8_VIDEO_RESET, 0, 0b1);

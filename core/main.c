@@ -47,12 +47,6 @@ void main()
     InitUART(UART_BAUD, UART_TIMER2); SwitchToUART(); putchar('\n');
     EA = 1; // Enable all interrupts
 
-    /*BANK_CONTROL = 0b00001011;
-    BANK_XDATA_START = 2;
-    BANK_XDATA_SELECT = 1;
-    __xdata uint8_t* p = 0x0002;
-    printf("0x%x\n", (int)(*p));*/
-
     SetGPIODrivingCurrent(DRIVE_96_TO_97, DRIVE_HIGH); // Set Driving current for TTL DCLK and DVS
 
     SetGPIOShare(GPIO36, OPEN_DRAIN_OUT);
@@ -72,17 +66,11 @@ void main()
     char* entries[]= { "abc", "dce" };
     OSDCreateMenu("Main", entries, 2);
 
-    /*InitComposite(2);
-
-    ScalerWriteByte(S_YUV_TO_RGB_CONTROL, 0x00);
-    ScalerWriteByte(S_PAGE_SELECT, 7);
-    ScalerWriteByte(S7_YUV_TO_RGB_CONTROL, 0x00);
-    ScalerWriteByte(S_PAGE_SELECT, 6);
-    ScalerWriteBits(S6_YUV422_TO_YUV444, 5, 3, 0b000);
-*/
-    InitHDMI();
+    //InitHDMI();
 
     //InitVGA();
+
+    InitComposite(2);
 
     int j = 0;
     SetGPIO(GPIO36, 0); SwitchToI2C();

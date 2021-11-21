@@ -31,7 +31,7 @@ const uint8_t DisplayInitTable[] =
     1,  AUTOINC_DIS,    S_VDISP_CONTROL,    (1 << 0) | // Enable timing generator
                                             (1 << 1) | // Enable output
                                             (PANEL_DOUBLE_PORT << 2) |
-                                            (PANEL_RGB_18 << 4) |
+                                            (PANEL_18_BIT << 4) |
                                             (1 << 5) | // Force display output to monotone background
                                             (1 << 7),  // Force enable display timing generator
 

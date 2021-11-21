@@ -21,8 +21,8 @@ uint16_t buttonState = 0;
 
 const uint8_t buttonLevels[] =
 {
-     0, // First button level
-    10, // Second button level
+     0, // First button ADC level
+    10, // Second button ADC level
     20, // ...
     30, // ...
     40  // ...
@@ -31,7 +31,7 @@ const uint8_t buttonLevels[] =
 void ReadButtons()
 {
     ADC_A_CONTROL |= (1 << 7) | (1 << 2); // Start ADC Conversion
-    while (ADC_A_CONTROL & (1 << 7)) WDT_CONTROL = (1 << 6); // Wait for ADC Conversion to complete
+    while (ADC_A_CONTROL & (1 << 7)) FeedWatchdog(); // Wait for ADC Conversion to complete
     uint8_t keyboardADCValue = 0;//KEYBOARD_ADC_CHANNEL >> 2;
     printf("Read keyboard value: %i\n", (int)keyboardADCValue);
     for (uint8_t i = 0; i < sizeof(buttonLevels); i++)
