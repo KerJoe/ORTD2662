@@ -37,16 +37,16 @@ const uint8_t DisplayInitTable[] =
 
 
     1,  AUTOINC_DIS,    S_PAGE_SELECT,                      1,
-    1,  AUTOINC_DIS,    S1_EVEN_FIXED_LASTLINE_HI,          ((PANEL_HTOTAL >> 8) << 4) | (PANEL_VTOTAL >> 8), // ...
+    1,  AUTOINC_DIS,    S1_EVEN_FIXED_LASTLINE_HI,          (((PANEL_HTOTAL + 4) >> 8) << 4) | (PANEL_VTOTAL >> 8), // ...
     1,  AUTOINC_DIS,    S1_EVEN_FIXED_LASTLINE_DVTOTAL_LO,  PANEL_VTOTAL, // S1_EVEN_FIXED_LASTLINE_DVTOTAL_LO
-    1,  AUTOINC_DIS,    S1_EVEN_FIXED_LASTLINE_LENGTH_LO,   PANEL_HTOTAL, // S1_EVEN_FIXED_LASTLINE_LENGTH_LO
+    1,  AUTOINC_DIS,    S1_EVEN_FIXED_LASTLINE_LENGTH_LO,   (PANEL_HTOTAL + 4), // S1_EVEN_FIXED_LASTLINE_LENGTH_LO
 
 
     1,  AUTOINC_DIS,    S_TCON_ADDRESS,     SP_TCON_CONTROL0,
     1,  AUTOINC_DIS,    S_TCON_PORT,        PANEL_TYPE & 1,     // Set display type
     1,  AUTOINC_DIS,    S_TCON_ADDRESS,     SP_LVDS_CONTROL0,
     2,  AUTOINC_DIS,    S_TCON_PORT,        (0b11 << 4),        // Power up LVDS ports
-                                            (0b11 << 6),        // Inverse BCKPOLARL and DCKPOLARL // TODO: Always inverted... test
+                                            (0b11 << 6),        // Inverse BCKPOLARL and DCKPOLARL // TODO: What does it do?... test
 
     TABLE_END
 };

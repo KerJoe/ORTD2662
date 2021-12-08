@@ -13,6 +13,7 @@
 #include "scaler/scaler_access.h"
 
 #include "config/board_config.h"
+#include "config/misc_config.h"
 
 #include "osd/osd.h"
 #include "osd/osd_ui.h"
@@ -47,30 +48,49 @@ void main()
     InitUART(UART_BAUD, UART_TIMER2); SwitchToUART(); putchar('\n');
     EA = 1; // Enable all interrupts
 
-    SetGPIODrivingCurrent(DRIVE_96_TO_97, DRIVE_HIGH); // Set Driving current for TTL DCLK and DVS
+    SetGPIOShare(DISPLAY_POWER_ENABLE_PIN, PUSH_PULL_OUT);
+    SetGPIO(DISPLAY_POWER_ENABLE_PIN, 1^!DISPLAY_POWER_ACTIVE_LEVEL);
+    SetGPIOShare(BACKLIGHT_ENABLE_PIN, PUSH_PULL_OUT);
+    SetGPIO(BACKLIGHT_ENABLE_PIN, 1^!BACKLIGHT_ENABLE_ACTIVE_LEVEL);
 
-    SetGPIOShare(GPIO36, OPEN_DRAIN_OUT);
-    SetGPIO(GPIO36, 0);
-    SetGPIOShare(GPIO35, OPEN_DRAIN_OUT);
-    SetGPIO(GPIO35, 1);
+    SetGPIOShare(MIRROR_HORIZONTAL_PIN, PUSH_PULL_OUT);
+    SetGPIOShare(MIRROR_VERTICAL_PIN, PUSH_PULL_OUT);
+    SetGPIO(MIRROR_HORIZONTAL_PIN, HOR_MIRRROR);
+    SetGPIO(MIRROR_VERTICAL_PIN, VER_MIRRROR);
 
-    SetGPIOShare(GPIO54, OPEN_DRAIN_OUT);
-    SetGPIOShare(GPIO55, OPEN_DRAIN_OUT);
-    SetGPIO(GPIO54, 0);
-    SetGPIO(GPIO55, 1);
+    InitScaler(); SetOverlayColor(0x75, 0x18, 0xA1);
 
-    InitScaler();
-    SetOverlayColor(0x75, 0x18, 0xA1);
+    //InitHDMI();
+    /*InitComposite(2);
+
+    SwitchToI2C(); while (1)
+    {
+        FeedWatchdog();
+    }*/
+
+
+
+
     OSDInit();
 
     char* entries[]= { "abc", "dce" };
     OSDCreateMenu("Main", entries, 2);
 
-    //InitHDMI();
+    InitHDMI();
 
     //InitVGA();
 
     InitComposite(2);
+
+    /*ScalerWriteByte(S_SCALE_CONTROL, 0x01);
+
+    ScalerWriteByte(S_SCALE_FACTOR_ADDRESS, 0x80);
+    EnableScalerAutoIncrement(1);
+    ScalerWriteByte(S_SCALE_FACTOR_PORT, 0x0a);
+    ScalerWriteByte(S_SCALE_FACTOR_PORT, 0xe0);
+    ScalerWriteByte(S_SCALE_FACTOR_PORT, 0x00);
+    EnableScalerAutoIncrement(0);
+    printf("%x",ScalerReadByte(S_SCALE_FACTOR_ADDRESS));*/
 
     int j = 0;
     SetGPIO(GPIO36, 0); SwitchToI2C();
