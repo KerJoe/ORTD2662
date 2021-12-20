@@ -1,4 +1,5 @@
 #pragma once
+#include "scaler/compat_regs.h"
 
 //--------------------------------------------------
 // Global Event Flag
@@ -307,7 +308,7 @@
 #define S1_ICODE_LO                             0xA2        // I Code LByte
 #define S1_PCODE                             	0xA3        // P Code
 #define S1_PFD_CALIBRATED_RESULTS_HI          	0xA4        // PFD Calibrated Result HByte
-#define S1_PFD_CALIBRATED_RESULTS_LI          	0xA5        // PFD Calibrated Result LByte
+#define S1_PFD_CALIBRATED_RESULTS_LO          	0xA5        // PFD Calibrated Result LByte
 #define S1_PE_MEASURE_HI                       	0xA6        // Phase Error Measure HByte
 #define S1_PE_MEASURE_LO                       	0xA7        // Phase Error Measure LByte
 #define S1_PE_MAX_MEASURE_HI                   	0xA8        // Phase Error Max MEasure HByte
