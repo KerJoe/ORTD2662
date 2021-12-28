@@ -10,8 +10,10 @@
         "config_defines.h": "c",
         "stdbool.h": "c",
         "compat_funcs.h": "c",
-        "misc.h": "c",
-        "osd.h": "c",
-        "buttons.h": "c"
+        "debug.h": "c",
+        "pins.h": "c",
+        "sfr.h": "c",
+        "cstdio": "c",
+        "type_traits": "c"
     }
 }

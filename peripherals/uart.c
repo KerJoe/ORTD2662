@@ -5,9 +5,11 @@
 #include "peripherals/pins.h"
 #include "peripherals/uart.h"
 
-#include "config/board_config.h"
+//#include "config/board_config.h"
+#define BOARD_FREQ                      27000000UL
 
 #include "core/main.h"
+#include "core/misc.h"
 
 /**
  *
@@ -24,16 +26,19 @@ void InitUART(uint32_t baudRate, uint8_t timerSelect)
 {
     if (timerSelect == UART_TIMER1)
     {
-        uint16_t div16 = UART_DIV_TIMER1(BOARD_FREQ, baudRate);
-        TMOD  |= 0b00100000;    // Timer 1, 8-bit auto reload mode
-        SCON  |= 0b00000101;    // UART Mode 1, Reciever enable
-        TH1   = div16 >> 8;     // Load divider value
+        uint8_t div = UART_DIV_TIMER1(BOARD_FREQ, baudRate);
+        RCLK = 0; TCLK = 0;     // Use Timer 1 as UART clock source
+        TMOD  = (TMOD & 0x0f) | 0b00100000; // Timer 1, 8-bit auto reload mode
+        PCON  |= SMOD;          // Double transmission speed
+        SCON  = 0b01010000;     // UART Mode 1, Reciever enable
+        TH1   = div;            // Load divider value
         TR1   = 1;              // Start Timer
     }
     else
     {
         uint16_t div16 = UART_DIV_TIMER2(BOARD_FREQ, baudRate);
-        T2CON  = 0b00110000;    // Timer 2,
+        RCLK = 1; TCLK = 1;     // Use Timer 2 as UART clock source
+        PCON  &= ~SMOD;         // Normal transmission speed
         SCON   = 0b01010000;    // UART Mode 1, Reciever enable
         RCAP2H = div16 >> 8;    // Load divider value
         RCAP2L = div16;

@@ -61,14 +61,12 @@ $(OUTPUTDIR):
 
 # Create dependency files and object files
 $(OUTPUTDIR)/%.rel: %.c
-	@echo Compiling $<...
-	@sdcc $(SDCC_CFLAGS) -MMD -c $<
+	sdcc $(SDCC_CFLAGS) -MMD -c $<
 	@$(fix_d_files)
 
 # SDCC requires the main file to be passed first
 $(OUTPUTDIR)/firmware.hex: $(OUTPUTDIR)/$(MAINFILE).rel $(filter-out $(OUTPUTDIR)/$(MAINFILE).rel, $(RELFILES))
-	@echo Linking...
-	@sdcc $(SDCC_CFLAGS) $(SDCC_LDFLAGS) -o$(OUTPUTDIR)/firmware.hex $^
+	sdcc $(SDCC_CFLAGS) $(SDCC_LDFLAGS) -o$(OUTPUTDIR)/firmware.hex $^
 
 $(OUTPUTDIR)/firmware.bin: $(OUTPUTDIR)/firmware.hex
 	makebin $(OUTPUTDIR)/firmware.hex $(OUTPUTDIR)/firmware.bin
