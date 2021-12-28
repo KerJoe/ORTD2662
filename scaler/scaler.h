@@ -12,7 +12,7 @@ enum POWER_MODE
 };
 
 void SetDPLLFrequncy(uint32_t outFreq);
-void SetAPLLFrequncy(uint32_t outFreq, uint32_t horFreq);
+void SetAPLLFrequncy(uint32_t pixelClock, uint16_t linePixelCount);
 void SetVideoBrightness(uint8_t value);
 void SetVideoContrast(uint8_t value);
 void SetVideoHue(uint8_t value);

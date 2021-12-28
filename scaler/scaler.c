@@ -305,13 +305,111 @@ stModeInfo.IHFreq UINT in 100Hz
 }
 
 
-void SetAPLLFrequncy(uint32_t outFreq, uint32_t horFreq)
+void SetAPLLFrequncy(uint32_t pixelClock, uint16_t linePixelCount)
 {
+    linePixelCount -= 56;
     // FREQUENCY_OUTPUT = FREQUENCY_INPUT * (M_VALUE + K_VALUE / 16) / N_VALUE / (1 << OUTPUT_DIVIDER)
+    // I_CODE =
+    // P_CODE =
 
-    CAdjustAdcClock(1056, 378);
+    //       3 bit  8 bit  1 or 2
+    uint8_t  apllN, apllM, apllDiv;
+    int8_t   apllK; // 4 bit
+    uint16_t apllMK;
+    if (pixelClock < 25*MHZ)
+        return;
+    else if (pixelClock < 100*MHZ)
+        {apllN = 3; apllDiv = 2; } // dpllDiv is 1/2
+    else if (pixelClock < 200*MHZ)
+        {apllN = 3; apllDiv = 2; } // dpllDiv is 1/4
+    else
+        {apllN = 3; apllDiv = 2; } // dpllDiv is 1/4
+
+    apllMK = (pixelClock/KHZ) * apllN * (1 << apllDiv) * 16 / (BOARD_FREQ/KHZ); // Calculate (M_VALUE + K_VALUE / 16) // Multiply by 16, so as to not loose the fractional part
+    apllM  = apllMK >> 4;     // Divide by 16 to get the integer part - M_VALUE
+    apllK  = apllMK & 0b1111; // Get remainder of 16 to get fractional part - K_VALUE
+    // Correct K range from [0;31] to [-16;15]
+    apllK -= 16; // Integer part subtracted
+    apllM += 1;  // Integer part added
+    // Limit K between -8 and 7 // REF:RTD2660 datasheet, page 122, footnote 3 // TODO: Wrong explanation
+    if (apllK > 7) // Simlar to converting 1 + 0.6 to 2 - 0.4
+    {
+        apllM += 1;
+        apllK = -apllK;
+    }
+    else if (apllK < -7) // Simlar to converting 1 - 0.6 to 0 + 0.4
+    {
+        apllM -= 1;
+        apllK = -apllK;
+    }
 
     ScalerWriteByte(S_PAGE_SELECT, 1);
+
+    ScalerWriteByte(0xAE, 0x65); // Set PLL current // TODO: Find actual DPM/Ich ratio
+
+    ScalerWriteBits(S1_PLL_N, 0, 3, apllN - 2); // Set N
+    ScalerWriteByte(S1_PLL_M,       apllM - 3); // Set M
+    ScalerWriteBits(S1_PLL_N, 4, 4, apllK);     // Set K
+    ScalerWriteBit (S1_PLL_DIV_HI, 4, (1 << apllDiv)==4); // Set output divider
+    ScalerWriteByte(0xB4, 0x00); // Apply PLL output divider selection
+
+    // Set ADC CLK divider
+    ScalerWriteBits(S1_PLL_DIV_HI, 0, 4, (linePixelCount - 1) >> 8);
+    ScalerWriteByte(S1_PLL_DIV_LO,       (linePixelCount - 1));
+
+
+
+    // Measure Phase Error
+    ScalerWriteBit(S1_PFD_CALIBRATED_RESULTS_HI, 7, 0b1); // Begin measurement
+    delayMS(1); // TODO: WHAT
+    uint16_t phaseError = ((ScalerReadByte(S1_PFD_CALIBRATED_RESULTS_HI) & 0x0F) << 8) | ScalerReadByte(S1_PFD_CALIBRATED_RESULTS_LO);
+
+
+
+    // Calculate I, P, G values
+
+
+
+    ScalerWriteBit (S1_PLL_WDT, 0, 0); // Power up the APLL
+    //return;
+
+//ScalerWriteByte(0x49, 0x66); delayMS(1); // Select source
+ScalerWriteByte(0x47, 0x40); // HSYNC Type Detection Auto Run: Automatic
+
+//ScalerWriteByte(0x52, 0x22); delayMS(1); // Measure
+//ScalerWriteByte(0x52, 0x42); delayMS(1); // Update
+
+//ScalerWriteByte(0x58, 0x00); delayMS(1); // Start Measurement after Mode Detection Auto-mode
+
+
+// ScalerWriteByte(0x9F, 0x01);
+
+// ScalerWriteByte(0xAE, 0x65); // Set pll current // Keep Icp/DPM constant
+
+// ScalerWriteByte(0xAD, 0x21); // Set N
+// ScalerWriteByte(0xAC, 0x0E); // Set M
+// ScalerWriteByte(0xAD, 0xD1); // Set K
+
+//ScalerWriteByte(0xA4, 0x80); delayMS(1); // Start Callibration
+//ScalerWriteByte(0xA1, 0x00); delayMS(1); // Read PFD, stop callib
+
+ScalerWriteByte(0xA2, 0x09); // Set ICODE
+ScalerWriteByte(0xB6, 0x10); // G value 0
+ScalerWriteByte(0xB9, 0x05); // P CODE MAX
+ScalerWriteByte(0xBA, 0x1E); // P CODE MAX
+ScalerWriteByte(0xA3, 0x10); // P CODE
+//ScalerWriteByte(0x03, 0x00); delayMS(1); // CLEAR Status
+
+// ScalerWriteByte(0xB1, 0x73); // SET PLLDIV, Use LUT, Long path, ADC CLK=1/4 VCO CLK
+// ScalerWriteByte(0xB2, 0xE7); // SET PLLDIV
+// ScalerWriteByte(0xB4, 0x00); // Apply PLL divider selection (register 0xb1)
+
+//ScalerWriteByte(0x03, 0x00); delayMS(1); // CLEAR Status
+// ScalerWriteByte(0xAF, 0x08); // Set Watchdog, Start PLL
+
+
+
+    /*ScalerWriteByte(S_PAGE_SELECT, 1);
     ScalerWriteBit (S1_PLL_WDT, 0, 0); // Power up the APLL
 
     return;
@@ -337,204 +435,7 @@ void SetAPLLFrequncy(uint32_t outFreq, uint32_t horFreq)
     ScalerWriteByte(S1_DDS_MIX3, 0xff);
 
     ScalerWriteByte(S_PAGE_SELECT, 1);
-    ScalerWriteBit (S1_PLL_WDT, 0, 0); // Power up the APLL
-
-
-ScalerWriteByte(S_PAGE_SELECT, 0);
-ScalerWriteByte(0xa0, 0x00);
-ScalerWriteByte(0xa1, 0x0f);
-ScalerWriteByte(0xa2, 0x00);
-ScalerWriteByte(0xa3, 0x00);
-ScalerWriteByte(0xa4, 0x00);
-ScalerWriteByte(0xa5, 0x06);
-ScalerWriteByte(0xa6, 0x84);
-ScalerWriteByte(0xa7, 0x84);
-ScalerWriteByte(0xa8, 0x10);
-ScalerWriteByte(0xa9, 0xc1);
-ScalerWriteByte(0xaa, 0x00);
-ScalerWriteByte(0xab, 0x18);
-ScalerWriteByte(0xac, 0x88);
-ScalerWriteByte(0xad, 0x00);
-ScalerWriteByte(0xae, 0x02);
-ScalerWriteByte(0xaf, 0x01);
-ScalerWriteByte(0xb0, 0x00);
-ScalerWriteByte(0xb1, 0x00);
-ScalerWriteByte(0xb2, 0x00);
-ScalerWriteByte(0xb3, 0x00);
-ScalerWriteByte(0xb4, 0x00);
-ScalerWriteByte(0xb5, 0x00);
-ScalerWriteByte(0xb6, 0x00);
-ScalerWriteByte(0xb7, 0x00);
-ScalerWriteByte(0xb8, 0x00);
-ScalerWriteByte(0xb9, 0x00);
-ScalerWriteByte(0xba, 0x00);
-ScalerWriteByte(0xbb, 0x00);
-ScalerWriteByte(0xbc, 0x00);
-ScalerWriteByte(0xbd, 0x00);
-ScalerWriteByte(0xbe, 0x00);
-ScalerWriteByte(0xbf, 0x00);
-ScalerWriteByte(0xc0, 0x83);
-ScalerWriteByte(0xc1, 0x8c);
-ScalerWriteByte(0xc2, 0x8b);
-ScalerWriteByte(0xc3, 0x82);
-ScalerWriteByte(0xc4, 0x89);
-ScalerWriteByte(0xc5, 0x80);
-ScalerWriteByte(0xc6, 0x3f);
-ScalerWriteByte(0xc7, 0x55);
-ScalerWriteByte(0xc8, 0x15);
-ScalerWriteByte(0xc9, 0x53);
-ScalerWriteByte(0xca, 0x29);
-ScalerWriteByte(0xcb, 0x00);
-ScalerWriteByte(0xcc, 0x01);
-ScalerWriteByte(0xcd, 0x00);
-ScalerWriteByte(0xce, 0x15);
-ScalerWriteByte(0xcf, 0x50);
-ScalerWriteByte(0xd0, 0x50);
-ScalerWriteByte(0xd1, 0x50);
-ScalerWriteByte(0xd2, 0x20);
-ScalerWriteByte(0xd3, 0x00);
-ScalerWriteByte(0xd4, 0xf0);
-ScalerWriteByte(0xd5, 0x00);
-ScalerWriteByte(0xd6, 0x58);
-ScalerWriteByte(0xd7, 0x00);
-ScalerWriteByte(0xd8, 0x00);
-ScalerWriteByte(0xd9, 0x00);
-ScalerWriteByte(0xda, 0x84);
-ScalerWriteByte(0xdb, 0x84);
-ScalerWriteByte(0xdc, 0xd4);
-ScalerWriteByte(0xdd, 0x00);
-ScalerWriteByte(0xde, 0x00);
-ScalerWriteByte(0xdf, 0x00);
-ScalerWriteByte(0xe0, 0x00);
-ScalerWriteByte(0xe1, 0x00);
-ScalerWriteByte(0xe2, 0x00);
-ScalerWriteByte(0xe3, 0x84);
-ScalerWriteByte(0xe4, 0x10);
-ScalerWriteByte(0xe5, 0x82);
-ScalerWriteByte(0xe6, 0x04);
-ScalerWriteByte(0xe7, 0xc0);
-ScalerWriteByte(0xe8, 0x60);
-ScalerWriteByte(0xe9, 0x24);
-ScalerWriteByte(0xea, 0x00);
-ScalerWriteByte(0xeb, 0x06);
-ScalerWriteByte(0xec, 0x00);
-ScalerWriteByte(0xed, 0x00);
-ScalerWriteByte(0xee, 0x00);
-ScalerWriteByte(0xef, 0x00);
-ScalerWriteByte(0xf0, 0x00);
-ScalerWriteByte(0xf1, 0x00);
-ScalerWriteByte(0xf2, 0x00);
-ScalerWriteByte(0xf3, 0xd4);
-ScalerWriteByte(0xf4, 0xcf);
-ScalerWriteByte(0xf5, 0x00);
-ScalerWriteByte(0xf6, 0x00);
-ScalerWriteByte(0xf7, 0x00);
-ScalerWriteByte(0xf8, 0x00);
-ScalerWriteByte(0xf9, 0x00);
-ScalerWriteByte(0xfa, 0x00);
-ScalerWriteByte(0xfb, 0x00);
-ScalerWriteByte(0xfc, 0x00);
-ScalerWriteByte(0xfd, 0x00);
-ScalerWriteByte(0xfe, 0x00);
-ScalerWriteByte(0xff, 0x00);
-ScalerWriteByte(S_PAGE_SELECT, 1);
-ScalerWriteByte(0xa0, 0x08);
-ScalerWriteByte(0xa1, 0x00);
-ScalerWriteByte(0xa2, 0x09);
-ScalerWriteByte(0xa3, 0x10);
-ScalerWriteByte(0xa4, 0x01);
-ScalerWriteByte(0xa5, 0x44);
-ScalerWriteByte(0xa6, 0x00);
-ScalerWriteByte(0xa7, 0x00);
-ScalerWriteByte(0xa8, 0x00);
-ScalerWriteByte(0xa9, 0x00);
-ScalerWriteByte(0xaa, 0x03);
-ScalerWriteByte(0xab, 0x00);
-ScalerWriteByte(0xac, 0x0f);
-ScalerWriteByte(0xad, 0xc1);
-ScalerWriteByte(0xae, 0x65);
-ScalerWriteByte(0xaf, 0x00);
-ScalerWriteByte(0xb0, 0x01);
-ScalerWriteByte(0xb1, 0x74);
-ScalerWriteByte(0xb2, 0x1f);
-ScalerWriteByte(0xb3, 0x30);
-ScalerWriteByte(0xb4, 0x00);
-ScalerWriteByte(0xb5, 0x10);
-ScalerWriteByte(0xb6, 0x10);
-ScalerWriteByte(0xb7, 0x02);
-ScalerWriteByte(0xb8, 0x4d);
-ScalerWriteByte(0xb9, 0xff);
-ScalerWriteByte(0xba, 0xff);
-ScalerWriteByte(0xbb, 0x1b);
-ScalerWriteByte(0xbc, 0xa0);
-ScalerWriteByte(0xbd, 0x00);
-ScalerWriteByte(0xbe, 0x00);
-ScalerWriteByte(0xbf, 0x51);
-ScalerWriteByte(0xc0, 0x24);
-ScalerWriteByte(0xc1, 0x81);
-ScalerWriteByte(0xc2, 0x13);
-ScalerWriteByte(0xc3, 0x16);
-ScalerWriteByte(0xc4, 0x18);
-ScalerWriteByte(0xc5, 0x0c);
-ScalerWriteByte(0xc6, 0x00);
-ScalerWriteByte(0xc7, 0x42);
-ScalerWriteByte(0xc8, 0x72);
-ScalerWriteByte(0xc9, 0x84);
-ScalerWriteByte(0xca, 0x01);
-ScalerWriteByte(0xcb, 0x0d);
-ScalerWriteByte(0xcc, 0x40);
-ScalerWriteByte(0xcd, 0x39);
-ScalerWriteByte(0xce, 0x00);
-ScalerWriteByte(0xcf, 0x00);
-ScalerWriteByte(0xd0, 0x00);
-ScalerWriteByte(0xd1, 0x00);
-ScalerWriteByte(0xd2, 0x00);
-ScalerWriteByte(0xd3, 0x00);
-ScalerWriteByte(0xd4, 0x00);
-ScalerWriteByte(0xd5, 0x00);
-ScalerWriteByte(0xd6, 0x00);
-ScalerWriteByte(0xd7, 0x00);
-ScalerWriteByte(0xd8, 0x00);
-ScalerWriteByte(0xd9, 0x00);
-ScalerWriteByte(0xda, 0x00);
-ScalerWriteByte(0xdb, 0x00);
-ScalerWriteByte(0xdc, 0x00);
-ScalerWriteByte(0xdd, 0x00);
-ScalerWriteByte(0xde, 0x00);
-ScalerWriteByte(0xdf, 0x00);
-ScalerWriteByte(0xe0, 0x82);
-ScalerWriteByte(0xe1, 0x94);
-ScalerWriteByte(0xe2, 0x00);
-ScalerWriteByte(0xe3, 0x00);
-ScalerWriteByte(0xe4, 0x00);
-ScalerWriteByte(0xe5, 0x00);
-ScalerWriteByte(0xe6, 0x00);
-ScalerWriteByte(0xe7, 0x00);
-ScalerWriteByte(0xe8, 0x00);
-ScalerWriteByte(0xe9, 0x00);
-ScalerWriteByte(0xea, 0x1b);
-ScalerWriteByte(0xeb, 0xdc);
-ScalerWriteByte(0xec, 0x78);
-ScalerWriteByte(0xed, 0x00);
-ScalerWriteByte(0xee, 0x00);
-ScalerWriteByte(0xef, 0x00);
-ScalerWriteByte(0xf0, 0x00);
-ScalerWriteByte(0xf1, 0x00);
-ScalerWriteByte(0xf2, 0x00);
-ScalerWriteByte(0xf3, 0x00);
-ScalerWriteByte(0xf4, 0x00);
-ScalerWriteByte(0xf5, 0x00);
-ScalerWriteByte(0xf6, 0x00);
-ScalerWriteByte(0xf7, 0x00);
-ScalerWriteByte(0xf8, 0x00);
-ScalerWriteByte(0xf9, 0x00);
-ScalerWriteByte(0xfa, 0x00);
-ScalerWriteByte(0xfb, 0x00);
-ScalerWriteByte(0xfc, 0x00);
-ScalerWriteByte(0xfd, 0x00);
-ScalerWriteByte(0xfe, 0x00);
-ScalerWriteByte(0xff, 0x00);
-
+    ScalerWriteBit (S1_PLL_WDT, 0, 0); // Power up the APLL*/
 }
 
 void SetVideoBrightness(uint8_t value)

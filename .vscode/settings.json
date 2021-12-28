@@ -9,6 +9,9 @@
         "8051.h": "c",
         "config_defines.h": "c",
         "stdbool.h": "c",
-        "compat_funcs.h": "c"
+        "compat_funcs.h": "c",
+        "misc.h": "c",
+        "osd.h": "c",
+        "buttons.h": "c"
     }
 }

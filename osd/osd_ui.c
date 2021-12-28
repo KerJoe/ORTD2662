@@ -7,8 +7,16 @@
 // NOTE: Must be even
 #define MENU_WIDTH 16
 
-// NOTE: Struct assignment for non constant structs is broken in SDCC
-const OSDRow MenuRowConst =
+// Temporary place for Row and Character definitions
+#define SetOSDUnion(__struct_pointer) memcpy(&OSDUnion, __struct_pointer, 3);
+typedef union
+{
+    OSDRow              row;
+    OSDCharacter1       ch1;
+    OSDCharacterBlank   chb;
+} _OSDUnion; _OSDUnion OSDUnion;
+
+const OSDRow MenuRow =
 {
     .notStop = 1,
     .charHeight2X = 1,
@@ -19,9 +27,8 @@ const OSDRow MenuRowConst =
     .height = 16,
     .length = MENU_WIDTH
 };
-OSDRow MenuRow;
 
-const OSDCharacter1 MenuBarCharConst =
+const OSDCharacter1 MenuBarChar =
 {
     .fontSize = 0,
     .width = 8,
@@ -31,9 +38,8 @@ const OSDCharacter1 MenuBarCharConst =
     .bgColor = 3,
     .fgColor = 1,
 };
-OSDCharacter1 MenuBarChar;
 
-const OSDCharacter1 MenuEntryCharConst =
+const OSDCharacter1 MenuEntryChar =
 {
     .fontSize = 0,
     .width = 8,
@@ -43,16 +49,14 @@ const OSDCharacter1 MenuEntryCharConst =
     .bgColor = 2,
     .fgColor = 1,
 };
-OSDCharacter1 MenuEntryChar;
 
-const OSDCharacterBlank BlankCharConst =
+const OSDCharacterBlank BlankChar =
 {
     .blinking = 0,
     .isVisible = 0,
     .length = 12,
     .color = 3,
 };
-OSDCharacterBlank BlankChar;
 
 /*
 uint8_t RowLenghtArray[OSD_CHAR_OFFSET];
@@ -111,54 +115,118 @@ void OSDCreateMenu(char* title, char* menuItems[], uint8_t menuItemsNum)
 }
 */
 
+uint8_t cursorPos, cursorMax;
+
 void OSDWriteCenteredRow(OSDRow* row, OSDCharacter1* ch, uint8_t rowNumber, char* str)
 {
-    OSDSetRow(row, rowNumber);
     char str_len = strlen(str);
     uint16_t charItr;
+    OSDSetRow(row, rowNumber);
     if (str_len % 2) // If odd
     {
-        OSDSetBlank(&BlankChar, MENU_WIDTH * rowNumber);
+        SetOSDUnion(&BlankChar);
+        OSDUnion.chb.length = 12;
+        OSDUnion.chb.color = ch->bgColor;
+        OSDSetBlank(&OSDUnion.chb, MENU_WIDTH * rowNumber);
         charItr = 1;
-        ch->character = 0x20;
+        SetOSDUnion(ch);
+        OSDUnion.ch1.character = 0x20;
         for(; charItr < (MENU_WIDTH - str_len) / 2; charItr++)
-            OSDSetChar1(ch, charItr + MENU_WIDTH * rowNumber);
+            OSDSetChar1(&OSDUnion.ch1, charItr + MENU_WIDTH * rowNumber);
         for(; charItr < (MENU_WIDTH - str_len) / 2 + str_len; charItr++)
         {
-            ch->character = str[charItr - (MENU_WIDTH - str_len) / 2];
-            OSDSetChar1(ch, charItr + MENU_WIDTH * rowNumber);
+            OSDUnion.ch1.character = str[charItr - (MENU_WIDTH - str_len) / 2];
+            OSDSetChar1(&OSDUnion.ch1, charItr + MENU_WIDTH * rowNumber);
         }
-        ch->character = 0x20;
-        for(; charItr < MENU_WIDTH; charItr++)
-            OSDSetChar1(ch, charItr + MENU_WIDTH * rowNumber);
+        OSDUnion.ch1.character = 0x20;
+        for(; charItr < MENU_WIDTH-1; charItr++)
+            OSDSetChar1(&OSDUnion.ch1, charItr + MENU_WIDTH * rowNumber);
+        SetOSDUnion(&BlankChar);
+        OSDUnion.chb.length = 4;
+        OSDUnion.chb.color = ch->bgColor;
+        OSDSetBlank(&OSDUnion.chb, MENU_WIDTH * rowNumber + MENU_WIDTH - 1);
     }
     else // If even
     {
         charItr = 0;
-        ch->character = 0x20;
+        SetOSDUnion(ch);
+        OSDUnion.ch1.character = 0x20;
         for(; charItr < (MENU_WIDTH - str_len) / 2; charItr++)
-            OSDSetChar1(ch, charItr + MENU_WIDTH * rowNumber);
+            OSDSetChar1(&OSDUnion.ch1, charItr + MENU_WIDTH * rowNumber);
         for(; charItr < (MENU_WIDTH - str_len) / 2 + str_len; charItr++)
         {
-            ch->character = str[charItr - (MENU_WIDTH - str_len) / 2];
-            OSDSetChar1(ch, charItr + MENU_WIDTH * rowNumber);
+            OSDUnion.ch1.character = str[charItr - (MENU_WIDTH - str_len) / 2];
+            OSDSetChar1(&OSDUnion.ch1, charItr + MENU_WIDTH * rowNumber);
         }
-        ch->character = 0x20;
+        OSDUnion.ch1.character = 0x20;
         for(; charItr < MENU_WIDTH; charItr++)
-            OSDSetChar1(ch, charItr + MENU_WIDTH * rowNumber);
+            OSDSetChar1(&OSDUnion.ch1, charItr + MENU_WIDTH * rowNumber);
     }
+}
+
+void OSDWriteLeftRow(OSDRow* row, OSDCharacter1* ch, uint8_t rowNumber, char* str, char firstChar) // firstChar may be used for cursor
+{
+    char str_len = strlen(str);
+    uint16_t charItr;
+    OSDSetRow(row, rowNumber);
+    SetOSDUnion(ch);
+    OSDUnion.ch1.character = firstChar;
+    OSDSetChar1(&OSDUnion.ch1, MENU_WIDTH * rowNumber);
+    charItr = 0;
+    for(; charItr < str_len; charItr++)
+    {
+        OSDUnion.ch1.character = str[charItr];
+        OSDSetChar1(&OSDUnion.ch1, charItr + 1 + MENU_WIDTH * rowNumber);
+    }
+    OSDUnion.ch1.character = 0x20;
+    for(; charItr < MENU_WIDTH; charItr++)
+        OSDSetChar1(&OSDUnion.ch1, charItr + 1 + MENU_WIDTH * rowNumber);
 }
 
 void OSDCreateMenu(char* title, char* menuItems[], uint8_t menuItemsNum)
 {
-    memcpy(&MenuRow, &MenuRowConst, sizeof(OSDRow));
-    memcpy(&MenuBarChar, &MenuBarCharConst, sizeof(OSDCharacter1));
-    memcpy(&MenuEntryChar, &MenuEntryCharConst, sizeof(OSDCharacter1));
-    memcpy(&BlankChar, &BlankCharConst, sizeof(OSDCharacterBlank));
+    cursorPos = 0;
+    cursorMax = menuItemsNum - 1;
 
-    SetOSDOffset(50, 50);
+    SetOSDOffset(400, 50);
 
-    OSDWriteCenteredRow(&MenuRow, &MenuBarChar, 0, "!$~");
-    OSDWriteCenteredRow(&MenuRow, &MenuBarChar, 1, "Menu");
-    OSDEndRow(2);
+    OSDWriteCenteredRow(&MenuRow, &MenuBarChar,   0, title);
+    uint8_t i;
+    for (i = 0; i < menuItemsNum; i++)
+        OSDWriteLeftRow (&MenuRow, &MenuEntryChar, i+1, menuItems[i], i == 0 ? '>' : ' ');
+
+    OSDEndRow(i+1);
+}
+
+void OSDActionUp()
+{
+    SetOSDUnion(&MenuEntryChar);
+    OSDUnion.ch1.character = ' ';
+    OSDSetChar1(&OSDUnion.ch1, MENU_WIDTH * (cursorPos + 1));
+    if (cursorPos < cursorMax)
+        cursorPos++;
+    else
+        cursorPos = 0;
+    SetOSDUnion(&MenuEntryChar);
+    OSDUnion.ch1.character = '>';
+    OSDSetChar1(&OSDUnion.ch1, MENU_WIDTH * (cursorPos + 1));
+}
+
+void OSDActionDown()
+{
+    SetOSDUnion(&MenuEntryChar);
+    OSDUnion.ch1.character = ' ';
+    OSDSetChar1(&OSDUnion.ch1, MENU_WIDTH * (cursorPos + 1));
+    if (cursorPos > 0)
+        cursorPos--;
+    else
+        cursorPos = cursorMax;
+    SetOSDUnion(&MenuEntryChar);
+    OSDUnion.ch1.character = '>';
+    OSDSetChar1(&OSDUnion.ch1, MENU_WIDTH * (cursorPos + 1));
+}
+
+void OSDActionSelect()
+{
+
 }
