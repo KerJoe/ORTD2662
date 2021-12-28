@@ -27,7 +27,7 @@ void main()
 
     StartDebug();
 
-    SwitchToI2C();
+    //SwitchToI2C();
     volatile int abc = 0;
     for(;;abc++)
         FeedWatchdog();

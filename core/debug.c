@@ -17,7 +17,7 @@ uint8_t readSFR(uint8_t address) __naked
     ret
     00002$:
     mov     a,  dpl         ; Address to accumulator
-    anl     a,  #127
+    anl     a,  #0x7f
     mov     b,  #3          ; Dispatch table entry size
     mul     ab              ; Get offset
 	add	    a,  #<00001$	; Add offset to dispatch table
@@ -48,7 +48,7 @@ void _writeSFR(uint8_t data_address) __naked
     ret
     00002$:
     mov     a,  dpl         ; Address to accumulator
-    anl     a,  #127
+    anl     a,  #0x7f
     mov     b,  #3          ; Dispatch table entry size
     mul     ab              ; Get offset
 	add	    a,  #<00001$	; Add offset to dispatch table
@@ -73,14 +73,74 @@ char hex2int(char ch)
     return ch - '0' > 0x09 ? (ch & 0x20) - 'A' + 11 : ch - '0';
 }
 
-uint16_t pc_val;
-uint8_t  adr;
-uint8_t  dat;
-uint16_t bp0 = 0;
-#define PC_STACK_OFFSET 15
-void DebugTimerIRQ() __interrupt (5)
+uint8_t sp_val;
+#define PC_STACKOFFSET      15
+#define BITS_STACKOFFSET    13
+#define A_STACKOFFSET       12
+#define B_STACKOFFSET       11
+#define DPL_STACKOFFSET     10
+#define DPH_STACKOFFSET     9
+#define R7_STACKOFFSET      8
+#define R6_STACKOFFSET      7
+#define R5_STACKOFFSET      6
+#define R4_STACKOFFSET      5
+#define R3_STACKOFFSET      4
+#define R2_STACKOFFSET      3
+#define R1_STACKOFFSET      2
+#define R0_STACKOFFSET      1
+#define PSW_STACKOFFSET     0
+
+__near uint8_t  a_tmp, psw_tmp;
+__near uint16_t bp0 = 0x012E;//NULL;
+
+void DebugTimerIRQ() __interrupt (5) __naked
 {
-    pc_val = *((__near uint16_t*)(SP-PC_STACK_OFFSET));
+    __asm
+    ; push  pcl ; Done by hardware
+    ; push  pch ; ...
+    mov     _psw_tmp, psw
+    mov     _a_tmp, a
+    pop     a
+    cjne    a,      _bp0+1, 00001$
+    pop     a
+    cjne    a,      _bp0,   00002$
+    ; Hit break point
+    inc     sp
+    inc     sp
+    mov     a,      _a_tmp
+    mov     psw,    _psw_tmp
+    ajmp    00003$
+    00002$:
+    inc     sp
+    00001$:
+    inc     sp
+    mov     a,      _a_tmp
+    mov     psw,    _psw_tmp
+    reti
+    00003$:
+    push	0x20    ; bits
+    push	a
+    push	b
+    push	dpl
+    push	dph
+    push	(0 + 7) ; r7
+    push	(0 + 6) ; r6
+    push	(0 + 5) ; r5
+    push	(0 + 4) ; r4
+    push	(0 + 3) ; r3
+    push	(0 + 2) ; r2
+    push	(0 + 1) ; r1
+    push	(0 + 0) ; r0
+    push	psw
+    mov     psw, #0
+    __endasm;
+
+    sp_val = SP;
+
+    printf("Breakpoint Hit");
+    getchar();
+
+    /*pc_val = *((__near uint16_t*)(SP-PC_STACK_OFFSET));
 
     printf("%x:", pc_val);
     switch (getchar())
@@ -106,9 +166,31 @@ void DebugTimerIRQ() __interrupt (5)
         default:
             printf("\n?\n");
             break;
-    }
+    }*/
     //putchar('x');
     //StopDebug();
+
+
+
+    __asm
+    push	psw
+    push	(0 + 0) ; r0
+    push	(0 + 1) ; r1
+    push	(0 + 2) ; r2
+    push	(0 + 3) ; r3
+    push	(0 + 4) ; r4
+    push	(0 + 5) ; r5
+    push	(0 + 6) ; r6
+    push	(0 + 7) ; r7
+    push	dph
+    push	dpl
+    push	b
+    push	a
+    push	0x20   ; bits
+    ; push pch ; ...
+    ; push pcl ; Done by hardware
+    reti
+    __endasm;
 }
 
 void InitDebug()
