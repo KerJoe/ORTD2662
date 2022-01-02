@@ -20,14 +20,17 @@ void main()
 
     CKCON &= InsertBits8(CKCON, 0, 3, 0b000); // Set MOVX stretch value to 0 (REF: RTD2660 datasheet, page 278)
     ISP_MCU_CLOCK_CONTROL |= (1 << 6); // Keep timers running while MCU is stopped by SPI flash access
-    //InitSysTimer();
-    InitDebug();
+    InitSysTimer();
     InitUART(9600, UART_TIMER1); SwitchToUART(); putchar('\n');
     EA = 1; // Enable all interrupts
 
-    StartDebug();
+    $
 
-    //SwitchToI2C();
+    /*#ifdef DEBUG
+    StartDebug();
+    #endif*/
+
+    SwitchToI2C();
     volatile int abc = 0;
     for(;;abc++)
         FeedWatchdog();
