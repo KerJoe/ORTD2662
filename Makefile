@@ -6,7 +6,7 @@ ifeq ($(OS),Windows_NT)
 	list_paths   = cmd /C dir /s /b /o:n /ad $1
 	EXEC = .exe
     # SDCC Bug, Replace backslash with forward slash, in dependency files, if on windows # Proper regex \\*(?=.*:)
-	fix_d_files = cscript //NoLogo scripts\\substitute.vbs s:$(OUTPUTDIR)\\:$(OUTPUTDIR)/: < $(basename $@).d > $(basename $@).d.tmp && cmd /C move $(call fwd_to_back,$(CURDIR)/$(basename $@).d.tmp $(CURDIR)/$(basename $@).d) > nul
+	fix_d_files  = cscript //NoLogo scripts\\substitute.vbs s:$(OUTPUTDIR)\\:$(OUTPUTDIR)/: < $(basename $@).d > $(basename $@).d.tmp && cmd /C move $(call fwd_to_back,$(CURDIR)/$(basename $@).d.tmp $(CURDIR)/$(basename $@).d) > nul
 else # Other POSIX
 	remove_file  = rm -f $1
 	remove_files = rm -f -r $1/*
@@ -17,34 +17,39 @@ else # Other POSIX
 	EXEC =
 endif
 
-OUTPUTDIR    = output
-DBGOUTPUTDIR = $(OUTPUTDIR)-debug
-MAINFILE     = main
 
-# Ignore warning 158: "overflow in implicit constant conversion" because of SDCC bug where unisgned integers are treates as signed
-SDCC_CFLAGS  = --disable-warning 158 -mmcs51 --model-large -o$(OUTPUTDIR)/ -I$(CURDIR)
-SDCC_LDFLAGS = --xram-loc 0xFB00 --xram-size 640
+MAINFILE      = main
+RLSOUTPUTDIR  = output
+DBGOUTPUTDIR  = output-debug
 
-GCC_CFLAGS   = -o$(DBGOUTPUTDIR)/ -I$(CURDIR) -DDEBUG
-GCC_LDFLAGS  =
+DEBUG_FLAGS   = -D DEBUG --debug
 
-#PROGRAMMER 	= cmd \/C ROVATool.lnk -d2660 -ppparallel -w
-PROGRAMMER	= cmd \/C rtdmultiprog.lnk -i lpt_old -d 888 -w
+SDCC_CFLAGS   = -mmcs51 --model-large -I$(CURDIR)
+SDCC_LDFLAGS  = --xram-loc 0xFB00 --xram-size 640
+
+PROGRAMMER    = cmd \/C rtdmultiprog.lnk -i lpt_old -d 888 -w
+
+
+ifeq ($(DEBUG),1)
+	SDCC_CFLAGS  += $(DEBUG_FLAGS)
+	SDCC_LDFLAGS += $(DEBUG_FLAGS)
+	OUTPUTDIR     = $(DBGOUTPUTDIR)
+else
+	OUTPUTDIR 	  = $(RLSOUTPUTDIR)
+endif
+
 
 # Add all subdirectories 1 level deep into make search path
 VPATH =  $(wildcard ./*/)
 
 SRCFILES = $(filter-out $(MAINFILE), $(wildcard */*.c))
 RELFILES = $(patsubst %.c, $(OUTPUTDIR)/%.rel, $(notdir $(SRCFILES)))
-OFILES   = $(patsubst %.c, $(DBGOUTPUTDIR)/%.o, $(notdir $(SRCFILES)))
 DFILES   = $(RELFILES:.rel=.d)
 
 
-all: firmware #debug
+all: firmware
 
 firmware: $(OUTPUTDIR) $(OUTPUTDIR)/firmware.hex
-
-debug: $(DBGOUTPUTDIR) $(DBGOUTPUTDIR)/debug$(EXE)
 
 programm: $(OUTPUTDIR)/firmware.bin
 	$(PROGRAMMER) "$(CURDIR)/$(OUTPUTDIR)/firmware.bin"
@@ -52,36 +57,23 @@ programm: $(OUTPUTDIR)/firmware.bin
 memory: firmware.mem
 	python scripts/print_memory_usage.py
 
-clean: $(OUTPUTDIR) $(DBGOUTPUTDIR)
+clean: $(OUTPUTDIR)
 	$(call remove_files,$(OUTPUTDIR))
-	$(call remove_files,$(DBGOUTPUTDIR))
 
 $(OUTPUTDIR):
 	mkdir $(OUTPUTDIR)
 
 # Create dependency files and object files
 $(OUTPUTDIR)/%.rel: %.c
-	@echo Compiling $<...
-	@sdcc $(SDCC_CFLAGS) -MMD -c $<
+	sdcc $(SDCC_CFLAGS) -o$(OUTPUTDIR)/ -MMD -c $<
 	@$(fix_d_files)
 
 # SDCC requires the main file to be passed first
 $(OUTPUTDIR)/firmware.hex: $(OUTPUTDIR)/$(MAINFILE).rel $(filter-out $(OUTPUTDIR)/$(MAINFILE).rel, $(RELFILES))
-	@echo Linking...
-	@sdcc $(SDCC_CFLAGS) $(SDCC_LDFLAGS) -o$(OUTPUTDIR)/firmware.hex $^
+	sdcc $(SDCC_CFLAGS) $(SDCC_LDFLAGS) -o$(OUTPUTDIR)/firmware.hex $^
 
 $(OUTPUTDIR)/firmware.bin: $(OUTPUTDIR)/firmware.hex
 	makebin $(OUTPUTDIR)/firmware.hex $(OUTPUTDIR)/firmware.bin
-
-
-$(DBGOUTPUTDIR):
-	mkdir $(DBGOUTPUTDIR)
-
-$(DBGOUTPUTDIR)/%.o: %.c %.h
-	gcc $(GCC_CFLAGS) -c $<
-
-$(DBGOUTPUTDIR)/debug$(EXE): $(DBGOUTPUTDIR)/$(MAINFILE).o $(filter-out $(DBGOUTPUTDIR)/$(MAINFILE).o, $(OFILES))
-	gcc $(GCC_CFLAGS) $(GCC_LDFLAGS) -o$(DBGOUTPUTDIR)/debug$(EXE) $^
 
 # Include the .d makefiles. The - at the front suppresses the errors of missing
 # Makefiles. Initially, all the .d files will be missing, and we don't want those

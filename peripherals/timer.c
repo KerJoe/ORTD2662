@@ -5,6 +5,7 @@
 #include "peripherals/pins.h"
 
 #include "core/main.h"
+#include "core/debug.h"
 
 uint32_t sysTimerCount = 0;
 
@@ -30,15 +31,15 @@ void delayMS(uint32_t ms)
     while (delayActive) WDT_CONTROL = (1 << 6);
 }
 
-void SysTimerIRQ() __interrupt(1)
-{
+void SysTimerIRQ() __interrupt(1) __naked
+{InterruptPrologue
     sysTimerCount++;
 
     if (delayActive) delayTime--;
     if (delayTime == 0) delayActive = 0;
 
     TF0 = 0;
-}
+InterruptEpilogue}
 
 void InitSysTimer()
 {
@@ -48,5 +49,4 @@ void InitSysTimer()
     TR0 = 1;
 
     ET0 = 1;
-    //ET0 = 1;
 }
