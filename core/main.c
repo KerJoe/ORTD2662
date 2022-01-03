@@ -60,10 +60,10 @@ void main()
 
     InitScaler();
 
-    InitVGA();
-    //InitHDMI();
+    //InitVGA();
+    InitHDMI();
 
-    OSDInit();
+    //OSDInit();
 
     char* entries[]= { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
     OSDCreateMenu("Main", entries, 5);

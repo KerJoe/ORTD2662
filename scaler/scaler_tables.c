@@ -50,10 +50,3 @@ const uint8_t DisplayInitTable[] =
 
     TABLE_END
 };
-
-const uint8_t tSCALER_POWERUP_HDMI[] =
-{
-	1,  AUTOINC_DIS,    S_PAGE_SELECT,              2,
-	8, 	AUTOINC_ENA,    S2_TMDS_OUTPUT_CONTROL,     0x78,0x6F,0x03,0x00,0x70,0x70,0xe3,0x24,
-    TABLE_END
-};
