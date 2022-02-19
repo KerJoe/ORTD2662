@@ -2,6 +2,8 @@ from ctypes import *
 import sys
 import time
 import os
+import PySimpleGUI as sg
+from PySimpleGUI.PySimpleGUI import Slider
 
 if (sys.maxsize > 2**32):
     print ("64 bit Python is not supported! Use a 32 bit version.")
@@ -84,28 +86,51 @@ def EnterISPMode():
     if (not success):
         raise ConnectionError("Timed out waiting to enter ISP mode")
 
-def Reboot():
-    RTDWriteRegisters(0xEE, 0x02)
-    RTDWriteRegisters(0x6F, 0x01)
-
-
-
-
 InitI2C(0x378, 0)
 EnterISPMode()
 
-try:
-    while(1):
-        string = input("> ")
-        strList = string.split(' ')
-        if strList[0].upper() == "ENTER":
-            EnterISPMode()
-        if strList[0].upper() == "EXIT":
-            Reboot()
-        if strList[0].upper() == "PEEK":
-            print(hex(ScalerReadRegisters(int(strList[1],16))[0]))
-        if strList[0].upper() == "POKE":
-            ScalerWriteRegisters(int(strList[1],16), int(strList[2],16),  0)
+ScalerWriteRegisters(0x32, 0x03)
 
-except KeyboardInterrupt:
-    exit(0)
+def SendWin():
+    ScalerWriteRegisters(0x30, 0x00); ScalerWriteRegisters(0x31, (((WinW) >> 8) << 4) | ((WinH) >> 8))
+    ScalerWriteRegisters(0x30, 0x01); ScalerWriteRegisters(0x31, (WinW))
+    ScalerWriteRegisters(0x30, 0x02); ScalerWriteRegisters(0x31, (WinH))
+    ScalerWriteRegisters(0x16, (WinW) >> 8)
+    ScalerWriteRegisters(0x17, WinW)
+    ScalerWriteRegisters(0x1A, (WinH) >> 8)
+    ScalerWriteRegisters(0x1B, WinH)
+
+
+WinW = 722
+WinH = 232
+
+# Window layout
+mainLayout = [[sg.Text("Hor"), sg.Slider(range=(0,2**20-1), orientation='horizontal', key="HorS", enable_events=True)],
+              [sg.Text("Ver"), sg.Slider(range=(0,2**20-1), orientation='horizontal', key="VerS", enable_events=True)],
+              [sg.HorizontalSeparator()],
+              [sg.Text("WinHor"), sg.Slider(range=(0,2**12-1), orientation='horizontal', key="WinHorS", enable_events=True)],
+              [sg.Text("WinVer"), sg.Slider(range=(0,2**12-1), orientation='horizontal', key="WinVerS", enable_events=True)]]
+
+mainWindow = sg.Window('RTDMultiProg', mainLayout, element_justification='center')
+while (True):
+    event, values = mainWindow.read(timeout=10)
+    if event == sg.WIN_CLOSED:
+        break
+    if event == "HorS":
+        CS = int(values["HorS"])
+        ScalerWriteRegisters(0x33, 0x80)
+        ScalerWriteRegisters(0x34, (CS >> 16) & 0xff, True)
+        ScalerWriteRegisters(0x34, (CS >> 8) & 0xff, True)
+        ScalerWriteRegisters(0x34, (CS) & 0xff, True)
+    if event == "VerS":
+        CS = int(values["VerS"])
+        ScalerWriteRegisters(0x33, 0x83)
+        ScalerWriteRegisters(0x34, (CS >> 16) & 0xff, True)
+        ScalerWriteRegisters(0x34, (CS >> 8) & 0xff, True)
+        ScalerWriteRegisters(0x34, (CS) & 0xff, True)
+    if event == "WinHorS":
+        WinW = int(values["WinHorS"])
+        SendWin()
+    if event == "WinVerS":
+        WinH = int(values["WinVerS"])
+        SendWin()

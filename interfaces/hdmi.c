@@ -8,6 +8,11 @@
 #include "peripherals/timer.h"
 #include "scaler/scaler_tables.h"
 
+#include "peripherals/pins.h"
+
+#include "scaler/compat_funcs.h"
+#include "scaler/compat_regs.h"
+
 uint8_t ucHdmiAVMuteCnt = 0;
 
 uint8_t GetTMDSFormat(void) // True - HDMI, False - DVI
@@ -16,8 +21,11 @@ uint8_t GetTMDSFormat(void) // True - HDMI, False - DVI
     return ScalerReadByte(S2_HDMI_STATUS) & 0x01;
 }
 
+//void InitHDMI(uint8_t tmds_in)
 void InitHDMI()
 {
+    uint8_t tmds_in = 0;
+
     #define WINDOW_HSTA 0
     #define WINDOW_VSTA 0
     #define WINDOW_HS_DELAY 0
@@ -47,14 +55,30 @@ void InitHDMI()
 
     ScalerWriteBits(S_VGIP_CONTROL, 2, 2, 0b01); // Input Format - Digital (TMDS)
 
-	ScalerWriteByte(S_PAGE_SELECT, 2);
-	ScalerWriteByte(S2_TMDS_OUTPUT_CONTROL, 0x78);    // Enable output Clock and RGB port
-    ScalerWriteByte(S2_POWER_ON_OFF_CONTROL, 0x6F);   // Swap B/R Channels and swap P/N, Input channel control is manual, Enable input Clock and RGB port
+    ScalerWriteByte(S_PAGE_SELECT, 2);
     ScalerWriteByte(S2_Z0_CALIBRATION_CONTROL, 0xe3); // Z0 impedence is auto, Set 50 ohm calibration, Default Z0 impedence value, REXT is 1kOhm
+    if (tmds_in == 0)
+    {
+        ScalerWriteBit(S2_TMDS_MEAS_RESULT0, 1, 0b0);     // Select Port 0 ???
+        ScalerWriteByte(S2_TMDS_OUTPUT_CONTROL, 0x78);    // Enable output Clock and RGB port
+        ScalerWriteByte(S2_POWER_ON_OFF_CONTROL, 0x6F);   // Swap B/R Channels and swap P/N, Input channel control is manual, Enable input Clock and RGB port
+    }
+    else
+    {
+        ScalerWriteBit(S2_TMDS_MEAS_RESULT0, 1, 0b1);     // Select Port 1 ???
+        ScalerWriteByte(S2_TMDS_OUTPUT_CONTROL, 0x78);    // Enable output Clock and RGB port
+        ScalerWriteByte(S2_POWER_ON_OFF_CONTROL, 0xEF);   // Swap B/R Channels and don't swap P/N, Input channel control is manual, Enable input Clock and RGB port
+        //ScalerWritePortBit(S2_HDMI_PORT, SP2_HDMI_SCR, 3, 0b0);
+        //ScalerWritePortBit(S2_HDMI_PORT, SP2_HDMI_SCR, 2, 0b0);
+    }
 
     ScalerWriteBit(S2_ANALOG_COMMON_CONTROL2, 0, 0b1); // TODO: ???
     ScalerWriteBit(S2_UP_DOWN_CONTROL0, 7, 0b1); // TODO: ???
     ScalerWritePortBit(S2_HDMI_PORT, SP2_HDMI_AVMCR, 3, 0b1); //Enable DVI/HDMI video output
 
     ScalerWriteBit (S_VGIP_CONTROL, 1, 0b1); // Enable video capture
+
+    /*ScalerWriteByte(S2_TMDS_CONTROL, 0xff);
+    delayMS(100);
+    if(ScalerReadByte(S2_TMDS_CONTROL) & (1 << 4)) SetGPIO(PIN100, 0);*/
 }
