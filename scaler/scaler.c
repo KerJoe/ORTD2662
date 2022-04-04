@@ -508,6 +508,39 @@ void SetPowerMode(uint8_t mode)
     }
 }
 
+void SetWindow()
+{
+    // #define WINDOW_HSTA 26
+    // #define WINDOW_VSTA 8
+    // #define WINDOW_HLEN 720
+    // #define WINDOW_VLEN 244
+    // #define WINDOW_HS_DELAY 110
+    // #define WINDOW_VS_DELAY 6
+    #define WINDOW_HSTA 34
+    #define WINDOW_VSTA 5
+    #define WINDOW_HLEN 696
+    #define WINDOW_VLEN 232
+    #define WINDOW_HS_DELAY 110
+    #define WINDOW_VS_DELAY 21
+
+    // Setup capture window
+    ScalerWriteByte(S_IFW_HACT_STA_HI, (WINDOW_HSTA) >> 8);
+    ScalerWriteByte(S_IFW_HACT_STA_LO, WINDOW_HSTA);
+    ScalerWriteByte(S_IFW_HACT_LEN_HI, (WINDOW_HLEN) >> 8);
+    ScalerWriteByte(S_IFW_HACT_LEN_LO, WINDOW_HLEN);
+    ScalerWriteByte(S_IFW_VACT_STA_HI, (WINDOW_VSTA) >> 8);
+    ScalerWriteByte(S_IFW_VACT_STA_LO, WINDOW_VSTA);
+    ScalerWriteByte(S_IFW_VACT_LEN_HI, (WINDOW_VLEN) >> 8);
+    ScalerWriteByte(S_IFW_VACT_LEN_LO, WINDOW_VLEN);
+    ScalerWriteByte(S_IFW_HSYNC_DELAY, WINDOW_HS_DELAY);
+    ScalerWriteByte(S_IFW_VSYNC_DELAY, WINDOW_VS_DELAY);
+
+    // Setup FIFO window
+    ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRWL_BSU_HI, (((WINDOW_HLEN) >> 8) << 4) | ((WINDOW_VLEN) >> 8));
+    ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRW_BSU_LO,  (WINDOW_HLEN));
+    ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRL_BSU_LO,  (WINDOW_VLEN));
+}
+
 void InitScaler()
 {
     ScalerWriteBit(S_HOST_CONTROL, 0, BIT_ONE);

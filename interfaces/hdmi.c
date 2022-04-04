@@ -24,7 +24,7 @@ uint8_t GetTMDSFormat(void) // True - HDMI, False - DVI
 //void InitHDMI(uint8_t tmds_in)
 void InitHDMI()
 {
-    uint8_t tmds_in = 0;
+    uint8_t tmds_in = 1;
 
     #define WINDOW_HSTA 0
     #define WINDOW_VSTA 0

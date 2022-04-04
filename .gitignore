@@ -6,3 +6,6 @@ output-debug
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Ignore VS Code configuration
+.vscode

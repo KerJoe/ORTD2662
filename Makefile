@@ -27,7 +27,7 @@ DEBUG_FLAGS   = -D DEBUG --debug
 SDCC_CFLAGS   = -mmcs51 --model-large -I$(CURDIR)
 SDCC_LDFLAGS  = --xram-loc 0xFB00 --xram-size 640
 
-PROGRAMMER    = python3 ../RTDMultiProg/rtdmultiprog.py -i i2cdev -d 1 -w
+PROGRAMMER    = python3 ../RTDMultiProg/rtdmultiprog.py -i mcp2221 -d 0 -w
 
 
 ifeq ($(DEBUG),1)
