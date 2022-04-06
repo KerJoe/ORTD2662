@@ -28,7 +28,7 @@ void UploadEDID(uint8_t ddcNumber, uint8_t* data)
         case 2: DDC3_CONTROL0 = InsertBits8(DDC3_CONTROL0, 0, 1, 0b0); break;
     }
     // TODO: Use memcpy
-    __xdata uint16_t* p = 0xFD80 + 0x80 * ddcNumber;
+    __xdata uint16_t* p = (__xdata uint16_t*)(0xFD80 + 0x80 * ddcNumber);
     memcpy(p, data, 128);
     // Enable DDC access to EDID
     switch (ddcNumber)

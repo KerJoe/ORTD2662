@@ -4,7 +4,8 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "$(check)",
+            "label": "Compile",
+            "options": { "statusbar": { "label" : "$(check)" } },
             "type": "shell",
             "command": "make firmware",
             "problemMatcher": [
@@ -12,9 +13,10 @@
             ]
         },
         {
-            "label": "$(arrow-down)",
+            "label": "Program",
+            "options": { "statusbar": { "label" : "$(arrow-down)" } },
             "type": "shell",
-            "command": "make programm",
+            "command": "make program",
             "problemMatcher": [
                 "$gcc"
             ]

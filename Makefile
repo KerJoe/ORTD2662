@@ -27,7 +27,7 @@ DEBUG_FLAGS   = -D DEBUG --debug
 SDCC_CFLAGS   = -mmcs51 --model-large -I$(CURDIR)
 SDCC_LDFLAGS  = --xram-loc 0xFB00 --xram-size 640
 
-PROGRAMMER    = python3 ../RTDMultiProg/rtdmultiprog.py -i mcp2221 -d 0 -w
+PROGRAMMER    = python3 ../RTDMultiProg/rtdmultiprog.py -i mcp2221_c -w
 
 
 ifeq ($(DEBUG),1)
@@ -51,7 +51,7 @@ all: firmware
 
 firmware: $(OUTPUTDIR) $(OUTPUTDIR)/firmware.hex
 
-programm: $(OUTPUTDIR)/firmware.bin
+program: $(OUTPUTDIR)/firmware.bin
 	$(PROGRAMMER) "$(CURDIR)/$(OUTPUTDIR)/firmware.bin"
 
 memory: firmware.mem

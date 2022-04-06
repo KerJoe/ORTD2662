@@ -32,8 +32,9 @@
 void main()
 {
     // Write EDID at first opportunity, else some video cards may mark the scaler as unavailable if using cold plug with constant Hot Plug Detection
-    UploadEDID(HDMI_DDC_NUMBER, testEDID);
-    UploadEDID(2, testEDID);
+    UploadEDID(DDC0, testEDID);
+    UploadEDID(DDC1, testEDID);
+    UploadEDID(DDC2, testEDID);
 
     for (uint16_t i = 0; i < 0xffff; i++) FeedWatchdog(); // Add grace period to allow I2C Programming before switching to UART
 
@@ -57,10 +58,10 @@ void main()
     SetOverlayColor(0x75, 0x18, 0xA1);
 
     OSDInit();
-    char* entries[]= { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+    const char* entries[]= { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
     OSDCreateMenu("Main", entries, 5);
 
-    InitHDMI();
+    InitHDMI(TMDS1);
 
     while (1)
     {

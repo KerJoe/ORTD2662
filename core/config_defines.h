@@ -2,9 +2,16 @@
 
 #include <stdbool.h>
 
+#define TRUE  1
+#define FALSE 0
+
 #define TTL  0
 #define LVDS 1
 #define RSDS 3
+
+#define TMDS0 0
+#define TMDS1 1
+
 // TODO: Find if BG actually means single color fill
 #define PANEL_HTOTAL    (PANEL_H_SYNC_WIDTH + PANEL_H_BACK_PORCH + PANEL_H_ACTIVE + PANEL_H_FRONT_PORCH - 4) // Real DH_Total (Target value) = DH_Total (Register value) + 4
 #define PANEL_HS_END    (PANEL_H_SYNC_WIDTH)
