@@ -5,9 +5,11 @@ ifeq ($(OS),Windows_NT)
 	remove_files = cmd /C rmdir /Q /S $1
 	list_paths   = cmd /C dir /s /b /o:n /ad $1
 	EXEC = .exe
-    # SDCC Bug, Replace backslash with forward slash, in dependency files, if on windows # Proper regex \\*(?=.*:)
-	fix_d_files  = cscript //NoLogo scripts\\substitute.vbs s:$(OUTPUTDIR)\\:$(OUTPUTDIR)/: < $(basename $@).d > $(basename $@).d.tmp && cmd /C move $(call fwd_to_back,$(CURDIR)/$(basename $@).d.tmp $(CURDIR)/$(basename $@).d) > nul
-else # Other POSIX
+    # SDCC Bug, If on windows, replace backslash with forward slash in dependency files
+	fix_d_files  = cscript //NoLogo scripts\\fix_d_files.js < $(basename $@).d > $(basename $@).d.tmp && \
+				   cmd /C move $(call fwd_to_back,$(CURDIR)/$(basename $@).d.tmp $(CURDIR)/$(basename $@).d) > nul
+# Other POSIX
+else
 	remove_file  = rm -f $1
 	remove_files = rm -f -r $1/*
 	space :=
