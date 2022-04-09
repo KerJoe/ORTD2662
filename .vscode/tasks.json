@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Compile",
+            "label": "Compile firmware",
             "options": { "statusbar": { "label" : "$(check)" } },
             "type": "shell",
             "command": "make firmware",
@@ -13,10 +13,19 @@
             ]
         },
         {
-            "label": "Program",
+            "label": "Program firmware",
             "options": { "statusbar": { "label" : "$(arrow-down)" } },
             "type": "shell",
             "command": "make program",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Compile native",
+            "options": { "statusbar": { "label" : "$(beaker)" } },
+            "type": "shell",
+            "command": "make native",
             "problemMatcher": [
                 "$gcc"
             ]

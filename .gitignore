@@ -1,6 +1,6 @@
 # Ignore binary output files
 output
-output-debug
+output-native
 
 # Ignore python temporary files
 __pycache__/
@@ -8,4 +8,4 @@ __pycache__/
 *$py.class
 
 # Ignore VS Code configuration
-.vscode
+#.vscode
