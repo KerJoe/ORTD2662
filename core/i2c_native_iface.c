@@ -1,9 +1,12 @@
 #define RTDMULTIPROG_PATH "/media/all/Data/Users/Misha/Documents/Projects/RTD2662/RTDMultiProg"
-#define INTERFACE   "mcp2221"
+#define INTERFACE   "mcp2221_c"
 #define DEVICE      0
 #define SETTINGS    ""
 
+// NOTE: XSFRWriteByte and XSFRReadByte declarations are in xsfr.h
 
+// Compile only for native
+#ifndef __SDCC
 
 #include "Python.h"
 #include "stdint.h"
@@ -19,20 +22,22 @@
 PyObject *pI2C;
 
 
-void ScalerWriteByte(uint8_t address, uint8_t data)
+void XSFRWriteByte(uint8_t address, uint8_t data)
 {
     PyObject* result = PyObject_CallMethod(pI2C, "write_i2c", "(i[ii])", RTD_ISP_ADR, (int)address, (int)data); CHECKNR(result)
     Py_XDECREF(result);
 }
 
-uint8_t ScalerReadByte(uint8_t address)
+uint8_t XSFRReadByte(uint8_t address)
 {
+    PyObject* result = PyObject_CallMethod(pI2C, "write_i2c", "(i[i])", RTD_ISP_ADR, (int)address); CHECKNR(result)
     PyObject* retList = PyObject_CallMethod(pI2C, "read_i2c", "(ii)", RTD_ISP_ADR, 1); CHECKNR(retList)
     CHECKNR(PyList_Check(retList))
     PyObject* retLong = PyList_GetItem(retList, 0); CHECKNR(retLong)
     CHECKNR(PyLong_Check(retLong))
     uint8_t ret = PyLong_AsLong(retLong);
 
+    Py_XDECREF(result);
     Py_XDECREF(retList);
     Py_XDECREF(retLong);
 
@@ -68,15 +73,16 @@ int __attribute__ ((constructor)) begin_i2c_native_iface()
     PyObject* result = PyObject_CallMethod(pI2C, "init_i2c", "(iz)", DEVICE, SETTINGS); CHECK(result)
     Py_XDECREF(result);
 
-    ScalerWriteByte(0x6F, 0x80);
+    XSFRWriteByte(0xEE, 0x02);
+    XSFRWriteByte(0x6F, 0x80);
 
     return 0;
 }
 
 int __attribute__ ((destructor)) end_i2c_native_iface()
 {
-    ScalerWriteByte(0xEE, 0x02);
-    ScalerWriteByte(0x6F, 0x01);
+    XSFRWriteByte(0xEE, 0x02);
+    XSFRWriteByte(0x6F, 0x01);
 
     PyObject* result = PyObject_CallMethod(pI2C, "deinit_i2c", ""); CHECK(result)
     Py_XDECREF(result);
@@ -86,3 +92,4 @@ int __attribute__ ((destructor)) end_i2c_native_iface()
 
     return 0;
 }
+#endif // #ifndef __SDCC

@@ -8,7 +8,7 @@
             "name": "Debug Native Build",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/output_native/native",
+            "program": "${workspaceFolder}/output-native/native",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
