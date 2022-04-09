@@ -1,6 +1,6 @@
 # Ignore binary output files
 output
-output-native
+output_native
 
 # Ignore python temporary files
 __pycache__/

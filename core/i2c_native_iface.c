@@ -80,14 +80,14 @@ int __attribute__ ((constructor)) begin_i2c_native_iface()
 }
 
 int __attribute__ ((destructor)) end_i2c_native_iface()
-{
+{    
     XSFRWriteByte(0xEE, 0x02);
     XSFRWriteByte(0x6F, 0x01);
 
     PyObject* result = PyObject_CallMethod(pI2C, "deinit_i2c", ""); CHECK(result)
     Py_XDECREF(result);
 
-    Py_XDECREF(pI2C);
+    Py_XDECREF(pI2C);PyErr_Print();
     Py_Finalize();
 
     return 0;
