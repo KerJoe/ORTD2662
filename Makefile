@@ -12,7 +12,7 @@ PROGRAMMER := python3 ../RTDMultiProg/rtdmultiprog.py -i mcp2221_c -w
 NATIVE_CC        = gcc
 NATIVE_CFLAGS 	 = -I. -MMD -g $(shell pkg-config --cflags python3-embed)
 NATIVE_LDFLAGS   = $(shell pkg-config --libs python3-embed)
-NATIVE_OUTPUTDIR = output-native
+NATIVE_OUTPUTDIR = output_native
 
 NATIVE_OBJFILES := $(addprefix $(NATIVE_OUTPUTDIR)/, $(notdir $(SRCFILES:.c=.o)))
 NATIVE_DFILES   := $(addprefix $(NATIVE_OUTPUTDIR)/, $(notdir $(SRCFILES:.c=.d)))

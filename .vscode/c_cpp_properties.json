@@ -34,7 +34,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/usr/include/python3.9"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

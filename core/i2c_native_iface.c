@@ -1,6 +1,6 @@
-#define RTDMULTIPROG_PATH "/media/all/Data/Users/Misha/Documents/Projects/RTD2662/RTDMultiProg"
-#define INTERFACE   "mcp2221_c"
-#define DEVICE      0
+#define RTDMULTIPROG_PATH "/home/misha/Documents/Projects/RTD2662/RTDMultiProg"
+#define INTERFACE   "i2cdev"
+#define DEVICE      1
 #define SETTINGS    ""
 
 // NOTE: XSFRWriteByte and XSFRReadByte declarations are in xsfr.h
@@ -19,7 +19,7 @@
 #define RTD_ISP_ADR         0x4A
 #define RTD_ISP_AUTOINC_ADR (RTD_ISP_ADR | 1)
 
-PyObject *pI2C;
+PyObject* pI2C;
 
 
 void XSFRWriteByte(uint8_t address, uint8_t data)
@@ -30,7 +30,7 @@ void XSFRWriteByte(uint8_t address, uint8_t data)
 
 uint8_t XSFRReadByte(uint8_t address)
 {
-    PyObject* result = PyObject_CallMethod(pI2C, "write_i2c", "(i[i])", RTD_ISP_ADR, (int)address); CHECKNR(result)
+    PyObject* result  = PyObject_CallMethod(pI2C, "write_i2c", "(i[i])", RTD_ISP_ADR, (int)address); CHECKNR(result)
     PyObject* retList = PyObject_CallMethod(pI2C, "read_i2c", "(ii)", RTD_ISP_ADR, 1); CHECKNR(retList)
     CHECKNR(PyList_Check(retList))
     PyObject* retLong = PyList_GetItem(retList, 0); CHECKNR(retLong)
@@ -49,9 +49,9 @@ int __attribute__ ((constructor)) begin_i2c_native_iface()
 {
     Py_Initialize();
 
-    PyObject *sys = PyImport_ImportModule("sys");
-    PyObject *sys_path = PyObject_GetAttrString(sys, "path");
-    PyObject *folder_path = PyUnicode_FromString(RTDMULTIPROG_PATH);
+    PyObject* sys = PyImport_ImportModule("sys");
+    PyObject* sys_path = PyObject_GetAttrString(sys, "path");
+    PyObject* folder_path = PyUnicode_FromString(RTDMULTIPROG_PATH);
     PyList_Append(sys_path, folder_path);
 
     Py_XDECREF(sys);
@@ -87,7 +87,7 @@ int __attribute__ ((destructor)) end_i2c_native_iface()
     PyObject* result = PyObject_CallMethod(pI2C, "deinit_i2c", ""); CHECK(result)
     Py_XDECREF(result);
 
-    Py_XDECREF(pI2C);PyErr_Print();
+    Py_XDECREF(pI2C);    
     Py_Finalize();
 
     return 0;

@@ -5,7 +5,6 @@
 #include "scaler/scaler_registers.h"
 #include "core/misc.h"
 
-// Auto increment of access port address (not SCALER_ADDRESS)
 #define EnableScalerAutoIncrement(__state) XSFRWriteByte(SCALER_CONTROL, InsertBits8(XSFRReadByte(SCALER_CONTROL), 5, 1, !__state))
 #define ScalerWriteAddress(__address) XSFRWriteByte(SCALER_ADDRESS, __address)
 #define ScalerWriteData(__data) XSFRWriteByte(SCALER_DATA, __data)

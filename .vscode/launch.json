@@ -8,7 +8,7 @@
             "name": "Debug Native Build",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/output-native/native",
+            "program": "${workspaceFolder}/output_native/native",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -17,16 +17,9 @@
             "MIMode": "gdb",
             "preLaunchTask": "Compile native",
             "setupCommands": [
-                {
-                    "description": "Включить автоматическое форматирование для gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description":  "Задать для варианта приложения дизассемблирования значение Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                }
+                { "text": "-enable-pretty-printing", "ignoreFailures": true },
+                { "text": "-gdb-set disassembly-flavor intel", "ignoreFailures": true }
+                { "text": "-gdb-set output-radix 16", "ignoreFailures": true }
             ]
         }
 

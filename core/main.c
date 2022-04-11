@@ -6,7 +6,7 @@
 #include "peripherals/xsfr.h"
 #include "config/board_config.h"
 #include "config/misc_config.h"
-
+#include <unistd.h>
 void main()
 {
     XSFRWriteByte(WDT_CONTROL, 0x00);
@@ -23,14 +23,15 @@ void main()
 
     InitScaler();
     SetOverlayColor(0xff, 0x00, 0xff);
-    //while(1);
+
+    usleep(1000000);//while(1);
 }
 
 #ifndef __SDCC
-#include <unistd.h>
+//#include <unistd.h>
 void delayMS(uint32_t ms)
 {
-    usleep(ms);
+    usleep(ms*1000);
 }
 #else
 void delayMS(uint32_t ms)
