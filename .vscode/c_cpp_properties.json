@@ -7,10 +7,10 @@
                 "C:/Program Files/SDCC/include",
                 "C:/Program Files/SDCC/include/mcs51",
                 "/usr/share/sdcc/include/",
-                "/usr/share/sdcc/include/mcs51",
-                "/media/all/Data/Users/Misha/Documents/Projects/RTD2662/ORTD2662"
+                "/usr/share/sdcc/include/mcs51"
             ],
             "defines": [
+                "__SDCC=",
                 "__interrupt(_ARG_)=",
                 "__at(_ARG_)=",
                 "__bit=uint8_t",

@@ -1,19 +1,19 @@
+// Compile only for native
+// NOTE: XSFRWriteByte and XSFRReadByte declarations are in xsfr.h
+#ifndef __SDCC
+
 #define RTDMULTIPROG_PATH "/home/misha/Documents/Projects/RTD2662/RTDMultiProg"
-#define INTERFACE   "i2cdev"
-#define DEVICE      1
+#define INTERFACE   "mcp2221_c"
+#define DEVICE      0
 #define SETTINGS    ""
 
-// NOTE: XSFRWriteByte and XSFRReadByte declarations are in xsfr.h
-
-// Compile only for native
-#ifndef __SDCC
 
 #include "Python.h"
 #include "stdint.h"
 
 
-#define CHECK(_par) if (!_par) { printf("Error in function \"%s\" at line %i\n", __FUNCTION__, __LINE__); PyErr_Print(); return 1; }
-#define CHECKNR(_par) if (!_par) { printf("Error in function \"%s\" at line %i\n", __FUNCTION__, __LINE__); PyErr_Print(); }
+#define CHECK(__par) if (!__par) { printf("Error in function \"%s\" at line %i\n", __FUNCTION__, __LINE__); PyErr_Print(); return 1; }
+#define CHECKNR(__par) if (!__par) { printf("Error in function \"%s\" at line %i\n", __FUNCTION__, __LINE__); PyErr_Print(); }
 
 // Controller's address on I2C bus
 #define RTD_ISP_ADR         0x4A
@@ -88,7 +88,7 @@ int __attribute__ ((destructor)) end_i2c_native_iface()
     Py_XDECREF(result);
 
     Py_XDECREF(pI2C);    
-    Py_Finalize();
+    //Py_Finalize(); // HACK: Avoid random segfault for mcp2221 and mcp2221_c
 
     return 0;
 }

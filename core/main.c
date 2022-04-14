@@ -1,12 +1,17 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "scaler/scaler.h"
-#include "peripherals/pins.h"
-#include "peripherals/xsfr.h"
 #include "config/board_config.h"
 #include "config/misc_config.h"
-#include <unistd.h>
+
+#include "scaler/scaler.h"
+
+#include "peripherals/pins.h"
+#include "peripherals/xsfr.h"
+#include "peripherals/timer.h"
+
+#include "interfaces/hdmi.h"
+
 void main()
 {
     XSFRWriteByte(WDT_CONTROL, 0x00);
@@ -24,17 +29,9 @@ void main()
     InitScaler();
     SetOverlayColor(0xff, 0x00, 0xff);
 
-    usleep(1000000);//while(1);
-}
+    InitHDMI(1);
 
-#ifndef __SDCC
-//#include <unistd.h>
-void delayMS(uint32_t ms)
-{
-    usleep(ms*1000);
+#   ifdef __SDCC
+    while(1);
+#   endif    
 }
-#else
-void delayMS(uint32_t ms)
-{
-}
-#endif

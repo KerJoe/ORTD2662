@@ -5,11 +5,9 @@
 /**
  * Panel interface select
 **/
-
 #define PANEL_TYPE LVDS
-
-#define PANEL_DOUBLE_PORT 0
-#define PANEL_18_BIT      0
+#define PANEL_18_BIT      FALSE
+#define PANEL_DOUBLE_PORT FALSE // Only applicable when PANEL_TYPE==LVDS
 
 /**
  * Panel resolution and timings
@@ -48,11 +46,11 @@
 /**
  * Panel signal polarity and data order
 **/
-#define PANEL_INVERT_DCLK       0
-#define PANEL_INVERT_DHS        0
-#define PANEL_INVERT_DVS        0
-#define PANEL_INVERT_DEN        0
+#define PANEL_INVERT_DCLK       FALSE
+#define PANEL_INVERT_DHS        FALSE
+#define PANEL_INVERT_DVS        FALSE
+#define PANEL_INVERT_DEN        FALSE
 
-#define PANEL_SWAP_BIT_ORDER    0
-#define PANEL_SWAP_RED_BLU      0
-#define PANEL_SWAP_ODD_EVEN     0
+#define PANEL_SWAP_BIT_ORDER    FALSE
+#define PANEL_SWAP_RED_BLU      FALSE
+#define PANEL_SWAP_ODD_EVEN     FALSE
