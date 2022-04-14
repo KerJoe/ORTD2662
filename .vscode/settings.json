@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "board_config.h": "c",
+        "stdio.h": "c",
+        "scaler_registers.h": "c",
+        "scaler_tables.h": "c",
+        "scaler_access.h": "c"
+    }
+}

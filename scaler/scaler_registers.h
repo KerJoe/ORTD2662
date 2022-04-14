@@ -1,5 +1,4 @@
 #pragma once
-#include "scaler/compat_regs.h"
 
 //--------------------------------------------------
 // Global Event Flag
