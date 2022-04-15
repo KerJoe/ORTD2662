@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Adjust_customer.h No.0001
 // Update Note  :

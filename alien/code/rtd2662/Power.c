@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //-------------------------------------------------------------------------
 // ID Code      : Power.c No.0002
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __POWER__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 //---------------------------------------------------------------------------
 

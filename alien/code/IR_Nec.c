@@ -1,7 +1,8 @@
+#include "alien/header/Global.h"
 #define _IR_C
 
 
-#include "Core\Header\include.h"
+#include "alien/header/Include.h"
 
 
 BYTE ucIrQueue[8];

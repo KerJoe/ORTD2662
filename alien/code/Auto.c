@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Auto.c No.0002
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __AUTO__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 //--------------------------------------------------
 // Description  : Auto clock, phase and H,V position

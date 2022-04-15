@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Scaler.c No.0003
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __SCALER__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 //--------------------------------------------------
 // Description  : Get bytes from selected register in data port

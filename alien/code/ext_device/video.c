@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Video.c No.0002
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __VIDEO__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 #if(_VIDEO_SUPPORT == _ON)
 

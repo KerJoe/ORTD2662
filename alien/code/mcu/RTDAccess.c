@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 /*=============================================
   * Copyright (c)      Realtek Semiconductor Corporation, 2005
   * All rights reserved.
@@ -5,7 +6,7 @@
 
 #define __RTDACCESS__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 //----------------------------------------------------------------------------------------------------
 // Scaler communication basic function

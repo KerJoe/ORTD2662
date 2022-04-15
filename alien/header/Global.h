@@ -21,6 +21,19 @@
 
 #ifndef  _GLOBAL_H
 #define  _GLOBAL_H
+
+#ifdef __SDCC
+#define code __code
+#define data __data
+#define idata __idata
+#define xdata __xdata
+#else
+#define code
+#define data
+#define idata
+#define xdata
+#endif
+
 /*===================== Module Dependency  ================== */
 
 /*========================== Types ========================== */
@@ -29,6 +42,7 @@
 //--------------------------------------------------
 // Data Type Redefine
 //--------------------------------------------------
+typedef char bit;
 typedef unsigned char BYTE;
 typedef unsigned char UINT8;
 typedef char SBYTE;

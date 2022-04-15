@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : YPbPr.c No.0001
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __YPBPR__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 #if(_YPBPR_SUPPORT == _ON)
 

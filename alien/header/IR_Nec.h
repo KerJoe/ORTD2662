@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 /*=============================================
   * Copyright (c)      Realtek Semiconductor Corporation, 2005
   * All rights reserved.
@@ -9,7 +10,7 @@
  * 	This file is for global structure's declaration.
  *
  * @author 	$Author: leo_liu $
- * @date 	$Date: 2006-06-26 17:17:25 +0800 (?Ÿæ?ä¸€, 26 ?­æ? 2006) $
+ * @date 	$Date: 2006-06-26 17:17:25 +0800 (?ï¿½ï¿½?ä¸€, 26 ?ï¿½ï¿½? 2006) $
  * @version 	$Revision: 1055 $
  * @ingroup 	input
  */

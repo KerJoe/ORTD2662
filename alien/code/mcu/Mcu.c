@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Mcu.c No.0002
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __MCU__
 
-#include  "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 #if(_MCU_TYPE == _REALTEK_RTD3580D_EMCU)
 /**
@@ -18,6 +19,7 @@
 */
 void CMcuInitial(void)
 {
+#   ifdef __SDCC
     IE      = 0x00;                         // Disable all interrupts
     TMOD    = 0x11;                         // Program Timer0 & Timer1 to Mode#1
     TR0     = 0;                            // Stop Timer0
@@ -27,6 +29,7 @@ void CMcuInitial(void)
     TR1     = 0;                            // Stop Timer1
     TF1     = 0;                            // Clear Timer1 Overflow Bit
     IE      = 0x8a;                         // Enable interrupts of Timer0
+#   endif    
 
 	MCU_WATCHDOG_TIMER_FFEA		= 0x00; 	//dis wdt, wdt default enable
     MCU_WATCHDOG_TIMER_FFEA		|= 0x40;	//clr wdt.//eric 20070627
@@ -136,7 +139,7 @@ void CMCUSetFlashClk(void)
 }
 
 
-void CMCUFlashClkDiv(BYTE clkdiv) // _FlashClkDiv(x=0-15): SPI Flash Clock Generator (OSC/PLL°£¥HDIV:from 0~15) 
+void CMCUFlashClkDiv(BYTE clkdiv) // _FlashClkDiv(x=0-15): SPI Flash Clock Generator (OSC/PLLï¿½ï¿½ï¿½HDIV:from 0~15) 
 { 
     clkdiv &= 0x0F;
     clkdiv = (clkdiv << 2);

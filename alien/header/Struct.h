@@ -1,9 +1,9 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Struct.h No.0000
 // Update Note  :
 //
 //----------------------------------------------------------------------------------------------------
-#include "Core\Header\Maindef.h"
 
 #define _SET_INPUT_SOURCE(value)        (stSystemData.InputSource = value)
 #define _GET_INPUT_SOURCE()             stSystemData.InputSource
@@ -254,17 +254,17 @@ typedef struct
 		//		5: TT1, 6:TT2, 7:TT3, 8:TT4
 	UINT8 Mode;//use for picture mode and audio mode  
                //-------picture mode--------
-		//bit 7~4	[0: standard			±ê×¼]
-		//			[1: bright				ÁÁÀö]
-		//			[2: MILD				ÈáºÍ]
-		//			[3: movie			    µçÓ°]
-		//			[4: user				ÓÃ»§]  
+		//bit 7~4	[0: standard			ï¿½ï¿½×¼]
+		//			[1: bright				ï¿½ï¿½ï¿½ï¿½]
+		//			[2: MILD				ï¿½ï¿½ï¿½]
+		//			[3: movie			    ï¿½ï¿½Ó°]
+		//			[4: user				ï¿½Ã»ï¿½]  
 		//--------audio mode---------
-		//bit 0~3		[0: standard		±ê×¼]
+		//bit 0~3		[0: standard		ï¿½ï¿½×¼]
 		//			[1: THEATER			    Ó°Ôº]
-		//			[2: music				ÒôÀÖ]
-		//			[3: news				ÐÂÎÅ]
-		//			[3: user				ÓÃ»§]
+		//			[2: music				ï¿½ï¿½ï¿½ï¿½]
+		//			[3: news				ï¿½ï¿½ï¿½ï¿½]
+		//			[3: user				ï¿½Ã»ï¿½]
 		//---------------------------------------
 
 } StructSystemDataType;

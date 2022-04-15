@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : I2c.c No.0000
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __I2C__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 //#undef CONFIG_VBI_ENABLE
 //----------------------------------------------------------------------------------------------------

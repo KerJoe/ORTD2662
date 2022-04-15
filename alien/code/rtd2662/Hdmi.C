@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : RTD2528R_Hdmi.c No.0000
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __HDMI__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 
 #if(_HDMI_SUPPORT == _ON)

@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // Copyright of Realtek SemiConductor Corp.
 // Model   : RTD2553V
@@ -13,7 +14,7 @@
 
 #define __MAIN__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 
 /**

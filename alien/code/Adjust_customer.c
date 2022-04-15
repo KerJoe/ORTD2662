@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 /*===========================================================
  * Copyright (c)      Realtek Semiconductor Corporation, 2005
  * All rights reserved.
@@ -22,7 +23,7 @@
 #define _ADJUST_CUSTOMER_C
 
 /*===================== Module dependency  ================== */
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 //--------------------------------------------------
 // Description  : Adjust sharpness
@@ -592,7 +593,7 @@ void CAdjustHueSatSet(BYTE color, SWORD TempU1, SWORD TempU2, SWORD TempV1, SWOR
     //CTimerWaitForEvent(_EVENT_DEN_STOP);
     CScalerSetByte(_P7_ICM_SEL_D1,value);
     CScalerSetByte(_P7_ICM_ACCESS_PORT_D2,((color & 0xf0)+0x03));
-	//CScalerSendAddr(_P7_ICM_DATA_PORT_D3, _WRITE, _NON_AUTOINC);//provisional �ȩw
+	//CScalerSendAddr(_P7_ICM_DATA_PORT_D3, _WRITE, _NON_AUTOINC);//provisional �ȩw
 	
     for(i=1; i<9; i++)
     {

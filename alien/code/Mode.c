@@ -1,3 +1,5 @@
+#include "alien/header/Global.h"
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code  	: Mode.c No.0002
 // Update Note  :
@@ -6,7 +8,7 @@
 
 #define __MODE__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 unsigned char code HDMI_ModeMap[] =
 {
@@ -2654,7 +2656,7 @@ WORD CCalcPanelWdith(void)
 {
      BYTE ucRatio = CCalcRatio();
      
-	 if(ucRatio >= 75)     // ±ÈÀý±È 4:3 ¸ü´ó
+	 if(ucRatio >= 75)     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 4:3 ï¿½ï¿½ï¿½ï¿½
 	    return Panel[ucPanelSelect]->DHWidth;
 
      // if run to here Panel Ratio is 16 : 9 or 16 : 10

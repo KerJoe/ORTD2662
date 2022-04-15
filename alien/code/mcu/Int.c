@@ -1,10 +1,11 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Int.c No.0002
 // Update Note  :
 //
 //----------------------------------------------------------------------------------------------------
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 #if defined(CONFIG_VBI_ENABLE)
 void VBI_GetData();

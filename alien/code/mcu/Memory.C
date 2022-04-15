@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : RTD2528R_Memory.c No.0000
 // Update Note  : 
@@ -6,5 +7,5 @@
 
 #define __RTD2528R_MEMORY__
 
-#include  "Core\Header\Include.h"
+#include "alien/header/Include.h"
 

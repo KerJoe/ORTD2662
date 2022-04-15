@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 /*=============================================
   * Copyright (c)      Realtek Semiconductor Corporation, 2005
   * All rights reserved.
@@ -9,7 +10,7 @@
  * 	This file is for global structure's declaration.
  *
  * @author 	$Author: kingee $
- * @date 	$Date: 2006-06-09 11:09:32 +0800 (?Ÿæ?äº? 09 ?­æ? 2006) $
+ * @date 	$Date: 2006-06-09 11:09:32 +0800 (?ï¿½ï¿½?ï¿½? 09 ?ï¿½ï¿½? 2006) $
  * @version 	$Revision: 872 $
  * @ingroup 	timer
  */
@@ -20,7 +21,7 @@
 */
 
 /*===================== Module dependency  ================== */
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 /*======================= Private Types ===================== */
 

@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 ////////////////////////////////////////////////////////////////////////////
 //         Copyright of Vector Co.,Ltd.                                   //
 //                                                                        //
@@ -222,7 +223,7 @@
 //--------------------------------------------------
 // Set DClk Spread Spectrum Range
 //--------------------------------------------------
-#define _DCLK_SPREAD_RANGE              		0	//0~15, 0¡÷disable, 15¡÷7.5%
+#define _DCLK_SPREAD_RANGE              		0	//0~15, 0ï¿½ï¿½disable, 15ï¿½ï¿½7.5%
 
 //--------------------------------------------------
 // Set Last Line Finetune Method

@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Video.c No.0002
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __UART__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 #if(_RS232_EN)
 

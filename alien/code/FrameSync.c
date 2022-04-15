@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : FrameSync.c No.0000
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __FRAMESYNC__
 
-#include "Core\Header\Include.h"
+#include "alien/header/Include.h"
 
 
 //--------------------------------------------------
@@ -380,7 +381,7 @@ BYTE CFrameSyncDo(void)
             else
                 buffer  += (result & 0x02) ? (_OFFSET_STEP / 2) : _OFFSET_STEP;  // overflow
                 
-            result  = pData[0];  // ·|Àx¦s¤W¤@¦¸¬O over or under
+            result  = pData[0];  // ï¿½|ï¿½xï¿½sï¿½Wï¿½@ï¿½ï¿½ï¿½O over or under
         }
         while(--fine);
 				

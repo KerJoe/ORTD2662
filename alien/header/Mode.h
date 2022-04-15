@@ -1,3 +1,4 @@
+#include "alien/header/Global.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Mode.h No.0001
 // Update Note  :
@@ -35,7 +36,7 @@ RGB->YUV matrix : (CR9C[4] = 1, CR9C[2:1] = 00)
 	Cb = h10*R + h11*G + h12*B
 	Cr = h20*R + h21*G + h22*B
 
-	All ‘h’ coefficients are expressed as 2’s complement with 4-bit signed-extension, 2-bit integer	and 10-bit fractional number. (0x0400 means 1.0)
+	All ï¿½hï¿½ coefficients are expressed as 2ï¿½s complement with 4-bit signed-extension, 2-bit integer	and 10-bit fractional number. (0x0400 means 1.0)
 
 	When color conversion setting is YUV->RGB (CR9C[4]=0), h00, h10 and h20 is not effective(force to 1.0 internally).
 
@@ -155,11 +156,11 @@ BYTE code tRGB2YUV709_TABLE_FOR_NON_RGB_SOURCE[] =
  K13: U(11, 10) 11 bits, 1 bit integer and 10-bit fractional bits (Default: 0x048Fh)
  K22, K23: U(10, 10) 10 bits, all fractional bits (Default: K22: 0x0194h, K23: 0x0252h)
  K32: U(12, 10) 12 bits, 2 bit integer and 10-bit fractional bits (Default: 0x0820h)
- K11’: S(15,4)
+ K11ï¿½: S(15,4)
  Roffset, Goffset, Boffset: S(14,4) 14 bits, 10 bit signed integer and 4-bit fractional bits. (Default: 0x000h)
- K13’: S(15,4)
- K22’, K23’: S(11,2)
- K32’: S(13,2)
+ K13ï¿½: S(15,4)
+ K22ï¿½, K23ï¿½: S(11,2)
+ K32ï¿½: S(13,2)
  Rgain, Ggain, Bgain: U(10, 9) 10bits, 1 bit integer and 9-bit fractional bits. (Default: 0x0200h)
 
 */
