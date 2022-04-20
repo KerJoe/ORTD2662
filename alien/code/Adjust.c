@@ -32,7 +32,7 @@
 //BYTE idata ucAdjustCtrl = 0;
 
 /*=================== Local Functions Phototype ==============*/
-static void CAdjustSetSharpnessTable(bit scaling,BYTE code *pArray0, BYTE code *pArray1);
+void CAdjustSetSharpnessTable(bit scaling,BYTE code *pArray0, BYTE code *pArray1);
 void CAdjustPeakingCoring(void);
 void CAdjustPeakingFilter(SBYTE ucPeaking);
 
@@ -411,9 +411,9 @@ void CAdjustGamma(BYTE ucGammaTableType, BYTE *pGammaTableArrayR, BYTE *pGammaTa
 	CRtdWriteGamma(pGammaTableArrayG);
  	CScalerSetByte(_GAMMA_CTRL_67, 0xa1);
 	CRtdWriteGamma(pGammaTableArrayB);
- 	CScalerSetByte(_GAMMA_CTRL_67, 0x40);	
+ 	CScalerSetByte(_GAMMA_CTRL_67, 0x40);
     }
-#endif	
+#endif
     else if((ucGammaTableType == _COMPACT_GAMMA_COMPRESS_TABLE) || (ucGammaTableType == _FULL_GAMMA_COMPRESS_TABLE))
     {
         for(i=0;i<3;i++)
@@ -459,7 +459,7 @@ void CRtdWriteGamma(UINT8  *array)
 	int diff0;
 	int d2;
 	int k0;
- 
+
 	int outA;
 
 	k0=outA=*array++; // //2x+0
@@ -479,10 +479,10 @@ void CRtdWriteGamma(UINT8  *array)
 		CScalerSetByte(_GAMMA_PORT_66,(((k0&3)<<6)|diff0));
   		diff0=diff0+d2; // d[2x+1]
 // dump d1
-		if (i==254) 
+		if (i==254)
 			diff0=0; // Last item :: without d2;
 		CScalerSetByte(_GAMMA_PORT_66,(diff0));
-		m++; 
+		m++;
 		k++;
 		//---odd-----------------------
 		d2=(tmp&0xf)-8;
@@ -490,7 +490,7 @@ void CRtdWriteGamma(UINT8  *array)
 			d2 = (char)*array++;
  		k0 = outA = outA + diff0;
   		diff0 = diff0 + d2; // d[2x+1];
-   		m++; 
+   		m++;
    		k++;
 	}
 }
@@ -533,7 +533,7 @@ void CAdjustSharpnessForScaleDown(void)
 //--------------------------------------------------
 // Description  : Set Sharpness Table
 // Input Value  : 1: Scale-Up
-//                0: Scale-Down  
+//                0: Scale-Down
 // Output Value : None
 //--------------------------------------------------
 void CAdjustSetSharpnessTable(bit scaling, BYTE code *pArray0, BYTE  code *pArray1)
@@ -636,7 +636,7 @@ void CAdjustAdcGain(void)
    	}
 
    	{
-		CScalerPageSelect(_PAGE0);		
+		CScalerPageSelect(_PAGE0);
     	CScalerWrite(_P0_RED_GAIN_C0, 3, pData, _AUTOINC);
 	}
 }
@@ -668,7 +668,7 @@ void CAdjustAdcOffset(void)
     	pData[5] = stAdcData.AdcOffset[_BLUE];
 #endif
 	}
-	else 
+	else
     {
 #if(_ADC1_INPUT_SWAP_RG == _ON)
     	pData[4] = stYPbPrData.YPbPrOffset[_RED];
@@ -728,10 +728,10 @@ bit CheckInterLace(void)
 {
 	CTimerDelayXms(200);
 	CScalerRead(_IPV_ACT_LEN_H_1A, 1, pData, _NON_AUTOINC);
-	
+
 	if(pData[0] & 0x20)
 		return 1;
-		
+
 	return 0;
 }
 
@@ -739,19 +739,19 @@ bit CheckInterLace(void)
 void CAdjustInterlaceIVS2DVSDelay(void)
 {
     UINT16 usTemp;
-	
+
 //    CScalerRead(_IPV_ACT_LEN_H_1A, 1, pData, _NON_AUTOINC);
 
 	if(CTimerPollingEventProc(5, CheckInterLace))
     //if(pData[0] & 0x20)
     {
-    	CScalerSetBit(_SCALE_CTRL_32, ~(_BIT7 | _BIT6), _BIT7);	
+    	CScalerSetBit(_SCALE_CTRL_32, ~(_BIT7 | _BIT6), _BIT7);
     	CScalerRead(_IPV_ACT_LEN_H_1A, 2, pData, _AUTOINC);
     	usTemp = (((WORD) pData[0] & 0x07) << 8) | (WORD) pData[1];
-    	if(usTemp <= 288)	//480i 576i	
+    	if(usTemp <= 288)	//480i 576i
     		CScalerSetBit(_VGIP_SIGINV_11, ~_BIT4, 0);
     	else
-    		CScalerSetBit(_VGIP_SIGINV_11, ~_BIT4, _BIT4);		
+    		CScalerSetBit(_VGIP_SIGINV_11, ~_BIT4, _BIT4);
 
 
         CScalerRead(_IV_DV_DELAY_CLK_ODD_41, LENGTH(1), pData, _NON_AUTOINC);
@@ -799,7 +799,7 @@ BYTE CAdjustIVS2DVSDelay(BYTE ucOption)
         //eric 20070620
         CScalerPageSelect(_PAGE6);
         //if((CScalerGetBit(_P6_UZD_CTRL0_E3, _BIT1 | _BIT0)) && (~(bit)(CScalerGetBit(_P6_UZD_CTRL0_E3, _BIT4))))
-		#if(_DE_INTERLACE_SUPPORT == _ON)        
+		#if(_DE_INTERLACE_SUPPORT == _ON)
         if (bSourceVideo())
         {
             if (stDisplayInfo.DHWidth < 700)
@@ -815,7 +815,7 @@ BYTE CAdjustIVS2DVSDelay(BYTE ucOption)
         else
         {
         	if(stModeInfo.IVHeight <= 288)
-        	{ 
+        	{
         		if((~(bit)(CScalerGetBit(_P6_UZD_CTRL0_E3, _BIT4))) &&(CScalerGetBit(_P6_UZD_CTRL0_E3, _BIT1))&&
                    (CScalerGetBit(_P6_UZD_CTRL0_E3, _BIT0)) && (Panel[ucPanelSelect]->DHWidth > 700)) // EricLee 0402 add for YPbPr
         			((DWORD *)pData)[1] += (stModeInfo.IHTotal * 3) + 640;
@@ -823,7 +823,7 @@ BYTE CAdjustIVS2DVSDelay(BYTE ucOption)
         			((DWORD *)pData)[1] += (stModeInfo.IHTotal *2) + 640;
         	}
         	else
-        	{ 
+        	{
         		if((~(bit)(CScalerGetBit(_P6_UZD_CTRL0_E3, _BIT4))) &&(CScalerGetBit(_P6_UZD_CTRL0_E3, _BIT1))&&
                    (CScalerGetBit(_P6_UZD_CTRL0_E3, _BIT0)) && (Panel[ucPanelSelect]->DHWidth > 700)) // EricLee 0402 add for YPbPr
         			((DWORD *)pData)[1] += (stModeInfo.IHTotal * 2) + 640;
@@ -991,7 +991,7 @@ void CAdjustDPLL2(DWORD ulFreq)
     // Calculate the 4 * Ich,
     pData[5]    = ((WORD)mcode * 4 * 10 / 176) - 5;
     pData[6]    = 0x00;
-    
+
     if(pData[5] >= 60)
     {
         pData[5]    -= 60;
@@ -1028,11 +1028,11 @@ void CAdjustDPLL2(DWORD ulFreq)
 #else
     pData[1]    = ((1 == div) ? 0x00 : 0x10) | (_DPLL_N_CODE - 2);
 #endif
-    pData[2]    = 0x40 | pData[6]; 
+    pData[2]    = 0x40 | pData[6];
     pData[3]    = 0x0f;
 
-#else  //#if(_TEST_DPLL) 
- 
+#else  //#if(_TEST_DPLL)
+
     mcode   = ulFreq * 8 * _DPLL_N_CODE * 16 / ((DWORD)_RTD_XTAL * 15);
 
 	//DebugPrintf("\n CAdjustDPLL =%x, ",(UINT8)(mcode>>8));
@@ -1043,7 +1043,7 @@ void CAdjustDPLL2(DWORD ulFreq)
         {
 			div     = 8;                            				// Output DPLL/2 for DCLK
 			mcode   = (mcode + 0) <<1;   			// Round to integer
-		}		
+		}
 		if(mcode<120)*/
 		if(mcode<38)
         {
@@ -1051,7 +1051,7 @@ void CAdjustDPLL2(DWORD ulFreq)
   //          mcode   = (mcode + 1) >> 1;             // Round to integer
             div     = 2;                            // Output DPLL/2 for DCLK
             mcode   = (mcode + 1) >> 1;             // Round to integer
-		}		
+		}
 		else if(mcode<120)
         {
 			div     = 4;                            				// Output DPLL/2 for DCLK
@@ -1069,8 +1069,8 @@ void CAdjustDPLL2(DWORD ulFreq)
     {
 		div     = 1;                            			// Output DPLL for DCLK
 		mcode   = (mcode + 2) >> 2;   		// Round to integer
-	}		
-           
+	}
+
     // Original Formula : M_Code/Ich = 36.67 must be constant
     // Ich   = M_Code * 100 / 3667
     // Ich   = 1u + D0[0]*1u + D0[1]*2u + D0[2]*4u + D0[3]*8u (A)
@@ -1112,11 +1112,11 @@ void CAdjustDPLL2(DWORD ulFreq)
 		if(div==2)
 			pData[1]    = 0x10 | (_DPLL_N_CODE - 2);
 		else if(div==4)
-			pData[1]    = 0x20 | (_DPLL_N_CODE - 2);	
+			pData[1]    = 0x20 | (_DPLL_N_CODE - 2);
 		else//div==1
 			pData[1]    = 0x00 | (_DPLL_N_CODE - 2);
 	}
-	else	
+	else
  		pData[1]    = ((1 == div) ? 0x00 : 0x10) | (_DPLL_N_CODE - 2);
 #endif
     pData[2]    = 0x80 | pData[6];
@@ -1239,7 +1239,7 @@ void CAdjustAdcClock(WORD usClock , BYTE ucControl)
 	SBYTE STemp;
 	WORD pcode;
 	BYTE vco_divider = 2;
-	
+
 
 	//CPowerADCAPLLOn();
 
@@ -1258,15 +1258,15 @@ IHF : Input Horizontal Frequency
 usClock : Divider number of input clock
 stModeInfo.IHFreq = 10 * IHF(in KHz)
 _RTD_XTAl : Defined crystal clock unit in KHz
- 
+
 Fvco = Fxtal*(M + K/16)/N1 = IHF * usClock * vco_divider
 Assum N1 = 2
 (M + K/16) = IHF * usClock * N1 * vco_divider / Fxtal
 stModeInfo.IHFreq UINT in 100Hz
 *********************************************************/
      	//ADC sampling clock, UNIT in KHz
-        pllclock = (DWORD)stModeInfo.IHFreq * usClock / 10;  
-    	vco_divider = pllclock < 100000 ? 4 : 2;   
+        pllclock = (DWORD)stModeInfo.IHFreq * usClock / 10;
+    	vco_divider = pllclock < 100000 ? 4 : 2;
         //Get (M + K/16) * 1024
         pllclock  = ((pllclock * _APLL_N_CODE * vco_divider) << 10 ) / _RTD_XTAL;
         CScalerPageSelect(_PAGE1);
@@ -1297,7 +1297,7 @@ stModeInfo.IHFreq UINT in 100Hz
     		STemp += 16;
     	}
         //set M, N, K code
-       	CScalerSetByte(_P1_PLL_M_AC, (mcode - 3)); 
+       	CScalerSetByte(_P1_PLL_M_AC, (mcode - 3));
     	CScalerSetBit(_P1_PLL_N_AD, 0x0f, (((STemp & 0x0f) << 4) | (_APLL_N_CODE - 2)));
         CScalerSetByte(0xA4, 0x80);
         CTimerDelayXms(1);
@@ -1319,9 +1319,9 @@ stModeInfo.IHFreq UINT in 100Hz
 	I_gain = ----------------------------- x -----
 	                     Ths                   8
 
-	    2^19 x PE_U x (16M +- K)   
+	    2^19 x PE_U x (16M +- K)
 	= -----------------------------
-	              Ths              
+	              Ths
 
 	= IHF x 2^19 x PE_U x (16M +- K)
 ****************************************************************************/
@@ -1344,10 +1344,10 @@ stModeInfo.IHFreq UINT in 100Hz
         //icode = icode>>2;   // n=32
         icode = icode>>6;   // n=512
     	icode &= 0x00007fff;
-    
+
     	CScalerSetByte(_P1_I_CODE_M_A1,(BYTE)(icode >> 8));
     	CScalerSetByte(_P1_I_CODE_L_A2, (BYTE)icode);
-    
+
     	// Set the P code
         //pcode = (5 * icode * _RTD_XTAL / (stModeInfo.IHFreq/10) / _APLL_N_CODE ) >> 7;    // Total gain=(1+5)/32
         pcode = (63 * icode * _RTD_XTAL / (stModeInfo.IHFreq/10) / _APLL_N_CODE ) >> 7;    // Total gain=(1+63)/512
@@ -1360,7 +1360,7 @@ stModeInfo.IHFreq UINT in 100Hz
     			if((pcode >> pData[0]) == 0)
     				break;
     		}
-            switch(pData[0]-9)//yc 20080225 
+            switch(pData[0]-9)//yc 20080225
             {
                 case 0:
             		pcode = pcode / _G_VALUE_DIVIDER_0;
@@ -1386,49 +1386,49 @@ stModeInfo.IHFreq UINT in 100Hz
     		//pcode = pcode / g_value_divider[(pData[0] - 9)];
     		STemp = pData[0] - 7;
     	}
-    
+
     	if(pcode==0)
         pcode = 1;
-    
+
     	//g_value = 0x01;
         CScalerSetByte(_P1_P_CODE_MAPPING_METHOD_B6, STemp << 2);
-    
+
         CScalerSetByte(_P1_DDS_MIX_2_B9, 0x05); //set the P_code_max
         CScalerSetByte(_P1_DDS_MIX_3_BA, 0x1e);
     	CScalerSetByte(_P1_P_CODE_A3, (BYTE)pcode);
-    
+
     	CScalerSetByte(_P1_PLLPHASE_CTRL1_B4, 0x00);
-    
+
         CTimerWaitForEvent(_EVENT_IEN_STOP);
         CTimerWaitForEvent(_EVENT_IEN_STOP);
-    
+
         pData[0] = 32;
         do
         {
             CScalerSetBit(_P1_PLLDIV_H_B1, 0xf0, (BYTE)(((usClock - 1) >> 8) & 0x0f));
     	    CScalerSetByte(_P1_PLLDIV_L_B2, (BYTE)((usClock - 1) & 0x00ff));
     	    CScalerSetByte(_P1_PLLPHASE_CTRL1_B4, 0x00);
-    
+
             CTimerWaitForEvent(_EVENT_IEN_STOP);
             CTimerWaitForEvent(_EVENT_IEN_STOP);
-    
+
         }while(CAdjustGetAPLLSetting(usClock) && --pData[0]);
-    
+
     	CPowerADCAPLLOn();
 				//DebugPrintf("\n CPowerADCAPLLOn ... ",0x20);
 					DebugPrintf("\n Stop ... ",0x20);
 	//CSwitchToI2C();
 	//for(;;);
-        
-    
+
+
         CTimerWaitForEvent(_EVENT_IEN_STOP);
         CTimerWaitForEvent(_EVENT_IEN_STOP);
         CTimerWaitForEvent(_EVENT_IEN_STOP);
-    
+
         CAdjustGetAPLLSetting(usClock);
-    
+
         CScalerSetByte(_P1_FAST_PLL_CTRL_AA, 0x00);
-    
+
         CMiscClearStatusRegister();
 
     }
@@ -1483,11 +1483,11 @@ void CAdjustAPLLFastLock(WORD usClock)
 //*/    whhsiao 20080227 update-end
 
 
-    // calculate Final K Value    
+    // calculate Final K Value
     delta_k =  sum_i_now >> 22;
 
     if ( (delta_k>>4) == 1 )
-    {  
+    {
       delta_k |= 0xE0;
       delta_k +=1;
      }
@@ -1512,14 +1512,14 @@ void CAdjustAPLLFastLock(WORD usClock)
         final_k -=16;
     }
 
-    
+
     final_k &= 0x0F;
 
     // calculate Sum_I
     delta = sum_i_now & 0x3fffff;   // 22bits
 
 
-    // calculate Final M Value 
+    // calculate Final M Value
     CScalerRead(0xAC, 1, pData, _NON_AUTOINC);
     mcode = pData[0]+3;
 
@@ -1533,7 +1533,7 @@ void CAdjustAPLLFastLock(WORD usClock)
     pll_divider_k = (DWORD)final_k << 22;
 
 
-    if ( (final_k>>3) == 1 )                                 // final_k 2's 
+    if ( (final_k>>3) == 1 )                                 // final_k 2's
         pll_divider_k = 0x4000000 - pll_divider_k;
 
 
@@ -1544,11 +1544,11 @@ void CAdjustAPLLFastLock(WORD usClock)
 
 
     if ((sum_i_now>>26) ==1)                        // delta 2's
-        delta = 0x400000 -  delta;       
+        delta = 0x400000 -  delta;
   //  else
   //      delta = delta;
 
-        
+
     if ((sum_i_now>>26) ==1)
         pll_divider = pll_divider - delta ;
     else
@@ -1559,7 +1559,7 @@ void CAdjustAPLLFastLock(WORD usClock)
     usPllDividerRem =  ((pll_divider % usClock) <<12) / usClock ;
 
     usIHFreqApllFast =  ((((DWORD)stModeInfo.IHFreq * (pll_divider>>11)) / pll_divider_old) + 2) >> 2;
-  
+
 }
 //--------------------------------------------------
 // Description  : Set ADC clock (IHTotal)
@@ -1593,7 +1593,7 @@ void CAdjustAdcClock_OSD(WORD usClock)
     delta = pll_divider & 0x003FFFFF;
 	CScalerSetBit(_P1_PLLDIV_H_B1, 0xf0, (BYTE)(((usClock - 1) >> 8) & 0x0f));
 	CScalerSetByte(_P1_PLLDIV_L_B2, (BYTE)((usClock - 1) & 0x00ff));
-   	CScalerSetByte(_P1_PLL_M_AC, (mcode - 3)); 
+   	CScalerSetByte(_P1_PLL_M_AC, (mcode - 3));
 	CScalerSetBit(_P1_PLL_N_AD, 0x0f, (((STemp & 0x0f) << 4) | (_APLL_N_CODE - 2)));
     pData[0] = 0x00;
 	pData[1] = (BYTE)((delta >> 16) & 0x0000003f);
@@ -1636,9 +1636,9 @@ void CAdjustAdcClock_OSD(WORD usClock)
 	// 2^19 * 2^4 / 2^10 = 2^13
 	// _PE_VALUE UNIT is ps, so result has to multiply 10^(-12)
 	// stModeInfo.IHFreq/10 UNIT is KHz, so result has to multiply 10^2
-    pll_divider = (usPEValue * (usIHFreqApllFast/10)) * (pll_divider/(DWORD)100000);  //yc 20080306 
-    pll_divider = (pll_divider/10000) >> 9;    // 
-    //pll_divider = (pll_divider/10000) >> 8;    // 
+    pll_divider = (usPEValue * (usIHFreqApllFast/10)) * (pll_divider/(DWORD)100000);  //yc 20080306
+    pll_divider = (pll_divider/10000) >> 9;    //
+    //pll_divider = (pll_divider/10000) >> 8;    //
     pll_divider &= 0x00007fff;
 	CScalerSetByte(_P1_I_CODE_M_A1,(BYTE)(pll_divider >> 8));
 	CScalerSetByte(_P1_I_CODE_L_A2, (BYTE)pll_divider);
@@ -1652,7 +1652,7 @@ void CAdjustAdcClock_OSD(WORD usClock)
 			if((pcode >> pData[0]) == 0)
 				break;
 		}
-        switch(pData[0]-9)//yc 20080225 
+        switch(pData[0]-9)//yc 20080225
         {
             case 0:
         		pcode = pcode / _G_VALUE_DIVIDER_0;
@@ -1682,12 +1682,12 @@ void CAdjustAdcClock_OSD(WORD usClock)
 	CScalerSetByte(_P1_P_CODE_MAPPING_METHOD_B6, STemp << 2);
     CScalerSetByte(_P1_DDS_MIX_2_B9, 0xFF); //set the P_code_max
     CScalerSetByte(_P1_DDS_MIX_3_BA, 0xFF);
-	CScalerSetByte(_P1_P_CODE_A3, (BYTE)pcode); 
+	CScalerSetByte(_P1_P_CODE_A3, (BYTE)pcode);
 #if(_APLL_FAST_LOCK) //yc 20080225
     //CScalerSetBit(_P1_FAST_PLL_CTRL_AA, ~(_BIT6 | _BIT5 | _BIT4), (_BIT6 | _BIT5 | _BIT4));
     CAdjustDisableWatchDog(_WD_APLL_NONLOCK);
     CScalerSetBit(_P1_FAST_PLL_CTRL_AA, ~(_BIT6 | _BIT5), (_BIT6 | _BIT5));
-    CTimerDelayXms(100); 
+    CTimerDelayXms(100);
     CAdjustEnableWatchDog(_WD_APLL_NONLOCK);
 #else
     //Enable Double buffer write in PLL M/N K�BPLLDIV�BDDS SUM_I
@@ -1748,12 +1748,12 @@ void CAdjustAdcClockYPbPr(WORD usClock)
 //  CScalerSetByte(_P1_DDS_MIX_1_B8, 0x0c);   //Ming-Yen
     CScalerSetByte(_P1_DDS_MIX_2_B9, 0xff);
     CScalerSetByte(_P1_PLL_CRNT_AE, 0x63);
-    
+
     //CScalerSetByte(_P1_PLL_WD_AF, 0x08);
 
     CScalerSetBit(_P1_PLLDIV_H_B1, ~(_BIT6 | _BIT5 | _BIT4), (vco_divider == 2) ? (_BIT6 | _BIT5) : (_BIT6 | _BIT5 | _BIT4));
 
-       
+
 
     //Set the divide number
     CScalerSetBit(_P1_PLLDIV_H_B1, 0xf0, (BYTE)(((usClock - 1) >> 8) & 0x0f));
@@ -1773,12 +1773,12 @@ void CAdjustAdcClockYPbPr(WORD usClock)
     delta = (DWORD)pllclock - ((DWORD)mcode << 10);
 
     //K is the fraction part quantized by 16
-    kcode = (delta) >> 6; 
+    kcode = (delta) >> 6;
 
 #if(_APLL_FAST_LOCK)
     //SUM_I is the truncated part by calculation quantized by 1024
-	SUM_I = ((DWORD)delta << 4) - ((DWORD)kcode << 10); 
-#endif  
+	SUM_I = ((DWORD)delta << 4) - ((DWORD)kcode << 10);
+#endif
 
     //K is range from -8 ~ 7
     if(kcode>7)
@@ -1793,7 +1793,7 @@ void CAdjustAdcClockYPbPr(WORD usClock)
     }
 
     //set M, N, K code
-    CScalerSetByte(_P1_PLL_M_AC, (mcode - 3)); 
+    CScalerSetByte(_P1_PLL_M_AC, (mcode - 3));
     CScalerSetBit(_P1_PLL_N_AD, 0x0f, (((kcode & 0x0f) << 4) | (_APLL_N_CODE - 2)));
 
 #if (_APLL_FAST_LOCK)
@@ -1846,7 +1846,7 @@ void CAdjustAdcClockYPbPr(WORD usClock)
 
     // Set the P code
     pcode = (7 * icode * _RTD_XTAL / stModeInfo.IHFreq /_APLL_N_CODE) >> 7;
-    
+
     if(pcode > 255)
     {
         for(pData[0] = 9; pData[0] < 15; pData[0]++)
@@ -1890,17 +1890,17 @@ void CAdjustAdcClockYPbPr(WORD usClock)
 
     CPowerADCAPLLOn();
     //DebugPrintf("\n CPowerADCAPLLOn ... ",0x20);
-    
+
     CTimerWaitForEvent(_EVENT_IEN_STOP);
     CTimerWaitForEvent(_EVENT_IEN_STOP);
     CTimerWaitForEvent(_EVENT_IEN_STOP);
-        
+
     CAdjustGetAPLLSetting(usClock);
-        
+
     CScalerSetByte(_P1_FAST_PLL_CTRL_AA, 0x00);
-        
+
     CMiscClearStatusRegister();
-        
+
 	if (bDoAspectRatioFlag == _FALSE && bDoAutoConfigFlag == _FALSE)
        CAdjustEnableWatchDog(_WD_ALL);
 }
@@ -1963,12 +1963,12 @@ void CAdjustAdcClock(WORD usClock)
 //  CScalerSetByte(_P1_DDS_MIX_1_B8, 0x0c);   //Ming-Yen
     CScalerSetByte(_P1_DDS_MIX_2_B9, 0xff);
     CScalerSetByte(_P1_PLL_CRNT_AE, 0x63);
-    
+
     //CScalerSetByte(_P1_PLL_WD_AF, 0x08);
 
     CScalerSetBit(_P1_PLLDIV_H_B1, ~(_BIT6 | _BIT5 | _BIT4), (vco_divider == 2) ? (_BIT6 | _BIT5) : (_BIT6 | _BIT5 | _BIT4));
 
-       
+
 
     //Set the divide number
     CScalerSetBit(_P1_PLLDIV_H_B1, 0xf0, (BYTE)(((usClock - 1) >> 8) & 0x0f));
@@ -1988,12 +1988,12 @@ void CAdjustAdcClock(WORD usClock)
     delta = (DWORD)pllclock - ((DWORD)mcode << 10);
 
     //K is the fraction part quantized by 16
-    kcode = (delta) >> 6; 
+    kcode = (delta) >> 6;
 
 #if(_APLL_FAST_LOCK)
     //SUM_I is the truncated part by calculation quantized by 1024
-	SUM_I = ((DWORD)delta << 4) - ((DWORD)kcode << 10); 
-#endif  
+	SUM_I = ((DWORD)delta << 4) - ((DWORD)kcode << 10);
+#endif
 
     //K is range from -8 ~ 7
     if(kcode>7)
@@ -2008,7 +2008,7 @@ void CAdjustAdcClock(WORD usClock)
     }
 
     //set M, N, K code
-    CScalerSetByte(_P1_PLL_M_AC, (mcode - 3)); 
+    CScalerSetByte(_P1_PLL_M_AC, (mcode - 3));
     CScalerSetBit(_P1_PLL_N_AD, 0x0f, (((kcode & 0x0f) << 4) | (_APLL_N_CODE - 2)));
 
 #if (_APLL_FAST_LOCK)
@@ -2061,7 +2061,7 @@ void CAdjustAdcClock(WORD usClock)
 
     // Set the P code
     pcode = (7 * icode * _RTD_XTAL / stModeInfo.IHFreq /_APLL_N_CODE) >> 7;
-    
+
     if(pcode > 255)
     {
         for(pData[0] = 9; pData[0] < 15; pData[0]++)
@@ -2105,17 +2105,17 @@ void CAdjustAdcClock(WORD usClock)
 
     CPowerADCAPLLOn();
     //DebugPrintf("\n CPowerADCAPLLOn ... ",0x20);
-    
+
     CTimerWaitForEvent(_EVENT_IEN_STOP);
     CTimerWaitForEvent(_EVENT_IEN_STOP);
     CTimerWaitForEvent(_EVENT_IEN_STOP);
-        
+
     CAdjustGetAPLLSetting(usClock);
-        
+
     CScalerSetByte(_P1_FAST_PLL_CTRL_AA, 0x00);
-        
+
     CMiscClearStatusRegister();
-        
+
 	if (bDoAspectRatioFlag == _FALSE && bDoAutoConfigFlag == _FALSE)
        CAdjustEnableWatchDog(_WD_ALL);
 }
@@ -2133,7 +2133,7 @@ BYTE CAdjustGetAPLLSetting(WORD usClock)
     BYTE ucTemp[2];
 
 	usClock -= 1;
-    
+
     CScalerPageSelect(_PAGE1);
     CScalerRead(_P1_PLLDIV_H_B1, 2, ucTemp, _AUTOINC);
 
@@ -2160,7 +2160,7 @@ void CAdjustPhase(BYTE ucPhase)
 #if(1)
     BYTE ctrl, select;
 	//DebugPrintf("\n CAdjustPhase %c",'!');
-	
+
 	if (bDoAspectRatioFlag == _FALSE && bDoAutoConfigFlag == _FALSE)
        CAdjustEnableWatchDog(_WD_DV_TIMEOUT_APLL_NONLOCK);
 
@@ -2213,9 +2213,9 @@ void CAdjustPhase(BYTE ucPhase)
 
     CAdjustIHSDelay(select);                                        // Compensate IHS delay
     CScalerSetBit(_VGIP_DELAY_CTRL_12, ~_BIT3, (ctrl << 3));        // Select a correct edge to latch the stable data
-    
+
     CMiscApplyDoubleBuffer();
-		
+
     CMiscClearStatusRegister();
 	if (bDoAspectRatioFlag == _FALSE && bDoAutoConfigFlag == _FALSE)
        CAdjustEnableWatchDog(_WD_ALL);
@@ -2223,33 +2223,33 @@ void CAdjustPhase(BYTE ucPhase)
     BYTE ctrl, select;
     BYTE pllclock;
     //DebugPrintf("\n CAdjustPhase %c",'!');
-    
-    if(bDoAspectRatioFlag == _FALSE && bDoAutoConfigFlag == _FALSE)  // for Aspect ratio,hill 20070515  
+
+    if(bDoAspectRatioFlag == _FALSE && bDoAutoConfigFlag == _FALSE)  // for Aspect ratio,hill 20070515
     CAdjustEnableWatchDog(_WD_DV_TIMEOUT);
-    
+
     //Ida added for change range from 0-63 to 0-100
     ucPhase = ucPhase & 0x3f;
- 
+
     pllclock = (DWORD)stModeInfo.IHFreq * stModeUserData.Clock / 10000;
     if(pllclock < 113)
         select = (138+pllclock)/4;
     else
         select = (pllclock-113)/3;
- 
- 
+
+
     // Calculate the absolute value from the selected phase to transition
     pData[0]    = (ucPhase >= select) ? ucPhase - select : select - ucPhase;
     ctrl = (pData[0] > 12 && pData[0] < 52) ? 0x00 : 0x01;
- 
+
     if((stModeInfo.IHStartPos < stModeUserData.HPosition) && ((stModeUserData.HPosition - stModeInfo.IHStartPos) > ucHStartBias))
         stModeUserData.HPosition = stModeInfo.IHStartPos + ucHStartBias;
- 
+
     if((stModeInfo.IHStartPos > stModeUserData.HPosition) && ((stModeInfo.IHStartPos - stModeUserData.HPosition) > ucHStartBias))
         stModeUserData.HPosition = stModeInfo.IHStartPos - ucHStartBias;
- 
+
 //    pData[0]    = ucHStartBias + stModeInfo.IHStartPos - stModeUserData.HPosition  + _PROGRAM_HDELAY;
     ((WORD *)pData)[0]  = ucHStartBias + stModeInfo.IHStartPos - stModeUserData.HPosition  + _PROGRAM_HDELAY;
- 
+
 
     // Compensate the H position shift due to the phase select
     if (select > 12)
@@ -2257,9 +2257,9 @@ void CAdjustPhase(BYTE ucPhase)
     else
         select  = (ucPhase < (select + 52)) ? (((WORD *)pData)[0] - 1) : ((WORD *)pData)[0];
     CScalerPageSelect(_PAGE1);
- 
+
     CScalerSetBit(_P1_PLLDIV_H_B1, ~_BIT6, _BIT6);
- 
+
     if((bit)CScalerGetBit(_P1_PLLDIV_H_B1, _BIT4))
     {
         CScalerSetBit(_P1_PLLPHASE_CTRL1_B4, 0x80, ucPhase * 2);           // Set phase
@@ -2268,15 +2268,15 @@ void CAdjustPhase(BYTE ucPhase)
     {
         CScalerSetBit(_P1_PLLPHASE_CTRL1_B4, 0x80, ucPhase);               // Set phase
     }
- 
+
     CAdjustIHSDelay(select);                                        // Compensate IHS delay
     CScalerSetBit(_VGIP_DELAY_CTRL_12, ~_BIT3, (ctrl << 3));        // Select a correct edge to latch the stable data
-    
+
     CMiscApplyDoubleBuffer();
-  
+
     CMiscClearStatusRegister();
-  
-    if(bDoAspectRatioFlag == _FALSE && bDoAutoConfigFlag == _FALSE)  // for Aspect ratio,hill 20070515  
+
+    if(bDoAspectRatioFlag == _FALSE && bDoAutoConfigFlag == _FALSE)  // for Aspect ratio,hill 20070515
         CAdjustEnableWatchDog(_WD_DV_TIMEOUT | _WD_FRAMESYNC);
 #endif
 }
@@ -2375,7 +2375,7 @@ void CAdjustInterlaceIVS2DVSProtection(void)
 	CScalerRead(_IPV_ACT_LEN_H_1A, 1, pData, _NON_AUTOINC);
 	if(pData[0] & 0x20)
 	{
-      //  CScalerSetBit(_SCALE_CTRL_32, ~(_BIT7 | _BIT6), _BIT7); //forster modified 061102 
+      //  CScalerSetBit(_SCALE_CTRL_32, ~(_BIT7 | _BIT6), _BIT7); //forster modified 061102
         //CScalerSetBit(_VGIP_ODD_CTRL_13, ~_BIT0, _BIT0);
 
 //V400 modify
@@ -2394,9 +2394,9 @@ void CAdjustInterlaceIVS2DVSProtection(void)
             CScalerSetByte(_IV_DV_DELAY_CLK_ODD_41, (ustemp - 16) / 16);
             ustemp -= stModeInfo.IHTotal / 2;
             CScalerSetByte(_IV_DV_DELAY_CLK_EVEN_42, (ustemp - 16) / 16);
-        } 
-//V400 modify  
-        CScalerSetBit(_FS_DELAY_FINE_TUNING_43, ~(_BIT1), _BIT1);       
+        }
+//V400 modify
+        CScalerSetBit(_FS_DELAY_FINE_TUNING_43, ~(_BIT1), _BIT1);
 	}
 }
 #endif
@@ -2412,7 +2412,7 @@ void CAdjustHdmiCbCr422(void)
 
 		CScalerPageSelect(_PAGE0);
 		if((pData[0] & 0x30) == 0x10)
-		{		
+		{
 			CTimerWaitForEvent(_EVENT_IVS);
 			pData[0] = HIBYTE(stModeInfo.IHTotal - 2);
 			pData[1] = 0x02;
@@ -2431,13 +2431,13 @@ void CAdjustHdmiCbCr422(void)
 			CScalerWrite(_H_BOUNDARY_H_70, 14, pData, _AUTOINC);
    		 	pData[0]    = CAutoWaitFinish();
     		//if(pData[0] != _ERROR_SUCCESS)
-			//DebugPrintf("\nmeasure result = %x",pData[0]);	
+			//DebugPrintf("\nmeasure result = %x",pData[0]);
 
 			CScalerRead(_V_START_END_H_7E, 6, pData, _AUTOINC);
 			usHStartPos = (((WORD) pData[3] & 0xf0) << 4) | (WORD) pData[4];
 			usHEndPos = (((WORD) pData[3] & 0x0f) << 8) | (WORD) pData[5];
 			usVStartPos = (((WORD) pData[0] & 0xf0) << 4) | (WORD) pData[1];
-			usVEndPos = (((WORD) pData[0] & 0x0f) << 8) | (WORD) pData[2];			
+			usVEndPos = (((WORD) pData[0] & 0x0f) << 8) | (WORD) pData[2];
 
 			pData[0]    = ((usHStartPos >> 4) & 0x70) | (HIBYTE(usHStartPos) & 0x0f);
 			pData[1]    = (LOBYTE(usHStartPos)+0);
@@ -2445,34 +2445,34 @@ void CAdjustHdmiCbCr422(void)
 			pData[3]    = (HIBYTE(usVStartPos) & 0x0f);
 			pData[4]    = (LOBYTE(usVStartPos)+0);
 			pData[5]    = (LOBYTE(usVStartPos)+0);
-			CScalerWrite(_H_BOUNDARY_H_70, 6, pData, _AUTOINC);	
+			CScalerWrite(_H_BOUNDARY_H_70, 6, pData, _AUTOINC);
 
 			CScalerSetByte(_AUTO_ADJ_CTRL1_7D, 0x20);
-	
-			CScalerSetByte(_AUTO_ADJ_CTRL0_7A, 0x00|_BIT1);//red	
+
+			CScalerSetByte(_AUTO_ADJ_CTRL0_7A, 0x00|_BIT1);//red
 			CScalerSetBit(_AUTO_ADJ_CTRL1_7D, ~_BIT0 , _BIT0);//start
 
 			pData[0] = CAutoWaitFinish();
-			//if(pData[0] != _ERROR_SUCCESS)       
+			//if(pData[0] != _ERROR_SUCCESS)
 				//DebugPrintf("\nmeasureMAX_R result = %x",pData[0]);
 
 			CScalerRead(_AUTO_PHASE_0_87, 1, &pData[1], _AUTOINC);
 			//DebugPrintf("\n****RED**** = %x",pData[1]);
-	
-			CScalerSetByte(_AUTO_ADJ_CTRL0_7A, 0x00);//blue	
+
+			CScalerSetByte(_AUTO_ADJ_CTRL0_7A, 0x00);//blue
 			CScalerSetBit(_AUTO_ADJ_CTRL1_7D, ~_BIT0 , _BIT0);//start
 
 			pData[0] = CAutoWaitFinish();
-			//if(pData[0] != _ERROR_SUCCESS)       
+			//if(pData[0] != _ERROR_SUCCESS)
 				//DebugPrintf("\nmeasureMAX_B result = %x",pData[0]);
 
 			CScalerRead(_AUTO_PHASE_0_87, 1, &pData[2], _AUTOINC);
-			//DebugPrintf("\n****BLUE**** = %x",pData[2]);	
+			//DebugPrintf("\n****BLUE**** = %x",pData[2]);
 
 			if((pData[1] != 0) || (pData[2] != 0))
 			{
 				//DebugPrintf("\n\n=========MODIFY!!!!=========  \n\n",'0');
-    	    	CScalerRead(_IPH_ACT_STA_L_15, 1, pData, _NON_AUTOINC);			
+    	    	CScalerRead(_IPH_ACT_STA_L_15, 1, pData, _NON_AUTOINC);
 				pData[0] = pData[0] - 1 ;
 				CScalerSetBit(_VGIP_CTRL_10, ~(_BIT4) , 0x00);
 				CScalerSetByte(_IPH_ACT_STA_L_15, pData[0]);
@@ -2534,7 +2534,7 @@ void CAdjustDisableHDMIWatchDog(BYTE ucPar)
 //                MCU DAC function
 //------------------------------------------------------------
 void CSetPWM(BYTE PWMId, WORD Value)
-{         
+{
     BYTE ucPWMData = 0;
 
 /*
@@ -2600,7 +2600,7 @@ void CSetPWM(BYTE PWMId, WORD Value)
          MCU_PWM4H_DUT_FF50  = Value;
          break;
 
-     case 5:  // PWM5     
+     case 5:  // PWM5
 /*         ucPWMData = MCU_PWM45L_DUT_FF52;
          MCU_PWM5H_DUT_FF51  = (Value >> 4) & 0xFF;
          MCU_PWM45L_DUT_FF52 = (ucPWMData & 0x0F) | (((BYTE)Value & 0x0F) << 4); */
@@ -2636,7 +2636,7 @@ void CAdjustGammaTable(BYTE index)
 	default:
 		break;
 	}
-	
+
 #elif(_GAMMA_TYPE == _FULL_GAMMA_COMPRESS_TABLE2)
 
 	switch(index)
@@ -2656,7 +2656,7 @@ void CAdjustGammaTable(BYTE index)
     case 3:
     	CAdjustGamma(_FULL_GAMMA_COMPRESS_TABLE2, GAMMA_3_R, GAMMA_3_G, GAMMA_3_B);
     	break;
-    
+
     default:
     	break;
 	}
@@ -2665,4 +2665,3 @@ void CAdjustGammaTable(BYTE index)
 #endif
 
 //-------------------------------------------------
-

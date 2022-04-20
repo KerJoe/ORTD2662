@@ -12,11 +12,11 @@
 
 unsigned char code HDMI_ModeMap[] =
 {
-	0,  1,  2,  2,  3,  4,  
-	1,  1,  1,  1,  1,  1,  
-	1,  1,  2,  2,  5,  2,  
-	2,  3,  4,  1,  1,  1,  
-	1,  1,  1,  1,  1,  2,	 
+	0,  1,  2,  2,  3,  4,
+	1,  1,  1,  1,  1,  1,
+	1,  1,  2,  2,  5,  2,
+	2,  3,  4,  1,  1,  1,
+	1,  1,  1,  1,  1,  2,
 	2,  5,  5,  5,  5
 };
 
@@ -27,7 +27,7 @@ unsigned char code HDMI_ModeMap[] =
 //--------------------------------------------------
 void CModeHandler(void)
 {
-	/*if (CPowerHandler()) 
+	/*if (CPowerHandler())
 	{
 		ucCurrState = GET_POWERSTATUS() ? _INITIAL_STATE : _PWOFF_STATE;
 	}*/
@@ -78,14 +78,14 @@ void CModeHandler(void)
             {
                 CShowNote();//ucOsdEventMsg = _DO_SHOW_NOTE;
                 CPowerPanelOn();
-    			if (GET_LIGHTPOWERSTATUS() == _OFF) 
+    			if (GET_LIGHTPOWERSTATUS() == _OFF)
     			{
                     CPowerLightPowerOn();
     			}
             }
 
 			break;
-					
+
         case _SEARCH_STATE:
    			#if(AUDIO_TYPE == _AUDIO_SC7313)
             CInitSoundChannel(_GET_INPUT_SOURCE());
@@ -94,7 +94,7 @@ void CModeHandler(void)
         case _NOSIGNAL_STATE:
 		case _NOSUPPORT_STATE:
 		case _SLEEP_STATE:
-			switch (_GET_INPUT_SOURCE()) 
+			switch (_GET_INPUT_SOURCE())
 			{
 				case _SOURCE_YPBPR:
 				case _SOURCE_VGA:
@@ -111,12 +111,12 @@ void CModeHandler(void)
 				#endif
 				case _SOURCE_NONE:   // Don't need to do anything
 				break;
-				
+
 			default:
 				break;
     		}
     		break;
-    				
+
     	default:
     		while(_TRUE);
 	}
@@ -131,10 +131,10 @@ bit CModeMeasureReady(void)
 {
 	CScalerSetBit(_SYNC_SELECT_47, ~_BIT0, 0x00);
 	CAdjustSyncProcessorMeasureStart();
-	if (CTimerPollingEventProc(60, CMiscModeMeasurePollingEvent)) 
+	if (CTimerPollingEventProc(60, CMiscModeMeasurePollingEvent))
 	{
 		return _TRUE;
-	} 
+	}
 	else
 	{
 		CScalerSetBit(_MEAS_HS_PERIOD_H_52, ~_BIT5, 0x00);
@@ -153,21 +153,21 @@ bit CModeMeasureData(void)
 {
 	if(_GET_INPUT_SOURCE() == _SOURCE_DVI || _GET_INPUT_SOURCE() == _SOURCE_HDMI)
     {
-		CScalerSetBit(_SYNC_SELECT_47, ~_BIT6, _BIT6);	
+		CScalerSetBit(_SYNC_SELECT_47, ~_BIT6, _BIT6);
 		CScalerSetBit(_SYNC_CTRL_49, ~_BIT2, _BIT2);
 	}
-	
+
 	// Read measurement status bit
-	CScalerRead(_MEAS_HS_PERIOD_H_52, 3, &pData[8], _AUTOINC);// 
+	CScalerRead(_MEAS_HS_PERIOD_H_52, 3, &pData[8], _AUTOINC);//
 	if((bit)(pData[8] & _BIT4) || (bit)(pData[10] & _BIT4) || (bit)(pData[10] & _BIT5))
     {
 		return _FALSE;
-	}			
-	
+	}
+
 	// Pop up measurement result
 	CScalerSetBit(_MEAS_HS_PERIOD_H_52, ~_BIT6, _BIT6);
 	if(CTimerPollingEventProc(60, CMiscMeasureResultPOPPollingEvent))
-	{	
+	{
 		CScalerSetBit(_MEAS_HS_VS_HI_SEL_58, ~_BIT0, 0x00);
 		CScalerRead(_MEAS_HS_PERIOD_H_52, 6, &pData[8], _AUTOINC);
 
@@ -175,14 +175,14 @@ bit CModeMeasureData(void)
 		((WORD *)pData)[0] = ((pData[8] & 0x1f) << 8) | pData[9];
 		((WORD *)pData)[1] = ((pData[10] & 0x1f) << 8) | pData[11];
 		((WORD *)pData)[2] = ((pData[12] & 0xf0) << 4) | pData[13];
-			
+
 		if((((WORD *)pData)[0] >=  0x07ff) || (((WORD *)pData)[1] >= 0x07ff) || (((WORD *)pData)[0] == 0) || (((WORD *)pData)[1] == 0))
 		{
     		// The measurement result is out of range
 			return _FALSE;
 		}
 		else
-		{        
+		{
 			// Store measurement results in global system variable
 			stModeInfo.Polarity = (pData[10] & 0xc0) >> 6;
 			stModeInfo.IHCount = ((WORD *) pData)[0];
@@ -192,7 +192,7 @@ bit CModeMeasureData(void)
 			stModeInfo.IVFreq = (WORD)((DWORD) (stModeInfo.IHFreq) * 1000 * 2 / stModeInfo.IVTotal);
 			stModeInfo.IVFreq = (stModeInfo.IVFreq >> 1) + (stModeInfo.IVFreq & 0x01);
 			stModeInfo.IHSyncPulseCount = ((WORD *) pData)[2];
-                   
+
     		if((_GET_INPUT_SOURCE()==_SOURCE_DVI || _GET_INPUT_SOURCE() == _SOURCE_HDMI) && (ucCurrState==_SEARCH_STATE))	//for philips dvd player(dvp5965k) hdmi timing
     			CTimerDelayXms(40);
 
@@ -200,7 +200,7 @@ bit CModeMeasureData(void)
 		}
 	}
 	else
-		return _FALSE;		
+		return _FALSE;
 
 }
 
@@ -221,7 +221,7 @@ bit CModeMeasureData(void)
 //--------------------------------------------------
 bit CModeDetect(void)
 {
-	switch (_GET_INPUT_SOURCE()) 
+	switch (_GET_INPUT_SOURCE())
 	{
 	case _SOURCE_VGA:
 
@@ -260,49 +260,49 @@ bit CModeDetectCommon(void)
 	BYTE modetemp = _MODE_NOSIGNAL;
 	BYTE polaritytemp;
 	WORD hcount, vtotal;
-	
-	if (CModeMeasureReady()) 
+
+	if (CModeMeasureReady())
 	{
 		polaritytemp = stModeInfo.Polarity;
 		hcount = stModeInfo.IHCount;
 		vtotal = stModeInfo.IVTotal;
-		
+
 		// Get measure results and decide " modetemp = _MODE_NOSIGNAL/_MODE_NOSUPPORT/_MODE_EXIST "
-		
-		if (CModeMeasureData()) 
+
+		if (CModeMeasureData())
 		{
             CSyncModifyPolarityVGA();
 			stModeInfo.ModeCurr = _MODE_NOSIGNAL;
-			
+
 			if (abs(stModeInfo.IHCount - hcount) <= 1)
 				stModeInfo.IHCount = hcount;
-			
+
 			if (abs(stModeInfo.IVTotal - vtotal) <= 2)
 				stModeInfo.IVTotal = vtotal;
-			
+
 			if ((stModeInfo.IHCount != hcount) ||(stModeInfo.IVTotal != vtotal) ||	(stModeInfo.Polarity != polaritytemp))
 			{
 				modetemp = _MODE_NOSIGNAL;
 			}
-			else 
+			else
 			{
 				if ((stModeInfo.IHFreq < Panel[ucPanelSelect]->HSyncMinFreq) ||(stModeInfo.IHFreq > Panel[ucPanelSelect]->HSyncMaxFreq) ||
 					(stModeInfo.IVFreq < Panel[ucPanelSelect]->VSyncMinFreq) ||(stModeInfo.IVFreq > Panel[ucPanelSelect]->VSyncMaxFreq))
 				{
 					modetemp = _MODE_NOSUPPORT;
 				}
-				else 
+				else
 				{
 					modetemp = _MODE_EXIST;
 				}
 			}
 		}
-		else 
+		else
 		{
 			modetemp = _MODE_NOSIGNAL;
 		}
 		// Wait mode stable and decide the mode type for current source
-		if (modetemp != ucModeFound) 
+		if (modetemp != ucModeFound)
 		{
 			ucModeFound = modetemp;
 			ucEvent1 = _INACTIVE_COUNTDOWN_EVENT;
@@ -310,29 +310,29 @@ bit CModeDetectCommon(void)
 			CTimerCountDownEventProc(&ucEvent1, 3, CModeStableCountDownEvent);
 			return _FALSE;
 		}
-		else 
+		else
 		{
 			CTimerCountDownEventProc(&ucEvent1, 3, CModeStableCountDownEvent);
-			if (GET_MODESTABLE()) 
+			if (GET_MODESTABLE())
 			{
 				if (ucModeFound == _MODE_EXIST)
 				{
 					CModeInterlaceCheck();//v003_interlace_check
 					stModeInfo.ModeCurr = CModeSearchDisplayMode();
 				}
-				else 
+				else
 				{
 					stModeInfo.ModeCurr = ucModeFound;
 				}
 				return _TRUE;
 			}
-			else 
+			else
 			{
 				return _FALSE;
 			}
 		}
 	}
-	else 
+	else
 	{
 		return _FALSE;
 	}
@@ -350,24 +350,24 @@ bit CModeIsChange(void)
 {
 	BYTE polaritytemp;
 	WORD hcount, vtotal;
-	
+
 	polaritytemp = stModeInfo.Polarity;
 	hcount = stModeInfo.IHCount;
 	vtotal = stModeInfo.IVTotal;
-	
+
 	if(_GET_INPUT_SOURCE() == _SOURCE_VGA)
 	{
 		if(CScalerGetBit(_HSYNC_TYPE_DETECTION_FLAG_4E, _BIT6 | _BIT5))
 			return _TRUE;
 	}
-	//DebugPrintf("\nMMD.1.%c",0x20);	
+	//DebugPrintf("\nMMD.1.%c",0x20);
 	if(CModeMeasureData())
 	{
 		if(abs(stModeInfo.IHCount - hcount) <= 1)
 			stModeInfo.IHCount = hcount;
        	if(abs(stModeInfo.IVTotal - vtotal) <= 2)
 			stModeInfo.IVTotal = vtotal;
-		
+
        	if((stModeInfo.IHCount != hcount) || (stModeInfo.IVTotal != vtotal) || (stModeInfo.Polarity != polaritytemp))
 			return _TRUE;
 		else
@@ -399,13 +399,13 @@ BYTE CModeSearchDisplayMode(void)
 	case _SOURCE_VGA:
 		modetemp = CModeSearchModeVGA();
 		break;
-		
+
 	#if(_YPBPR_SUPPORT == _ON)
 	case _SOURCE_YPBPR:
 		modetemp = CYPbPrSearchMode();
 		break;
 	#endif
-		
+
 	#if((_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON))
 	case _SOURCE_DVI:
     case _SOURCE_HDMI:
@@ -432,23 +432,23 @@ BYTE CModeSearchDisplayMode(void)
 BYTE CModeSearchModeVGA(void)
 {
 	BYTE modecnt;
-	
+
 	SET_MODE_SEARCH_TYPE(_PRESET_MODE_TYPE);	///!set preset mode type
-	
-	for (modecnt = 0; modecnt < _MAX_PRESET_MODE; modecnt++) 
+
+	for (modecnt = 0; modecnt < _MAX_PRESET_MODE; modecnt++)
 	{
 		if (CModeComparePresetModeVGA(modecnt))
 		{
-			if( (modecnt != _MODE_640x400_85HZ) && 
-				(modecnt != _MODE_720x400_85HZ) && 
-				(modecnt != _MODE_640x400_70HZ)	&& 
+			if( (modecnt != _MODE_640x400_85HZ) &&
+				(modecnt != _MODE_720x400_85HZ) &&
+				(modecnt != _MODE_640x400_70HZ)	&&
 				(modecnt != _MODE_720x400_70HZ) )
 			{
 				return modecnt;
 			}
 		}
 	}
-	
+
 	modecnt = CModeSearchAcceptiveModeVGA();
 
 	if(modecnt==_MODE_640x400_85HZ || modecnt==_MODE_720x400_85HZ)
@@ -464,7 +464,7 @@ BYTE CModeSearchModeVGA(void)
 			return	_MODE_640x400_70HZ;
 		else
 			return	_MODE_720x400_70HZ;
-		
+
 	}
 
 	if ((modecnt == _MODE_NOSIGNAL) || (modecnt == _MODE_NOSUPPORT))
@@ -492,19 +492,19 @@ BYTE CModeSearchModeVGA(void)
 bit CModeComparePresetModeVGA(BYTE ucModeCnt)
 {
 	BYTE polarity, polaritytemp;
-	
+
 	polarity = (stModeInfo.Polarity & ~_BIT0) | ((bit)CScalerGetBit(_STABLE_PERIOD_H_50, _BIT6) ? 0x00 : _BIT0);
-	
+
 	if(abs(stModeInfo.IVFreq - tINPUTMODE_PRESET_TABLE[ucModeCnt].IVFreq) > tINPUTMODE_PRESET_TABLE[ucModeCnt].IVFreqTolerance)
 		return _FALSE;
-	
+
 	if(abs(stModeInfo.IHFreq - tINPUTMODE_PRESET_TABLE[ucModeCnt].IHFreq) > tINPUTMODE_PRESET_TABLE[ucModeCnt].IHFreqTolerance)
 		return _FALSE;
-	
+
     if(abs(stModeInfo.IVTotal - tINPUTMODE_PRESET_TABLE[ucModeCnt].IVTotal) > 4)//v003
         return _FALSE;
-	
-	if ((bit) (polarity & _BIT0)) 
+
+	if ((bit) (polarity & _BIT0))
 	{
 		if ((bit) (polarity & _BIT1))
 			polaritytemp = _SYNC_HP_VP;
@@ -541,10 +541,10 @@ bit CModeComparePresetModeVGA(BYTE ucModeCnt)
 BYTE CModeSearchAcceptiveModeVGA(void)
 {
 	BYTE acceptivemode = _MODE_NOSUPPORT;
-	
+
 	//DebugPrintf("\n stModeInfo.IHFreq_H %x",(stModeInfo.IHFreq & 0xff00 )>>8);
-	//DebugPrintf("\n stModeInfo.IHFreq_L %x",stModeInfo.IHFreq);		
-	if (stModeInfo.IVTotal < 420) 
+	//DebugPrintf("\n stModeInfo.IHFreq_L %x",stModeInfo.IHFreq);
+	if (stModeInfo.IVTotal < 420)
 	{
 	}
 	else if (stModeInfo.IVTotal < 488)				   // 720x400 Mode : Vertical Line < 488
@@ -623,7 +623,7 @@ BYTE CModeSearchAcceptiveModeVGA(void)
 	{
 		if ((stModeInfo.IHFreq > 679) && (stModeInfo.IHFreq < 697))
 			acceptivemode = _MODE_1152x870_75HZ;
-		else 
+		else
 		{
 			if (stModeInfo.IVFreq < 650)
 				acceptivemode = _MODE_1152x864_60HZ;
@@ -656,15 +656,15 @@ BYTE CModeSearchAcceptiveModeVGA(void)
     else if(stModeInfo.IVTotal < 1087)             // 1280x1024 Mode : 1040 <= Vertical Line < 1087
 	{
 		if (stModeInfo.IVFreq < 680)
-		{		   	
+		{
             acceptivemode = _MODE_1280x1024_60HZ;//Confuse mode between 1280x1024_60HZ and 1680x1050_60HZ_BR
-			
-			//eric 20070626 mark by constomer		
+
+			//eric 20070626 mark by constomer
             //if((stModeInfo.IHFreq > 630) &&(stModeInfo.IHFreq < 638)) // chroma #3603 RB1280x1024
-            //	acceptivemode =_MODE_NOSUPPORT;  	
-			
+            //	acceptivemode =_MODE_NOSUPPORT;
+
             //acceptivemode = _MODE_1680x1050_60HZ_BR;
-		} 
+		}
 		else if (stModeInfo.IVFreq < 720)
 			acceptivemode = _MODE_1280x1024_70HZ;
 		else if (stModeInfo.IVFreq < 780)
@@ -678,16 +678,16 @@ BYTE CModeSearchAcceptiveModeVGA(void)
             acceptivemode = _MODE_1680x1050_60HZ;
         else
             acceptivemode = _MODE_1680x1050_75HZ;
-		
+
 		//eric 20070626 mark by constomer
-		//if((stModeInfo.IHFreq > 940) &&(stModeInfo.IHFreq < 948)) // chroma #3584,3558 
+		//if((stModeInfo.IHFreq > 940) &&(stModeInfo.IHFreq < 948)) // chroma #3584,3558
 		//		acceptivemode = _MODE_NOSUPPORT;
 	}
     else if(stModeInfo.IVTotal < 1200)             // 1920x1080 Mode : 1110 <= Vertical Line < 1200
     {
         acceptivemode = _MODE_1920x1080_60HZ;
-		
-		//eric 20070626 mark by constomer			
+
+		//eric 20070626 mark by constomer
 		//if((stModeInfo.IHFreq > 554) &&(stModeInfo.IHFreq < 562)) // chroma #3559,3585
 		//	acceptivemode = _MODE_NOSUPPORT;
 	}
@@ -724,12 +724,12 @@ BYTE CModeCheckFIFOModeVGA(BYTE ucModeCnt)
 {
 	BYTE cnt0, cnt1;
 	StructModeUserFIFODataType stFIFOModeTemp;
-	
-	for (cnt0 = 0; cnt0 < 4; cnt0++) 
+
+	for (cnt0 = 0; cnt0 < 4; cnt0++)
 	{
 		CEepromLoadUserFIFOModeData(cnt0, pData);
-		
-		for (cnt1 = 0; cnt1 < 4; cnt1++) 
+
+		for (cnt1 = 0; cnt1 < 4; cnt1++)
 		{
 			if (CModeCompareFIFOModeVGA(cnt1, ucModeCnt) == _TRUE)
 			{
@@ -745,7 +745,7 @@ BYTE CModeCheckFIFOModeVGA(BYTE ucModeCnt)
 	stFIFOModeTemp.IHFreq = stModeInfo.IHFreq;
 	stFIFOModeTemp.IVFreq = stModeInfo.IVFreq;
 	CEepromSaveUserFIFOModeData(stFIFOModeTemp);
-	
+
 	stModeUserData.FirstAuto = 0;
 	stModeUserData.HPosition = tINPUTMODE_PRESET_TABLE[ucModeCnt].IHStartPos;
 	stModeUserData.VPosition = tINPUTMODE_PRESET_TABLE[ucModeCnt].IVStartPos;
@@ -772,11 +772,11 @@ BYTE CModeCheckFIFOModeVGA(BYTE ucModeCnt)
 bit CModeCompareFIFOModeVGA(BYTE ucNum, BYTE ucModeCnt)
 {
 	StructModeUserFIFODataType stFIFOModeTemp;
-	
+
 	stFIFOModeTemp.ModeNum = (pData[ucNum * 4]);
 	stFIFOModeTemp.IHFreq = ((WORD) (pData[ucNum * 4 + 1] & 0x0f) << 8) | pData[ucNum * 4 + 2];
 	stFIFOModeTemp.IVFreq = ((WORD) (pData[ucNum * 4 + 1] & 0xf0) << 4) | pData[ucNum * 4 + 3];
-	
+
 	if (stFIFOModeTemp.ModeNum != ucModeCnt)
 		return _FALSE;
 	if (abs(stModeInfo.IVFreq - stFIFOModeTemp.IVFreq) >
@@ -806,32 +806,32 @@ BYTE CModeSearchModeDVI(void)
 	BYTE modecnt = 0;
 
 	CScalerSetBit(_SYNC_SELECT_47, ~_BIT0, _BIT0);
-	
+
 	CAdjustSyncProcessorMeasureStart();
-	
-	if (CTimerPollingEventProc(60, CMiscModeMeasurePollingEvent)) 
+
+	if (CTimerPollingEventProc(60, CMiscModeMeasurePollingEvent))
 	{
 		CScalerSetBit(_MEAS_HS_PERIOD_H_52, ~_BIT6, _BIT6);
 		CScalerSetBit(_MEAS_HS_VS_HI_SEL_58, ~_BIT0, 0x00);
 		CScalerRead(_MEAS_HS_PERIOD_H_52, 6, &pData[8], _AUTOINC);
-		
+
 		((WORD *) pData)[0] = ((WORD) (pData[8] & 0x1f) << 8) | pData[9];
 		((WORD *) pData)[1] = ((WORD) (pData[10] & 0x1f) << 8) | pData[11];
 		((WORD *) pData)[2] = ((WORD) (pData[12] & 0xf0) << 4) | pData[13];
-		
+
 		if ( (((WORD *) pData)[0] >= 0x0fff) ||
 			 (((WORD *) pData)[1] >= 0x0fff) ||
 			 (((WORD *) pData)[0] == 0) 	 ||
 			 (((WORD *) pData)[1] == 0) 	 ||
-			 (bit) (pData[10] & _BIT5) ) 
+			 (bit) (pData[10] & _BIT5) )
 		{
 			modecnt = _MODE_NOSUPPORT;
 		}
-		else 
+		else
 		{
 			// Save IH_TOTAL
 			stModeInfo.IHTotal = ((WORD *) pData)[0] + 1;
-			
+
 			// Save input data enable width and height
 			stModeInfo.IVHeight = ((WORD *) pData)[1] + 1;
 			stModeInfo.IHWidth = ((WORD *) pData)[2] + 1;
@@ -839,7 +839,7 @@ BYTE CModeSearchModeDVI(void)
 			//DebugPrintf(",%x",(BYTE)(stModeInfo.IHWidth));
 			//DebugPrintf("\n stModeInfo.IVHeight=%x",(BYTE)(stModeInfo.IVHeight>>8));
 			//DebugPrintf(",%x",(BYTE)(stModeInfo.IVHeight));
-			
+
 			#if(_HDMI_SUPPORT == _ON)
             // For width = 2880
 			if((stModeInfo.IHWidth > 2048))
@@ -852,30 +852,30 @@ BYTE CModeSearchModeDVI(void)
 			}
 			#endif
 
-			for (modecnt = 0; modecnt < _MAX_PRESET_MODE; modecnt++) 
+			for (modecnt = 0; modecnt < _MAX_PRESET_MODE; modecnt++)
 			{
-				if (CModeCompareModeDVI(modecnt)) 
+				if (CModeCompareModeDVI(modecnt))
 				{
 					break;
 				}
 			}
 		}
 	}
-	else 
+	else
 	{
 		CScalerSetBit(_MEAS_HS_PERIOD_H_52, ~_BIT5, 0x00);
 		modecnt = _MODE_NOSUPPORT;
 	}
 
 	CScalerSetBit(_SYNC_SELECT_47, ~_BIT0, 0x00);
-	
+
 	// We don't support input image less than 240 active lines
 	if(stModeInfo.IVHeight < 240)//cyc:for minimum resolution 720x480i
 		modecnt = _MODE_NOSUPPORT;
 	// If no mode found, set to mode 0
 	else if (modecnt >= _MAX_PRESET_MODE)
 		modecnt = 0;
-	
+
 	// We don't support input image large than 2048 active pixel
 	if((stModeInfo.IHWidth > 2048))
 		modecnt = _MODE_NOSUPPORT;
@@ -893,7 +893,7 @@ BYTE CModeSearchModeDVI(void)
 			{
 				bLED1 = _LED_OFF;
 				bLED2 = _LED_ON;
-			}		
+			}
 		}
 		else
 		{
@@ -926,14 +926,14 @@ bit CModeCompareModeDVI(BYTE ucModeCnt)
 {
 	if (stModeInfo.IHWidth != tINPUTMODE_PRESET_TABLE[ucModeCnt].IHWidth)
 		return _FALSE;
-	
+
 	if (stModeInfo.IVHeight != tINPUTMODE_PRESET_TABLE[ucModeCnt].IVHeight)
 		return _FALSE;
-	
+
 	if (abs(stModeInfo.IVFreq - tINPUTMODE_PRESET_TABLE[ucModeCnt].IVFreq) >
 		tINPUTMODE_PRESET_TABLE[ucModeCnt].IVFreqTolerance)
 		return _FALSE;
-	
+
 	return _TRUE;
 }
 #endif  // #if((_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON))
@@ -958,12 +958,12 @@ bit CModeDisplayActiveMode(void)
 	{
 	case _SOURCE_VGA:
 		return CModeSetupModeVGA();
-		
+
 	#if(_YPBPR_SUPPORT == _ON)
 	case _SOURCE_YPBPR:
 		return CYPbPrSetupMode();
 	#endif
-		
+
 	#if((_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON))
 	case _SOURCE_DVI:
     case _SOURCE_HDMI:
@@ -988,39 +988,39 @@ bit CModeDisplayActiveMode(void)
 bit CModeSetupModeVGA(void)
 {
 	BYTE option = 0;
-	
+
 	DebugPrintf("\n CModeSetupModeVGA %c",0x20);
-	
+
 	// Get information from mode table, such as IHTotal, IHStartPos, IHWidth, IVStartPos, IVHeight.
 	CModeGetModeTableInfo();
-	
+
 	// Start up settings of VGA mode.
 	CModeStartUpVGA();
-	
+
 	// Get scaling option, Capture window setup, Scaling setup, Display setup
 	CModeSetupDisplay();
-	
+
 	// Load mode user data from eeprom
 	CEepromLoadModeData(stModeInfo.ModeCurr);
-	
+
 	// Setup color processing
 	CModeSetupColorProcess();
-	
+
 	// Setup color conversion
 	CModeSetupColorConversion();//jerry20070605
-	
+
 	CAdjustBacklight();
 	CAdjustAdcGainOffset();
 	//080324
-	//CAdjustAdcClock(stModeUserData.Clock);	
+	//CAdjustAdcClock(stModeUserData.Clock);
     CAdjustAdcClock(stModeUserData.Clock, 0);
 	//CAdjustPhase(stModeUserData.Phase);
 	CAdjustHPosition();
 	CModeModifyVTotal();
 	CAdjustVPosition();
 	CAdjustPeakingCoding();
-	
-	CScalerPageSelect(_PAGE0); 
+
+	CScalerPageSelect(_PAGE0);
     if(CGetSourcePortType(_GET_INPUT_SOURCE()) == _YPBPR_A0_PORT || CGetSourcePortType(_GET_INPUT_SOURCE()) == _DSUB_A0_PORT)
 	{
 	    CScalerSetBit(_P0_ADC_CLAMP_CTRL0_D4, ~(_BIT7 | _BIT6 | _BIT5 | _BIT4), (_BIT7 | _BIT6 | _BIT5 | _BIT4));
@@ -1042,15 +1042,15 @@ bit CModeSetupModeVGA(void)
 	CScalerPageSelect(_PAGE1);
 	CScalerSetByte(_P1_I_CODE_M_A1,0);
 	CScalerSetByte(_P1_I_CODE_L_A2, 1);
-	
+
 	pData[0] = CFrameSyncDo();
-	
-	if (pData[0] == 2) 
+
+	if (pData[0] == 2)
     {
 		return _FALSE;
 	}
 	   /*
-//20080114***	
+//20080114***
 	CScalerPageSelect(_PAGE6);
 	if(stModeInfo.ModeCurr == _MODE_1600x1200_60HZ || stModeInfo.ModeCurr == _MODE_1600x1200_65HZ)
 	{
@@ -1096,34 +1096,34 @@ bit CModeSetupModeDVI(void)
 
 	//if(CHdmiFormatDetect())
 	//	COsdFxDisableOsd();
-	
+
 	// Get scaling option, Capture window setup, Scaling setup, Display setup
-	CModeSetupDisplay();	
-	
+	CModeSetupDisplay();
+
 	// Setup color processing
 	CModeSetupColorProcess();
-	
+
 	// Setup color conversion
 	CModeSetupColorConversion();//jerry20070605
-	
+
 	CAdjustBacklight();
 	CAdjustPeakingCoding();
 	CAdjustYpbprSaturation(GET_SATURATION());
 	CAdjustYpbprhue(50);//GET_HUE());
 
-	CScalerSetBit(_COLOR_CTRL_62, ~(_BIT2), _BIT2);   		//  Enable SRGB	
-	
+	CScalerSetBit(_COLOR_CTRL_62, ~(_BIT2), _BIT2);   		//  Enable SRGB
+
 	CAccAdjust(_DISABLE);  // disable DCC mode
-	
+
     //For Digital Interlace Mode Compensation
 	CScalerPageSelect(_PAGE2);
 	CScalerGetDataPortByte(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_VCR_50, 1, pData, _NON_AUTOINC);
-	
+
 	if((pData[0] & 0x40) == 0x40)
 	{
 		CScalerSetBit(_SCALE_CTRL_32, ~(_BIT7 | _BIT6), (_BIT7 | _BIT6));
 	}
-	
+
 	#if(_DE_INTERLACE_SUPPORT == _ON)	//v003_interlace_check
 	//if(GET_INTERLACE_MODE(stSystemData.InputSource)){
 	if(GET_INTERLACE_MODE())
@@ -1137,22 +1137,22 @@ bit CModeSetupModeDVI(void)
 		}
 	}
 	#endif
-	
+
 	//forster modified 061123
 	CAdjustInterlaceIVS2DVSDelay();
-	
+
 	pData[0] = CFrameSyncDo();
 	//DebugPrintf("\n CFrameSyncDo=%x", pData[0]);
-	
-	if (pData[0] == 2) 
+
+	if (pData[0] == 2)
 	{
-		// ??? if(CHdmiFormatDetect())//741002 
+		// ??? if(CHdmiFormatDetect())//741002
 		// ???	COsdFxEnableOsd();//741002
 		return _FALSE;
 	}
-	
+
 	CAdjustInterlaceIVS2DVSProtection();
-	
+
 	#if(((_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON)) && (_DVI_LONG_CABLE_SUPPORT == _ON))
 	CAdjustTMDSCRCCheck();
 	#endif
@@ -1168,13 +1168,13 @@ bit CModeSetupModeDVI(void)
     if(!CHdmiFormatDetect())//741002
 	{
 		  //DebugPrintf("zhyftest plug\n",1);
-		  CAdjustBackgroundColor(0x00, 0x00, 0xff);		// set background blue screen	
+		  CAdjustBackgroundColor(0x00, 0x00, 0xff);		// set background blue screen
           // force to background
    		  CScalerSetBit(_VDISP_CTRL_28, ~(_BIT5), _BIT5);	// Display output is forced to the background color
          // CModeHdmiHP();
          CModeHDMIChageDelay();
 	}
-	#endif	
+	#endif
 
 	return _TRUE;
 
@@ -1196,16 +1196,16 @@ bit CModeSetupModeDVI(void)
 void CModeSetupDisplay(void)
 {
 	BYTE option = 0;
-	
+
 	// Get scaling option
 	option = CModeGetScaleSetting();	///!decide capture size and display size
-	
+
 	// Capture window setup
 	CModeSetCaptureWindow(option);		///!set captur size
-	
+
 	// Scaling setup
 	CModeSetScaling(option);			///!set scaling factor
-	
+
 	// Display setup
 	CModeSetDisplay(option);			///!set display size
 }
@@ -1271,7 +1271,7 @@ void CModeSetupColorConversion(void)//jerry20070605
         {//HD 720p above
             CScalerCodeW(tRGB2YUV709_TABLE_FOR_NON_RGB_SOURCE);
             CScalerCodeW(tYUV2RGB709_TABLE_FOR_NON_RGB_SOURCE);
-		}		
+		}
 	}
 	#if(_HDMI_SUPPORT == _ON)
 	else if(_GET_INPUT_SOURCE() == _SOURCE_DVI || _GET_INPUT_SOURCE() == _SOURCE_HDMI)
@@ -1284,7 +1284,7 @@ void CModeSetupColorConversion(void)//jerry20070605
             {//SD 720p below
 				CScalerGetDataPortByte(_P2_HDMI_PSAP_CD, 0x04, 1, pData, _NON_AUTOINC);
 				if((pData[0] & 0x60) == 0x00)
-                {//RGB			
+                {//RGB
                     CScalerCodeW(tRGB2YUV601_TABLE_FOR_RGB_SOURCE);
                     CScalerCodeW(tYUV2RGB601_TABLE_FOR_NON_RGB_SOURCE);
 				}
@@ -1300,7 +1300,7 @@ void CModeSetupColorConversion(void)//jerry20070605
 				if((pData[0] & 0x60) == 0x00)
                 {//RGB
                     CScalerCodeW(tRGB2YUV601_TABLE_FOR_RGB_SOURCE);
-                    CScalerCodeW(tYUV2RGB601_TABLE_FOR_NON_RGB_SOURCE);     
+                    CScalerCodeW(tYUV2RGB601_TABLE_FOR_NON_RGB_SOURCE);
 				}
 				else
                 {//YUV422 & YUV444
@@ -1313,9 +1313,9 @@ void CModeSetupColorConversion(void)//jerry20070605
         {//DVI timing
             //CScalerCodeW(tRGB2YUV601_TABLE_FOR_RGB_SOURCE);
             //CScalerCodeW(tYUV2RGB601_TABLE_FOR_DVI_SOURCE);
-		}		
+		}
 	}
-	#endif	
+	#endif
 }
 
 /**
@@ -1333,14 +1333,14 @@ void CModeSetupColorConversion(void)//jerry20070605
 void CModeSetupEtcs(BYTE ucPar)
 {
 	CAdjustBackgroundColor(0x00,0x00,0x00);		//avoid 4:3 or letter aspect_ratio blue_background
-	
+
 	CMiscEnableDoubleBuffer();
 	                 /*
 	if((_GET_INPUT_SOURCE() != _SOURCE_DVI && _GET_INPUT_SOURCE() != _SOURCE_HDMI)
    || ((_GET_INPUT_SOURCE() == _SOURCE_DVI || _GET_INPUT_SOURCE() == _SOURCE_HDMI) && !CHdmiFormatDetect()))
-	{	
+	{
 		if ((bit) CScalerGetBit(_VDISP_CTRL_28, _BIT3))
-			CScalerSetBit(_VDISP_CTRL_28,  ~(_BIT5), 0x00);		
+			CScalerSetBit(_VDISP_CTRL_28,  ~(_BIT5), 0x00);
 	}                      */
 	CAdjustDigitalFilter(_PHASE_ACCESS_PORT, _PHASE_THD_0, _DIV_VALUE_2, ucPar);
    	CAdjustDigitalFilter(_YPBPR_ACCESS_PORT, _YPBPR_ENABLE, _DIV_VALUE_0, ucPar);
@@ -1365,7 +1365,7 @@ void CModeSetupEtcs(BYTE ucPar)
 void CModeGetModeTableInfo(void)
 {
 	BYTE modetemp;
-	
+
 #if 0//eric 0706
     if(GET_MODE_SEARCH_TYPE() == _PRESET_MODE_TYPE)
     {
@@ -1374,7 +1374,7 @@ void CModeGetModeTableInfo(void)
     else if(GET_MODE_SEARCH_TYPE() == _USER_MODE_TYPE)
     {
         CEepromLoadUserFIFOModeData((stModeInfo.ModeCurr / 4), pData);
-		
+
         modetemp = pData[(stModeInfo.ModeCurr % 4) * 4];
     }
 #else
@@ -1382,11 +1382,11 @@ void CModeGetModeTableInfo(void)
 		modetemp = stModeInfo.ModeCurr;
 	else
 	{
-		if (GET_MODE_SEARCH_TYPE() == _PRESET_MODE_TYPE) 
+		if (GET_MODE_SEARCH_TYPE() == _PRESET_MODE_TYPE)
 		{
 			modetemp = stModeInfo.ModeCurr;
 		}
-		else if (GET_MODE_SEARCH_TYPE() == _USER_MODE_TYPE) 
+		else if (GET_MODE_SEARCH_TYPE() == _USER_MODE_TYPE)
 		{
 			CEepromLoadUserFIFOModeData((stModeInfo.ModeCurr / 4), pData);	///!decide current mode in which block of FIFO mode
 			modetemp = pData[(stModeInfo.ModeCurr % 4) * 4];					///!decide the mode number of the mode we want
@@ -1422,22 +1422,22 @@ void CModeGetModeTableInfo(void)
 void CModeStartUpVGA(void)
 {
 	WORD pixelclock;
-	
+
     CScalerPageSelect(_PAGE2);
     CScalerSetBit(_P2_POWER_ON_OFF_CTRL_A7, ~(_BIT4 | _BIT3 | _BIT2 | _BIT1 | _BIT0), 0x00);
     CScalerSetBit(_P2_TMDS_OUTPUT_CTRL_A6, ~(_BIT7 | _BIT6 | _BIT5 | _BIT4 | _BIT3), 0x00);
     CScalerSetBit(_P2_Z0_CALIBRATION_CTRL_AC, ~_BIT6, 0x00);
-	
+
 	// To imporve the FIFO efficiency only when input data rate is slow, and display data rate is high.
 	CScalerSetBit(_VGIP_CTRL_10, ~(_BIT3 | _BIT2 | _BIT1 | _BIT0), _BIT0);
-	
+
 	// Calculate pixel clock rate (round to MHz)
 	pixelclock  = (((DWORD)stModeInfo.IHFreq * (DWORD)stModeInfo.IHTotal) * 2 / (1000 * 10));
 	pixelclock  = (pixelclock >> 1) + (pixelclock & 0x01);
-	
+
 	//cyc_delete    // To imporve the FIFO efficiency only when input data rate is slow, and display data rate is high.
 	//cyc_delete    CScalerSetBit(_VGIP_CTRL_10, ~(_BIT3 | _BIT2 | _BIT1), 0x00);
-	
+
     // ADC differential mode and Set ADC bandwidth to reduce high frequency noise
     CScalerPageSelect(_PAGE0);
     if(pixelclock < 38)
@@ -1448,28 +1448,28 @@ void CModeStartUpVGA(void)
         CScalerSetBit(_P0_ADC_RBG_CTRL_CE, ~(_BIT2 | _BIT1 | _BIT0), (_BIT2 | _BIT1));          //300MHz
     else
         CScalerSetBit(_P0_ADC_RBG_CTRL_CE, ~(_BIT2 | _BIT1 | _BIT0), (_BIT2 | _BIT1 | _BIT0));  //500MHz
-	
+
     CScalerPageSelect(_PAGE1);
     // Phase interpolation control load modified.   Marvin 0812
     if(pixelclock < 50)
         CScalerSetBit(_P1_PLL_PHASE_INTERPOLATION_B5, ~(_BIT7 | _BIT6), 0x00);
     else
         CScalerSetBit(_P1_PLL_PHASE_INTERPOLATION_B5, ~(_BIT7 | _BIT6), _BIT6);
-	
+
     // Fine-tune R/G/B delay and enable the ADC frame-modulation
     CScalerPageSelect(_PAGE0);
 	CScalerSetBit(_P0_ADC_RED_CTL_CF, ~(_BIT2 | _BIT1 | _BIT0), (_ADC_FINE_TUNE_DELAY_RED & 0x07));
 	CScalerSetBit(_P0_ADC_GREEN_CTL_D0, ~(_BIT2 | _BIT1 | _BIT0), (_ADC_FINE_TUNE_DELAY_GREEN & 0x07));
 	CScalerSetBit(_P0_ADC_BLUE_CTL_D1, ~(_BIT2 | _BIT1 | _BIT0), (_ADC_FINE_TUNE_DELAY_BLUE & 0x07));
-	
+
 	if(_GET_INPUT_SOURCE() == _SOURCE_YPBPR)
 		CScalerSetBit(_P0_ADC_CLAMP_CTRL1_D5,~(_BIT0 | _BIT1 | _BIT2 |_BIT3 | _BIT4 |_BIT5 ),
-		((_ADC1_INPUT_SWAP_RG << 2) | _ADC1_INPUT_SWAP_RG |(_ADC1_INPUT_SWAP_GB <<4)| (_ADC1_INPUT_SWAP_GB<<2)));	
-	else //VGA	
+		((_ADC1_INPUT_SWAP_RG << 2) | _ADC1_INPUT_SWAP_RG |(_ADC1_INPUT_SWAP_GB <<4)| (_ADC1_INPUT_SWAP_GB<<2)));
+	else //VGA
 		CScalerSetByte(_P0_ADC_CLAMP_CTRL1_D5, 0x00);
 	//CScalerSetByte(_P0_ADC_CLAMP_CTRL1_D5, 0x00);
     CScalerSetByte(_YUV2RGB_CTRL_9C, 0x00);
-	
+
     // HSYNC positive/negtive tracking
     CScalerPageSelect(_PAGE1);
     CScalerSetBit(_P1_PLL_DIV_CTRL_A0, ~_BIT7, 0x00);
@@ -1492,11 +1492,11 @@ void CModeStartUpVGA(void)
 void CModeStartUpDVI(void)
 {
 	CScalerSetBit(_VGIP_HV_DELAY_1E, 0x0f, 0x00);
-	
+
 	CScalerSetBit(_VGIP_CTRL_10, ~(_BIT3 | _BIT2 | _BIT0), (_BIT2 | _BIT0));
-	
+
 	CTimerWaitForEvent(_EVENT_IVS);
-	
+
 	pData[0] = HIBYTE(stModeInfo.IHTotal - 2);
 	pData[1] = 0x02;
 	pData[2] = LOBYTE(stModeInfo.IHTotal - 2);
@@ -1512,19 +1512,19 @@ void CModeStartUpDVI(void)
 	pData[12] = 0x00;
 	pData[13] = 0x81;
 	CScalerWrite(_H_BOUNDARY_H_70, 14, pData, _AUTOINC);
-	
-	if (CTimerPollingEventProc(255, CMiscAutoMeasurePollingEvent)) 
+
+	if (CTimerPollingEventProc(255, CMiscAutoMeasurePollingEvent))
 	{
 		CScalerRead(_V_START_END_H_7E, 6, pData, _AUTOINC);
-		
+
 		// IDEN horizontal Start
 		CScalerPageSelect(_PAGE2);
 		stModeInfo.IHStartPos = ((((WORD) pData[3] & 0xf0) << 4) | (WORD) pData[4]) - ((CScalerGetBit(_P2_POWER_ON_OFF_CTRL_A7, _BIT7) == _BIT7) ? 16 - 14 : 18 - 14);
-		
+
 		// IDEN vertical Start
 		stModeInfo.IVStartPos = (((WORD) pData[0] & 0xf0) << 4) | (WORD) pData[1];
 	}
-	else 
+	else
 	{
 		CScalerSetByte(_AUTO_ADJ_CTRL1_7D, 0x00);
 		CModeResetMode();
@@ -1542,11 +1542,11 @@ void CCheckHDMIMode(void)
 
 	// Decide V overscan
 	if (stModeInfo.IVHeight == (480/2))
-	{            
+	{
 		ucHDMIMode = _HM_480I;
 	}
 	else if (stModeInfo.IVHeight == (576/2))
-	{            
+	{
 		ucHDMIMode = _HM_576I;
 	}
 	else if (stModeInfo.IVHeight == (480))
@@ -1556,16 +1556,16 @@ void CCheckHDMIMode(void)
 	    	ucHDMIMode = _HM_OTHER;
 		}
 		else
-		{            	
+		{
 			ucHDMIMode = _HM_480P;
 		}
 	}
 	else if (stModeInfo.IVHeight == (576))
-	{            
+	{
 	    ucHDMIMode = _HM_576P;
 	}
 	else if (stModeInfo.IVHeight == (720))
-	{            
+	{
 		ucHDMIMode = _HM_720P;
 	}
 	else if (stModeInfo.IVHeight == (1080/2))
@@ -1573,7 +1573,7 @@ void CCheckHDMIMode(void)
 		ucHDMIMode = _HM_1080I;
 	}
 	else if (stModeInfo.IVHeight == (1080))
-	{            
+	{
 		ucHDMIMode = _HM_1080P;
 	}
 	else
@@ -1609,7 +1609,11 @@ void CCheckHDMIMode(void)
 		}
 	}
 }
-#endif // #if(_HDMI_SUPPORT == _ON)   
+#endif // #if(_HDMI_SUPPORT == _ON)
+
+WORD CCalcPanelWdith(void);
+WORD CCalcPanelDHSta(void);
+WORD CCalcPanelDHEnd(void);
 
 //--------------------------------------------------
 // Description  : Get scaling information
@@ -1623,11 +1627,11 @@ BYTE CModeGetScaleSetting(void)
 	#if((_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON))
 	BYTE	OverScan_HWidth, OverScan_VHeight;
 	#endif
-	
+
 	#if(_DISP_INFO_BY_MODE == _ON)
-	
+
 	BYTE modetemp;
-	
+
 	if(GET_MODE_SEARCH_TYPE() == _PRESET_MODE_TYPE)
 	{
 		modetemp = stModeInfo.ModeCurr;
@@ -1635,42 +1639,42 @@ BYTE CModeGetScaleSetting(void)
 	else if(GET_MODE_SEARCH_TYPE() == _USER_MODE_TYPE)
 	{
 		CEepromLoadUserFIFOModeData((stModeInfo.ModeCurr / 4), pData);
-		
+
 		modetemp = pData[(stModeInfo.ModeCurr % 4) * 4];
 	}
-	
+
 	stDisplayInfo = tDISPLAY_PRESET_TABLE[modetemp];
 	//stDisplayInfo.DVStartPos = (DWORD)35 * 2 * stDisplayInfo.DVHeight / stModeInfo.IVHeight / 10;
 	//stDisplayInfo.DVStartPos = ((stDisplayInfo.DVStartPos >> 1) + (stDisplayInfo.DVStartPos & 0x01));
-	
+
 	// Modify Display Vertical Start Position
 	//stDisplayInfo.DVStartPos = (DWORD)35 * 2 * stDisplayInfo.DVHeight / stModeInfo.IVHeight / 10;
 	//stDisplayInfo.DVStartPos = ((stDisplayInfo.DVStartPos >> 1) + (stDisplayInfo.DVStartPos & 0x01));
-	
-	stDisplayInfo.DVStartPos = Panel[ucPanelSelect]->DVStartPos; 
+
+	stDisplayInfo.DVStartPos = Panel[ucPanelSelect]->DVStartPos;
 	if (stDisplayInfo.DVStartPos < 6)
 		stDisplayInfo.DVStartPos = 6;
-	
+
 	#else//(_DISP_INFO_BY_MODE == _ON)
 
-	stDisplayInfo.DHWidth 	= CCalcPanelWdith();//Panel[ucPanelSelect]->DHWidth;
+	stDisplayInfo.DHWidth 	= (WORD)CCalcPanelWdith();//Panel[ucPanelSelect]->DHWidth;
 	//stDisplayInfo.DHWidth = Panel[ucPanelSelect]->DHWidth;
 	stDisplayInfo.DVHeight = Panel[ucPanelSelect]->DVHeight;
 	stDisplayInfo.DHTotal = Panel[ucPanelSelect]->DHTotal;
-	
+
 	// Modify Display Vertical Start Position	//CFrameSyncModifyDVStartPos
-	
+
 	//stDisplayInfo.DVStartPos = (DWORD)35 * 2 * stDisplayInfo.DVHeight / stModeInfo.IVHeight / 10;
 	//stDisplayInfo.DVStartPos = ((stDisplayInfo.DVStartPos >> 1) + (stDisplayInfo.DVStartPos & 0x01));
 	stDisplayInfo.DVStartPos = Panel[ucPanelSelect]->DVStartPos;   //Ming-Yen
-	
+
 	if (stDisplayInfo.DVStartPos < 6)
 		stDisplayInfo.DVStartPos = 6;
-		
+
 	#endif
-	
+
 	#if((_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON))
-	if((_GET_INPUT_SOURCE() ==_SOURCE_DVI || _GET_INPUT_SOURCE() ==_SOURCE_HDMI) && CHdmiFormatDetect())//HDMI only	
+	if((_GET_INPUT_SOURCE() ==_SOURCE_DVI || _GET_INPUT_SOURCE() ==_SOURCE_HDMI) && CHdmiFormatDetect())//HDMI only
 	{
 		//Overscan Area refer by Polaroid.
 		HDMI_H_Width = stModeInfo.IHWidth;
@@ -1678,19 +1682,19 @@ BYTE CModeGetScaleSetting(void)
 
 		CCheckHDMIMode();
 
-		#if(_HDMI_OVERSCAN_PERCENT==_OVERSCAN_PERCENT_93_75)	
+		#if(_HDMI_OVERSCAN_PERCENT==_OVERSCAN_PERCENT_93_75)
 		CScalerPageSelect(_PAGE2);
 		CScalerGetDataPortByte(_P2_HDMI_PSAP_CD, 0x07, 1, pData, _NON_AUTOINC);
 		if(0)	//pData[0] == 20)
         {//1920x1080ix50Hz
 			OverScan_HWidth = (BYTE)(stModeInfo.IHWidth/32);	//Horizontal: 96.87%
-			OverScan_VHeight= (BYTE)(stModeInfo.IVHeight/32);	//Vertical: 96.87%   
-		}	
+			OverScan_VHeight= (BYTE)(stModeInfo.IVHeight/32);	//Vertical: 96.87%
+		}
 		else
         {
 			OverScan_HWidth = (BYTE)(stModeInfo.IHWidth/16);	//Horizontal: 93.75%
 			OverScan_VHeight= (BYTE)(stModeInfo.IVHeight/16);	//Vertical: 93.75%   //forster modified 061102 for HDMI 576P @ 1280x1024 panel frame sync problem
-		}			
+		}
 		#elif(_HDMI_OVERSCAN_PERCENT==_OVERSCAN_PERCENT_95_00)
 		OverScan_HWidth = (BYTE)(stModeInfo.IHWidth/20);		//Horizontal: 95.00%
 		OverScan_VHeight= (BYTE)(stModeInfo.IVHeight/20);		//Vertical: 95.00%
@@ -1699,7 +1703,7 @@ BYTE CModeGetScaleSetting(void)
 		OverScan_VHeight= 0;									//Vertical: 100.00%
 		#endif
 
-		stModeInfo.IHWidth = stModeInfo.IHWidth - OverScan_HWidth; 
+		stModeInfo.IHWidth = stModeInfo.IHWidth - OverScan_HWidth;
 		if(stModeInfo.IHWidth % 8)
 			stModeInfo.IHWidth = ((stModeInfo.IHWidth + 4) >> 3) << 3;
 		stModeInfo.IHStartPos = stModeInfo.IHStartPos + OverScan_HWidth/2;
@@ -1707,7 +1711,7 @@ BYTE CModeGetScaleSetting(void)
 		stModeInfo.IVStartPos = stModeInfo.IVStartPos + OverScan_VHeight/2;
 	}
 	#endif
-	
+
 	if (stModeInfo.IVHeight < stDisplayInfo.DVHeight)
 		option |= _BIT0;	// bit 0 : V scale-up
 	if (stModeInfo.IVHeight > stDisplayInfo.DVHeight)
@@ -1716,7 +1720,7 @@ BYTE CModeGetScaleSetting(void)
 		option |= _BIT2;	// bit 2 : H scale-up
 	if (stModeInfo.IHWidth > stDisplayInfo.DHWidth)
 		option |= _BIT3;	// bit 3 : H scale-down
-	
+
 	return option;
 }
 
@@ -1733,31 +1737,31 @@ void CModeSetCaptureWindow(BYTE ucOption)
         ucHStartBias = 50;
     else
         ucHStartBias = 100;
-	
+
 	ucVStartBias = 0;
 	ucVStartBias = CAdjustIVS2DVSDelay(ucOption);
-	
+
 	if (ucVStartBias > stModeInfo.IVStartPos)
 		ucVStartBias = stModeInfo.IVStartPos;
-	
+
 	// Set capture window
     ustemp = stModeInfo.IHStartPos + _CAPTURE_HDELAY - (ucHStartBias + _PROGRAM_HDELAY);
-	
+
     CScalerSetBit(_IPH_ACT_STA_H_14, ~(_BIT2 | _BIT1 | _BIT0), HIBYTE(ustemp) & (_BIT2 | _BIT1 | _BIT0));
 	CScalerSetByte(_IPH_ACT_STA_L_15, LOBYTE(ustemp));
     CScalerSetBit(_IPH_ACT_WID_H_16, ~(_BIT2 | _BIT1 | _BIT0), HIBYTE(stModeInfo.IHWidth) & (_BIT2 | _BIT1 | _BIT0));
 	CScalerSetByte(_IPH_ACT_WID_L_17, LOBYTE(stModeInfo.IHWidth));
-	
+
 	ustemp = stModeInfo.IVStartPos - (ucVStartBias + _PROGRAM_VDELAY);
-	
+
     CScalerSetBit(_IPV_ACT_STA_H_18, ~(_BIT2 | _BIT1 | _BIT0), HIBYTE(ustemp) & (_BIT2 | _BIT1 | _BIT0));
 	CScalerSetByte(_IPV_ACT_STA_L_19, LOBYTE(ustemp));
     CScalerSetBit(_IPV_ACT_LEN_H_1A, ~(_BIT2 | _BIT1 | _BIT0), HIBYTE(stModeInfo.IVHeight) & (_BIT2 | _BIT1 | _BIT0));
 	CScalerSetByte(_IPV_ACT_LEN_L_1B, LOBYTE(stModeInfo.IVHeight));
-	
+
 	// Set internal input H sync delay
 	CAdjustIHSDelay(ucHStartBias + _PROGRAM_HDELAY);
-	
+
 	// Set internal input V sync delay
 	CAdjustIVSDelay(ucVStartBias + _PROGRAM_VDELAY);
 }
@@ -1771,7 +1775,7 @@ void CModeSetScaling(BYTE ucOption)
 {
     BYTE Hini = 0;
     BYTE Vini = 0;
-                      
+
     CScalerSetBit(_P6_UZD_CTRL0_E3, ~(_BIT4), 0x00); //Disable 2-tap   EricLee add for VGA change to AV/YPbPr position issue
 
     // Set window size before scale up
@@ -1787,7 +1791,7 @@ void CModeSetScaling(BYTE ucOption)
         pData[0] = (BYTE)((stModeInfo.IHWidth >> 4) & 0x70);
         pData[1] = LOBYTE(stModeInfo.IHWidth);
     }
-	
+
     if(ucOption & _BIT1)
     {
         // V scale-down
@@ -1800,37 +1804,37 @@ void CModeSetScaling(BYTE ucOption)
         pData[0] = pData[0] | (HIBYTE(stModeInfo.IVHeight) & 0x07);
         pData[2] = LOBYTE(stModeInfo.IVHeight);
     }
-    
+
     CScalerSetByte(_FIFO_ACCESS_PORT_30, _FIFO_DWRWL_H_BSU_00);
     CScalerWrite(_FIFO_DATA_PORT_31, 3, pData, _NON_AUTOINC);
-	
-	// Write coefficient for sharpness for scale-up 
+
+	// Write coefficient for sharpness for scale-up
     CAdjustSharpnessForScaleUp();
-    // Write sharpness coefficient for scale-down 
+    // Write sharpness coefficient for scale-down
     CAdjustSharpnessForScaleDown();
 
     // Config scaling
-    CScalerPageSelect(_PAGE6); 
+    CScalerPageSelect(_PAGE6);
     if(ucOption & _BIT1)
         CScalerSetBit(_P6_UZD_CTRL0_E3, ~(_BIT1), _BIT1);          // Turn on V scale-down
     else
         CScalerSetBit(_P6_UZD_CTRL0_E3, ~(_BIT1), 0x00);           // Turn off V scale-down
-	
+
     if(ucOption & _BIT3)
         CScalerSetBit(_P6_UZD_CTRL0_E3, ~(_BIT0), _BIT0);          // Turn on H scale-down
     else
         CScalerSetBit(_P6_UZD_CTRL0_E3, ~(_BIT0), 0x00);           // Turn off H scale-down
-	
+
     if(ucOption & _BIT0)
         CScalerSetBit(_SCALE_CTRL_32, ~(_BIT1), _BIT1);            // Turn on V scale-up
     else
         CScalerSetBit(_SCALE_CTRL_32, ~(_BIT1), 0x00);             // Turn off V scale-up
-	
+
     if(ucOption & _BIT2)
         CScalerSetBit(_SCALE_CTRL_32, ~(_BIT0), _BIT0);            // Turn on H scale-up
     else
         CScalerSetBit(_SCALE_CTRL_32, ~(_BIT0), 0x00);             // Turn off H scale-up
-	
+
     // Set scale-down coefficient
     if(ucOption & _BIT3)    // H scale-down
     {
@@ -1845,7 +1849,7 @@ void CModeSetScaling(BYTE ucOption)
         pData[2] = ((((DWORD *)pData)[3]) & 0xff);
         ///CScalerSetBit(_IPH_PORCH_NUM_H_1F, ~_BIT3, _BIT3); //Ming-Yen
         CScalerSetBit(_P6_UZD_CTRL1_E4, ~(_BIT3 | _BIT2), _BIT3); //For vertical UZD, H->V
-		
+
         if(stModeInfo.IHWidth >= stDisplayInfo.DHWidth)
         {
             if(stDisplayInfo.DHWidth > 960)
@@ -1863,7 +1867,7 @@ void CModeSetScaling(BYTE ucOption)
         pData[1] = 0x00;
         pData[2] = 0x00;
     }
-	
+
     if(ucOption & _BIT1)    // V scale-down
     {
         ((DWORD *)pData)[3] = (DWORD)1048576 * stModeInfo.IVHeight / stDisplayInfo.DVHeight;
@@ -1874,7 +1878,7 @@ void CModeSetScaling(BYTE ucOption)
         pData[4] = ((((DWORD *)pData)[3] >> 8) & 0xff);
         pData[5] = ((((DWORD *)pData)[3]) & 0xff);
         CScalerSetBit(_P6_UZD_CTRL0_E3, ~(_BIT7), 0x00);    // Diable Video scale-down compensation
-		
+
         if(stModeInfo.IHWidth >= stDisplayInfo.DHWidth)
         {
             if(stDisplayInfo.DHWidth > 960)
@@ -1884,43 +1888,43 @@ void CModeSetScaling(BYTE ucOption)
         {
             if(stModeInfo.IHWidth > 960)
                 CScalerSetBit(_P6_UZD_CTRL0_E3, ~_BIT4, _BIT4); //Enable 2-tap
-        } 
+        }
 		CScalerSetBit(_P6_UZD_CTRL1_E4, ~(_BIT3 | _BIT2), _BIT3); //For vertical UZD, H->V
     }
-	else 
+	else
 	{
         pData[3] = 0x00;
         pData[4] = 0x00;
         pData[5] = 0x00;
         CScalerSetBit(_P6_UZD_CTRL0_E3, ~_BIT7, 0x00);    // Disable Video scale-down compensation
     }
-	
+
 	CTimerWaitForEvent(_EVENT_IEN_STOP);
-	
+
     CScalerWrite(_P6_UZD_SCALE_HOR_FACTOR_H_E5, 6, pData, _AUTOINC);
-	
+
     pData[0] = 0x00;
     pData[1] = 0x00;
     pData[2] = 0x00;
     pData[3] = 0x00;
     pData[4] = (BYTE)(stDisplayInfo.DHWidth >> 8);
     pData[5] = (BYTE)stDisplayInfo.DHWidth;
-    pData[6] = Hini;//0x00; 
+    pData[6] = Hini;//0x00;
     pData[7] = Vini;//0x00;
-	
+
     CScalerWrite(_P6_UZD_HOR_DELTA1_H_EB, 8, pData, _AUTOINC);
-	
+
 #if(_NONLINEAR_SCALING)
     CScalerDisableNonlinearScaleDown();
 #endif
-	
+
     // Set scale-up coefficient
     if(ucOption & _BIT2)    // H scale-up
     {
         // Data[12~15]
         ((DWORD *)pData)[3] = (DWORD)2 * 1048576 * stModeInfo.IHWidth / stDisplayInfo.DHWidth;
         ((DWORD *)pData)[3] = (((DWORD *)pData)[3] >> 1) + (((DWORD *)pData)[3] & 0x01);
-		
+
         pData[0] = ((((DWORD *)pData)[3] >> 16) & 0x0f);
         pData[1] = ((((DWORD *)pData)[3] >> 8) & 0xff);
         pData[2] = ((((DWORD *)pData)[3]) & 0xff);
@@ -1930,13 +1934,13 @@ void CModeSetScaling(BYTE ucOption)
         pData[1] = 0xff;
         pData[2] = 0xff;
     }
-	
+
     if(ucOption & _BIT0)    // V scale-up
     {
         // Data[12~15]
         ((DWORD *)pData)[3] = (DWORD)2 * 1048576 * stModeInfo.IVHeight / stDisplayInfo.DVHeight;
         ((DWORD *)pData)[3] = (((DWORD *)pData)[3] >> 1) + (((DWORD *)pData)[3] & 0x01);
-		
+
         pData[3] = ((((DWORD *)pData)[3] >> 16) & 0x0f);
         pData[4] = ((((DWORD *)pData)[3] >> 8) & 0xff);
         pData[5] = ((((DWORD *)pData)[3]) & 0xff);
@@ -1947,12 +1951,12 @@ void CModeSetScaling(BYTE ucOption)
         pData[4] = 0xff;
         pData[5] = 0xff;
     }
-	
+
     CScalerSetByte(_SU_ACCESS_PORT_33, 0x80);
     CScalerWrite(_SU_DATA_PORT_34, 6, pData, _NON_AUTOINC);
     CScalerSetByte(_SU_ACCESS_PORT_33, 0x00);
     CScalerPageSelect(_PAGE0);
-	
+
 #if(_NONLINEAR_SCALING)
     CScalerDisableNonlinearScaleUp();
     CScalerNonlinearScaleUp(ucOption);
@@ -1969,45 +1973,45 @@ void CModeSetDisplay(BYTE ucOption)
 {
 	// Disable spread spectrum
 	CAdjustSpreadSpectrumRange(0);
-	
+
 	// Calculate and set display clock frequency
 	((DWORD *) pData)[0] = (DWORD)(stDisplayInfo.DHTotal) * (DWORD)stModeInfo.IHFreq * (DWORD)(stDisplayInfo.DVHeight) / stModeInfo.IVHeight / 10;
-	
+
 	CAdjustDPLL2(((DWORD *) pData)[0]);
-	
+
 	// Set DH_TOTAL
 	pData[0] = (HIBYTE(stDisplayInfo.DHTotal - 4) & 0x0f);
 	pData[1] = (LOBYTE(stDisplayInfo.DHTotal - 4));
     CScalerSetByte(_DISP_ACCESS_PORT_2A, _DISP_DH_TOTAL_H_00);
     CScalerWrite(_DISP_DATA_PORT_2B, 2, pData, _NON_AUTOINC);
-	
+
 	// Calculate DV_TOTAL setting for watchdog
 	((WORD *) pData)[2] = (DWORD) stModeInfo.IVTotal * (DWORD) (stDisplayInfo.DVHeight) / stModeInfo.IVHeight +	64;
 	pData[0] = (HIBYTE(((WORD *) pData)[2]) & 0x0f);
 	pData[1] = (LOBYTE(((WORD *) pData)[2]));
     CScalerSetByte(_DISP_ACCESS_PORT_2A, _DISP_DV_TOTAL_H_0B);
     CScalerWrite(_DISP_DATA_PORT_2B, 2, pData, _NON_AUTOINC);
-	
+
 	// Display horizontal start/end
-    ((WORD *)pData)[4] = CCalcPanelDHSta();
-    ((WORD *)pData)[5] = CCalcPanelDHEnd(); 
+    ((WORD *)pData)[4] = (WORD)CCalcPanelDHSta();
+    ((WORD *)pData)[5] = (WORD)CCalcPanelDHEnd();
     //((WORD *)pData)[4] = (Panel[ucPanelSelect]->DHWidth - stDisplayInfo.DHWidth) / 2 + Panel[ucPanelSelect]->DHStartPos;
     //((WORD *)pData)[5] = ((WORD *)pData)[4] + stDisplayInfo.DHWidth;
-	
+
     pData[0] = HIBYTE(((WORD *)pData)[4]);
     pData[1] = LOBYTE(((WORD *)pData)[4]);
     pData[2] = HIBYTE(((WORD *)pData)[5]);
     pData[3] = LOBYTE(((WORD *)pData)[5]);
-	
+
     CScalerSetByte(_DISP_ACCESS_PORT_2A, _DISP_DH_ACT_STA_H_05);
     CScalerWrite(_DISP_DATA_PORT_2B, 4, pData, _NON_AUTOINC);
-	
+
     // Display vertical start/end
     ((WORD *)pData)[4] = stDisplayInfo.DVStartPos - ((Panel[ucPanelSelect]->DVHeight - stDisplayInfo.DVHeight) / 2);
     ((WORD *)pData)[5] = stDisplayInfo.DVStartPos;
     ((WORD *)pData)[6] = ((WORD *)pData)[5] + stDisplayInfo.DVHeight;
     ((WORD *)pData)[7] = ((WORD *)pData)[4] + Panel[ucPanelSelect]->DVHeight;
-	
+
     pData[0] = HIBYTE(((WORD *)pData)[4]);
     pData[1] = LOBYTE(((WORD *)pData)[4]);
     pData[2] = HIBYTE(((WORD *)pData)[5]);
@@ -2019,15 +2023,15 @@ void CModeSetDisplay(BYTE ucOption)
     CScalerSetByte(_DISP_ACCESS_PORT_2A, (0x80 | _DISP_DV_BKGD_STA_H_0E));
     CScalerWrite(_DISP_DATA_PORT_2B, 8, pData, _NON_AUTOINC);
     CScalerSetByte(_DISP_ACCESS_PORT_2A, 0x00);//cyc_test
-	
+
 	// Turn off full-line buffer
 	CScalerSetBit(_SCALE_CTRL_32, ~_BIT4, 0x00);
-	
+
 	CAdjustIVS2DVSDelay(ucOption);
-	
+
 	//CTimerWaitForEvent(_EVENT_DEN_STOP);
 	// Enable display timing
-	
+
 	CScalerSetBit(_VDISP_CTRL_28, ~(_BIT5 | _BIT3 | _BIT1 | _BIT0),	(_BIT5 | _BIT3 | _BIT1 | _BIT0));
 	CMiscClearStatusRegister();
 }
@@ -2044,15 +2048,15 @@ BYTE ucTemp;
 
 		// Force to stop auto-tracking function
 		CScalerSetByte(_AUTO_ADJ_CTRL_7F, 0x00);
-		
+
 		  CScalerSetByte(_STATUS0_01, 0x00);   // Clear Status
-		  
+
 			ucTemp  = 8;			 // Tracking timeout 80ms
 			do
 			{
 			CTimerDelayXms(10);
 			CScalerRead(_STATUS0_01, 1, pData, _NON_AUTOINC);  // Read Status
-			
+
 			  // V101C corrected
 			  if(pData[0] & 0x80)
 			  CScalerSetByte(_STATUS0_01, 0x00);   // Clear Status
@@ -2060,10 +2064,10 @@ BYTE ucTemp;
 			  break;
 			  }
 			  while(--ucTemp);
-			  
+
 				// Measure actual number of scan line in each frame
 				CScalerCodeW(tMEASURE_IVS);
-				
+
 				  ucTemp  = 50;    // Tracking timeout 50ms
 				  do
 				  {
@@ -2071,15 +2075,15 @@ BYTE ucTemp;
 				  CScalerRead(_AUTO_ADJ_CTRL_7F, 0x01, pData, _NON_AUTOINC);
 				  }
 				  while((pData[0] & 0x01) && (--ucTemp));
-				  
+
 					CScalerSetByte(_AUTO_ADJ_CTRL_7F, 0x00);
-					
+
 					  if(ucTemp)
 					  {
 					  CScalerRead(_VER_START_80, 0x04, pData, _AUTOINC);
 					  pData[0]	= pData[3] & 0x0f;
 					  pData[1]	= pData[2];
-					  
+
 						stModeInfo.IVTotal   = stModeInfo.IVTotal < ((WORD *)pData)[0] ? ((WORD *)pData)[0] : stModeInfo.IVTotal;
 						}
 	*/
@@ -2097,7 +2101,7 @@ BYTE ucTemp;
 *
 */
 void CModeResetMode(void)
-{	
+{
     if (_GET_INPUT_SOURCE() == _SOURCE_VIDEO_TV)
     {
        ucTVSyncFailCount++;
@@ -2141,7 +2145,7 @@ void CModeResetMode(void)
 	if(_GET_INPUT_SOURCE() != _SOURCE_HDMI)
   	#endif
 	{
-		CPowerLightPowerOff();	
+		CPowerLightPowerOff();
 	}
 	#else
 	CPowerLightPowerOff();
@@ -2153,7 +2157,7 @@ void CModeResetMode(void)
         if(CGetSourcePortType(_GET_INPUT_SOURCE()) == _YPBPR_A0_PORT)
         {
     		#if(_YPBPR_HW_AUTO_SOY != _ENABLE)
-    		CScalerPageSelect(_PAGE0);		
+    		CScalerPageSelect(_PAGE0);
     		CScalerSetByte(_P0_ADC_SOG0_CTRL_D2, _SOY_LEVEL);
     		#endif
         }
@@ -2164,7 +2168,7 @@ void CModeResetMode(void)
     		CScalerSetByte(_PB_SOYCH0_CFG3_C3,_SOY_LEVEL);//20071122
     		#endif
         }
-    
+
     	CScalerPageSelect(_PAGE0);
     	CScalerSetByte(_P0_ADC_DCR_CTRL_D3,0x11);
     	CScalerSetByte(_P0_ADC_CLAMP_CTRL0_D4,0x00);
@@ -2184,31 +2188,31 @@ void CModeResetMode(void)
 	CScalerSetBit(_VGIP_CTRL_10, ~(_BIT1 | _BIT0), 0x00);
 	CScalerSetByte(_VGIP_SIGINV_11, 0x00);
     CScalerSetByte(_VGIP_DELAY_CTRL_12, 0x00); //731301
-	
+
     CScalerPageSelect(_PAGE2);
 	CScalerSetBit(_P2_Z0_CALIBRATION_CTRL_AC, ~_BIT6, _BIT6); //V305 modify
-	
+
     CScalerPageSelect(_PAGE2);
 	CScalerSetByte(_P2_TMDS_OUTPUT_CTRL_A6, 0x78);		//Auto Output Disable
 	CScalerSetByte(_P2_POWER_ON_OFF_CTRL_A7, 0x6F);		//Input Channel ctrl by auto func(Manual)
 	CScalerCodeW(tSCALER_RESET_TABLE);
 	CScalerSetByte(_VDISP_SIGINV_29, Panel[ucPanelSelect]->PanelConfig & (~_BIT3));
-	
+
 //20080114***
 	CScalerPageSelect(_PAGE6);
 	CScalerSetByte(_P6_UZD_VER_INITIAL_VALUE_F2, 0x00);
-	CScalerSetByte(_P6_UZD_HOR_INITIAL_VALUE_F1, 0x00);	
+	CScalerSetByte(_P6_UZD_HOR_INITIAL_VALUE_F1, 0x00);
 //20080114###
 
 	if(bSourceVideo())
     {
-		CScalerPageSelect(_PAGE9);		
+		CScalerPageSelect(_PAGE9);
         CScalerSetBit(_P9_HLOOP_MAXSTATE_C1, ~(_BIT2 | _BIT1 | _BIT0), 0x03);
     }
 
 	CModeSetFreeRun();
-	
-	if (GET_PANELPOWERSTATUS() == _OFF) 
+
+	if (GET_PANELPOWERSTATUS() == _OFF)
 	{
 		CScalerEnableDisplayOutput();
 	}
@@ -2223,12 +2227,12 @@ void CModeResetMode(void)
        	CScalerSetDataPortByte(_SYNC_PROC_ACCESS_PORT_5C, _SYNC_BR_CLAMP_START_02, 0x04);
        	CScalerSetDataPortByte(_SYNC_PROC_ACCESS_PORT_5C, _SYNC_BR_CLAMP_END_03, 0x10);
 	}
-	
-	#if (_YPBPR_NONE_CHECK_APLL)		
-	if (_GET_INPUT_SOURCE() == _SOURCE_YPBPR)		
+
+	#if (_YPBPR_NONE_CHECK_APLL)
+	if (_GET_INPUT_SOURCE() == _SOURCE_YPBPR)
 		CScalerSetDataPortByte(_SYNC_PROC_ACCESS_PORT_5C, _SYNC_DETECT_TOLERANCE_SET_08, 0x14);	// Set capture windows tolance is 16,hill 20070417
 	else
-		CScalerSetDataPortByte(_SYNC_PROC_ACCESS_PORT_5C, _SYNC_DETECT_TOLERANCE_SET_08, 0x04);	// restore capture windows tolance,hill 20070417	
+		CScalerSetDataPortByte(_SYNC_PROC_ACCESS_PORT_5C, _SYNC_DETECT_TOLERANCE_SET_08, 0x04);	// restore capture windows tolance,hill 20070417
 	#endif
 
 	CLR_SHOW_NO_SIGNAL();
@@ -2244,7 +2248,7 @@ void CModeResetMode(void)
     #endif
 	#endif
     if (GET_CLEAR_OSD_EN())
-    	CTimerCancelTimerEvent(COsdDispOsdTimerEvent);
+    	//CTimerCancelTimerEvent(COsdDispOsdTimerEvent);
 	#if(_OSD_TYPE == _OSD002)
     if (GET_CLEAR_OSD_EN())
         CTimerCancelTimerEvent(CChangePalette);
@@ -2258,7 +2262,7 @@ void CModeResetMode(void)
 	#endif
     if (GET_CLEAR_OSD_EN())
         COsdDispOsdTimerEvent();
-	
+
 	CLR_FIRST_ADCCLOCK();
 	CLR_USE_TRANSITION_RESULT();
 	CLR_FRAMESYNCSTATUS();
@@ -2270,7 +2274,7 @@ void CModeResetMode(void)
 	}
 	#endif
 	ucInputSyncType = _NO_SYNC_STATE;
-	
+
 	#if(_TMDS_SUPPORT == _ON)
 	SET_PRE_VGA_CONNECT(bVGACONNECT);
 	#if (_HDMI_SUPPORT == _ON)
@@ -2286,7 +2290,7 @@ void CModeResetMode(void)
 	ucModeFound         = _MODE_FIRST;
 	ucTimerEvent 		= _INACTIVE_COUNTDOWN_EVENT;
 	ucEvent1		    = _INACTIVE_COUNTDOWN_EVENT;
-	
+
 	stModeInfo.Polarity = 0;
 	stModeInfo.IHCount = 0;
 	stModeInfo.IHFreq = 0;
@@ -2295,10 +2299,10 @@ void CModeResetMode(void)
 	stModeInfo.IHWidth = 0;
 	stModeInfo.IVHeight = 0;
 	stModeInfo.IHSyncPulseCount = 0;
-	
-	if(ucCurrState != _PWOFF_STATE)			
+
+	if(ucCurrState != _PWOFF_STATE)
 		ucCurrState = _SEARCH_STATE;
-	
+
     SET_CLEAR_OSD_EN();
     ucVideoType = 0;
 	#if (_OSD_TYPE == _OSD003)
@@ -2316,11 +2320,11 @@ void CModeSetFreeRun(void)
 {
     WORD usDEndPos;
 	CMiscDisableDoubleBuffer();			// Disable video graphic input(VGIP) double buffer mode
-	
+
    	CAdjustDPLL2((DWORD) (Panel[ucPanelSelect]->PixelClock - 10) * 1000);
-	
+
 	CScalerSetBit(_VDISP_CTRL_28, ~(_BIT5 | _BIT3 | _BIT1 | _BIT0),	(_BIT5 | _BIT1 | _BIT0));	// Display output normal operation and enable display timing generator
-		
+
 	pData[0] = (HIBYTE(Panel[ucPanelSelect]->DHTotal - 4) & 0x0f);
    	pData[1] = (LOBYTE(Panel[ucPanelSelect]->DHTotal - 4));
 	pData[2] = (Panel[ucPanelSelect]->DHSyncWidth);
@@ -2328,16 +2332,16 @@ void CModeSetFreeRun(void)
 	pData[4] = (LOBYTE(Panel[ucPanelSelect]->DHStartPos));
 	pData[5] = (HIBYTE(Panel[ucPanelSelect]->DHStartPos) & 0x0f);
 	pData[6] = (LOBYTE(Panel[ucPanelSelect]->DHStartPos));
-	
+
 	usDEndPos = Panel[ucPanelSelect]->DHStartPos+ Panel[ucPanelSelect]->DHWidth;
 	pData[7] = (HIBYTE(usDEndPos) & 0x0f);
 	pData[8] = (LOBYTE(usDEndPos));
 	pData[9] = (HIBYTE(usDEndPos) & 0x0f);
 	pData[10] = (LOBYTE(usDEndPos));
-	
+
 	CScalerSetByte(_DISP_ACCESS_PORT_2A, _DISP_DH_TOTAL_H_00);
 	CScalerWrite(_DISP_DATA_PORT_2B, 11, pData, _NON_AUTOINC);
-	
+
 	pData[0] = (HIBYTE(Panel[ucPanelSelect]->DVTotal) & 0x0f);
 	pData[1] = (LOBYTE(Panel[ucPanelSelect]->DVTotal));
 	pData[2] = (Panel[ucPanelSelect]->DVSyncHeight);
@@ -2345,23 +2349,23 @@ void CModeSetFreeRun(void)
 	pData[4] = (LOBYTE(Panel[ucPanelSelect]->DVStartPos));
 	pData[5] = (HIBYTE(Panel[ucPanelSelect]->DVStartPos) & 0x0f);
 	pData[6] = (LOBYTE(Panel[ucPanelSelect]->DVStartPos));
-	
+
     usDEndPos = Panel[ucPanelSelect]->DVStartPos+ Panel[ucPanelSelect]->DVHeight;
 	pData[7] = (HIBYTE(usDEndPos) & 0x0f);
 	pData[8] = (LOBYTE(usDEndPos));
 	pData[9] = (HIBYTE(usDEndPos) & 0x0f);
 	pData[10] = (LOBYTE(usDEndPos));
-	
+
 	CScalerSetByte(_DISP_ACCESS_PORT_2A, _DISP_DV_TOTAL_H_0B);
 	CScalerWrite(_DISP_DATA_PORT_2B, 11, pData, _NON_AUTOINC);
-	
+
 	pData[0] = ((Panel[ucPanelSelect]->DHTotal >> 4) & 0xf0) | (HIBYTE(Panel[ucPanelSelect]->DVTotal) & 0x0f);
 	pData[1] = LOBYTE(Panel[ucPanelSelect]->DVTotal);
 	pData[2] = LOBYTE(Panel[ucPanelSelect]->DHTotal);
-	
+
     CScalerPageSelect(_PAGE1);
 	CScalerWrite(_P1_EVEN_FIX_LASTLINE_M_C7, 3, pData, _AUTOINC);
-	
+
     // Modify OSD Reference Position
 	CScalerSetDataPortByte(_DISP_ACCESS_PORT_2A, _DISP_OSD_REFERENCE_DEN_21, 0x02);//stDisplayInfo.DVStartPos);
 }
@@ -2478,7 +2482,7 @@ void CModePowerSavingEvent(void)
 	CPowerADCAPLLOff();
 	CPowerLVDSOff();
 	CPowerDPLLOff();
-	
+
 	#if(_VGA_DVI_AUTO_SWITCH_SUPPORT == _ON)
 	SET_SOURCE_AUTOCHANGE();
 	#endif
@@ -2489,7 +2493,7 @@ void CModePowerSavingEvent(void)
 	#if(_VIDEO_TV_SUPPORT)
  	#if(_SLEEP_FUNC)
     _SET_POWER_DOWN_TIME(0);
-    ucAutoPowerDownTime = 0xff;
+    //ucAutoPowerDownTime = 0xff;
     CEepromSaveTvData();
  	#endif
 	#endif
@@ -2500,7 +2504,7 @@ void CModeHDMITimeoutCountDownEvent(void)
 {
 	//if(ucOsdState == 0)
 	//	COsdFxDisableOsd();
-	
+
 	// EricLee mark for HDMI display faster
 	//CTimerDelayXms(500);
 	if ((bit) CScalerGetBit(_VDISP_CTRL_28, _BIT3))
@@ -2525,7 +2529,7 @@ void CModeInterlaceCheck(void)//v003_interlace_check
 	case _SOURCE_YPBPR:
 	#endif
 		CLR_INTERLACE_MODE();
-		
+
 		stModeInfo.IHTotal = 1000;
 		//080324
         ///CAdjustAdcClock(stModeInfo.IHTotal);
@@ -2533,18 +2537,18 @@ void CModeInterlaceCheck(void)//v003_interlace_check
         if (_SOURCE_YPBPR == _GET_INPUT_SOURCE())
             CAdjustAdcClockYPbPr(stModeInfo.IHTotal);
         else
-					
+
             CAdjustAdcClock(stModeInfo.IHTotal, 0);
 		CAdjustPhase(0);
 		CScalerSetBit(_VGIP_CTRL_10, ~(_BIT3 | _BIT2 | _BIT1), 0);
-		
+
 		CScalerSetBit(_IPV_ACT_LEN_H_1A, ~_BIT5, _BIT5);
 		CTimerDelayXms(80);
 		CScalerRead(_IPV_ACT_LEN_H_1A, 1, pData, _NON_AUTOINC);
 		if(pData[0] & 0x20)
 			SET_INTERLACE_MODE();
 		break;
-		
+
 	#if((_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON) || (_VIDEO_SUPPORT == _ON))
   	#if(_VIDEO_SUPPORT == _ON)
    	case _SOURCE_VIDEO_AV:
@@ -2579,45 +2583,45 @@ void CModeDeInterlaceSetting(void)
 	UINT8 option =0;
 
     stModeInfo.IVHeight = stModeInfo.IVHeight * 2;
-	
+
     CScalerPageSelect(_PAGE1);
     CScalerSetBit(_P1_MIX_B0, ~(_BIT2 | _BIT1), (_BIT2 | _BIT1));			//ADC input clock: dual clk mode
     CScalerPageSelect(_PAGE0);
     CScalerSetBit(_P0_ADC_V_BAIS1_CB, ~_BIT6, _BIT6);							//ADC 2X Oversample
     CScalerSetBit(_VGIP_ODD_CTRL_13, ~(_BIT6 | _BIT2 | _BIT0), (_BIT2 | _BIT0));
     CScalerSetBit(_SCALE_CTRL_32, ~_BIT7, 0x00);									//Disable video compensation
-	
+
     CScalerPageSelect(_PAGE6);
     CScalerSetBit(_P6_YUV422_TO_YUV444_D4, ~(_BIT7), _BIT7);				//Enable YUV422 to YUV 444
     CScalerSetByte(_P6_HORIZONTAL_ACTIVE_SIZE_MSB_A9, (BYTE)(stModeInfo.IHWidth >> 8));	//setup NR cap-win(H)
     CScalerSetByte(_P6_HORIZONTAL_ACTIVE_SIZE_LSB_AA, (BYTE)(stModeInfo.IHWidth >> 0));
     CScalerSetByte(_P6_VERTICAL_ACTIVE_SIZE_MSB_AB, (BYTE)(stModeInfo.IVHeight >> 8));		//setup NR cap-win(V)
     CScalerSetByte(_P6_VERTICAL_ACTIVE_SIZE_LSB_AC, (BYTE)(stModeInfo.IVHeight >> 0));
-    CScalerSetBit(_P6_ENABLE_BIST_CTRL_A0, ~_BIT3, _BIT3);					//Enable De-interlace Mode		
-	
+    CScalerSetBit(_P6_ENABLE_BIST_CTRL_A0, ~_BIT3, _BIT3);					//Enable De-interlace Mode
+
 	CScalerSetByte(_P6_INTERPOLATION_CTRL_A1, 0x00/*0x01*/);//eric 20070607							//use 9 pixel interpolation range
 	CScalerSetBit(_P6_SMOOTHING_ERROR_CORR_CTRL_A6,~_BIT2,_BIT2);		//enable median filter
-	
+
 	CScalerSetBit(_P6_UZD_CTRL1_E4, ~(_BIT3 |_BIT2), _BIT2); 						//For 480i/576i SU case,open NR func.
-	
+
     if(_GET_INPUT_SOURCE() == _SOURCE_YPBPR)
         CScalerSetBit(_P6_PEAKING_ENABLE_C1, ~_BIT0, _BIT0);						//Enable 444 to 422 color conversion
-	
+
     if(stModeInfo.IHWidth > 720)
         ((WORD *)pData)[0] = 720;
     else
         ((WORD *)pData)[0] = stModeInfo.IHWidth;
     ((WORD *)pData)[1] = stModeInfo.IHTotal - stModeInfo.IHWidth;
 	//((WORD *)pData)[0] = stModeInfo.IHWidth;							//v004 add
-	
+
     CScalerSetByte(_P6_ACTIVE_BLANK_WINDOW_CTRL_MSB_D5, (((pData[0] & 0x07) << 4) | (pData[2] & 0x03)));
     CScalerSetByte(_P6_ACTIVE_WINDOW_CTRL_LSB_D6, pData[1]);
     CScalerSetByte(_P6_BLANK_WINDOW_CTRL_LSB_D7, pData[3]);
-	
+
     //CScalerSetByte(_IPH_PORCH_NUM_H_1F, (pData[2] & 0x07));	//v004 cancel
     CScalerSetByte(_IPH_PORCH_NUM_H_1F, ((pData[2] | 0x10)& 0x17)); //fjyang20070712 for FV set
     CScalerSetByte(_IPH_PORCH_NUM_L_20, pData[3]);				//v004 cancel
-	
+
 //20080114***
 	CScalerSetBit(_P6_DELETE_LINE_PIXEL_ENABLE_A7, ~(_BIT1), _BIT1);
 	stModeInfo.IVHeight = stModeInfo.IVHeight - 4;
@@ -2633,8 +2637,8 @@ void CModeDeInterlaceSetting(void)
 	if (stModeInfo.IHWidth > stDisplayInfo.DHWidth)
 		option |= _BIT3;	// bit 3 : H scale-down
  	CModeSetScaling(option);
-	
-	stModeInfo.IVHeight = stModeInfo.IVHeight + 4;//20080114		
+
+	stModeInfo.IVHeight = stModeInfo.IVHeight + 4;//20080114
     stModeInfo.IVHeight = stModeInfo.IVHeight / 2;
 }
 #endif  // End of #if(_DE_INTERLACE_SUPPORT == _ON)
@@ -2655,7 +2659,7 @@ BYTE CCalcRatio(void)
 WORD CCalcPanelWdith(void)
 {
      BYTE ucRatio = CCalcRatio();
-     
+
 	 if(ucRatio >= 75)     // ������ 4:3 ����
 	    return Panel[ucPanelSelect]->DHWidth;
 
@@ -2663,7 +2667,7 @@ WORD CCalcPanelWdith(void)
      if(GET_DISPLAYMODE() == _DISPMODE_FULL)
      {
        	return Panel[ucPanelSelect]->DHWidth;
-     }     
+     }
      else if(GET_DISPLAYMODE() == _DISPMODE_43)
      {
 		return Panel[ucPanelSelect]->DVHeight * 4 / 3;
@@ -2671,7 +2675,7 @@ WORD CCalcPanelWdith(void)
      else		// auto
      {
 		 BYTE ucModeRatio = CCalcCurrentModeRatio();
-		 
+
 		 if(ucModeRatio >= 75)
 		 	return Panel[ucPanelSelect]->DVHeight * 4 / 3;
 
@@ -2705,16 +2709,16 @@ void CModeNoSignalEvent(void)
 #if(_VIDEO_TV_SUPPORT)
  #if(_SLEEP_FUNC)
     _SET_POWER_DOWN_TIME(0);
-    ucAutoPowerDownTime = 0xff;
+    //ucAutoPowerDownTime = 0xff;
     CEepromSaveTvData();
  #endif
 #endif
 
 	CPowerPanelOn();
     CPowerLightPowerOn();
-	ucOsdEventMsg = _SHOW_NOSIGNAL_MSG;
-	
-    #if (_HDMI_SUPPORT == _ON)	
+	//ucOsdEventMsg = _SHOW_NOSIGNAL_MSG;
+
+    #if (_HDMI_SUPPORT == _ON)
     CLR_HDMISHOWSEARCH();
     #endif
 
@@ -2730,20 +2734,20 @@ void CModeNoCableEvent(void)
 #if(_VIDEO_TV_SUPPORT)
  #if(_SLEEP_FUNC)
     _SET_POWER_DOWN_TIME(0);
-    ucAutoPowerDownTime = 0xff;
+    //ucAutoPowerDownTime = 0xff;
     CEepromSaveTvData();
  #endif
 #endif
 
-    ucOsdEventMsg = _SHOW_NOCABLE_MSG;
+    //ucOsdEventMsg = _SHOW_NOCABLE_MSG;
 	CPowerPanelOn(); // avoid power on not active panel power
     CPowerLightPowerOn();
 
-#if (_HDMI_SUPPORT == _ON)	
+#if (_HDMI_SUPPORT == _ON)
 	CLR_HDMISHOWSEARCH();
 #endif
 
-	
+
 }
 
 //--------------------------------------------------
@@ -2756,22 +2760,22 @@ void CModeNoSupportEvent(void)
 #if(_VIDEO_TV_SUPPORT)
  #if(_SLEEP_FUNC)
     _SET_POWER_DOWN_TIME(0);
-    ucAutoPowerDownTime = 0xff;
+    //ucAutoPowerDownTime = 0xff;
     CEepromSaveTvData();
  #endif
 #endif
 
-	CPowerPanelOn(); 
+	CPowerPanelOn();
     CPowerLightPowerOn();
-	ucOsdEventMsg = _SHOW_NOSUPPORT_MSG;
+	//ucOsdEventMsg = _SHOW_NOSUPPORT_MSG;
 
-#if (_HDMI_SUPPORT == _ON)	
+#if (_HDMI_SUPPORT == _ON)
 	CLR_HDMISHOWSEARCH();
-#endif	
+#endif
 }
 
 //--------------------------------------------------
-#define NOR_FACTOR_CONSTANT		0x3FC00000 
+#define NOR_FACTOR_CONSTANT		0x3FC00000
 BYTE code tDCC_Control1[] =
 {
 	0x84,  0x66,  0xc3,
@@ -2898,8 +2902,8 @@ void CAccAdjust (BYTE mode)
 	{
 		#if(_DCC_FUNC==_ENABLE)//Modify:2006.4.25D jerry
 		CScalerSetByte(_DCC_CTRL0_E4, 0x90);  //set manual mode
-		CScalerSetByte(_DCC_CTRL1_E5, 0x80);  //DCC gain control enable	
-		#else	
+		CScalerSetByte(_DCC_CTRL1_E5, 0x80);  //DCC gain control enable
+		#else
 		CScalerSetByte(_DCC_CTRL0_E4, 0x00);  //disable dcc, page0
 		CScalerSetByte(_DCC_CTRL1_E5, 0x00);  //disable
 		#endif
@@ -2919,7 +2923,7 @@ void CAccAdjust (BYTE mode)
 	CScalerSetByte(_DCC_CTRL1_E5, j);
 
 	CScalerSetByte(_DCC_ACCESS_PORT_E6, 0x03);
-	for (i=0; i<9; i++) 
+	for (i=0; i<9; i++)
     {
 		CScalerSetByte(_DCC_DATA_PORT_E7, *DCCContol );
 		DCCContol++;
@@ -2930,7 +2934,7 @@ void CAccAdjust (BYTE mode)
 	CScalerSetByte(_DCC_CTRL0_E4, i);
 
 	CScalerSetByte(_DCC_ACCESS_PORT_E6, 0x00);
-	for (i=0; i<20; i++) 
+	for (i=0; i<20; i++)
     {
 		CScalerSetByte(_DCC_DATA_PORT_E7, *DCCCurve);
 		DCCCurve++;
@@ -2954,24 +2958,23 @@ void CModeHdmiHP(void)
 	//20070326, change for Philips DVP5965K mute
 	//CTimerDelayXms(150);
 //   	CLR_HDMI_CTRL();//Hot plug
-   	CScalerSetBit(_P2_HDCP_CTRL_C0, ~ _BIT0, 0);	
-	CScalerSetBit(_P2_Z0_CALIBRATION_CTRL_AC, ~ _BIT6, 0);		
+   	CScalerSetBit(_P2_HDCP_CTRL_C0, ~ _BIT0, 0);
+	CScalerSetBit(_P2_Z0_CALIBRATION_CTRL_AC, ~ _BIT6, 0);
 	//20070326, change for Philips DVP5965K mute
    	CTimerDelayXms(200+50);// 500
    	//CTimerDelayXms(600);
-	CScalerSetBit(_P2_HDCP_CTRL_C0, ~ _BIT0, _BIT0);	
+	CScalerSetBit(_P2_HDCP_CTRL_C0, ~ _BIT0, _BIT0);
 	CScalerSetBit(_P2_Z0_CALIBRATION_CTRL_AC, ~ _BIT6, _BIT6);
 	//20070326, change for Philips DVP5965K mute
-	//CTimerDelayXms(200);// 200		
+	//CTimerDelayXms(200);// 200
 	//CTimerDelayXms(200+100);// 20070414, 	Philips DVP5965K mute by x.hu
-	//CTimerDelayXms(800);	
-//	SET_HDMI_CTRL();	
+	//CTimerDelayXms(800);
+//	SET_HDMI_CTRL();
 	//CScalerSetBit(_P2_Z0_CALIBRATION_CTRL_AC, ~_BIT6, _BIT6); //V307 modify
-    //CScalerSetBit(_P2_HDCP_CTRL_C0, ~ _BIT0, _BIT0);		
-	
+    //CScalerSetBit(_P2_HDCP_CTRL_C0, ~ _BIT0, _BIT0);
+
 	#if 0//(_WATCHDOG_SUPPORT)
 	WD_RESET();
 	#endif */
 }
 #endif
-

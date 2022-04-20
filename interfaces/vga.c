@@ -9,12 +9,10 @@
 #include "scaler/scaler_tables.h"
 #include "scaler/scaler.h"
 
-#include "scaler/compat_funcs.h"
-
 void InitVGA()
 {
     #define WINDOW_HSTA 256-40
-    #define WINDOW_VSTA 28-1
+    #define WINDOW_VSTA 27
     #define WINDOW_HLEN 800
     #define WINDOW_VLEN 600
     #define WINDOW_HS_DELAY 0

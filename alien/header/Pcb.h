@@ -1,4 +1,5 @@
-#include "alien/header/Global.h"
+#define _LED_OFF 0
+#define _LED_ON  1
 
 //--------------------------------------------------
 // Scalder Type
@@ -13,10 +14,10 @@
 #define _MCU_TYPE                       		_REALTEK_RTD3580D_EMCU
 
 //--------------------------------------------------
-//_KT_PCB2660_001 
+//_KT_PCB2660_001
 //--------------------------------------------------
-#define _KEY_TYPE                               _KT_PCB2660_003
-             
+#define _KEY_TYPE                               _KT_PCB2660_001
+
 //--------------------------------------------------
 //Key scan type
 //--------------------------------------------------
@@ -40,7 +41,7 @@
 #define _VIDEO_SUPPORT                  		_ON
 #define _VIDEO_AV_SUPPORT                       _ON
 #define _VIDEO_SV_SUPPORT                       _ON
-#define _VIDEO_TV_SUPPORT                       _ON
+#define _VIDEO_TV_SUPPORT                       _OFF
 #define _VIDEO_YUV_SUPPORT                      _OFF
 #define _VIDEO_SCART_SUPPORT                    _OFF
 #define _YPBPR_SUPPORT                  		_OFF
@@ -149,7 +150,7 @@ _SOURCE_YPBPR,     _SOURCE_NONE
 #define _MAIN_TYPE                      		_MAIN_TYPE_1
 
 //--------------------------------------------------
-// RTD3580D Pin Share 
+// RTD3580D Pin Share
 //--------------------------------------------------
 
 #define _PIN_50 								(0 & 0x07)	// 0 ~ 5 (0: P6D0i, 1: P6D0o<open-drain>, 2: P6D0o<push-pull>, 3: ADCA0, 4: AVOUT, 5: VCLK)
@@ -211,14 +212,14 @@ _SOURCE_YPBPR,     _SOURCE_NONE
 #define bI2CSDA									(_MCU_PORT67)
 #define bI2CSCL									(_MCU_PORT66)
 #define bPANELPOWER 							(_MCU_PORT80)
-sbit    bLIGHTPOWER                             = P1^0;
+#define bLIGHTPOWER                             (_MCU_PORT10)
 
 //--------------------------------------------------
 // Connect definitions
 //--------------------------------------------------
-sbit    bVGACONNECT                             = P1^3;
+#define bVGACONNECT                             (_MCU_PORT60)
 #define bHDMICONNECT							(_MCU_PORT60)
-sbit    bHot_Plug                               = P3^7;
+#define bHot_Plug                               (_MCU_PORT17)
 #define bDVICONNECT                             0
 
 #define bUD							(_MCU_PORT74)
@@ -229,7 +230,7 @@ sbit    bHot_Plug                               = P3^7;
 //--------------------------------------------------
 #if(_KEY_SCAN_TYPE == _KEY_SCAN_NORMAL)
 
-#define bKey_P54                                (_MCU_PORT54)   //Power       
+#define bKey_P54                                (_MCU_PORT54)   //Power
 #define bKey_P56                                (_MCU_PORT56)   //Down
 #define bKey_P55                                (_MCU_PORT55)   //Up
 #define bKey_P57         						(_MCU_PORT57)   //Left
@@ -246,7 +247,7 @@ sbit    bKey_P34								= P3^4;         //Source
 #define AD_KEY3                                 MCU_ADC_NONE
 #define AD_KEY4                                 MCU_ADC_NONE
 
-#define bAD1_Key_1                              8//     //RESET//       
+#define bAD1_Key_1                              8//     //RESET//
 #define bAD1_Key_2                              52//54  //-//
 #define bAD1_Key_3                              23//39  //MENU//
 #define bAD1_Key_4                              39//54  //+//
@@ -261,8 +262,8 @@ sbit    bKey_P34								= P3^4;         //Source
 //--------------------------------------------------
 //            LED definitions
 //--------------------------------------------------
-sbit bLED2									    = P3^2;
-sbit bLED1									    = P3^3;
+#define bLED2									(_MCU_PORT57)
+#define bLED1									(_MCU_PORT57)//(_MCU_PORT33)
 
 //--------------------------------------------------
 // Tuner power
@@ -285,7 +286,7 @@ sbit bLED1									    = P3^3;
 //--------------------------------------------------
 //            Audio definitions
 //--------------------------------------------------
-#define AUDIO_TYPE                              _AUDIO_PWM      // _AUDIO_SC7313,_AUDIO_PWM 
+#define AUDIO_TYPE                              _AUDIO_PWM      // _AUDIO_SC7313,_AUDIO_PWM
 
 #define bAUDIO_MUTE_A							(_MCU_PORT64)
 #define SET_bAUDIO_MUTE_A(x)					(bAUDIO_MUTE_A = x)
@@ -294,15 +295,15 @@ sbit bLED1									    = P3^3;
 #define bMUTE                                   (bAUDIO_MUTE_A)
 
 #if (AUDIO_TYPE == _AUDIO_PWM)
-#define _AUDIO_A                                (_MCU_PORT81)        
-sbit  	_AUDIO_B 								= P3^2; 
+#define _AUDIO_A                                (_MCU_PORT81)
+#define _AUDIO_B 								(_MCU_PORT32)
 
 #define _VOLUME_INV                             1
 #define _MAX_VOLUME                             190
 #define _MIN_VOLUME                             0
 
 /*
-_RTD_PWM0, _RTD_PWM1, _RTD_PWM2, _RTD_PWM3, _RTD_PWM4, _RTD_PWM5 
+_RTD_PWM0, _RTD_PWM1, _RTD_PWM2, _RTD_PWM3, _RTD_PWM4, _RTD_PWM5
 */
 #define bVOLUME_PWM                             _RTD_PWM5
 
@@ -318,7 +319,7 @@ _RTD_PWM0, _RTD_PWM1, _RTD_PWM2, _RTD_PWM3, _RTD_PWM4, _RTD_PWM5
 // Definitions for Backlight PWM Setting
 //--------------------------------------------------
 /*
-_RTD_PWM0, _RTD_PWM1, _RTD_PWM2, _RTD_PWM3, _RTD_PWM4, _RTD_PWM5 
+_RTD_PWM0, _RTD_PWM1, _RTD_PWM2, _RTD_PWM3, _RTD_PWM4, _RTD_PWM5
 */
 #define _BACKLIGHT_PWM                         _RTD_PWM1
 #define _BACKLIGHT_PWM_INVERSE                 _DISABLE    // _ENABLE,  _DISABLE
@@ -353,7 +354,7 @@ _RTD_PWM0, _RTD_PWM1, _RTD_PWM2, _RTD_PWM3, _RTD_PWM4, _RTD_PWM5
 #define _DDC_CHANNEL_FOR_D1 				   _DDC3	// DDC Channel SEL for digital input 1
 
 //--------------------------------------------------
-// Interior VGA  EDID 
+// Interior VGA  EDID
 //--------------------------------------------------
 #define _VGA_EDID                              _ON
 
@@ -364,7 +365,7 @@ _RTD_PWM0, _RTD_PWM1, _RTD_PWM2, _RTD_PWM3, _RTD_PWM4, _RTD_PWM5
 #define _HDMI_DDC_CHANNEL_SELECT 		       _DDC_CHANNEL_FOR_D0
 
 //--------------------------------------------------
-// Interior DVI  EDID 
+// Interior DVI  EDID
 //--------------------------------------------------
 #define _DVI_EDID                              _ON
 #define _DVI_DDC_CHANNEL_SELECT                _DDC_CHANNEL_FOR_D1

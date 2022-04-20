@@ -12,13 +12,10 @@
 #include "scaler/scaler_tables.h"
 #include "scaler/scaler.h"
 
-//#include "peripherals/timer.h"
+#include "peripherals/timer.h"
 #include "peripherals/xsfr.h"
 
-//#include "peripherals/pins.h"
-
-#include "scaler/compat_funcs.h"
-#include "scaler/compat_regs.h"
+#include "peripherals/pins.h"
 
 void SetDPLLFrequncy(uint32_t outFreq)
 {
@@ -76,7 +73,7 @@ void SetDPLLFrequncy(uint32_t outFreq)
     //ScalerWriteByte(S_VDISP_CONTROL, 0xa3); // Display control, generator start
 }
 
-
+#if 0
 BYTE CAdjustGetAPLLSetting(WORD usClock)
 {
     BYTE ucTemp[2];
@@ -303,7 +300,7 @@ stModeInfo.IHFreq UINT in 100Hz
 
     }
 }
-
+#endif
 
 void SetAPLLFrequncy(uint32_t pixelClock, uint16_t linePixelCount)
 {

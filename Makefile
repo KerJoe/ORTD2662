@@ -1,5 +1,11 @@
+ifeq ($(OS),Windows_NT) # Windows tools
+RMDIR = -cmd /C rd /S /Q # Ignore not found error
+else # POSIX tools
+RMDIR = rm -r
+endif
+
 # Add all subdirectories 1 level deep into make search path
-VPATH += $(wildcard ./*/)
+VPATH =  $(wildcard ./*/)
 # Compile all .c files in directories
 SRCFILES := $(wildcard */*.c)
 # File that has the main() function
@@ -7,6 +13,9 @@ MAINFILE := core/main.c
 #
 PROGRAMMER := python3 ../RTDMultiProg/rtdmultiprog.py -i mcp2221_c -w
 
+# Compile alien
+VPATH += alien/code/ $(wildcard alien/code/*/)
+SRCFILES += $(wildcard alien/code/*.c)  $(wildcard alien/code/*/*.c)
 
 # Native compiler
 NATIVE_CC        = gcc
@@ -59,8 +68,9 @@ program: $(SDCC_OUTPUTDIR)/firmware.bin
 	$(PROGRAMMER) "$(CURDIR)/$(SDCC_OUTPUTDIR)/firmware.bin"
 
 clean:
-	rm -rf $(NATIVE_OUTPUTDIR)
-	rm -rf $(SDCC_OUTPUTDIR)
+	$(RMDIR) $(NATIVE_OUTPUTDIR)
+	$(RMDIR) $(SDCC_OUTPUTDIR)
 
-
+# Include dependency files
 -include $(NATIVE_DFILES)
+-include $(SDCC_DFILES)
