@@ -7,15 +7,12 @@ endif
 # Add all subdirectories 1 level deep into make search path
 VPATH =  $(wildcard ./*/)
 # Compile all .c files in directories
-SRCFILES := $(wildcard */*.c)
+SRCFILES := $(wildcard ./*/*.c)
 # File that has the main() function
 MAINFILE := core/main.c
 #
 PROGRAMMER := python3 ../RTDMultiProg/rtdmultiprog.py -i mcp2221_c -w
 
-# Compile alien
-VPATH += alien/code/ $(wildcard alien/code/*/)
-SRCFILES += $(wildcard alien/code/*.c)  $(wildcard alien/code/*/*.c)
 
 # Native compiler
 NATIVE_CC        = gcc
