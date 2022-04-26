@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Adjust.h No.0001
 // Update Note  :
@@ -202,7 +203,7 @@
 //----------------------------------------------------------------------------------------------------
 
 #ifdef _ADJUST_C
-                               
+
 //--------------------------------------------------
 // Global Variables
 //--------------------------------------------------
@@ -278,7 +279,7 @@ void CAdjustDisableHDMIWatchDog(BYTE ucPar);//731301
 void CRtdWriteGamma(UINT8 *array);
 #endif
 void CAdjustGammaTable(BYTE index);
-        
+
 #else
 
 //--------------------------------------------------
@@ -291,7 +292,7 @@ extern WORD idata usPEValue;
 extern DWORD idata usPllDivider;
 extern DWORD idata usPllDividerRem;
 extern DWORD idata usIHFreqApllFast;
-                  
+
 //--------------------------------------------------
 // Extern Function Prototypes
 //--------------------------------------------------
@@ -352,10 +353,10 @@ extern void CAdjustDisableHDMIWatchDog(BYTE ucPar);//731301
 #if(_GAMMA_TYPE == _FULL_GAMMA_COMPRESS_TABLE2)
 extern void CRtdWriteGamma(UINT8 *array);
 #endif
-   
+
 extern void CAdjustAdcClockYPbPr(WORD usClock);
 extern void CAdjustGammaTable(BYTE index);
-   
+
 #endif
 
 
@@ -382,4 +383,3 @@ extern void CAdjustGammaTable(BYTE index);
 #define GET_USE_TRANSITION_RESULT() ((bit)(ucAdjustCtrl & _BIT2))
 #define SET_USE_TRANSITION_RESULT() (ucAdjustCtrl |= _BIT2)
 #define CLR_USE_TRANSITION_RESULT() (ucAdjustCtrl &= ~_BIT2)
-

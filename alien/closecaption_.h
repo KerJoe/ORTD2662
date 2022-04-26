@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 /*===========================================================
  * Copyright (c)      Realtek Semiconductor Corporation, 2005
  * All rights reserved.
@@ -194,5 +195,3 @@ void CCcDisable(void);
 *
 * @}
 */
-
-

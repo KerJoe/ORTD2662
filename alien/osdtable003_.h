@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 #if(_OSD_TYPE == _OSD003)
 
 enum
@@ -28,13 +29,13 @@ enum
 	_MI_HUEADJ,
 	// MainMenu\Color\Saturation
 	_MI_SATURATIONADJ,
-#endif	
+#endif
 
 	// MainMenu\Color\ColorTemp
 	_MI_9300,
 	_MI_6500,
 	_MI_USER,
-	
+
 	// MainMenu\Color\ColorTemp\USER\R\G\B
 	_MI_USER_R,
 	_MI_USER_G,
@@ -46,7 +47,7 @@ enum
 	_MI_USER_GADJ,
 	_MI_USER_BADJ,
 #endif
-	
+
 	// MainMenu\Adjust
 	_MI_AUTOADJUST,
 	_MI_HPOSITION,
@@ -57,7 +58,7 @@ enum
 	// MainMenu\Adjust\AutoAdjust
 	_MI_AUTOADJUST_OK,
 	_MI_AUTOADJUST_CANCEL,
-	
+
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
 	// MainMenu\Adjust\HPositionAdj
 	_MI_ADJUST_HPOSITIONADJ,
@@ -68,7 +69,7 @@ enum
 	// MainMenu\Adjust\PhaseAdj
 	_MI_ADJUST_CLOCKADJ,
 #endif
-	
+
 	// MainMenu\OSD
 	_MI_LANGUAGE,
 	_MI_OSD_HPOSITION,
@@ -93,7 +94,7 @@ enum
 	// MainMenu\OSD\HPosition
 	_MI_OSD_HPOSITIONADJ,
 	// MainMenu\OSD\VPosition
-	_MI_OSD_VPOSITIONADJ,	
+	_MI_OSD_VPOSITIONADJ,
 
 	// MainMenu\OSD\TimerADJ
 	_MI_TIMERADJ,
@@ -105,7 +106,7 @@ enum
 
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
 	_MI_TRANSPARENTADJ,
-#endif	
+#endif
 
 	// MainMenu\TV
 	_MI_CHANNEL,
@@ -117,9 +118,9 @@ enum
     _MI_SWAP,
     _MI_AFC,
 	//
-#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)	
+#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
 	_MI_OSD_CHANNELADJ,
-#endif	
+#endif
 
 	// MainMenu\TV\System
 	_MI_S_NTSC_M,
@@ -139,17 +140,17 @@ enum
 	// MainMenu\TV\AutoSearch
 	_MI_AUTOSEARCH_OK,
 	_MI_AUTOSEARCH_CANCEL,
-    
+
 	// MainMenu\TV\ManualSearch
 	_MI_MANUALSEARCH_UP,
 	_MI_MANUALSEARCH_DOWN,
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
 	_MI_TUNINGADJ,
-#endif	
+#endif
 	// MainMenu\TV\Skip
 	_MI_SKIP_ON,
 	_MI_SKIP_OFF,
-	
+
 	// MainMenu\TV\AFC
 	_MI_AFC_ON,
 	_MI_AFC_OFF,
@@ -187,7 +188,7 @@ enum
 
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     _MI_SHARPNESS_ADJ,
-#endif	
+#endif
 
 	// MainMenu\Sound
 	_MI_VOLUME,
@@ -231,7 +232,7 @@ enum
     _MI_SC_INPUT_CH_NUM,
 
     //Factory menu
-    
+
 #if(_FAC_OSD)
     _MI_FAC_AUTOCOLOR,
 	_MI_FAC_GAIN,
@@ -242,7 +243,7 @@ enum
     _MI_GAMMA,
     _MI_FAC_NR,
 	_MI_FAC_EXIT,
-	
+
 	_MI_FAC_9300_R,
 	_MI_FAC_9300_G,
 	_MI_FAC_9300_B,
@@ -276,4 +277,3 @@ enum
 extern code SMenuItem g_tMenuItem[];
 
 #endif		//#if(_OSD_TYPE == _OSD003)
-

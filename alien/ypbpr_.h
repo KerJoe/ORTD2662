@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : YPbPr.h No.0000
 // Update Note  :
@@ -389,12 +390,12 @@ BYTE code tYPBPR_TABLE_SET_SCALER[] =
 //    4,  _NON_AUTOINC,   _SYNC_PROC_ACCESS_PORT_5C,      _SYNC_G_CLAMP_START_00,
   //  7,  _NON_AUTOINC,   _SYNC_PROC_DATA_PORT_5D,        0x10,0x18,0x10,0x18,
 
-    
+
     4,  _NON_AUTOINC,   _SYNC_PROC_ACCESS_PORT_5C,      _SYNC_CAPTURE_WINDOW_SET_07,
-  #if (_YPBPR_NONE_CHECK_APLL)	 
-    5,  _NON_AUTOINC,   _SYNC_PROC_DATA_PORT_5D,        0x21,0x14,	
+  #if (_YPBPR_NONE_CHECK_APLL)
+    5,  _NON_AUTOINC,   _SYNC_PROC_DATA_PORT_5D,        0x21,0x14,
   #else
-    5,  _NON_AUTOINC,   _SYNC_PROC_DATA_PORT_5D,        0x21,0x04, 
+    5,  _NON_AUTOINC,   _SYNC_PROC_DATA_PORT_5D,        0x21,0x04,
   #endif
 
     4,  _NON_AUTOINC,   _CB_ACCESS_PORT_64,             0x80,
@@ -452,4 +453,4 @@ extern void CYPbPrHWAutoSOY(void);
 
 #endif
 
-#endif 
+#endif

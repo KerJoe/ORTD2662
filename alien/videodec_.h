@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 ////////////////////////////////////////////////////////////////////////////
 //         Copyright of Vector Co.,Ltd.                                   //
 //                                                                        //
@@ -131,7 +132,7 @@
 
 ////////////////////////////////////////////// VIDEO NONE ////////////////////////////////////////////////
 #elif(_VIDEO_CHIP != _VDC_NONE)
-    #error  Definitions Code Trapped 
+    #error  Definitions Code Trapped
 
 #endif
 
@@ -145,11 +146,11 @@
 |                            Function gmi_CVideoCurrentColor() return data explain                                       |
 |_______________________________________________________________________________________________________________________|
 |\          |             |             |             |          |          |          |          |          |          |
-|  \ Return |             |             |             |          |          |          |          |          |          | 
+|  \ Return |             |             |             |          |          |          |          |          |          |
 |    \ data |    0x00     |    0x01     |    0x02     |   0x03   |   0x04   |   0x05   |  0x06    |  0x07    |  0x08    |
 |VDC   \    |             |             |             |          |          |          |          |          |          |
 |  CHIP  \  | (bMode:0/1) | (bMode:0/1) | (bMode:0/1) |(bMode:1) |(bMode:1) |(bMode:1) |(bMode:1) |(bMode:1) |(bMode:1) |
-|__________\|_____________|_____________|_____________|__________|__________|__________|__________|__________|__________| 
+|__________\|_____________|_____________|_____________|__________|__________|__________|__________|__________|__________|
 |           |             |             |             |          |          |          |          |          |          |
 | RTD2612/3 | No signal   |    NTSC     |     PAL     | Reserved | Reserved | Reserved | Reserved | Reserved | Reserved |
 |___________|_____________|_____________|_____________|__________|__________|__________|__________|__________|__________|
@@ -168,7 +169,35 @@ extern void kx_CVDCOutputDisable(void);
 extern bit kx_CVideoModeLocked(void);
 extern void kx_CSelectVideoChannel(BYTE ucYCrChannel, BYTE ucAVOut);
 extern void kx_CAdjustVDCHue(const BYTE ucVDCHue);
-#endif
+
+
+extern BYTE code t7313Test[];
+
+#if(AUDIO_TYPE == _AUDIO_SC7313)
+void CSc7313MuteOn(void);
+void CSetSc7313Volume(BYTE ucVolume);
+void CSelect7313SoundChannel(BYTE ucChannel);
+void CSetAudioProcessor(BYTE ucBalance, BYTE ucBass, BYTE ucTreble) small;
 #endif
 
 
+void CMuteOn(void);
+void CMuteOff(void);
+void CSetVolume(void);
+
+bit kx_CVideoModeDetect(void);
+bit kx_CVideoIsChange(void);
+void kx_CWriteTuner(BYTE *Array);
+BYTE kx_CReadIfPllDM(void);
+bit bCheckTuner(BYTE TunerAddr);
+void CSetPWM(BYTE PWMId, WORD Value);
+
+void CWriteDisable(void);
+void kx_CSetTVFrameSync(void);
+void CSetDivMcode(BYTE* ucDiv, WORD* iMcode);
+void CAdjustTVPQ(BYTE ucLevel);
+void CVideoSetVDCSaturation(BYTE ucValue);
+void CPowerDownScaler(void);
+
+#endif
+#endif

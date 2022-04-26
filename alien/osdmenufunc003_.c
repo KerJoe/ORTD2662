@@ -1,7 +1,8 @@
+#include "alien/global_.h"
 
 #define __OSDDRAW003__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 #if(_OSD_TYPE == _OSD003)
 //-------------------------------------------------------------------
@@ -43,7 +44,7 @@ bit CHDMIEnable(void)
     if(_GET_INPUT_SOURCE() == _SOURCE_HDMI)
         return 1;
     else return 0;
-} 
+}
 
 //---------------------------------------------------------------------------
 bit CDviEnable(void)
@@ -64,9 +65,9 @@ bit CTVEnable(void)
 //---------------------------------------------------------------------------
 bit MDisplayRatioEnable(void)
 {
-    if(CCalcRatio() >= 75)      // ÆÁµÄ±ÈÀý 4:3 »ò 5:4
+    if(CCalcRatio() >= 75)      // ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ 4:3 ï¿½ï¿½ 5:4
         return _FAIL;
-    
+
     return _TRUE;
 }
 
@@ -328,7 +329,7 @@ bit COSDDoubleEN(void)
 {
     if(Panel[ucPanelSelect]->DHWidth < 1280 || Panel[ucPanelSelect]->DVHeight < 1024)
         return _FALSE;
-    
+
     return _TRUE;
 }
 //---------------------------------------------------------------------------
@@ -351,9 +352,9 @@ BYTE StateColor(BYTE State)
     {
     case _ST_NORMAL:    return _MENU_NORMAL_COLOR;
     case _ST_SELECT:    return _MENU_SECECT_COLOR;
-    case _ST_ADJUST:    return _MENU_ADJUST_COLOR; 
-    case _ST_DISABLE:   
-    default:            return _MENU_DISABLE_COLOR;     
+    case _ST_ADJUST:    return _MENU_ADJUST_COLOR;
+    case _ST_DISABLE:
+    default:            return _MENU_DISABLE_COLOR;
     }
 }
 
@@ -364,7 +365,7 @@ void CreatePopupMenu(BYTE ucRow,BYTE ucHeight)
     WORD usWindowTop;
     WORD usWindowRight;
     WORD usWindowBottom;
-    
+
     BYTE i;
     BYTE x;
     BYTE iCurrRow;
@@ -373,18 +374,18 @@ void CreatePopupMenu(BYTE ucRow,BYTE ucHeight)
         iCurrRow = ucRow + i;
         if(iCurrRow % 2)
             x = 20;
-        else 
+        else
             x = 27;
-        
+
         OSDLine(iCurrRow, COL(x), WIDTH(19), 0x00, BYTE_DISPLAY);
         OSDLine(iCurrRow, COL(x), WIDTH(19), 0x8C, BYTE_ATTRIB);
-    }   
-    
+    }
+
     usWindowLeft = 21 * 12;
     usWindowRight = (21 + 18) * 12;
     usWindowTop = (WORD)ucRow * 18;
     usWindowBottom = (WORD)(ucRow + ucHeight) * 18;
-    
+
     COsdFxDrawWindow(usWindowLeft, usWindowTop, usWindowRight, usWindowBottom, tPopupMenuWindowStyle);
 }
 
@@ -393,8 +394,8 @@ void ClearPopupMenu(BYTE ucRow,BYTE ucHeight)
 {
     BYTE i;
     BYTE x;
-    BYTE iCurrRow; 
-    
+    BYTE iCurrRow;
+
     for(i=0;i<ucHeight;i++)
     {
         iCurrRow = ucRow + i;
@@ -403,15 +404,15 @@ void ClearPopupMenu(BYTE ucRow,BYTE ucHeight)
             x = 20;
             SETCOLOR_SUBMENU_SELLINE(iCurrRow);
         }
-        else 
+        else
         {
             x = 27;
         }
-        
+
         OSDLine(iCurrRow, COL(x), WIDTH(19), 0x00, BYTE_DISPLAY);
         OSDLine(iCurrRow, COL(x), WIDTH(19), 0x8C, BYTE_ATTRIB);
     }
-    
+
     COsdFxCloseWindow(4);
 }
 
@@ -421,24 +422,24 @@ void DrawAPopupMenuItem(BYTE *str,BYTE ItemIndex,BYTE ucRowStart,BYTE ucColStart
     BYTE c;
     //BYTE x;
     BYTE ucColor = StateColor(State);
-    
+
     ItemIndex = ItemIndex + ucRowStart + 1;
-    
+
     if(State == _ST_SELECT)
         c = 0x57;   // Select Icon
     else
         c = 0x01;   // Clear Select Icon
-    
+
     if(ItemIndex % 2)
         ucColStart += 21;
     else
         ucColStart += 27;
-    
+
     OSDLine(ROW(ItemIndex), COL(ucColStart), LENGTH(19), ucColor, BYTE_COLOR);
-    
+
     Gotoxy(COL(ucColStart + 1),ROW(ItemIndex),BYTE_DISPLAY);
     OutputChar(c);
-    
+
     CTextOutEx(str, COL(ucColStart + 3), ROW(ItemIndex));
 }
 
@@ -446,41 +447,41 @@ void DrawAPopupMenuItem(BYTE *str,BYTE ItemIndex,BYTE ucRowStart,BYTE ucColStart
 void InitMainOsd(void)
 {
     BYTE i;
-    
+
     InitOsdFrame();
-    SetOSDDouble((GET_OSD_SIZE() ? 0x03 : 0x00)  | OSD_WINDOWCHAR_BLENDING);   
-    
+    SetOSDDouble((GET_OSD_SIZE() ? 0x03 : 0x00)  | OSD_WINDOWCHAR_BLENDING);
+
     // Draw Top Line
     OSDLine(ROW(3), COL(1), LENGTH(37), 0xA6, THE_BYTE0);
     OSDLine(ROW(3), COL(1), LENGTH(37), 0xA4, THE_BYTE1);
     OSDLine(ROW(3), COL(1), LENGTH(37), 0x11, THE_BYTE2);
-    
+
     // Draw Bottom Line
     OSDLine(ROW(16), COL(1), LENGTH(37), 0xA6, THE_BYTE0);
     OSDLine(ROW(16), COL(1), LENGTH(37), 0xA4, THE_BYTE1);
     OSDLine(ROW(16), COL(1), LENGTH(37), 0x11, THE_BYTE2);
-    
+
     // Draw Left Line
     for(i=0;i<12;i++)
     {
         Gotoxy(5 , 4 + i , ALL_BYTE);
         CScalerSendAddr(_OSD_DATA_PORT_92 , _NON_AUTOINC);
-        *(&MCU_SCA_INF_DATA_FFF5) = 0xA6;
-        *(&MCU_SCA_INF_DATA_FFF5) = 0xA5;
-        *(&MCU_SCA_INF_DATA_FFF5) = 0x11;
+        XSFRWriteByte(MCU_SCA_INF_DATA_FFF5, 0xA6);
+        XSFRWriteByte(MCU_SCA_INF_DATA_FFF5, 0xA5);
+        XSFRWriteByte(MCU_SCA_INF_DATA_FFF5, 0x11);
     }
-    
+
     // set submenu selet line color
     for(i=0;i<6;i++)
     {
         SETCOLOR_SUBMENU_SELLINE(SHOWINDEX_TO_LINE(i) + 1);
     }
-    
+
     // Draw Window
-    COsdFxDrawWindow(0,0,                                       //WORD usXStart,WORD usYStart,  
-        _MAINMENU_WIDTH + 20,_MAINMENU_HEIGHT,                  //WORD usXEnd,WORD usYEnd,  
+    COsdFxDrawWindow(0,0,                                       //WORD usXStart,WORD usYStart,
+        _MAINMENU_WIDTH + 20,_MAINMENU_HEIGHT,                  //WORD usXEnd,WORD usYEnd,
         tMainWindowStyle);                                      //BYTE *pStyle)
-    
+
     // set osd position
     if (GET_OSD_SIZE())
     {
@@ -496,24 +497,24 @@ void InitMainOsd(void)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawMainMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *tIcon;
-    
+
     y = GetShowIndex(ucItem,_MI_COLOR,_MI_SOUND);
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     switch(ucState)
     {
     case _ST_NORMAL:
@@ -526,7 +527,7 @@ void DrawMainMenuItem(BYTE ucItem,BYTE ucState)
         tIcon = tIcon_Disable[ucItem - _MI_COLOR];
         break;
     }
-    
+
     Draw2bit3x2Icon(tIcon,1,y);
 }
 
@@ -536,32 +537,32 @@ void DrawMainItemTitle(BYTE ucItem)
 {
     BYTE i;
     BYTE n;
-    BYTE x; 
+    BYTE x;
     BYTE Width;
     BYTE code *tFont;
-    
+
     tFont = tMainTitle[ucItem - _MI_COLOR][GET_LANGUAGE()].Font;
     Width = tMainTitle[ucItem - _MI_COLOR][GET_LANGUAGE()].Width;
-    
+
     CScalerLoadHardwareVLCFont(tFont, 0xE8);
-    
+
     // 39 : OSD Width
     x = (39 - Width)/2;
     n = 0xE8;
-    
+
     Gotoxy(x,1,BYTE_DISPLAY);
     CScalerSendAddr(_OSD_DATA_PORT_92 , _NON_AUTOINC);
     for(i=0;i<Width;i++)
     {
-        *(&MCU_SCA_INF_DATA_FFF5) = n++;
+        XSFRWriteByte(MCU_SCA_INF_DATA_FFF5, n++);
     }
-    
+
     Gotoxy(x,2,BYTE_DISPLAY);
     CScalerSendAddr(_OSD_DATA_PORT_92 , _NON_AUTOINC);
     for(i=0;i<Width;i++)
     {
-        *(&MCU_SCA_INF_DATA_FFF5) = n++;
-    }   
+        XSFRWriteByte(MCU_SCA_INF_DATA_FFF5, n++);
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -570,9 +571,9 @@ void DrawMainMenu(void)
     BYTE i;
     BYTE ucMode;
     InitMainOsd();
-#if(_CHINESE_FONT_TYPE == _CHINESE_2_FONT)    
+#if(_CHINESE_FONT_TYPE == _CHINESE_2_FONT)
     LoadCHIFont(_LF_COLOR_PAGE);
-#endif    
+#endif
     for(i=_MI_COLOR;i<=_MI_SOUND;i++)
     {
         if(i == ucOsdState)
@@ -586,7 +587,7 @@ void DrawMainMenu(void)
         }
         DrawMainMenuItem(i,     ucMode);
     }
-    
+
     DrawSubMenu(ucOsdState);
 }
 
@@ -595,9 +596,9 @@ void SubMenuTextOut(BYTE *str,BYTE y,BYTE ucColor,BYTE State)
 {
     // set color
     SUBMENU_LINECOLOR(y,ucColor);
-    // draw menu item 
+    // draw menu item
     SUBMENU_TEXTOUT(str,y);
-    
+
     // draw select line
     if(State == _ST_SELECT || State == _ST_ADJUST)
     {
@@ -610,21 +611,21 @@ void SubMenuTextOut(BYTE *str,BYTE y,BYTE ucColor,BYTE State)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawBright(BYTE State)
 {
     BYTE y;
     BYTE ucColor,ucColor1;
-    
+
     // get display line
     y = GetShowIndex(_MI_BRIGHTNESS,BEGIN(_MI_BRIGHTNESS),END(_MI_COLORTEMP));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     if(State == _ST_ADJUST)
     {
         ucColor1 = StateColor(_ST_SELECT);
@@ -633,35 +634,35 @@ void DrawBright(BYTE State)
     {
         ucColor1 = ucColor;
     }
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sBrightness[GET_LANGUAGE()],y,ucColor1,State);
-    
+
     // draw slider
     OSD_SLIDER(y,stConBriData.Brightness,ucColor);
-    
+
 }
 
 //---------------------------------------------------------------------------
 void BrightAdjust(BYTE ucMode)
 {
     BYTE y;
-    
+
     // ucMode : _INC or _DEC
     SET_KEYREPEATENABLE();
     stConBriData.Brightness = ValueInRangeChange(0, 100, stConBriData.Brightness, _NON_LOOP | ucMode);
     CAdjustBrightness();
     ucOsdEventMsg = _SAVE_EE_COLORPROC0_MSG;
-    
+
     // get display line
     y = GetShowIndex(_MI_BRIGHTNESS,BEGIN(_MI_BRIGHTNESS),END(_MI_COLORTEMP));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     OSD_SLIDER(y,stConBriData.Brightness,_MENU_SECECT_COLOR);
 	#endif
@@ -671,7 +672,7 @@ void BrightAdjust(BYTE ucMode)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawContrast(BYTE State)
 {
     BYTE y;
@@ -679,13 +680,13 @@ void DrawContrast(BYTE State)
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_CONTRAST,BEGIN(_MI_BRIGHTNESS),END(_MI_COLORTEMP));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
@@ -697,13 +698,13 @@ void DrawContrast(BYTE State)
     {
         ucColor1 = ucColor;
     }
-	#endif      
+	#endif
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sContrast[GET_LANGUAGE()],y,ucColor,State);
 	#endif
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     SubMenuTextOut(sContrast[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
@@ -716,21 +717,21 @@ void ContrastAdjust(BYTE ucMode)
 {
     // ucMode : _INC or _DEC
     BYTE y;
-    
+
     SET_KEYREPEATENABLE();
     stConBriData.Contrast = ValueInRangeChange(0, 100, stConBriData.Contrast, _NON_LOOP | ucMode);
     CAdjustContrast();
     ucOsdEventMsg = _SAVE_EE_COLORPROC0_MSG;
-    
-    
+
+
     // get display line
     y = GetShowIndex(_MI_CONTRAST,BEGIN(_MI_BRIGHTNESS),END(_MI_COLORTEMP));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
-	#if(_KEY_TYPE == _KT_PCB2660_003)   
+	#if(_KEY_TYPE == _KT_PCB2660_003)
     OSD_SLIDER(y,stConBriData.Contrast,_MENU_SECECT_COLOR);
 	#endif
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
@@ -739,24 +740,24 @@ void ContrastAdjust(BYTE ucMode)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawHue(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_HUE,BEGIN(_MI_BRIGHTNESS),END(_MI_COLORTEMP));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
@@ -766,19 +767,19 @@ void DrawHue(BYTE State)
     {
         ucColor1 = ucColor;
     }
-	#endif  
-    
+	#endif
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sHue[GET_LANGUAGE()],y,ucColor,State);
 	#endif
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     SubMenuTextOut(sHue[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
     // draw slider
-    OSD_SLIDER(y,GET_HUE(),ucColor);  
+    OSD_SLIDER(y,GET_HUE(),ucColor);
 }
 
 //---------------------------------------------------------------------------
@@ -786,7 +787,7 @@ void HueAdjust(BYTE ucMode)
 {
     // ucMode : _INC or _DEC
     BYTE y;
-    
+
     SET_KEYREPEATENABLE();
     stHueSatData.Hue = ValueInRangeChange(0, 100, stHueSatData.Hue, _NON_LOOP | ucMode);
     if(bSourceVideo())
@@ -794,44 +795,44 @@ void HueAdjust(BYTE ucMode)
     else
         CAdjustYpbprhue(GET_HUE());
     ucOsdEventMsg = _SAVE_EE_HUE_SAT_DATA_MSG;
-    
-    
+
+
     // get display line
     y = GetShowIndex(_MI_HUE,BEGIN(_MI_BRIGHTNESS),END(_MI_COLORTEMP));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     OSD_SLIDER(y,GET_HUE(),_MENU_SECECT_COLOR);
 	#endif
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     OSD_SLIDER(y,GET_HUE(),_MENU_ADJUST_COLOR);
-	#endif   
+	#endif
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawSaturation(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
-	#endif  
-    
+	#endif
+
     // get display line
     y = GetShowIndex(_MI_SATURATION,BEGIN(_MI_BRIGHTNESS),END(_MI_COLORTEMP));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
@@ -841,12 +842,12 @@ void DrawSaturation(BYTE State)
     {
         ucColor1 = ucColor;
     }
-	#endif  
-    
+	#endif
+
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sSaturation[GET_LANGUAGE()],y,ucColor,State);
 	#endif
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     SubMenuTextOut(sSaturation[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
@@ -859,74 +860,74 @@ void SaturationAdjust(BYTE ucMode)
 {
     // ucMode : _INC or _DEC
     BYTE y;
-    
+
     SET_KEYREPEATENABLE();
     stHueSatData.Saturation = ValueInRangeChange(0, 100, stHueSatData.Saturation, _NON_LOOP | ucMode);
     if(bSourceVideo())
         CVideoSetSaturation(GET_SATURATION());
     else
         CAdjustYpbprSaturation(GET_SATURATION());
-    ucOsdEventMsg = _SAVE_EE_HUE_SAT_DATA_MSG;            
-    
-    
+    ucOsdEventMsg = _SAVE_EE_HUE_SAT_DATA_MSG;
+
+
     // get display line
     y = GetShowIndex(_MI_SATURATION,BEGIN(_MI_BRIGHTNESS),END(_MI_COLORTEMP));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
-	#if(_KEY_TYPE == _KT_PCB2660_003)   
+
+	#if(_KEY_TYPE == _KT_PCB2660_003)
     OSD_SLIDER(y,GET_SATURATION(),_MENU_SECECT_COLOR);
 	#endif
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)    
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     OSD_SLIDER(y,GET_SATURATION(),_MENU_ADJUST_COLOR);
-	#endif  
+	#endif
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawColorTemp(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
     char *pStr;
-    
+
     // get display line
     y = GetShowIndex(_MI_COLORTEMP,BEGIN(_MI_BRIGHTNESS),END(_MI_COLORTEMP));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sColorTemp[GET_LANGUAGE()],y,ucColor,State);
-    
+
     switch(GET_COLOR_TEMP_TYPE())
     {
     case _CT_9300:          pStr = s9300[GET_LANGUAGE()];       break;
     case _CT_6500:          pStr = s6500[GET_LANGUAGE()];       break;
     case _CT_USER:
     default:                pStr = sUser[GET_LANGUAGE()];       break;
-    }       
-    
-    SUBMENU_RIGHT_TEXTOUT(pStr, y);  
+    }
+
+    SUBMENU_RIGHT_TEXTOUT(pStr, y);
 }
 
 //---------------------------------------------------------------------------
 // ucItem : MainMenu\Color\_MI_BRIGHTNESS,_MI_CONTRAST,_MI_HUE,_MI_SATURATION,_MI_COLORTEMP,
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawColorPageMenuItem(BYTE ucItem,BYTE ucState)
 {
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     switch(ucItem)
     {
     case _MI_BRIGHTNESS:        DrawBright(ucState);        break;
@@ -942,7 +943,7 @@ void DrawColorPageMenuItem(BYTE ucItem,BYTE ucState)
 void DrawPageNullLine(BYTE MenuBegin,BYTE MenuEnd)
 {
     BYTE ucCount = GetShowCount(MenuBegin,MenuEnd);
-    
+
     for(;ucCount<6;ucCount++)
     {
         SUBMENU_TEXTOUT(sSpace,SHOWINDEX_TO_LINE(ucCount));
@@ -955,7 +956,7 @@ void DrawColorPage(void)
 {
     BYTE i;
     BYTE ucState;
-    
+
     for(i=_MI_BRIGHTNESS;i<=_MI_COLORTEMP;i++)
     {
         if(i == ucOsdState)
@@ -966,53 +967,53 @@ void DrawColorPage(void)
         {
             ucState = _ST_NORMAL;
         }
-        
+
         DrawColorPageMenuItem(i,        ucState);
     }
     DrawPageNullLine(_MI_BRIGHTNESS,_MI_COLORTEMP);
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawAutoAdjust(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-    
+
     // get display line
     y = GetShowIndex(_MI_AUTOADJUST,BEGIN(_MI_AUTOADJUST),END(_MI_CLOCK));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sAutoConfig[GET_LANGUAGE()],y,ucColor,State);
-    
+
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawHPosition(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)      
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
-	#endif  
-    
+	#endif
+
     // get display line
     y = GetShowIndex(_MI_HPOSITION,BEGIN(_MI_AUTOADJUST),END(_MI_CLOCK));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
@@ -1022,20 +1023,20 @@ void DrawHPosition(BYTE State)
     {
         ucColor1 = ucColor;
     }
-	#endif  
-    
+	#endif
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003)
         SubMenuTextOut(sHPosition[GET_LANGUAGE()],y,ucColor,State);
 	#endif
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     SubMenuTextOut(sHPosition[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
-    
+
     // draw slider
-    OSD_SLIDER(y,COsdCtrlGetHPosition(),ucColor); 
+    OSD_SLIDER(y,COsdCtrlGetHPosition(),ucColor);
 }
 
 //---------------------------------------------------------------------------
@@ -1043,22 +1044,22 @@ void HPositionAdjust(BYTE ucMode)
 {
     // ucMode : _INC or _DEC
     BYTE y;
-    
+
     SET_KEYREPEATENABLE();
-    
+
     stModeUserData.HPosition = ValueInRangeChange(stModeUserCenterData.CenterHPos - _HPOSITION_BIAS,
         stModeUserCenterData.CenterHPos + _HPOSITION_BIAS,
         stModeUserData.HPosition,_NON_LOOP | ucMode);
-    
+
     ucOsdEventMsg = _SAVE_EE_MODEUSERDATA_MSG;
     CAdjustHPosition();
-    
+
     // get display line
     y = GetShowIndex(_MI_HPOSITION,BEGIN(_MI_AUTOADJUST),END(_MI_CLOCK));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     OSD_SLIDER(y,COsdCtrlGetHPosition(),_MENU_SECECT_COLOR);
@@ -1069,21 +1070,21 @@ void HPositionAdjust(BYTE ucMode)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawVPosition(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_VPOSITION,BEGIN(_MI_AUTOADJUST),END(_MI_CLOCK));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
@@ -1094,20 +1095,20 @@ void DrawVPosition(BYTE State)
     else
     {
         ucColor1 = ucColor;
-    }   
+    }
 	#endif
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sVPosition[GET_LANGUAGE()],y,ucColor,State);
 	#endif
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     SubMenuTextOut(sVPosition[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
     // draw slider
-    OSD_SLIDER(y,COsdCtrlGetVPosition(),ucColor);  
+    OSD_SLIDER(y,COsdCtrlGetVPosition(),ucColor);
 }
 
 //---------------------------------------------------------------------------
@@ -1115,23 +1116,23 @@ void VPositionAdjust(BYTE ucMode)
 {
     // ucMode : _INC or _DEC
     BYTE y;
-    
+
     SET_KEYREPEATENABLE();
-    
+
     stModeUserData.VPosition = ValueInRangeChange(stModeUserCenterData.CenterVPos - _VPOSITION_BIAS,
         stModeUserCenterData.CenterVPos + _VPOSITION_BIAS,
         stModeUserData.VPosition,
         _NON_LOOP | ucMode);
-    
+
     ucOsdEventMsg = _SAVE_EE_MODEUSERDATA_MSG;
     CAdjustVPosition();
-    
+
     // get display line
     y = GetShowIndex(_MI_VPOSITION,BEGIN(_MI_AUTOADJUST),END(_MI_CLOCK));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     OSD_SLIDER(y,COsdCtrlGetVPosition(),_MENU_SECECT_COLOR);
@@ -1146,20 +1147,20 @@ void PhaseAdjust(BYTE ucMode)
 {
     // ucMode : _INC or _DEC
     BYTE y;
-    
+
     SET_KEYREPEATENABLE();
-    
+
     stModeUserData.Phase = ValueInRangeChange(0, 63, stModeUserData.Phase, _NON_LOOP | ucMode);
-    
+
     ucOsdEventMsg = _SAVE_EE_MODEUSERDATA_MSG;
     CAdjustPhase(stModeUserData.Phase);
-    
+
     // get display line
     y = GetShowIndex(_MI_PHASE,BEGIN(_MI_AUTOADJUST),END(_MI_CLOCK));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     OSDSlider(y, 30, 10, stModeUserData.Phase, 63, _MENU_SECECT_COLOR);
@@ -1174,23 +1175,23 @@ void ClockAdjust(BYTE ucMode)
 {
     // ucMode : _INC or _DEC
     BYTE y;
-    
+
     SET_KEYREPEATENABLE();
-    
+
     // stModeUserData.VPosition = ValueInRangeChange(stModeUserCenterData.CenterVPos - _VPOSITION_BIAS,stModeUserCenterData.CenterVPos + _VPOSITION_BIAS,stModeUserData.VPosition,_NON_LOOP | ucMode);
     stModeUserData.Clock = ValueInRangeChange(COsdFxGetAdcClockRange(_GET_CLOCKRANGE_MIN), COsdFxGetAdcClockRange(_GET_CLOCKRANGE_MAX), stModeUserData.Clock, _NON_LOOP | ucMode);
-    
+
     ucOsdEventMsg = _SAVE_EE_MODEUSERDATA_MSG;
 	   //080324
 ///	CAdjustAdcClock(stModeUserData.Clock);
 	CAdjustAdcClock(stModeUserData.Clock, 2);
-    
+
     // get display line
     y = GetShowIndex(_MI_CLOCK,BEGIN(_MI_AUTOADJUST),END(_MI_CLOCK));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     OSD_SLIDER(y,COsdCtrlGetClock(),_MENU_SECECT_COLOR);
@@ -1201,24 +1202,24 @@ void ClockAdjust(BYTE ucMode)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawPhase(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_PHASE,BEGIN(_MI_AUTOADJUST),END(_MI_CLOCK));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
@@ -1227,11 +1228,11 @@ void DrawPhase(BYTE State)
     else
     {
         ucColor1 = ucColor;
-    }       
+    }
 	#endif
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     SubMenuTextOut(sPhase[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
@@ -1243,24 +1244,24 @@ void DrawPhase(BYTE State)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawClock(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
-	#endif  
-    
+	#endif
+
     // get display line
     y = GetShowIndex(_MI_CLOCK,BEGIN(_MI_AUTOADJUST),END(_MI_CLOCK));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
@@ -1269,34 +1270,34 @@ void DrawClock(BYTE State)
     else
     {
         ucColor1 = ucColor;
-    }   
-	#endif  
-    
+    }
+	#endif
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     SubMenuTextOut(sClock[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sClock[GET_LANGUAGE()],y,ucColor,State);
 	#endif
-    
+
     // draw slider
     OSD_SLIDER(y,COsdCtrlGetClock(),ucColor);
-    
+
 }
 
 //---------------------------------------------------------------------------
 // ucItem : MainMenu\Adjust\_MI_AUTOADJUST,_MI_HPOSITION,_MI_VPOSITION,_MI_PHASE,_MI_CLOCK,
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawAdjustPageMenuItem(BYTE ucItem,BYTE ucState)
 {
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     switch(ucItem)
     {
     case _MI_AUTOADJUST:        DrawAutoAdjust(ucState);        break;
@@ -1313,7 +1314,7 @@ void DrawAdjustPage(void)
 {
     BYTE i;
     BYTE ucState;
-    
+
     for(i=_MI_AUTOADJUST;i<=_MI_CLOCK;i++)
     {
         if(i == ucOsdState)
@@ -1324,51 +1325,51 @@ void DrawAdjustPage(void)
         {
             ucState = _ST_NORMAL;
         }
-        
+
         DrawAdjustPageMenuItem(i,       ucState);
     }
     DrawPageNullLine(_MI_AUTOADJUST,_MI_CLOCK);
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawLanguage(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-    
+
     // get display line
     y = GetShowIndex(_MI_LANGUAGE,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sLanguage[GET_LANGUAGE()],y,ucColor,State);
-    
+
     SUBMENU_RIGHT_TEXTOUT(sLanguageName[GET_LANGUAGE()],y);
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawOSDHPosition(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_OSD_HPOSITION,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
@@ -1379,14 +1380,14 @@ void DrawOSDHPosition(BYTE State)
     else
     {
         ucColor1 = ucColor;
-    }   
-	#endif  
-    
+    }
+	#endif
+
     y = SHOWINDEX_TO_LINE(y);
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sHPosition[GET_LANGUAGE()],y,ucColor,State);
 	#endif
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     SubMenuTextOut(sHPosition[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
@@ -1395,67 +1396,26 @@ void DrawOSDHPosition(BYTE State)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawOSDVPosition(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
-	#endif  
-    
+	#endif
+
     // get display line
     y = GetShowIndex(_MI_OSD_VPOSITION,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
-    
-    if(y == _NOT_SHOW)
-        return;
-    
-    // get display color
-    ucColor = StateColor(State);
-    
-    y = SHOWINDEX_TO_LINE(y);
-    
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)      
-    if(State == _ST_ADJUST)
-    {
-        ucColor1 = StateColor(_ST_SELECT);
-    }
-    else
-    {
-        ucColor1 = ucColor;
-    }   
-    
-    SubMenuTextOut(sVPosition[GET_LANGUAGE()],y,ucColor1,State);
-	#endif
-	#if(_KEY_TYPE == _KT_PCB2660_003)
-    SubMenuTextOut(sVPosition[GET_LANGUAGE()],y,ucColor,State);
-	#endif
-    
-    // draw slider
-    OSD_SLIDER(y,stOsdUserData.OsdVPos,ucColor);
-}
 
-//---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
-void DrawOSDTimer(BYTE State)
-{
-    BYTE y;
-    BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
-    BYTE ucColor1;
-	#endif  
-    
-    // get display line
-    y = GetShowIndex(_MI_TIMER,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
-    
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
@@ -1464,78 +1424,40 @@ void DrawOSDTimer(BYTE State)
     else
     {
         ucColor1 = ucColor;
-    }   
-    
-    SubMenuTextOut(sTimer[GET_LANGUAGE()],y,ucColor1,State);
+    }
+
+    SubMenuTextOut(sVPosition[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
-    
 	#if(_KEY_TYPE == _KT_PCB2660_003)
-    SubMenuTextOut(sTimer[GET_LANGUAGE()],y,ucColor,State);
+    SubMenuTextOut(sVPosition[GET_LANGUAGE()],y,ucColor,State);
 	#endif
-    
-    OSDLine(y, _MSG_COL, LENGTH(10), ucColor, BYTE_COLOR);
-    if (stOsdUserData.OsdTimeout < 5)
-    {
-        stOsdUserData.OsdTimeout = 0;
-        SUBMENU_RIGHT_TEXTOUT(sOff[GET_LANGUAGE()], y);
-    }
-    else
-    {       
-        CShowNumber(_MSG_COL, y, GET_OSDTIMEOUT());
-    }
+
+    // draw slider
+    OSD_SLIDER(y,stOsdUserData.OsdVPos,ucColor);
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
-void DrawDouble(BYTE State)
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
+void DrawOSDTimer(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-    BYTE *pStr;
-    
-    // get display line
-    y = GetShowIndex(_MI_DOUBLE,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
-    
-    if(y == _NOT_SHOW)
-        return;
-    
-    // get display color
-    ucColor = StateColor(State);
-    
-    y = SHOWINDEX_TO_LINE(y);
-    
-    SubMenuTextOut(sDouble[GET_LANGUAGE()],y,ucColor,State);
-    
-    if(GET_OSD_SIZE())
-        pStr = sOn[GET_LANGUAGE()];
-    else pStr = sOff[GET_LANGUAGE()];
-    SUBMENU_RIGHT_TEXTOUT(pStr, y);
-}
-
-//---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
-void DrawTransparent(BYTE State)
-{
-    BYTE y;
-    BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
-	#endif  
-    
+	#endif
+
     // get display line
-    y = GetShowIndex(_MI_TRANSPARENT,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
-    
+    y = GetShowIndex(_MI_TIMER,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
+
     if(y == _NOT_SHOW)
-    {
         return;
-    }
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
         ucColor1 = StateColor(_ST_SELECT);
@@ -1543,15 +1465,94 @@ void DrawTransparent(BYTE State)
     else
     {
         ucColor1 = ucColor;
-    }   
-    
+    }
+
+    SubMenuTextOut(sTimer[GET_LANGUAGE()],y,ucColor1,State);
+	#endif
+
+	#if(_KEY_TYPE == _KT_PCB2660_003)
+    SubMenuTextOut(sTimer[GET_LANGUAGE()],y,ucColor,State);
+	#endif
+
+    OSDLine(y, _MSG_COL, LENGTH(10), ucColor, BYTE_COLOR);
+    if (stOsdUserData.OsdTimeout < 5)
+    {
+        stOsdUserData.OsdTimeout = 0;
+        SUBMENU_RIGHT_TEXTOUT(sOff[GET_LANGUAGE()], y);
+    }
+    else
+    {
+        CShowNumber(_MSG_COL, y, GET_OSDTIMEOUT());
+    }
+}
+
+//---------------------------------------------------------------------------
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
+void DrawDouble(BYTE State)
+{
+    BYTE y;
+    BYTE ucColor;
+    BYTE *pStr;
+
+    // get display line
+    y = GetShowIndex(_MI_DOUBLE,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
+
+    if(y == _NOT_SHOW)
+        return;
+
+    // get display color
+    ucColor = StateColor(State);
+
+    y = SHOWINDEX_TO_LINE(y);
+
+    SubMenuTextOut(sDouble[GET_LANGUAGE()],y,ucColor,State);
+
+    if(GET_OSD_SIZE())
+        pStr = sOn[GET_LANGUAGE()];
+    else pStr = sOff[GET_LANGUAGE()];
+    SUBMENU_RIGHT_TEXTOUT(pStr, y);
+}
+
+//---------------------------------------------------------------------------
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
+void DrawTransparent(BYTE State)
+{
+    BYTE y;
+    BYTE ucColor;
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
+    BYTE ucColor1;
+	#endif
+
+    // get display line
+    y = GetShowIndex(_MI_TRANSPARENT,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
+
+    if(y == _NOT_SHOW)
+    {
+        return;
+    }
+
+    // get display color
+    ucColor = StateColor(State);
+
+    y = SHOWINDEX_TO_LINE(y);
+
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
+    if(State == _ST_ADJUST)
+    {
+        ucColor1 = StateColor(_ST_SELECT);
+    }
+    else
+    {
+        ucColor1 = ucColor;
+    }
+
     SubMenuTextOut(sTransparent[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
-    
-	#if(_KEY_TYPE == _KT_PCB2660_003)   
+
+	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sTransparent[GET_LANGUAGE()],y,ucColor,State);
-	#endif  
-    
+	#endif
+
     OSDLine(y, _MSG_COL, LENGTH(10), ucColor, BYTE_COLOR);
     if (0 == GET_OSDBLENDING())
         SUBMENU_RIGHT_TEXTOUT(sOff[GET_LANGUAGE()], y);
@@ -1561,14 +1562,14 @@ void DrawTransparent(BYTE State)
 
 //---------------------------------------------------------------------------
 // ucItem : MainMenu\OSD\_MI_LANGUAGE,_MI_OSD_HPOSITION,_MI_OSD_VPOSITION,_MI_TIMER,_MI_DOUBLE,_MI_TRANSPARENT,
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawOsdPageMenuItem(BYTE ucItem,BYTE ucState)
 {
     if(!g_tMenuItem[ucItem].Enable())
-    {   
-        ucState = _ST_DISABLE;  
+    {
+        ucState = _ST_DISABLE;
     }
-    
+
     switch(ucItem)
     {
     case _MI_LANGUAGE:              DrawLanguage(ucState);              break;
@@ -1586,7 +1587,7 @@ void DrawOSDPage(void)
 {
     BYTE i;
     BYTE ucState;
-    
+
     for(i=_MI_LANGUAGE;i<=_MI_TRANSPARENT;i++)
     {
         if(i == ucOsdState)
@@ -1597,57 +1598,57 @@ void DrawOSDPage(void)
         {
             ucState = _ST_NORMAL;
         }
-        
+
         DrawOsdPageMenuItem(i,      ucState);
     }
     DrawPageNullLine(_MI_LANGUAGE,_MI_TRANSPARENT);
-    
+
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawChannel(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-    
+
     // get display line
     y = GetShowIndex(_MI_CHANNEL,BEGIN(ucStartItem),END(ucEndItem));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sChannel[GET_LANGUAGE()],y,ucColor,State);
     CShowNumber(_MSG_COL, y, stTvInfo.CurChn);
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawSystem(BYTE State)
 {
 	#if(_VIDEO_TV_SUPPORT)
     BYTE y;
     BYTE ucColor;
     BYTE *pStr;
-    
+
     // get display line
     y = GetShowIndex(_MI_SYSTEM,BEGIN(ucStartItem),END(ucEndItem));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sSystem[GET_LANGUAGE()],y,ucColor,State);
-    
+
     switch(ucTVType)
     {
     case _TV_NTSC_M:        pStr = sNTSC_M;         break;
@@ -1655,95 +1656,95 @@ void DrawSystem(BYTE State)
     case _TV_NTSC_4_DK:     pStr = sNTSC_4_DK;      break;
     case _TV_NTSC_4_I:      pStr = sNTSC_4_I;       break;
     case _TV_PAL_M:         pStr = sPAL_M;          break;
-        
+
     case _TV_PAL_BG:        pStr = sPAL_BG;         break;
     case _TV_PAL_I:         pStr = sPAL_I;          break;
     case _TV_PAL_DK:        pStr = sPAL_DK;         break;
     case _TV_PAL_N:         pStr = sPAL_N;          break;
-        
+
     case _TV_SECAM_BG:      pStr = sSECAM_BG;       break;
     case _TV_SECAM_DK:      pStr = sSECAM_DK;       break;
     case _TV_SECAM_L:       pStr = sSECAM_L;        break;
     case _TV_SECAM_LL:      pStr = sSECAM_LL;       break;
-        
+
     }
-    
+
     OSDLine(y, COL(_MSG_COL), LENGTH(12), 0x00, BYTE_DISPLAY);
 #if (_NTSC_SEARCH_TABLE)
     pStr = sTVTypeN[_GET_TV_TYPE()];
 #endif
     SUBMENU_RIGHT_TEXTOUT(pStr, y);
-	#else 
+	#else
     State = State;
-	#endif   
+	#endif
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawAutoSearch(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-    
+
     // get display line
     y = GetShowIndex(_MI_AUTOSEARCH,BEGIN(ucStartItem),END(ucEndItem));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sAutoSearch[GET_LANGUAGE()],y,ucColor,State);
-    
+
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawManualSearch(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-    
+
     // get display line
     y = GetShowIndex(_MI_MANUALSEARCH,BEGIN(ucStartItem),END(ucEndItem));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sManualSearch[GET_LANGUAGE()],y,ucColor,State);
-    
+
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawTuning(BYTE State)
 {
 #if(_VIDEO_TV_SUPPORT)
     BYTE y;
     BYTE ucColor;
-#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
-#endif  
-    
+#endif
+
     // get display line
     y = GetShowIndex(_MI_TUNING,BEGIN(ucStartItem),END(ucEndItem));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
@@ -1752,15 +1753,15 @@ void DrawTuning(BYTE State)
     else
     {
         ucColor1 = ucColor;
-    }       
-    
+    }
+
     SubMenuTextOut(sTuning[GET_LANGUAGE()],y,ucColor1,State);
 #endif
-    
+
 #if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sTuning[GET_LANGUAGE()],y,ucColor,State);
 #endif
-    
+
     OSDLine(y, _MSG_COL, LENGTH(10), ucColor, BYTE_COLOR);
     CShowFreq(CLoadChannelFreq(stTvInfo.CurChn), _MSG_COL, y);
 
@@ -1773,7 +1774,7 @@ void DrawTuning(BYTE State)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawSkip(BYTE State)
 {
 	#if(_VIDEO_TV_SUPPORT)
@@ -1781,102 +1782,102 @@ void DrawSkip(BYTE State)
     BYTE ucColor;
     BYTE *pStr;
     bit fSkip;
-    
+
     // get display line
     y = GetShowIndex(_MI_SKIP,BEGIN(ucStartItem),END(ucEndItem));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sSkip[GET_LANGUAGE()],y,ucColor,State);
-    
+
     fSkip = CLoadChannelSkip(stTvInfo.CurChn);
-    
+
     if(fSkip)
         pStr = sOn[GET_LANGUAGE()];
-    else 
+    else
         pStr = sOff[GET_LANGUAGE()];
-    
+
     SUBMENU_RIGHT_TEXTOUT(pStr, y);
-	#else   
+	#else
     State = State;
 	#endif
 }
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawSwap(BYTE State)
 {
 #if(_VIDEO_TV_SUPPORT)
 
     BYTE y;
     BYTE ucColor;
-    
+
     // get display line
     y = GetShowIndex(_MI_SWAP,BEGIN(ucStartItem),END(ucEndItem));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sSwap[GET_LANGUAGE()],y,ucColor,State);
-    
+
     CShowNumber(_MSG_COL, y, stTvInfo.CurChn);
 
 #else
-    
+
     State = State;
 
 #endif
 }
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawAFC(BYTE State)
 {
 #if(_VIDEO_TV_SUPPORT && _TV_AFC)
 
     BYTE y;
     BYTE ucColor;
-    
+
     // get display line
     y = GetShowIndex(_MI_AFC,BEGIN(ucStartItem),END(ucEndItem));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sAFC[GET_LANGUAGE()],y,ucColor,State);
-                        
+
     SUBMENU_RIGHT_TEXTOUT(SOnOff[GET_AFC_MODE()][GET_LANGUAGE()], y);
 
 #else
-    
+
     State = State;
 
 #endif
 }//---------------------------------------------------------------------------
 
 // ucItem : MainMenu\TV\_MI_CHANNEL,_MI_SYSTEM,_MI_AUTOSEARCH,_MI_MANUALSEARCH,_MI_TUNING,_MI_SKIP,
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawTVPageMenuItem(BYTE ucItem,BYTE ucState)
 {
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     switch(ucItem)
     {
     case _MI_CHANNEL:               DrawChannel(ucState);               break;
@@ -1896,7 +1897,7 @@ void DrawTVPage(void)
 {
     BYTE i;
     BYTE ucState;
-    
+
     for(i=ucStartItem;i<=ucEndItem;i++)
     {
         if(i == ucOsdState)
@@ -1907,54 +1908,54 @@ void DrawTVPage(void)
         {
             ucState = _ST_NORMAL;
         }
-        
+
         DrawTVPageMenuItem(i,       ucState);
     }
     DrawPageNullLine(ucStartItem,ucEndItem);
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawReset(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-    
+
     // get display line
     y = GetShowIndex(_MI_RESET,BEGIN(_MI_RESET),END(_MI_SHARPNESS));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sReset[GET_LANGUAGE()],y,ucColor,State);
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawDisplayRatio(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
     BYTE *pStr;
-    
+
     // get display line
     y = GetShowIndex(_MI_DISPLAYRATIO,BEGIN(_MI_RESET),END(_MI_SHARPNESS));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sDisplayRatio[GET_LANGUAGE()],y,ucColor,State);
-    
+
 	if(GET_DISPLAYMODE() == _DISPMODE_FULL)
 	{
 		pStr = s16_9;
@@ -1967,32 +1968,32 @@ void DrawDisplayRatio(BYTE State)
 	{
 		pStr = sAuto;
 	}
-    
+
     SUBMENU_RIGHT_TEXTOUT(pStr, y);
-    
+
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawAutoPowerDown(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
     BYTE *pStr;
-    
+
     // get display line
     y = GetShowIndex(_MI_AUTOPOWERDOWN,BEGIN(_MI_RESET),END(_MI_SHARPNESS));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sAutoPowerDown[GET_LANGUAGE()],y,ucColor,State);
-    
+
     switch(_GET_POWER_DOWN_TIME())
     {
     case 0x00:          pStr = sOff[GET_LANGUAGE()];    break;
@@ -2005,32 +2006,32 @@ void DrawAutoPowerDown(BYTE State)
     case 0x07:          pStr = s105Min[GET_LANGUAGE()]; break;
     case 0x08:          pStr = s120Min[GET_LANGUAGE()]; break;
     }
-    
+
     SUBMENU_RIGHT_TEXTOUT(pStr, y);
-    
+
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawBlueScreen(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
     BYTE *pStr;
-    
+
     // get display line
     y = GetShowIndex(_MI_BLUESCREEN,BEGIN(_MI_RESET),END(_MI_SHARPNESS));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sBlueScreen[GET_LANGUAGE()],y,ucColor,State);
-    
+
     if(_GET_BLUE_BACKGROUND())
     {
         pStr = sOn[GET_LANGUAGE()];
@@ -2039,43 +2040,43 @@ void DrawBlueScreen(BYTE State)
     {
         pStr = sOff[GET_LANGUAGE()];
     }
-    
+
     SUBMENU_RIGHT_TEXTOUT(pStr, y);
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawSharpness(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-    
+
     // get display line
     y = GetShowIndex(_MI_SHARPNESS,BEGIN(_MI_RESET),END(_MI_SHARPNESS));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     SubMenuTextOut(sSharpness[GET_LANGUAGE()],y,ucColor,State);
-       
+
     CShowNumber(_MSG_COL, y, GET_PEAKING_CORING());
 }
 
-//---------------------------------------------------------------------------  
+//---------------------------------------------------------------------------
 // ucItem : MainMenu\Function\_MI_RESET,_MI_DISPLAYRATIO,_MI_AUTOPOWERDOWN,_MI_BLUESCREEN,_MI_SHARPNESS
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawFuncPageMenuItem(BYTE ucItem,BYTE ucState)
 {
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     switch(ucItem)
     {
     case _MI_RESET:             DrawReset(ucState);             break;
@@ -2092,7 +2093,7 @@ void DrawFuncPage(void)
 {
     BYTE i;
     BYTE ucState;
-    
+
     for(i=_MI_RESET;i<=_MI_SHARPNESS;i++)
     {
         if(i == ucOsdState)
@@ -2103,34 +2104,34 @@ void DrawFuncPage(void)
         {
             ucState = _ST_NORMAL;
         }
-        
+
         DrawFuncPageMenuItem(i,     ucState);
     }
     DrawPageNullLine(_MI_RESET,_MI_SHARPNESS);
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawVolume(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
-	#endif  
-    
+	#endif
+
     // get display line
     y = GetShowIndex(_MI_VOLUME,BEGIN(_MI_VOLUME),END(_MI_BBE));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)      
+
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
         ucColor1 = StateColor(_ST_SELECT);
@@ -2138,15 +2139,15 @@ void DrawVolume(BYTE State)
     else
     {
         ucColor1 = ucColor;
-    }   
-    
+    }
+
     SubMenuTextOut(sVolume[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sVolume[GET_LANGUAGE()],y,ucColor,State);
 	#endif
-    
+
     // draw slider
     OSD_SLIDER(y,GET_VOLUME(),ucColor);
 
@@ -2156,7 +2157,7 @@ void DrawVolume(BYTE State)
 void VolumeAdjust(BYTE ucMode)
 {
     BYTE y;
-    
+
     SET_KEYREPEATENABLE();
     stAudioData.Volume = ValueInRangeChange(0, 100, stAudioData.Volume, _NON_LOOP | ucMode);
     ucOsdEventMsg = _SAVE_EE_AUDIO_DATA_MSG;
@@ -2165,13 +2166,13 @@ void VolumeAdjust(BYTE ucMode)
     {
 		CLR_AUDIO_MUTE();
     }                        //20080304
-    
+
     // get display line
     y = GetShowIndex(_MI_VOLUME,BEGIN(_MI_VOLUME),END(_MI_BBE));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     OSD_SLIDER(y,GET_VOLUME(),_MENU_SECECT_COLOR);
@@ -2193,7 +2194,7 @@ void CBalanceAdjust(BYTE ucMode)
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     BYTE ucColor;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_BALANCE,BEGIN(_MI_VOLUME),END(_MI_BBE));
     y = SHOWINDEX_TO_LINE(y);
@@ -2201,7 +2202,7 @@ void CBalanceAdjust(BYTE ucMode)
     // get display color
     ucColor = StateColor(_ST_SELECT);
 	#endif
-    
+
     CLR_AUDIO_MUTE();
     SET_KEYREPEATENABLE();
     stAudioData.Balance = ValueInRangeChange(0, 100, stAudioData.Balance, _NON_LOOP | ucMode);
@@ -2211,7 +2212,7 @@ void CBalanceAdjust(BYTE ucMode)
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     OSD_SLIDER(y, stAudioData.Balance, _MENU_ADJUST_COLOR);
 	#endif
-    
+
 	#if(_SOUND_PROCESSOR == _ON)
     CSetAudioProcessor(stAudioData.Balance, stAudioData.Bass, stAudioData.Treble);
 	#endif
@@ -2225,7 +2226,7 @@ void CBassAdjust(BYTE ucMode)
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     BYTE ucColor;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_BASS,BEGIN(_MI_VOLUME),END(_MI_BBE));
     y = SHOWINDEX_TO_LINE(y);
@@ -2233,7 +2234,7 @@ void CBassAdjust(BYTE ucMode)
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     ucColor = StateColor(_ST_SELECT);
 	#endif
-    
+
     CLR_AUDIO_MUTE();
     SET_KEYREPEATENABLE();
     stAudioData.Bass = ValueInRangeChange(0, 100, stAudioData.Bass, _NON_LOOP | ucMode);
@@ -2256,7 +2257,7 @@ void CTrebleAdjust(BYTE ucMode)
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     BYTE ucColor;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_TREBLE,BEGIN(_MI_VOLUME),END(_MI_BBE));
     y = SHOWINDEX_TO_LINE(y);
@@ -2264,7 +2265,7 @@ void CTrebleAdjust(BYTE ucMode)
     // get display color
     ucColor = StateColor(_ST_SELECT);
 	#endif
-    
+
     CLR_AUDIO_MUTE();
     SET_KEYREPEATENABLE();
     stAudioData.Treble = ValueInRangeChange(0, 100, stAudioData.Treble, _NON_LOOP | ucMode);
@@ -2274,7 +2275,7 @@ void CTrebleAdjust(BYTE ucMode)
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     OSD_SLIDER(y, stAudioData.Treble, _MENU_ADJUST_COLOR);
 	#endif
-    
+
 	#if(_SOUND_PROCESSOR == _ON)
     CSetAudioProcessor(stAudioData.Balance, stAudioData.Bass, stAudioData.Treble);
 	#endif
@@ -2282,26 +2283,26 @@ void CTrebleAdjust(BYTE ucMode)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawBalance(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
-	#endif  
-    
+	#endif
+
     // get display line
     y = GetShowIndex(_MI_BALANCE,BEGIN(_MI_VOLUME),END(_MI_BBE));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
@@ -2310,10 +2311,10 @@ void DrawBalance(BYTE State)
     else
     {
         ucColor1 = ucColor;
-    }   
-    
+    }
+
     SubMenuTextOut(sBalance[GET_LANGUAGE()],y,ucColor1,State);
-	#endif  
+	#endif
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sBalance[GET_LANGUAGE()],y,ucColor,State);
 	#endif
@@ -2322,26 +2323,26 @@ void DrawBalance(BYTE State)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawBass(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_BASS,BEGIN(_MI_VOLUME),END(_MI_BBE));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
@@ -2353,36 +2354,36 @@ void DrawBass(BYTE State)
     }
     SubMenuTextOut(sBass[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sBass[GET_LANGUAGE()],y,ucColor,State);
 	#endif
-    
+
     // draw slider
     OSD_SLIDER(y, stAudioData.Bass, ucColor);
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawTreble(BYTE State)
 {
     BYTE y;
     BYTE ucColor;
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_TREBLE,BEGIN(_MI_VOLUME),END(_MI_BBE));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
     y = SHOWINDEX_TO_LINE(y);
-    
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)  
+
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
         ucColor1 = StateColor(_ST_SELECT);
@@ -2393,7 +2394,7 @@ void DrawTreble(BYTE State)
     }
     SubMenuTextOut(sTreble[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sTreble[GET_LANGUAGE()],y,ucColor,State);
 	#endif
@@ -2402,7 +2403,7 @@ void DrawTreble(BYTE State)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawSRS(BYTE State)
 {
     BYTE y;
@@ -2410,18 +2411,18 @@ void DrawSRS(BYTE State)
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_SRS,BEGIN(_MI_VOLUME),END(_MI_BBE));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
@@ -2441,7 +2442,7 @@ void DrawSRS(BYTE State)
 }
 
 //---------------------------------------------------------------------------
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawBBE(BYTE State)
 {
     BYTE y;
@@ -2449,18 +2450,18 @@ void DrawBBE(BYTE State)
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucColor1;
 	#endif
-    
+
     // get display line
     y = GetShowIndex(_MI_BBE,BEGIN(_MI_VOLUME),END(_MI_BBE));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(State);
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     if(State == _ST_ADJUST)
     {
@@ -2469,28 +2470,28 @@ void DrawBBE(BYTE State)
     else
     {
         ucColor1 = ucColor;
-    }   
+    }
     SubMenuTextOut(sBBE[GET_LANGUAGE()],y,ucColor1,State);
 	#endif
-    
+
 	#if(_KEY_TYPE == _KT_PCB2660_003)
     SubMenuTextOut(sBBE[GET_LANGUAGE()],y,ucColor,State);
 	#endif
-    
+
     // draw slider
     //  OSD_SLIDER(y, stAudioData.Balance, ucColor);
 }
 
 //---------------------------------------------------------------------------
 // ucItem : MainMenu\Sound\_MI_VOLUME,_MI_BALANCE,_MI_BASS,_MI_TREBLE,_MI_SRS,_MI_BBE,
-//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE 
+//ucState : _ST_NORMAL,_ST_SELECT,_ST_DISABLE
 void DrawSoundPageMenuItem(BYTE ucItem,BYTE ucState)
 {
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     switch(ucItem)
     {
     case _MI_VOLUME:        DrawVolume(ucState);        break;
@@ -2508,7 +2509,7 @@ void DrawSoundPage(void)
 {
     BYTE i;
     BYTE ucState;
-    
+
     for(i=_MI_VOLUME;i<=_MI_BBE;i++)
     {
         if(i == ucOsdState)
@@ -2519,7 +2520,7 @@ void DrawSoundPage(void)
         {
             ucState = _ST_NORMAL;
         }
-        
+
         DrawSoundPageMenuItem(i,        ucState);
     }
     DrawPageNullLine(_MI_VOLUME,_MI_BBE);
@@ -2538,7 +2539,7 @@ void DrawSubMenu(BYTE ucPageIndex)
     case _MI_FUNCTION:          DrawFuncPage();         break;
     case _MI_SOUND:             DrawSoundPage();        break;
     }
-    
+
 }
 //---------------------------------------------------------------------------
 
@@ -2550,12 +2551,12 @@ void MMenuNoneProc(void)
     {
         return;
     }
-    
+
     switch(ucOsdEventMsg)
     {
         // Enter main menu
     case _OE_ENTER_SUBMENU:     MMenuNoneEnterSubMenu();        break;
-        
+
         // Enter Source menu
     case _OE_CHANGE_SOURCE:
         if(_SLEEP_STATE == ucCurrState)
@@ -2573,31 +2574,31 @@ void MMenuNoneProc(void)
         }
 
 #if(_CHANGE_SOURCE_METHOD == _CHANGE_SOURCE_METHOD_0)
-        DrawSourceMenu();               
+        DrawSourceMenu();
 #elif(_CHANGE_SOURCE_METHOD == _CHANGE_SOURCE_METHOD_1)
         ucOsdEventMsg = _CHANGE_SOURCE_MSG;
         bChangeSource();
 #endif
         break;
 
-#if(_FAC_OSD) 
+#if(_FAC_OSD)
     case _OE_FAC_OPEN:          DrawFactoryMenu();              break;
 #endif
         // Enter short cut menu
     case _OE_SC_BRIGHTNESS:     EnterSCBright();                break;
-    case _OE_SC_VOLUME:         
+    case _OE_SC_VOLUME:
 #if(_CHINESE_FONT_TYPE == _CHINESE_2_FONT)
         LoadCHIFont(_LF_SOUND_PAGE);
 #endif
-        EnterSCVolume();                
+        EnterSCVolume();
         break;
-        
+
     case _OE_SC_MUTE:           CSetMuteState();                break;
     case _OE_DISPLAY:           CDisplayCurrentSourceMessage(); break;
-        
+
 #if(_VIDEO_TV_SUPPORT)
 
-    case _OE_SC_CH_INC: 
+    case _OE_SC_CH_INC:
     case _OE_SC_CH_DEC:
         if (!CMITVEnable())
             return;
@@ -2605,7 +2606,7 @@ void MMenuNoneProc(void)
         COsdDispOsdTimerEvent();
         bDrawMute = 0;
         break;
-        
+
     case _OE_SC_INPUT_NUM0:
     case _OE_SC_INPUT_NUM1:
     case _OE_SC_INPUT_NUM2:
@@ -2617,7 +2618,7 @@ void MMenuNoneProc(void)
     case _OE_SC_INPUT_NUM8:
     case _OE_SC_INPUT_NUM9:
         COsdDispOsdTimerEvent();
-        EnterSCInputNum();              
+        EnterSCInputNum();
         MScInputChNumProc();
         break;
     case _OE_SC_INPUT_CH:       EnterSCInputNum();              break;
@@ -2626,7 +2627,7 @@ void MMenuNoneProc(void)
         pData[0]        = stTvInfo.CurChn;
         stTvInfo.CurChn = ucPrevChannel;
         ucPrevChannel   = pData[0];
-        
+
         CMuteOn();
         CModeResetTVMode();
         CSetTVChannel(stTvInfo.CurChn);
@@ -2634,16 +2635,16 @@ void MMenuNoneProc(void)
         break;
 #endif
     }
-}    
+}
 //---------------------------------------------------------------------------
 void MMenuNoneEnterSubMenu(void)
 {
     // Draw osd
     ucOsdState = _MI_COLOR;
-    
+
     DrawMainMenu();
     CShowMode(13,17);
-    
+
     bDrawMute = 0;
     COsdFxEnableOsd();
 }
@@ -2664,7 +2665,7 @@ void MMainMenuProc(void)
     case _OE_MENU_PREV:         MMainMenuMenuAdj(_PREV);            break;
     case _OE_ENTER_SUBMENU:     MMainMenuEnterSubMenu();            break;
     case _OE_RETURN_UPMENU:     MMainMenuReturnUpMenu();            break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -2677,48 +2678,48 @@ void MMainMenuValueAdj(BYTE ucMode)
 void MainMenuItemChgClear(void)
 {
     BYTE i;
-    
+
     // Clear Title
     OSDClear(ROW(1), HEIGHT(2), COL(0), WIDTH(39), 0x00, BYTE_DISPLAY);
-    
+
     // clear sub menu
     for(i=0;i<6;i++)
     {
         OSDLine(SHOWINDEX_TO_LINE(i), COL(7), LENGTH(38), 0x00, BYTE_DISPLAY);
         OSDLine(SHOWINDEX_TO_LINE(i), COL(7), LENGTH(38), 0x8C, BYTE_ATTRIB);
     }
-    
+
 }
 //---------------------------------------------------------------------------
 void MMainMenuMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_COLOR,_MI_SOUND,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawMainMenuItem(ucOsdState,    _ST_NORMAL);
     MainMenuItemChgClear();
-    
-    
+
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
-    
-#if(_CHINESE_FONT_TYPE == _CHINESE_2_FONT)    
+
+#if(_CHINESE_FONT_TYPE == _CHINESE_2_FONT)
     LoadCHIFont(ucOsdState - _MI_COLOR);
     if(ucOsdState == _MI_OSD)
         COsdLoad1BitFont(FntLangaugeName,0x60,0x18,tFntLangaugeNameCharWidth);
-#endif    
+#endif
     DrawMainMenuItem(ucOsdState,    _ST_SELECT);
     DrawMainItemTitle(ucOsdState);
 
     switch(ucOsdState)
     {
-    case _MI_COLOR:             
+    case _MI_COLOR:
     case _MI_ADJUST:
     case _MI_OSD:
     case _MI_FUNCTION:
@@ -2735,56 +2736,56 @@ void MMainMenuMenuAdj(BYTE ucMode)
     }
 
     DrawSubMenu(ucOsdState);
-    
-    
+
+
 }
 //---------------------------------------------------------------------------
 void MMainMenuEnterSubMenu(void)
 {
     // 1. Before Enter SubMenu
     // Insert code to here ...
-    
-    
+
+
     // 2. Change ucOsdState
     switch(ucOsdState)
     {
-    case _MI_COLOR:                 
-        ucOsdState = _MI_BRIGHTNESS;        
+    case _MI_COLOR:
+        ucOsdState = _MI_BRIGHTNESS;
         DrawColorPageMenuItem(ucOsdState,_ST_SELECT);
         break;
-    case _MI_ADJUST:            
-        ucOsdState = _MI_AUTOADJUST; 
+    case _MI_ADJUST:
+        ucOsdState = _MI_AUTOADJUST;
         DrawAdjustPageMenuItem(ucOsdState,_ST_SELECT);
         break;
-    case _MI_OSD:               
-        ucOsdState = _MI_LANGUAGE;          
+    case _MI_OSD:
+        ucOsdState = _MI_LANGUAGE;
         DrawOsdPageMenuItem(ucOsdState,_ST_SELECT);
         break;
-    case _MI_TV:                
-        ucOsdState  = ucStartItem;//_MI_CHANNEL;           
+    case _MI_TV:
+        ucOsdState  = ucStartItem;//_MI_CHANNEL;
         DrawTVPageMenuItem(ucOsdState,_ST_SELECT);
         break;
-    case _MI_FUNCTION:          
-        ucOsdState = _MI_RESET;             
+    case _MI_FUNCTION:
+        ucOsdState = _MI_RESET;
         DrawFuncPageMenuItem(ucOsdState,_ST_SELECT);
         break;
-    case _MI_SOUND:             
-        ucOsdState = _MI_VOLUME;            
+    case _MI_SOUND:
+        ucOsdState = _MI_VOLUME;
         DrawSoundPageMenuItem(ucOsdState,_ST_SELECT);
         break;
     }
-    
+
     // 3. Now enter sub menu
     // Insert code to here ...
-    
-    
+
+
 }
 //---------------------------------------------------------------------------
 void MMainMenuReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     // Insert code to here ...
-    
+
     // 2. Change ucOsdState
     COsdDispOsdTimerEvent();
     // 3. Now Return to upmenu
@@ -2815,24 +2816,24 @@ void MColorValueAdj(BYTE ucMode)
     // ucMode : _INC or _DEC
     switch(ucOsdState)
     {
-    case _MI_BRIGHTNESS:          
+    case _MI_BRIGHTNESS:
         BrightAdjust(ucMode);
         break;
 
-    case _MI_CONTRAST:            
+    case _MI_CONTRAST:
         ContrastAdjust(ucMode);
         break;
 
-    case _MI_HUE:                 
+    case _MI_HUE:
         HueAdjust(ucMode);
         break;
 
-    case _MI_SATURATION:      
+    case _MI_SATURATION:
         SaturationAdjust(ucMode);
         break;
 
-    case _MI_COLORTEMP:           
-        EnterColorTempMenu();               
+    case _MI_COLORTEMP:
+        EnterColorTempMenu();
         break;
     }
 }
@@ -2843,17 +2844,17 @@ void MColorMenuAdj(BYTE ucMode)
     BYTE ucNewItem = AdjustMenuItem(_MI_BRIGHTNESS,_MI_COLORTEMP,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     // Insert code to here
     DrawColorPageMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawColorPageMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 
 //---------------------------------------------------------------------------
@@ -2862,12 +2863,12 @@ void MColorEnterSubMenu(void)
 {
     // 1. Before Enter SubMenu
     // Insert code to here ...
-    
-    
+
+
     // 2. Change ucOsdState
     switch(ucOsdState)
     {
-    case _MI_BRIGHTNESS: 
+    case _MI_BRIGHTNESS:
         DrawBright(_ST_ADJUST);
         ucOsdState = _MI_BRIGHTADJ;
         break;
@@ -2882,14 +2883,14 @@ void MColorEnterSubMenu(void)
         ucOsdState = _MI_HUEADJ;
         break;
 
-    case _MI_SATURATION:    
+    case _MI_SATURATION:
         DrawSaturation(_ST_ADJUST);
         ucOsdState = _MI_SATURATIONADJ;
         break;
 
     case _MI_COLORTEMP:
         DrawColorTemp(_ST_ADJUST);
-        EnterColorTempMenu();       
+        EnterColorTempMenu();
         break;
     }
 }
@@ -2900,10 +2901,10 @@ void MColorReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawColorPageMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_COLOR;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -2918,32 +2919,32 @@ void MBrightnessProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MBrightnessValueAdj(_INC);          
+    case _OE_ADJ_INC:
+        MBrightnessValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MBrightnessValueAdj(_DEC);          
+
+    case _OE_ADJ_DEC:
+        MBrightnessValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:         
+
+    case _OE_MENU_NEXT:
         MBrightnessReturnUpMenu();
-        MColorMenuAdj(_NEXT);               
+        MColorMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV:         
+
+    case _OE_MENU_PREV:
         MBrightnessReturnUpMenu();
-        MColorMenuAdj(_PREV);               
+        MColorMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
-        MColorEnterSubMenu();               
+
+    case _OE_ENTER_SUBMENU:
+        MColorEnterSubMenu();
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MBrightnessReturnUpMenu();          
+
+    case _OE_RETURN_UPMENU:
+        MBrightnessReturnUpMenu();
         break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -2956,13 +2957,13 @@ void MBrightnessReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawBright(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_BRIGHTNESS;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
-} 
+}
 //---------------------------------------------------------------------------
 // MainMenu\Color\Contrast\ContrastAdj
 // MainMenu\Color\Contrast\_MI_CONTRASTADJ
@@ -2970,30 +2971,30 @@ void MContrastProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MContrastValueAdj(_INC);            
+    case _OE_ADJ_INC:
+        MContrastValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MContrastValueAdj(_DEC);            
+
+    case _OE_ADJ_DEC:
+        MContrastValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:         
+
+    case _OE_MENU_NEXT:
         MContrastReturnUpMenu();
-        MColorMenuAdj(_NEXT);               
+        MColorMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV:         
+
+    case _OE_MENU_PREV:
         MContrastReturnUpMenu();
-        MColorMenuAdj(_PREV);               
+        MColorMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
-        MColorEnterSubMenu();               
+
+    case _OE_ENTER_SUBMENU:
+        MColorEnterSubMenu();
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MContrastReturnUpMenu();            
+
+    case _OE_RETURN_UPMENU:
+        MContrastReturnUpMenu();
         break;
     }
 }
@@ -3007,10 +3008,10 @@ void MContrastReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawContrast(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_CONTRAST;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -3021,32 +3022,32 @@ void MHueProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MHueValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MHueValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MHueValueAdj(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MHueValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:         
+
+    case _OE_MENU_NEXT:
         MHueReturnUpMenu();
-        MColorMenuAdj(_NEXT);             
+        MColorMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV:         
+
+    case _OE_MENU_PREV:
         MHueReturnUpMenu();
-        MColorMenuAdj(_PREV);             
+        MColorMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
-        MColorEnterSubMenu();             
+
+    case _OE_ENTER_SUBMENU:
+        MColorEnterSubMenu();
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MHueReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MHueReturnUpMenu();
         break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -3059,46 +3060,46 @@ void MHueReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawHue(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_HUE;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
 //---------------------------------------------------------------------------
-// MainMenu\Color\Saturation\SaturationAdj 
+// MainMenu\Color\Saturation\SaturationAdj
 // MainMenu\Color\Saturation\_MI_SATURATIONADJ
 void MSaturationProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MSaturationValueAdj(_INC);            
+    case _OE_ADJ_INC:
+        MSaturationValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MSaturationValueAdj(_DEC);            
+
+    case _OE_ADJ_DEC:
+        MSaturationValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:         
+
+    case _OE_MENU_NEXT:
         MSaturationReturnUpMenu();
-        MColorMenuAdj(_NEXT);                 
+        MColorMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV:         
+
+    case _OE_MENU_PREV:
         MSaturationReturnUpMenu();
-        MColorMenuAdj(_PREV);                
+        MColorMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
-        MColorEnterSubMenu();                 
+
+    case _OE_ENTER_SUBMENU:
+        MColorEnterSubMenu();
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MSaturationReturnUpMenu();            
+
+    case _OE_RETURN_UPMENU:
+        MSaturationReturnUpMenu();
         break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -3111,10 +3112,10 @@ void MSaturationReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawSaturation(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_SATURATION;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -3127,26 +3128,26 @@ void DrawAPopupMenuItem1(BYTE *str,BYTE ItemIndex,BYTE ucRowStart,BYTE ucColStar
     BYTE c;
     //BYTE x;
     BYTE ucColor = StateColor(State);
-    
+
     ItemIndex = ItemIndex + ucRowStart + 1;
-    
+
     if(State == _ST_DISABLE || State == _ST_NORMAL)
         c = 0x01;   // Clear Select Icon
     else
         c = 0x57;   // Select Icon
-    
+
     if(ItemIndex % 2)
         ucColStart += 21;
     else
         ucColStart += 27;
-    
+
     OSDLine(ROW(ItemIndex), COL(ucColStart), LENGTH(19), ucColor, BYTE_COLOR);
-    
+
     Gotoxy(COL(ucColStart + 1),ROW(ItemIndex),BYTE_DISPLAY);
     OutputChar(c);
-    
+
     CTextOutEx(str, COL(ucColStart + 3), ROW(ItemIndex));
-    
+
 }
 #endif
 
@@ -3159,31 +3160,31 @@ void DrawColorTempMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_9300),END(_MI_USER));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
-    
+
+
     switch(ucItem)
     {
     case _MI_9300:          pStr = s9300[GET_LANGUAGE()];   break;
     case _MI_6500:          pStr = s6500[GET_LANGUAGE()];   break;
     case _MI_USER:          pStr = sUser[GET_LANGUAGE()];   break;
     }
-    
+
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     DrawAPopupMenuItem1(pStr,y,_PM_COLORTMP_ROW_START,_PM_COLORTMP_COL_START,ucState);
 #elif(_KEY_TYPE == _KT_PCB2660_003)
     DrawAPopupMenuItem(pStr,y,_PM_COLORTMP_ROW_START,_PM_COLORTMP_COL_START,ucState);
-#endif    
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -3191,27 +3192,27 @@ void EnterColorTempMenu(void)
 {
     BYTE i;
     BYTE ucMode;
-    
+
     CreatePopupMenu(_PM_COLORTMP_ROW_START, _PM_COLORTMP_ROW_HEIGHT);
-    
+
     switch(GET_COLOR_TEMP_TYPE())
     {
     case _CT_9300:      ucOsdState = _MI_9300;      break;
     case _CT_6500:      ucOsdState = _MI_6500;      break;
-    case _CT_USER:      
+    case _CT_USER:
     default:            ucOsdState = _MI_USER;      break;
     }
-    
+
     for(i=_MI_9300;i<=_MI_USER;i++)
     {
         if(i == ucOsdState)
             ucMode = _ST_SELECT;
         else
             ucMode = _ST_NORMAL;
-        
+
         DrawColorTempMenuItem(i,ucMode);
     }
-    
+
 }
 //---------------------------------------------------------------------------
 void ClearColorTempMenu(void)
@@ -3227,56 +3228,56 @@ void MColorTempProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
+    case _OE_ADJ_INC:
         break;
-        
-    case _OE_ADJ_DEC:           
+
+    case _OE_ADJ_DEC:
         break;
-        
-    case _OE_MENU_NEXT:         
-        MColorTempMenuAdj(_NEXT);           
+
+    case _OE_MENU_NEXT:
+        MColorTempMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV:         
-        MColorTempMenuAdj(_PREV);           
+
+    case _OE_MENU_PREV:
+        MColorTempMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
-        MColorTempEnterSubMenu();           
+
+    case _OE_ENTER_SUBMENU:
+        MColorTempEnterSubMenu();
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MColorTempReturnUpMenu();           
+
+    case _OE_RETURN_UPMENU:
+        MColorTempReturnUpMenu();
         break;
     }
-} 
+}
 
 //---------------------------------------------------------------------------
 void MColorTempMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_9300,_MI_USER,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawColorTempMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     switch(ucOsdState)
     {
     case _MI_9300:     SET_COLOR_TEMP_TYPE(_CT_9300);   break;
     case _MI_6500:     SET_COLOR_TEMP_TYPE(_CT_6500);   break;
     case _MI_USER:     SET_COLOR_TEMP_TYPE(_CT_USER);   break;
     }
-    
+
     CEepromLoadColorTempData();
     CAdjustContrast();
     ucOsdEventMsg = _SAVE_EE_SYSTEMDATA_MSG;
-    
+
     // 3. Draw New Item
 #if(_KEY_TYPE == _KT_PCB2660_003)
     DrawColorTempMenuItem(ucOsdState,_ST_SELECT);
@@ -3298,10 +3299,10 @@ void MColorTempReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearColorTempMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_COLORTEMP;
-    
+
     // 3. Now Return to upmenu
     DrawColorPage();
 }
@@ -3312,7 +3313,7 @@ void MColorTempReturnUpMenu(void)
 #define _PM_COLORUSER_COL_START                     3
 
 void DrawColorUSERMenuItem(BYTE ucItem,BYTE ucState)
-{        
+{
     BYTE color;
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     BYTE ucRow, ucCol;
@@ -3320,14 +3321,14 @@ void DrawColorUSERMenuItem(BYTE ucItem,BYTE ucState)
 #endif
     // get display color
     color = StateColor(ucState);
-    
+
     switch(ucItem)
     {
-    case _MI_USER_R:   
+    case _MI_USER_R:
 #if(_KEY_TYPE == _KT_PCB2660_003)
         if (_ST_SELECT == ucState)
                color = 0xF0;
-        OSDSlider(12, 30, 8, stColorTempData.ColorTemp[_RED], 255,color);     
+        OSDSlider(12, 30, 8, stColorTempData.ColorTemp[_RED], 255,color);
 #endif
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
         ucValue = stColorTempData.ColorTemp[_RED];
@@ -3335,16 +3336,16 @@ void DrawColorUSERMenuItem(BYTE ucItem,BYTE ucState)
         ucCol = 30;
         if (_ST_ADJUST== ucState)
         {
-            color = 0xF0;               
+            color = 0xF0;
         }
 #endif
         break;
-        
+
     case _MI_USER_G:
-#if(_KEY_TYPE == _KT_PCB2660_003)           
+#if(_KEY_TYPE == _KT_PCB2660_003)
         if (_ST_SELECT == ucState)
                color = 0xD0;
-        OSDSlider(13, 24, 8, stColorTempData.ColorTemp[_GREEN], 255,color);   
+        OSDSlider(13, 24, 8, stColorTempData.ColorTemp[_GREEN], 255,color);
 #endif
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
         ucValue = stColorTempData.ColorTemp[_GREEN];
@@ -3353,17 +3354,17 @@ void DrawColorUSERMenuItem(BYTE ucItem,BYTE ucState)
         if (_ST_ADJUST== ucState)
         {
             color = 0xD0;
-            
+
         }
 #endif
         break;
-        
+
     case _MI_USER_B:
-#if(_KEY_TYPE == _KT_PCB2660_003)           
+#if(_KEY_TYPE == _KT_PCB2660_003)
         if (_ST_SELECT == ucState)
                color = 0xE0;
         OSDSlider(14, 30, 8, stColorTempData.ColorTemp[_BLUE], 255,color);
-#endif   
+#endif
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
         ucRow = 14;
         ucCol = 30;
@@ -3375,11 +3376,11 @@ void DrawColorUSERMenuItem(BYTE ucItem,BYTE ucState)
 #endif
         break;
     }
-    
+
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     OSDSlider(ucRow, ucCol, 8, ucValue, 255,color);
 #endif
-    
+
 }
 
 //---------------------------------------------------------------------------
@@ -3387,11 +3388,11 @@ void EnterColorTempUserMenu(void)
 {
     BYTE i;
     BYTE ucMode;
-    
+
     CreatePopupMenu(_PM_COLORUSER_ROW_START, _PM_COLORUSER_ROW_HEIGHT);
-    
+
     ucOsdState = _MI_USER_R;
-    
+
     OSDLine(12, COL(29), LENGTH(1), 0xF0, BYTE_COLOR);
     Gotoxy(29, 12, BYTE_DISPLAY);
     OutputChar(0x26); // "R"
@@ -3402,17 +3403,17 @@ void EnterColorTempUserMenu(void)
     OSDLine(14, COL(29), LENGTH(1), 0xE0, BYTE_COLOR);
     Gotoxy(29, 14, BYTE_DISPLAY);
     OutputChar(0x12); // "B"
-    
+
     for(i=_MI_USER_R;i<=_MI_USER_B;i++)
     {
         if(i == ucOsdState)
             ucMode = _ST_SELECT;
         else
             ucMode = _ST_NORMAL;
-        
+
         DrawColorUSERMenuItem(i,ucMode);
     }
-    
+
 }
 //---------------------------------------------------------------------------
 void ClearColorUSERMenu(void)
@@ -3430,13 +3431,13 @@ void MColorUserProc(void)
     case _OE_ADJ_DEC:           MColorUserValueAdj(_DEC);           break;
     case _OE_MENU_NEXT:         MColorUserMenuAdj(_NEXT);           break;
     case _OE_MENU_PREV:         MColorUserMenuAdj(_PREV);           break;
-    case _OE_ENTER_SUBMENU:  
-#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)        
-        MColorUserEnterSubMenu();   
+    case _OE_ENTER_SUBMENU:
+#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
+        MColorUserEnterSubMenu();
         break;
 #endif
     case _OE_RETURN_UPMENU:     MColorUserReturnUpMenu();           break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -3445,18 +3446,18 @@ void MColorUserValueAdj(BYTE ucMode)
     // ucMode : _INC or _DEC
     switch(ucOsdState)
     {
-    case _MI_USER_R:     
-        ColorRAdjust(ucMode);   
+    case _MI_USER_R:
+        ColorRAdjust(ucMode);
         break;
-    case _MI_USER_G:     
-        ColorGAdjust(ucMode);   
+    case _MI_USER_G:
+        ColorGAdjust(ucMode);
         break;
-    case _MI_USER_B:     
-        ColorBAdjust(ucMode);  
+    case _MI_USER_B:
+        ColorBAdjust(ucMode);
         break;
     }
     DrawColorUSERMenuItem(ucOsdState,_ST_SELECT);
-    
+
     CAdjustContrast();
     ucOsdEventMsg = _SAVE_EE_COLORPROC1_MSG;
 }
@@ -3464,17 +3465,17 @@ void MColorUserValueAdj(BYTE ucMode)
 void MColorUserMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_USER_R,_MI_USER_B,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawColorUSERMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 1. Clear Current Menu
     DrawColorUSERMenuItem(ucOsdState,_ST_SELECT);
 }
@@ -3483,12 +3484,12 @@ void MColorUserEnterSubMenu(void)
 {
     // 1. Before Enter SubMenu
     // Insert code to here ...
-    
-    
+
+
     // 2. Change ucOsdState
     switch(ucOsdState)
     {
-    case _MI_USER_R:       
+    case _MI_USER_R:
         DrawColorUSERMenuItem(ucOsdState,_ST_ADJUST);
         ucOsdState = _MI_USER_RADJ;
         break;
@@ -3500,9 +3501,9 @@ void MColorUserEnterSubMenu(void)
         DrawColorUSERMenuItem(ucOsdState,_ST_ADJUST);
         ucOsdState = _MI_USER_BADJ;
         break;
-        
+
     }
-    
+
     // 3. Now enter sub menu
     // Insert code to here ...
 }
@@ -3523,32 +3524,32 @@ void MRProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MRValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MRValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MRValueAdj(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MRValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:   
+
+    case _OE_MENU_NEXT:
         MRReturnUpMenu();
         MColorUserMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV: 
+
+    case _OE_MENU_PREV:
         MRReturnUpMenu();
         MColorUserMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU: 
-        
+
+    case _OE_ENTER_SUBMENU:
+
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MRReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MRReturnUpMenu();
         break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -3556,20 +3557,20 @@ void MRValueAdj(BYTE ucMode)
 {
     ColorRAdjust(ucMode);
     CAdjustContrast();
-    ucOsdEventMsg = _SAVE_EE_COLORPROC1_MSG;    
+    ucOsdEventMsg = _SAVE_EE_COLORPROC1_MSG;
 }
 //---------------------------------------------------------------------------
 void MRReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
-    DrawColorUSERMenuItem(_MI_USER_R, _ST_SELECT);  
-    
+    DrawColorUSERMenuItem(_MI_USER_R, _ST_SELECT);
+
     // 2. Change ucOsdState
     ucOsdState = _MI_USER_R;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
-    
+
 }
 //---------------------------------------------------------------------------
 //
@@ -3578,31 +3579,31 @@ void MGProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MGValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MGValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MGValueAdj(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MGValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:   
+
+    case _OE_MENU_NEXT:
         MGReturnUpMenu();
         MColorUserMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV: 
+
+    case _OE_MENU_PREV:
         MGReturnUpMenu();
         MColorUserMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:    
+
+    case _OE_ENTER_SUBMENU:
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MGReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MGReturnUpMenu();
         break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -3610,20 +3611,20 @@ void MGValueAdj(BYTE ucMode)
 {
     ColorGAdjust(ucMode);
     CAdjustContrast();
-    ucOsdEventMsg = _SAVE_EE_COLORPROC1_MSG;    
+    ucOsdEventMsg = _SAVE_EE_COLORPROC1_MSG;
 }
 //---------------------------------------------------------------------------
 void MGReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
-    DrawColorUSERMenuItem(_MI_USER_G, _ST_SELECT);  
-    
+    DrawColorUSERMenuItem(_MI_USER_G, _ST_SELECT);
+
     // 2. Change ucOsdState
     ucOsdState = _MI_USER_G;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
-    
+
 }
 //---------------------------------------------------------------------------
 //
@@ -3632,31 +3633,31 @@ void MBProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MBValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MBValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MBValueAdj(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MBValueAdj(_DEC);
         break;
-        
+
     case _OE_MENU_NEXT:
         MBReturnUpMenu();
         MColorUserMenuAdj(_NEXT);
         break;
-        
+
     case _OE_MENU_PREV:
         MBReturnUpMenu();
         MColorUserMenuAdj(_PREV);
         break;
-        
+
     case _OE_ENTER_SUBMENU:
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MBReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MBReturnUpMenu();
         break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -3671,12 +3672,12 @@ void MBReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawColorUSERMenuItem(_MI_USER_B, _ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_USER_B;
-    
+
     // 3. Now Return to upmenu
-    // Insert code to here ...   
+    // Insert code to here ...
 }
 #endif
 
@@ -3688,7 +3689,7 @@ void ColorRAdjust(BYTE ucMode)
     // ucMode : _INC or _DEC
     SET_KEYREPEATENABLE();
     stColorTempData.ColorTemp[_RED] = ValueInRangeChange(0, 255, stColorTempData.ColorTemp[_RED], _NON_LOOP | ucMode);
-    
+
 #if(_KEY_TYPE == _KT_PCB2660_003)
     DrawColorUSERMenuItem(_MI_USER_R, _ST_SELECT);
 #endif
@@ -3702,7 +3703,7 @@ void ColorGAdjust(BYTE ucMode)
     // ucMode : _INC or _DEC
     SET_KEYREPEATENABLE();
     stColorTempData.ColorTemp[_GREEN] = ValueInRangeChange(0, 255, stColorTempData.ColorTemp[_GREEN], _NON_LOOP | ucMode);
-    
+
 #if(_KEY_TYPE == _KT_PCB2660_003)
     DrawColorUSERMenuItem(_MI_USER_G, _ST_SELECT);
 #endif
@@ -3716,8 +3717,8 @@ void ColorBAdjust(BYTE ucMode)
     // ucMode : _INC or _DEC
     SET_KEYREPEATENABLE();
     stColorTempData.ColorTemp[_BLUE] = ValueInRangeChange(0, 255, stColorTempData.ColorTemp[_BLUE], _NON_LOOP | ucMode);
-    
-    
+
+
 #if(_KEY_TYPE == _KT_PCB2660_003)
     DrawColorUSERMenuItem(_MI_USER_B, _ST_SELECT);
 #endif
@@ -3741,7 +3742,7 @@ void MAdjustProc(void)
     case _OE_ENTER_SUBMENU:     MAdjustEnterSubMenu();              break;
 #endif
     case _OE_RETURN_UPMENU:     MAdjustReturnUpMenu();              break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -3761,20 +3762,20 @@ void MAdjustValueAdj(BYTE ucMode)
 void MAdjustMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_AUTOADJUST,_MI_CLOCK,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawAdjustPageMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawAdjustPageMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 
 //---------------------------------------------------------------------------
@@ -3783,32 +3784,32 @@ void MAdjustEnterSubMenu(void)
 {
     // 1. Before Enter SubMenu
     // Insert code to here ...
-    
-    
+
+
     // 2. Change ucOsdState
     switch(ucOsdState)
     {
-    case _MI_AUTOADJUST: 
+    case _MI_AUTOADJUST:
         DrawAutoAdjust(_ST_ADJUST);
         EnterAutoConfigMenu();
         break;
-                                
+
     case _MI_HPOSITION:
         DrawHPosition(_ST_ADJUST);
         ucOsdState = _MI_ADJUST_HPOSITIONADJ;
         break;
-                                
+
     case _MI_VPOSITION:
         DrawVPosition(_ST_ADJUST);
         ucOsdState = _MI_ADJUST_VPOSITIONADJ;
         break;
-        
-    case _MI_PHASE: 
+
+    case _MI_PHASE:
         DrawPhase(_ST_ADJUST);
         ucOsdState = _MI_ADJUST_PHASEADJ;
         break;
-        
-    case _MI_CLOCK:                                                                                                 
+
+    case _MI_CLOCK:
         DrawClock(_ST_ADJUST);
         ucOsdState = _MI_ADJUST_CLOCKADJ;
         break;
@@ -3820,10 +3821,10 @@ void MAdjustReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawAdjustPageMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_ADJUST;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -3837,38 +3838,38 @@ void DrawAutoConfigMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_AUTOADJUST_OK),END(_MI_AUTOADJUST_CANCEL));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
-    
+
+
     switch(ucItem)
     {
     case _MI_AUTOADJUST_OK:         pStr = sOK[GET_LANGUAGE()];     break;
     case _MI_AUTOADJUST_CANCEL:     pStr = sCancel[GET_LANGUAGE()]; break;
     }
-    
+
     DrawAPopupMenuItem(pStr,y,_PM_AUTOCONFIG_ROW_START,_PM_AUTOCONFIG_COL_START,ucState);
-    
+
 }
 
 //---------------------------------------------------------------------------
 void EnterAutoConfigMenu(void)
 {
     CreatePopupMenu(_PM_AUTOCONFIG_ROW_START, _PM_AUTOCONFIG_ROW_HEIGHT);
-    
+
     ucOsdState = _MI_AUTOADJUST_CANCEL;
-    
+
     DrawAutoConfigMenuItem(_MI_AUTOADJUST_OK,_ST_NORMAL);
-    DrawAutoConfigMenuItem(_MI_AUTOADJUST_CANCEL,_ST_SELECT);   
+    DrawAutoConfigMenuItem(_MI_AUTOADJUST_CANCEL,_ST_SELECT);
 }
 //---------------------------------------------------------------------------
 void ClearAutoConfigMenu(void)
@@ -3891,7 +3892,7 @@ void MAutoAdjustProc(void)
     case _OE_MENU_PREV:         MAutoAdjustMenuAdj(_PREV);          break;
     case _OE_ENTER_SUBMENU:     MAutoAdjustEnterSubMenu();          break;
     case _OE_RETURN_UPMENU:     MAutoAdjustReturnUpMenu();          break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -3904,31 +3905,31 @@ void MAutoAdjustValueAdj(BYTE ucMode)
 void MAutoAdjustMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_AUTOADJUST_OK,_MI_AUTOADJUST_CANCEL,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawAutoConfigMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawAutoConfigMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 //---------------------------------------------------------------------------
 void MAutoAdjustEnterSubMenu(void)
 {
     bit fDoAuto = 0;
-    
+
     if(ucOsdState == _MI_AUTOADJUST_OK)
         fDoAuto = 1;
-    
+
     MAutoAdjustReturnUpMenu();
-    
+
     if(fDoAuto)
     {
         CAutoDoAutoConfig();
@@ -3937,7 +3938,7 @@ void MAutoAdjustEnterSubMenu(void)
         DrawVPosition(_ST_NORMAL);
         DrawPhase(_ST_NORMAL);
         DrawClock(_ST_NORMAL);
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -3945,10 +3946,10 @@ void MAutoAdjustReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearAutoConfigMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_AUTOADJUST;
-    
+
     // 3. Now Return to upmenu
     DrawAdjustPage();
 }
@@ -3967,7 +3968,7 @@ void MAdjustHPositionProc(void)
     case _OE_MENU_PREV:         MColorMenuAdj(_PREV);                         break;
     case _OE_ENTER_SUBMENU:     MColorEnterSubMenu();                         break;
     case _OE_RETURN_UPMENU:     MAdjustHPositionReturnUpMenu();               break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -3980,10 +3981,10 @@ void MAdjustHPositionReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawHPosition(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_HPOSITION;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -3994,30 +3995,30 @@ void MAdjustVPositionProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:          
-        MAdjustVPositionValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MAdjustVPositionValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:          
-        MAdjustVPositionValueAdj(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MAdjustVPositionValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:         
+
+    case _OE_MENU_NEXT:
         MAdjustVPositionReturnUpMenu();
         MAdjustMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV:         
+
+    case _OE_MENU_PREV:
         MAdjustVPositionReturnUpMenu();
         MAdjustMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
-        
+
+    case _OE_ENTER_SUBMENU:
+
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MAdjustVPositionReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MAdjustVPositionReturnUpMenu();
         break;
     }
 }
@@ -4031,10 +4032,10 @@ void MAdjustVPositionReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawVPosition(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_VPOSITION;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -4045,32 +4046,32 @@ void MAdjustPhaseProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:          
-        MAdjustPhaseValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MAdjustPhaseValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:          
+
+    case _OE_ADJ_DEC:
         MAdjustPhaseValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:       
+
+    case _OE_MENU_NEXT:
         MAdjustPhaseReturnUpMenu();
         MAdjustMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV:        
+
+    case _OE_MENU_PREV:
         MAdjustPhaseReturnUpMenu();
         MAdjustMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
-        
+
+    case _OE_ENTER_SUBMENU:
+
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MAdjustPhaseReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MAdjustPhaseReturnUpMenu();
         break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -4083,10 +4084,10 @@ void MAdjustPhaseReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawPhase(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_PHASE;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -4097,30 +4098,30 @@ void MAdjustClockProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:          
-        MAdjustClockValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MAdjustClockValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:          
-        MAdjustClockValueAdj(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MAdjustClockValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:         
+
+    case _OE_MENU_NEXT:
         MAdjustClockReturnUpMenu();
         MAdjustMenuAdj(_NEXT);
         break;
-                                
-    case _OE_MENU_PREV:         
-        MAdjustClockReturnUpMenu();       
+
+    case _OE_MENU_PREV:
+        MAdjustClockReturnUpMenu();
         MAdjustMenuAdj(_PREV);
         break;
-                                
-    case _OE_ENTER_SUBMENU:     
-        
+
+    case _OE_ENTER_SUBMENU:
+
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MAdjustClockReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MAdjustClockReturnUpMenu();
         break;
     }
 }
@@ -4134,10 +4135,10 @@ void MAdjustClockReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawClock(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_CLOCK;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -4158,7 +4159,7 @@ void MOSDProc(void)
     case _OE_MENU_PREV:         MOSDMenuAdj(_PREV);                 break;
     case _OE_ENTER_SUBMENU:     MOSDEnterSubMenu();                 break;
     case _OE_RETURN_UPMENU:     MOSDReturnUpMenu();                 break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -4168,7 +4169,7 @@ void MOSDValueAdj(BYTE ucMode)
     // 1. Before Enter SubMenu
     // Insert code to here ...
     ucMode = ucMode;
-    
+
     // 2. Change ucOsdState
     switch(ucOsdState)
     {
@@ -4179,37 +4180,37 @@ void MOSDValueAdj(BYTE ucMode)
     case _MI_DOUBLE:            EnterDoubleMenu();                  break;
     case _MI_TRANSPARENT:       CTransparentAdj(ucMode);            break;
     }
-    
+
     // 3. Now enter sub menu
     // Insert code to here ...
-    
+
 }
 //---------------------------------------------------------------------------
 void MOSDMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_LANGUAGE,_MI_TRANSPARENT,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawOsdPageMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawOsdPageMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 //---------------------------------------------------------------------------
 void MOSDEnterSubMenu(void)
 {
     // 1. Before Enter SubMenu
     // Insert code to here ...
-    
-    
+
+
     // 2. Change ucOsdState
     switch(ucOsdState)
     {
@@ -4230,7 +4231,7 @@ void MOSDEnterSubMenu(void)
         DrawOSDVPosition(_ST_ADJUST);
         ucOsdState = _MI_OSD_VPOSITIONADJ;
         break;
-        
+
     case _MI_TIMER:
         DrawOSDTimer(_ST_ADJUST);
         ucOsdState = _MI_TIMERADJ;
@@ -4254,21 +4255,21 @@ void MOSDEnterSubMenu(void)
         break;
 #endif
     }
-    
+
     // 3. Now enter sub menu
     // Insert code to here ...
-    
-    
+
+
 }
 //---------------------------------------------------------------------------
 void MOSDReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawOsdPageMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_OSD;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -4281,20 +4282,20 @@ void MOSDReturnUpMenu(void)
 void DrawLangaugeMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_ENGLISH),END(_MI_RUS));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     DrawAPopupMenuItem(sLanguageName[ucItem - _MI_ENGLISH],y,_PM_LANGUAGE_ROW_START,_PM_LANGUAGE_COL_START,ucState);
-    
+
 }
 
 //---------------------------------------------------------------------------
@@ -4303,31 +4304,31 @@ void EnterLanguageMenu(void)
     BYTE i;
     BYTE ucMode;
     BYTE ucCount;
-    
+
     ucCount = GetShowCount(BEGIN(_MI_ENGLISH),END(_MI_RUS));
-    
+
     CreatePopupMenu(_PM_LANGUAGE_ROW_START, ucCount + 2);
-    
+
     ucOsdState = GET_LANGUAGE() + _MI_ENGLISH;
-    
+
     for(i=_MI_ENGLISH;i<=_MI_RUS;i++)
     {
         if(i == ucOsdState)
             ucMode = _ST_SELECT;
         else
             ucMode = _ST_NORMAL;
-        
+
         DrawLangaugeMenuItem(i,ucMode);
     }
-    
+
 }
 //---------------------------------------------------------------------------
 void ClearLangaugeMenu(void)
 {
     BYTE ucCount;
-    
+
     ucCount = GetShowCount(BEGIN(_MI_ENGLISH),END(_MI_RUS));
-    
+
     ClearPopupMenu(_PM_LANGUAGE_ROW_START, ucCount + 2);
 }
 //---------------------------------------------------------------------------
@@ -4347,7 +4348,7 @@ void MLanguageProc(void)
     case _OE_MENU_PREV:         MLanguageMenuAdj(_PREV);            break;
     case _OE_ENTER_SUBMENU:     MLanguageEnterSubMenu();            break;
     case _OE_RETURN_UPMENU:     MLanguageReturnUpMenu();            break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -4360,17 +4361,17 @@ void MLanguageValueAdj(BYTE ucMode)
 void MLanguageMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_ENGLISH,_MI_RUS,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawLangaugeMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawLangaugeMenuItem(ucOsdState,_ST_SELECT);
 }
@@ -4379,25 +4380,25 @@ void MLanguageEnterSubMenu(void)
 {
     SET_LANGUAGE(ucOsdState - _MI_ENGLISH);
     MainMenuItemChgClear();
-    
+
 #if(_CHINESE_FONT_TYPE == _CHINESE_2_FONT)
     LoadCHIFont(_LF_OSD_PAGE);
 #endif
     LoadLanguageFont();
     DrawMainItemTitle(_MI_OSD);
     MLanguageReturnUpMenu();
-    
-    ucOsdEventMsg = _SAVE_EE_OSDUSERDATA_MSG;            
+
+    ucOsdEventMsg = _SAVE_EE_OSDUSERDATA_MSG;
 }
 //---------------------------------------------------------------------------
 void MLanguageReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearLangaugeMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_LANGUAGE;
-    
+
     // 3. Now Return to upmenu
     DrawOSDPage();
 }
@@ -4409,21 +4410,21 @@ void MTimerProc(void)
     {
     case _OE_ADJ_INC:      MTimerAdjValue(_INC);     break;
     case _OE_ADJ_DEC:      MTimerAdjValue(_DEC);     break;
-    case _OE_MENU_NEXT:    
-        MTimerReturnUpMenu();     
+    case _OE_MENU_NEXT:
+        MTimerReturnUpMenu();
         MOSDMenuAdj(_NEXT);
         break;
-                                
+
     case _OE_MENU_PREV:
         MTimerReturnUpMenu();
         MOSDMenuAdj(_PREV);
         break;
-                                
+
     case _OE_ENTER_SUBMENU:
         break;
-        
+
     case _OE_RETURN_UPMENU: MTimerReturnUpMenu();    break;
-                                
+
     }
 }
 
@@ -4433,10 +4434,10 @@ void MTimerReturnUpMenu(void)
     // 1. Before Return UpMenu
     //  DrawBright(_ST_SELECT);
     DrawOSDTimer(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_TIMER;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -4447,29 +4448,29 @@ void MTimerAdjValue(BYTE ucMode)
 {
     BYTE y;
     BYTE idata ucTemp = GET_OSDTIMEOUT()/5;
-    
+
     // get display line
     y = GetShowIndex(_MI_TIMER,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(3), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(3), 0x00, BYTE_DISPLAY);
-    
+
     ucTemp = ValueInRangeChange(0, 12, ucTemp, _LOOP | ucMode);
     SET_OSDTIMEOUT(ucTemp * 5);
-    
+
     // draw
     OSDLine(ROW(y), _MSG_COL, LENGTH(10), StateColor(_ST_ADJUST), BYTE_COLOR);
-    
+
     if (ucTemp == 0)
         SUBMENU_RIGHT_TEXTOUT(sOff[GET_LANGUAGE()], y);
     else
         CShowNumber(_MSG_COL, y, GET_OSDTIMEOUT());
-    
+
     ucOsdEventMsg = _SAVE_EE_OSDUSERDATA_MSG;
 }
 
@@ -4482,31 +4483,31 @@ void MHPositionProc(void)
     switch(ucOsdEventMsg)
     {
     case _OE_ADJ_INC:
-        MHPositionValueAdj(_INC);               
+        MHPositionValueAdj(_INC);
         break;
-        
+
     case _OE_ADJ_DEC:
         MHPositionValueAdj(_DEC);
         break;
-        
+
     case _OE_MENU_NEXT:
-        MHPositionReturnUpMenu(); 
+        MHPositionReturnUpMenu();
         MOSDMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV:         
-        MHPositionReturnUpMenu(); 
+
+    case _OE_MENU_PREV:
+        MHPositionReturnUpMenu();
         MOSDMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
-        
+
+    case _OE_ENTER_SUBMENU:
+
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MHPositionReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MHPositionReturnUpMenu();
         break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -4519,10 +4520,10 @@ void MHPositionReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawOSDHPosition(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_OSD_HPOSITION;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -4533,32 +4534,32 @@ void MVPositionProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MVPositionValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MVPositionValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MVPositionValueAdj(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MVPositionValueAdj(_DEC);
         break;
-        
+
     case _OE_MENU_NEXT:
         MVPositionReturnUpMenu();
         MOSDMenuAdj(_NEXT);
         break;
-        
+
     case _OE_MENU_PREV:
         MVPositionReturnUpMenu();
         MOSDMenuAdj(_PREV);
         break;
-        
+
     case _OE_ENTER_SUBMENU:
-        
+
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MVPositionReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MVPositionReturnUpMenu();
         break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -4571,10 +4572,10 @@ void MVPositionReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawOSDVPosition(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_OSD_VPOSITION;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -4591,27 +4592,27 @@ void DrawDoubleMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_DOUBLE_ON),END(_MI_DOUBLE_OFF));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
-    
+
+
     switch(ucItem)
     {
     case _MI_DOUBLE_ON:         pStr = sOn[GET_LANGUAGE()];     break;
     case _MI_DOUBLE_OFF:        pStr = sOff[GET_LANGUAGE()];    break;
     }
-    
+
     DrawAPopupMenuItem(pStr,y,_PM_DOUBLE_ROW_START,_PM_DOUBLE_COL_START,ucState);
-    
+
 }
 
 //---------------------------------------------------------------------------
@@ -4619,24 +4620,24 @@ void EnterDoubleMenu(void)
 {
     BYTE i;
     BYTE ucMode;
-    
+
     CreatePopupMenu(_PM_DOUBLE_ROW_START, _PM_DOUBLE_ROW_HEIGHT);
-    
+
     if(GET_OSD_SIZE())
         ucOsdState = _MI_DOUBLE_ON;
-    else 
+    else
         ucOsdState = _MI_DOUBLE_OFF;
-    
+
     for(i=_MI_DOUBLE_ON;i<=_MI_DOUBLE_OFF;i++)
     {
         if(i == ucOsdState)
             ucMode = _ST_SELECT;
         else
             ucMode = _ST_NORMAL;
-        
+
         DrawDoubleMenuItem(i,ucMode);
     }
-    
+
 }
 //---------------------------------------------------------------------------
 void ClearDoubleMenu(void)
@@ -4661,7 +4662,7 @@ void MDoubleProc(void)
     case _OE_MENU_PREV:         MDoubleMenuAdj(_PREV);              break;
     case _OE_ENTER_SUBMENU:     MDoubleEnterSubMenu();              break;
     case _OE_RETURN_UPMENU:     MDoubleReturnUpMenu();              break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -4674,37 +4675,37 @@ void MDoubleValueAdj(BYTE ucMode)
 void MDoubleMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_DOUBLE_ON,_MI_DOUBLE_OFF,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawDoubleMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawDoubleMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 //---------------------------------------------------------------------------
 void MDoubleEnterSubMenu(void)
 {
     BYTE ucOldSize = GET_OSD_SIZE();
-    
+
     switch(ucOsdState)
     {
     case _MI_DOUBLE_ON:      SET_OSD_SIZE(1);           break;
     case _MI_DOUBLE_OFF:     SET_OSD_SIZE(0);           break;
     }
-    
-    MDoubleReturnUpMenu();   
-    
+
+    MDoubleReturnUpMenu();
+
     if (ucOldSize == GET_OSD_SIZE())
         return;
-    
+
     COsdFxDisableOsd();
     if (GET_OSD_SIZE())
     {
@@ -4724,10 +4725,10 @@ void MDoubleReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearDoubleMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_DOUBLE;
-    
+
     // 3. Now Return to upmenu
     DrawOSDPage();
 }
@@ -4738,15 +4739,15 @@ void COSDHPositionAdj(BYTE ucMode)
 #if(_KEY_TYPE == _KT_PCB2660_003)
     BYTE ucColor;
 #endif
-    
+
     // get display line
-    y = GetShowIndex(_MI_OSD_HPOSITION,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));   
+    y = GetShowIndex(_MI_OSD_HPOSITION,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
     y = SHOWINDEX_TO_LINE(y);
     // get display color
 #if(_KEY_TYPE == _KT_PCB2660_003)
     ucColor = StateColor(_ST_SELECT);
 #endif
-    
+
     SET_KEYREPEATENABLE();
     stOsdUserData.OsdHPos = ValueInRangeChange(0, 100, stOsdUserData.OsdHPos, _NON_LOOP | ucMode);
 #if(_KEY_TYPE == _KT_PCB2660_003)
@@ -4756,8 +4757,8 @@ void COSDHPositionAdj(BYTE ucMode)
     OSD_SLIDER(y,stOsdUserData.OsdHPos,_MENU_ADJUST_COLOR);
 #endif
     CSetOSDPosition(_MAINMENU_WIDTH, _MAINMENU_HEIGHT, stOsdUserData.OsdHPos, stOsdUserData.OsdVPos);
-    
-    ucOsdEventMsg = _SAVE_EE_OSDUSERDATA_MSG;            
+
+    ucOsdEventMsg = _SAVE_EE_OSDUSERDATA_MSG;
 }
 //---------------------------------------------------------------------------
 void COSDVPositionAdj(BYTE ucMode)
@@ -4766,15 +4767,15 @@ void COSDVPositionAdj(BYTE ucMode)
 #if(_KEY_TYPE == _KT_PCB2660_003)
     BYTE ucColor;
 #endif
-    
+
     // get display line
-    y = GetShowIndex(_MI_OSD_VPOSITION,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));   
+    y = GetShowIndex(_MI_OSD_VPOSITION,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
     y = SHOWINDEX_TO_LINE(y);
     // get display color
 #if(_KEY_TYPE == _KT_PCB2660_003)
     ucColor = StateColor(_ST_SELECT);
 #endif
-    
+
     SET_KEYREPEATENABLE();
     stOsdUserData.OsdVPos = ValueInRangeChange(0, 100, stOsdUserData.OsdVPos, _NON_LOOP | ucMode);
 #if(_KEY_TYPE == _KT_PCB2660_003)
@@ -4783,10 +4784,10 @@ void COSDVPositionAdj(BYTE ucMode)
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     OSD_SLIDER(y,stOsdUserData.OsdVPos,_MENU_ADJUST_COLOR);
 #endif
-    
+
     CSetOSDPosition(_MAINMENU_WIDTH, _MAINMENU_HEIGHT, stOsdUserData.OsdHPos, stOsdUserData.OsdVPos);
-    
-    ucOsdEventMsg = _SAVE_EE_OSDUSERDATA_MSG;            
+
+    ucOsdEventMsg = _SAVE_EE_OSDUSERDATA_MSG;
 }
 
 //---------------------------------------------------------------------------
@@ -4798,27 +4799,27 @@ void MTransparentProc(void)
     case _OE_ADJ_INC:
         CTransparentAdj(_INC);
         break;
-        
+
     case _OE_ADJ_DEC:
-        CTransparentAdj(_DEC); 
+        CTransparentAdj(_DEC);
         break;
-        
+
     case _OE_MENU_NEXT:
         MTransparentReturnUpMenu();
-        MOSDMenuAdj(_NEXT);               
+        MOSDMenuAdj(_NEXT);
         break;
-        
+
     case _OE_MENU_PREV:
         MTransparentReturnUpMenu();
-        MOSDMenuAdj(_PREV);               
+        MOSDMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
-        //                              MColorEnterSubMenu();               
+
+    case _OE_ENTER_SUBMENU:
+        //                              MColorEnterSubMenu();
         break;
-        
-    case _OE_RETURN_UPMENU: 
-        MTransparentReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MTransparentReturnUpMenu();
         break;
     }
 }
@@ -4828,10 +4829,10 @@ void MTransparentReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawTransparent(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_TRANSPARENT;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -4840,11 +4841,11 @@ void MTransparentReturnUpMenu(void)
 void CTransparentAdj(BYTE ucMode)
 {
     BYTE y;
-    
+
     // get display line
     y = GetShowIndex(_MI_TRANSPARENT,BEGIN(_MI_LANGUAGE),END(_MI_TRANSPARENT));
     y = SHOWINDEX_TO_LINE(y);
-    
+
     stOsdUserData.OsdBlending = ValueInRangeChange(0, 7, stOsdUserData.OsdBlending, _LOOP | ucMode);
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(3), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(3), 0x00, BYTE_DISPLAY);
@@ -4854,8 +4855,8 @@ void CTransparentAdj(BYTE ucMode)
     else
         CShowNumber(_MSG_COL, y, GET_OSDBLENDING());
     CScalerSetBit(_OVERLAY_CTRL_6C, 0x23, ((stOsdUserData.OsdBlending & 0x07) << 2));
-    
-    ucOsdEventMsg = _SAVE_EE_OSDUSERDATA_MSG;                        
+
+    ucOsdEventMsg = _SAVE_EE_OSDUSERDATA_MSG;
 }
 //---------------------------------------------------------------------------
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
@@ -4863,29 +4864,29 @@ void MTuningProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC: 
-        CTuningAdj(_INC);      
+    case _OE_ADJ_INC:
+        CTuningAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        CTuningAdj(_DEC);          
+
+    case _OE_ADJ_DEC:
+        CTuningAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:       
+
+    case _OE_MENU_NEXT:
         MTuningReturnUpMenu();
         MTVMenuAdj(_NEXT);
         break;
-        
+
     case _OE_MENU_PREV:
         MTuningReturnUpMenu();
         MTVMenuAdj(_PREV);
         break;
-        
+
     case _OE_ENTER_SUBMENU:
         break;
-        
-    case _OE_RETURN_UPMENU:  
-        MTuningReturnUpMenu();        
+
+    case _OE_RETURN_UPMENU:
+        MTuningReturnUpMenu();
         break;
     }
 }
@@ -4895,10 +4896,10 @@ void MTuningReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawTuning(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_TUNING;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -4908,12 +4909,12 @@ void CTuningAdj(BYTE ucMode)
 {
 #if(_VIDEO_TV_SUPPORT)
     BYTE y;
-    
+
     // get display line
     y = GetShowIndex(_MI_TUNING,BEGIN(ucStartItem),END(ucEndItem));
     y = SHOWINDEX_TO_LINE(y);
-    
-    SET_KEYREPEATENABLE();                                              
+
+    SET_KEYREPEATENABLE();
     CTuningCurrentChannel((bit)ucMode, stTvInfo.CurChn);
     CShowFreq(CLoadChannelFreq(stTvInfo.CurChn), _MSG_COL, y);
 #else
@@ -4926,20 +4927,20 @@ void CAdjChannel(BYTE ucMode)
 {
 #if(_VIDEO_TV_SUPPORT)
     BYTE y;
-    
+
     // get display line
     y = GetShowIndex(_MI_CHANNEL,BEGIN(ucStartItem),END(ucEndItem));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     CMuteOn();
-    
+
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(3), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(3), 0x00, BYTE_DISPLAY);
-    
+
 #if(_FM_DEVICE)
     if (1 == bFM)
     {
@@ -4958,11 +4959,11 @@ void CAdjChannel(BYTE ucMode)
         CShowNumber(_MSG_COL, y, stTvInfo.CurChn);
         ucPrevChannel =  stTvInfo.CurChn;
     }
-    
+
 	DrawSystem(_ST_NORMAL);
     DrawTuning(_ST_NORMAL);
     DrawSkip(_ST_NORMAL);
-    
+
     bChangeChannel = 0;
     ucOsdEventMsg  = _SAVE_EE_TV_DATA_MSG;
     CLR_CLEAR_OSD_EN();
@@ -4971,7 +4972,7 @@ void CAdjChannel(BYTE ucMode)
 
     ucMode = ucMode;
 
-#endif    
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -4979,30 +4980,30 @@ void CAdjustSwap(BYTE ucMode)
 {
 #if(_VIDEO_TV_SUPPORT)
     BYTE y;
-    
+
     // get display line
     y = GetShowIndex(_MI_SWAP,BEGIN(ucStartItem),END(ucEndItem));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     CMuteOn();
-    
+
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(3), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(3), 0x00, BYTE_DISPLAY);
-    
+
     CModeResetTVMode();
     stTvInfo.CurChn = ValueInRangeChange(0, CloadMaxChannelNumber(), stTvInfo.CurChn, _LOOP | ucMode);
     CSetTVChannel(stTvInfo.CurChn);
     CShowNumber(_MSG_COL, y, stTvInfo.CurChn);
     //ucPrevChannel =  stTvInfo.CurChn;
-    
+
 	DrawSystem(_ST_NORMAL);
     DrawTuning(_ST_NORMAL);
     DrawSkip(_ST_NORMAL);
-    
+
     bChangeChannel = 0;
     ucOsdEventMsg  = _SAVE_EE_TV_DATA_MSG;
     CLR_CLEAR_OSD_EN();
@@ -5011,7 +5012,7 @@ void CAdjustSwap(BYTE ucMode)
 
     ucMode = ucMode;
 
-#endif    
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -5027,7 +5028,7 @@ void MTVProc(void)
     case _OE_MENU_PREV:         MTVMenuAdj(_PREV);                  break;
     case _OE_ENTER_SUBMENU:     MTVEnterSubMenu();                  break;
     case _OE_RETURN_UPMENU:     MTVReturnUpMenu();                  break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -5036,17 +5037,17 @@ void MTVProc(void)
 void CSystemAdj(BYTE ucMode)
 {
     BYTE y;
-    
+
 	ucMode = ucMode;
 
     // get display line
     y = GetShowIndex(_MI_SYSTEM,BEGIN(_MI_CHANNEL),END(_MI_SKIP));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     if(_GET_TV_TYPE())
 	   _SET_TV_TYPE(0);
 	else
@@ -5103,17 +5104,17 @@ void CSwapSetup(void)
 
     if (ucPrevChannel != stTvInfo.CurChn)
     {
-        CAdjustBackgroundColor(0x00, 0x00, 0x00);     
+        CAdjustBackgroundColor(0x00, 0x00, 0x00);
         CScalerSetBit(_VDISP_CTRL_28, ~_BIT5, _BIT5);
-        
+
         CSaveChannelFreq(CLoadChannelFreq(ucPrevChannel), stTvInfo.CurChn);
         CSaveChannelColorType(CLoadChannelColorType(ucPrevChannel), stTvInfo.CurChn);
         CSaveChannelSoundType(CLoadChannelSoundType(ucPrevChannel), stTvInfo.CurChn);
-        
+
         CSaveChannelFreq(ucSwapFreq, ucPrevChannel);
         CSaveChannelColorType(ucSwapColorSystem, ucPrevChannel);
-        CSaveChannelSoundType(ucSwapSoundSystem, ucPrevChannel);  
-        
+        CSaveChannelSoundType(ucSwapSoundSystem, ucPrevChannel);
+
         CSetTVChannel(stTvInfo.CurChn);
     #if(_FM_DEVICE)
         if (1 == bFM)
@@ -5124,8 +5125,8 @@ void CSwapSetup(void)
     #endif
         {
             CModeResetTVMode();
-        }        
-        
+        }
+
         CTimerDelayXms(100);
         CScalerSetBit(_VDISP_CTRL_28, ~_BIT5, 0x00);
         bChangeChannel = 0;
@@ -5155,12 +5156,12 @@ void MTVMenuAdj(BYTE ucMode)
     if (ucOsdState == _MI_SWAP)
        ucPrevChannel = stTvInfo.CurChn;
 #endif
-        
+
     CSetItemStartEnd(DrawTVPage);
-    
+
     // 3. Draw New Item
     DrawTVPageMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 //---------------------------------------------------------------------------
 void MTVEnterSubMenu(void)
@@ -5175,47 +5176,47 @@ void MTVEnterSubMenu(void)
     {
         case _MI_CHANNEL:
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
-			DrawChannel(_ST_ADJUST);    
-			ucOsdState = _MI_OSD_CHANNELADJ;    	
+			DrawChannel(_ST_ADJUST);
+			ucOsdState = _MI_OSD_CHANNELADJ;
 #endif
         	break;
-        	
+
         case _MI_SYSTEM:
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
 			DrawSystem(_ST_ADJUST);
-			EnterSystemMenu();        	
-#endif        
+			EnterSystemMenu();
+#endif
 			ucOsdState = _MI_S_PAL_I;
         	break;
-        	
+
         case _MI_AUTOSEARCH:
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
         	DrawAutoSearch(_ST_ADJUST);
         	EnterAutoSearchMenu();
 #endif
-			ucOsdState = _MI_AUTOSEARCH_OK;                	     
+			ucOsdState = _MI_AUTOSEARCH_OK;
         	break;
-        	
+
         case _MI_MANUALSEARCH:
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
         	DrawManualSearch(_ST_ADJUST);
-        	EnterMSearchMenu();        	 
-#endif			  
+        	EnterMSearchMenu();
+#endif
 			ucOsdState = _MI_MANUALSEARCH_UP;
         	break;
-        case _MI_TUNING: 
+        case _MI_TUNING:
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
-        	DrawTuning(_ST_ADJUST);        	
-         	ucOsdState = _MI_TUNINGADJ; 
-#endif        
+        	DrawTuning(_ST_ADJUST);
+         	ucOsdState = _MI_TUNINGADJ;
+#endif
         	break;
-        	
-        case _MI_SKIP:      
+
+        case _MI_SKIP:
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
         	DrawSkip(_ST_ADJUST);
         	EnterSkipMenu();
-#endif        
-			ucOsdState = _MI_SKIP_ON;           
+#endif
+			ucOsdState = _MI_SKIP_ON;
         	break;
 
         case _MI_SWAP:              break;
@@ -5235,10 +5236,10 @@ void MTVReturnUpMenu(void)
 
     // 1. Before Return UpMenu
     DrawTVPageMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_TV;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -5249,31 +5250,31 @@ void MChannelProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        CAdjChannel(_INC);               
+    case _OE_ADJ_INC:
+        CAdjChannel(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        CAdjChannel(_DEC);               
+
+    case _OE_ADJ_DEC:
+        CAdjChannel(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:    
+
+    case _OE_MENU_NEXT:
         MChannelReturnUpMenu();
         MTVMenuAdj(_NEXT);
         break;
-                                
-    case _OE_MENU_PREV:         
+
+    case _OE_MENU_PREV:
         MChannelReturnUpMenu();
         MTVMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
+
+    case _OE_ENTER_SUBMENU:
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MChannelReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MChannelReturnUpMenu();
         break;
-        
+
     }
 }
 
@@ -5282,10 +5283,10 @@ void MChannelReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawChannel(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_CHANNEL;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -5302,18 +5303,18 @@ void DrawSystemMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_S_NTSC_M),END(_MI_S_SECAM_LL));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     switch(ucItem)
     {
     case _MI_S_NTSC_M:          pStr = sNTSC_M;         break;
@@ -5330,9 +5331,9 @@ void DrawSystemMenuItem(BYTE ucItem,BYTE ucState)
     case _MI_S_SECAM_L:         pStr = sSECAM_L;        break;
     case _MI_S_SECAM_LL:        pStr = sSECAM_LL;       break;
     }
-    
+
     DrawAPopupMenuItem(pStr,y,_PM_SYSTEM_ROW_START,_PM_SYSTEM_COL_START,ucState);
-    
+
 }
 #endif
 
@@ -5343,31 +5344,31 @@ void EnterSystemMenu(void)
     BYTE i;
     BYTE ucMode;
     BYTE ucCount;
-    
+
     ucCount = GetShowCount(BEGIN(_MI_S_NTSC_M),END(_MI_S_SECAM_LL));
-    
+
     CreatePopupMenu(_PM_SYSTEM_ROW_START, ucCount + 2);
-    
+
     ucOsdState = ucTVType + _MI_S_NTSC_M - 1;
-    
+
     for(i=_MI_S_NTSC_M;i<=_MI_S_SECAM_LL;i++)
     {
         if(i == ucOsdState)
             ucMode = _ST_SELECT;
         else
             ucMode = _ST_NORMAL;
-        
+
         DrawSystemMenuItem(i,ucMode);
     }
-#endif    
+#endif
 }
 //---------------------------------------------------------------------------
 void ClearSystemMenu(void)
 {
     BYTE ucCount;
-    
+
     ucCount = GetShowCount(BEGIN(_MI_S_NTSC_M),END(_MI_S_SECAM_LL));
-    
+
     ClearPopupMenu(_PM_SYSTEM_ROW_START, ucCount + 2);
 }
 //---------------------------------------------------------------------------
@@ -5388,7 +5389,7 @@ void MSystemProc(void)
     case _OE_MENU_PREV:         MSystemMenuAdj(_PREV);              break;
     case _OE_ENTER_SUBMENU:     MSystemEnterSubMenu();              break;
     case _OE_RETURN_UPMENU:     MSystemReturnUpMenu();              break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -5401,29 +5402,29 @@ void MSystemValueAdj(BYTE ucMode)
 void MSystemMenuAdj(BYTE ucMode)
 {
 #if(_VIDEO_TV_SUPPORT)
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_S_NTSC_M,_MI_S_SECAM_LL,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawSystemMenuItem(ucOsdState,  _ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     ucTVType = ucOsdState - _MI_S_NTSC_M + 1;
-    
+
     CSaveChannelColorType(stTvInfo.CurChn, ucTVType);
     gmi_CI2CWriteIfPllDM(ucTVType, _TUNER_MUTE_OFF, _NORMAL_MODE);
     CSetTvColor(ucTVType);
     ucTVSyncFailCount = 251;
     CLR_CLEAR_OSD_EN();
-    
+
     OSDClear(ROW(17), HEIGHT(1), COL(14), WIDTH(20), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(17), HEIGHT(1), COL(14), WIDTH(20), 0x00, BYTE_DISPLAY);
     CShowMode(13,17);
-    
+
     // 3. Draw New Item
     DrawSystemMenuItem(ucOsdState,  _ST_SELECT);
 #else
@@ -5443,10 +5444,10 @@ void MSystemReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearSystemMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_SYSTEM;
-    
+
     // 3. Now Return to upmenu
     DrawTVPage();
 }
@@ -5462,38 +5463,38 @@ void DrawAutoSearchMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_AUTOSEARCH_OK),END(_MI_AUTOSEARCH_CANCEL));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
-    
+
+
     switch(ucItem)
     {
     case _MI_AUTOSEARCH_OK:         pStr = sOK[GET_LANGUAGE()];     break;
     case _MI_AUTOSEARCH_CANCEL:     pStr = sCancel[GET_LANGUAGE()]; break;
     }
-    
+
     DrawAPopupMenuItem(pStr,y,CGetPopupMenuRow(_PM_AUTOSEARCH_ROW_START,_MI_CHANNEL),_PM_AUTOSEARCH_COL_START,ucState);
-    
+
 }
 
 //---------------------------------------------------------------------------
 void EnterAutoSearchMenu(void)
 {
     CreatePopupMenu(CGetPopupMenuRow(_PM_AUTOSEARCH_ROW_START,_MI_CHANNEL), _PM_AUTOSEARCH_ROW_HEIGHT);
-    
+
     ucOsdState = _MI_AUTOSEARCH_CANCEL;
-    
+
     DrawAutoSearchMenuItem(_MI_AUTOSEARCH_OK,_ST_NORMAL);
-    DrawAutoSearchMenuItem(_MI_AUTOSEARCH_CANCEL,_ST_SELECT);   
+    DrawAutoSearchMenuItem(_MI_AUTOSEARCH_CANCEL,_ST_SELECT);
 }
 //---------------------------------------------------------------------------
 void ClearAutoSearchMenu(void)
@@ -5516,33 +5517,33 @@ void MAutoSearchProc(void)
     case _OE_MENU_PREV:         MAutoSearchMenuAdj(_PREV);          break;
     case _OE_ENTER_SUBMENU:     MAutoSearchEnterSubMenu();          break;
     case _OE_RETURN_UPMENU:     MAutoSearchReturnUpMenu();          break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
 void MAutoSearchValueAdj(BYTE ucMode)
 {
     // ucMode : _INC or _DEC
-    ucMode = ucMode;  
+    ucMode = ucMode;
 }
 //---------------------------------------------------------------------------
 void MAutoSearchMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_AUTOSEARCH_OK,_MI_AUTOSEARCH_CANCEL,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawAutoSearchMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawAutoSearchMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 //---------------------------------------------------------------------------
 void MAutoSearchEnterSubMenu(void)
@@ -5550,16 +5551,16 @@ void MAutoSearchEnterSubMenu(void)
 #if(_VIDEO_TV_SUPPORT)
     bit fAutoSearch = 0;
     BYTE y;
-    
+
     if(ucOsdState == _MI_AUTOSEARCH_OK)
         fAutoSearch = 1;
-    
+
     MAutoSearchReturnUpMenu();
-    
+
     // get display line
     y = GetShowIndex(_MI_AUTOSEARCH, BEGIN(ucStartItem), END(ucEndItem));
     y = SHOWINDEX_TO_LINE(y);
-    
+
     if(fAutoSearch)
     {
         ucStartItem = _MI_CHANNEL;
@@ -5573,18 +5574,18 @@ void MAutoSearchEnterSubMenu(void)
         y = GetShowIndex(_MI_AUTOSEARCH, BEGIN(ucStartItem), END(ucEndItem));
         y = SHOWINDEX_TO_LINE(y);
         OSDLine(SHOWINDEX_TO_LINE(0), COL(_MSG_COL), LENGTH(3), StateColor(_ST_SELECT), BYTE_COLOR);
-    	CScalerPageSelect(_PAGE8);		
+    	CScalerPageSelect(_PAGE8);
         CScalerSetBit(_P8_OUTPUT_CTRL_A7, ~_BIT5, _BIT5);
         CTvAutoSearch();
-    	CScalerPageSelect(_PAGE8);		
+    	CScalerPageSelect(_PAGE8);
         CScalerSetBit(_P8_OUTPUT_CTRL_A7, ~_BIT5, 0x00);
-        
+
         OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(10), 0x8C, BYTE_ATTRIB);
         OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(10), 0x00, BYTE_DISPLAY);
-        
+
         OSDLine(SHOWINDEX_TO_LINE(0), COL(_MSG_COL), LENGTH(3), StateColor(_ST_NORMAL), BYTE_COLOR);
         CShowNumber(_MSG_COL, SHOWINDEX_TO_LINE(0), stTvInfo.CurChn);
-        
+
 		DrawChannel(_ST_NORMAL);
         DrawTuning(_ST_NORMAL);
         DrawSkip(_ST_NORMAL);
@@ -5596,10 +5597,10 @@ void MAutoSearchReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearAutoSearchMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_AUTOSEARCH;
-    
+
     // 3. Now Return to upmenu
     DrawTVPage();
 }
@@ -5614,38 +5615,38 @@ void DrawMSearchMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_MANUALSEARCH_UP),END(_MI_MANUALSEARCH_DOWN));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
-    
+
+
     switch(ucItem)
     {
     case _MI_MANUALSEARCH_UP:       pStr = sSearchUP[GET_LANGUAGE()];       break;
     case _MI_MANUALSEARCH_DOWN:     pStr = sSearchDown[GET_LANGUAGE()];     break;
     }
-    
+
     DrawAPopupMenuItem(pStr,y,CGetPopupMenuRow(_PM_MSEARCH_ROW_START,_MI_CHANNEL),_PM_MSEARCH_COL_START,ucState);
-    
+
 }
 
 //---------------------------------------------------------------------------
 void EnterMSearchMenu(void)
-{                   
+{
     CreatePopupMenu(CGetPopupMenuRow(_PM_MSEARCH_ROW_START,_MI_CHANNEL), _PM_MSEARCH_ROW_HEIGHT);
-    
+
     ucOsdState = _MI_MANUALSEARCH_UP;
-    
+
     DrawMSearchMenuItem(_MI_MANUALSEARCH_UP,_ST_SELECT);
-    DrawMSearchMenuItem(_MI_MANUALSEARCH_DOWN,_ST_NORMAL);  
+    DrawMSearchMenuItem(_MI_MANUALSEARCH_DOWN,_ST_NORMAL);
 }
 //---------------------------------------------------------------------------
 void ClearMSearchMenu(void)
@@ -5667,7 +5668,7 @@ void MManualSearchProc(void)
     case _OE_MENU_PREV:         MManualSearchMenuAdj(_PREV);        break;
     case _OE_ENTER_SUBMENU:     MManualSearchEnterSubMenu();        break;
     case _OE_RETURN_UPMENU:     MManualSearchReturnUpMenu();        break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -5680,20 +5681,20 @@ void MManualSearchValueAdj(BYTE ucMode)
 void MManualSearchMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_MANUALSEARCH_UP,_MI_MANUALSEARCH_DOWN,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawMSearchMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawMSearchMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 //---------------------------------------------------------------------------
 void MManualSearchEnterSubMenu(void)
@@ -5701,28 +5702,28 @@ void MManualSearchEnterSubMenu(void)
 #if(_VIDEO_TV_SUPPORT)
     bit fSearch = 0;
     BYTE y;
-    
+
     switch(ucOsdState)
     {
     case _MI_MANUALSEARCH_UP:       fSearch = 1;        break;
     case _MI_MANUALSEARCH_DOWN:     fSearch = 0;        break;
     }
-    
+
     MManualSearchReturnUpMenu();
-    
+
     // get display line
     y = GetShowIndex(_MI_MANUALSEARCH, BEGIN(ucStartItem), END(ucEndItem));
     y = SHOWINDEX_TO_LINE(y);
-    
-	CScalerPageSelect(_PAGE8);		
+
+	CScalerPageSelect(_PAGE8);
     CScalerSetBit(_P8_OUTPUT_CTRL_A7, ~_BIT5, _BIT5);
     CManualSearch(fSearch, stTvInfo.CurChn);
-	CScalerPageSelect(_PAGE8);		
+	CScalerPageSelect(_PAGE8);
     CScalerSetBit(_P8_OUTPUT_CTRL_A7, ~_BIT5, 0x00);
-    
+
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(10), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(10), 0x00, BYTE_DISPLAY);
-    
+
 	DrawChannel(_ST_NORMAL);
     DrawTuning(_ST_NORMAL);
     DrawSkip(_ST_NORMAL);
@@ -5734,10 +5735,10 @@ void MManualSearchReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearMSearchMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_MANUALSEARCH;
-    
+
     // 3. Now Return to upmenu
     DrawTVPage();
 }
@@ -5751,25 +5752,25 @@ void DrawSkipMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_SKIP_ON),END(_MI_SKIP_OFF));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
-    
+
+
     switch(ucItem)
     {
     case _MI_SKIP_ON:           pStr = sOn[GET_LANGUAGE()];     break;
     case _MI_SKIP_OFF:          pStr = sOff[GET_LANGUAGE()];    break;
     }
-    
+
     DrawAPopupMenuItem(pStr,y,CGetPopupMenuRow(_PM_SKIP_ROW_START,_MI_CHANNEL),_PM_SKIP_COL_START,ucState);
 }
 //---------------------------------------------------------------------------
@@ -5778,9 +5779,9 @@ void EnterSkipMenu(void)
 #if(_VIDEO_TV_SUPPORT)
     BYTE i;
     BYTE ucMode;
-    
+
     CreatePopupMenu(CGetPopupMenuRow(_PM_SKIP_ROW_START,_MI_CHANNEL), _PM_SKIP_ROW_HEIGHT);
-    
+
     if(CLoadChannelSkip(stTvInfo.CurChn))
     {
         ucOsdState = _MI_SKIP_ON;
@@ -5789,21 +5790,21 @@ void EnterSkipMenu(void)
     {
         ucOsdState = _MI_SKIP_OFF;
     }
-    
+
     for(i=_MI_SKIP_ON;i<=_MI_SKIP_OFF;i++)
     {
         if(i == ucOsdState)
             ucMode = _ST_SELECT;
         else
             ucMode = _ST_NORMAL;
-        
+
         DrawSkipMenuItem(i,ucMode);
     }
-#endif    
+#endif
 }
 //---------------------------------------------------------------------------
 void ClearSkipMenu(void)
-{                      
+{
     ClearPopupMenu(CGetPopupMenuRow(_PM_SKIP_ROW_START,_MI_CHANNEL), _PM_SKIP_ROW_HEIGHT);
 }
 //---------------------------------------------------------------------------
@@ -5822,7 +5823,7 @@ void MSkipProc(void)
     case _OE_MENU_PREV:         MSkipMenuAdj(_PREV);                break;
     case _OE_ENTER_SUBMENU:     MSkipEnterSubMenu();                break;
     case _OE_RETURN_UPMENU:     MSkipReturnUpMenu();                break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -5835,17 +5836,17 @@ void MSkipValueAdj(BYTE ucMode)
 void MSkipMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_SKIP_ON,_MI_SKIP_OFF,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawSkipMenuItem(ucOsdState,    _ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawSkipMenuItem(ucOsdState,    _ST_SELECT);
 }
@@ -5860,7 +5861,7 @@ void MSkipEnterSubMenu(void)
     case _MI_SKIP_ON:           fSkip = 1;          break;
     case _MI_SKIP_OFF:          fSkip = 0;          break;
     }
-    
+
     CSaveChannelSkip(fSkip, stTvInfo.CurChn);
     MSkipReturnUpMenu();
 #endif
@@ -5870,10 +5871,10 @@ void MSkipReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearSkipMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_SKIP;
-    
+
     // 3. Now Return to upmenu
     DrawTVPage();
 }
@@ -5887,25 +5888,25 @@ void DrawAFCMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_AFC_ON),END(_MI_AFC_OFF));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
-    
+
+
     switch(ucItem)
     {
     case _MI_AFC_ON:           pStr = sOn[GET_LANGUAGE()];     break;
     case _MI_AFC_OFF:          pStr = sOff[GET_LANGUAGE()];    break;
     }
-    
+
     DrawAPopupMenuItem(pStr,y,_PM_AFC_ROW_START,_PM_AFC_COL_START,ucState);
 }
 #endif
@@ -5918,7 +5919,7 @@ void EnterAFCMenu(void)
     BYTE ucMode;
 
     CreatePopupMenu(_PM_AFC_ROW_START, _PM_AFC_ROW_HEIGHT);
-    
+
     if(GET_AFC_MODE())
     {
         ucOsdState = _MI_AFC_ON;
@@ -5927,17 +5928,17 @@ void EnterAFCMenu(void)
     {
         ucOsdState = _MI_AFC_OFF;
     }
-    
+
     for(i=_MI_AFC_ON;i<=_MI_AFC_OFF;i++)
     {
         if(i == ucOsdState)
             ucMode = _ST_SELECT;
         else
             ucMode = _ST_NORMAL;
-        
+
         DrawAFCMenuItem(i,ucMode);
     }
-#endif    
+#endif
 }
 //---------------------------------------------------------------------------
 void ClearAFCMenu(void)
@@ -5960,7 +5961,7 @@ void MAFCProc(void)
     case _OE_MENU_PREV:         MAFCMenuAdj(_PREV);                break;
     case _OE_ENTER_SUBMENU:     MAFCEnterSubMenu();                break;
     case _OE_RETURN_UPMENU:     MAFCReturnUpMenu();                break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -5974,17 +5975,17 @@ void MAFCMenuAdj(BYTE ucMode)
 {
 #if (_TV_AFC)
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_AFC_ON,_MI_AFC_OFF,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawAFCMenuItem(ucOsdState,    _ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawAFCMenuItem(ucOsdState,    _ST_SELECT);
 #else
@@ -6000,16 +6001,16 @@ void MAFCEnterSubMenu(void)
 
     switch(ucOsdState)
     {
-    case _MI_AFC_ON:           
+    case _MI_AFC_ON:
         AFCState = _TV_AFC_START;
-        AFC = 1;          
+        AFC = 1;
         break;
 
-    case _MI_AFC_OFF:          
-        AFC = 0;          
+    case _MI_AFC_OFF:
+        AFC = 0;
         break;
     }
-    
+
     SET_AFC_MODE(AFC);
     ucOsdEventMsg = _SAVE_EE_TV_DATA_MSG;
     #endif
@@ -6021,10 +6022,10 @@ void MAFCReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearAFCMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_AFC;
-    
+
     // 3. Now Return to upmenu
     DrawTVPage();
 }
@@ -6044,13 +6045,13 @@ void MFunctionProc(void)
     case _OE_MENU_PREV:         MFunctionMenuAdj(_PREV);            break;
     case _OE_ENTER_SUBMENU:     MFunctionEnterSubMenu();            break;
     case _OE_RETURN_UPMENU:     MFunctionReturnUpMenu();            break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
 void MFunctionValueAdj(BYTE ucMode)
 {
-    // ucMode : _INC or _DEC   
+    // ucMode : _INC or _DEC
     switch(ucOsdState)
     {
     case _MI_RESET:             EnterResetMenu();                   break;
@@ -6059,28 +6060,28 @@ void MFunctionValueAdj(BYTE ucMode)
     case _MI_BLUESCREEN:        EnterBlueScreenMenu();              break;
     case _MI_SHARPNESS:         MSharpnessAdjValue(ucMode);         break;
     }
-    
-    
-    
+
+
+
 }
 //---------------------------------------------------------------------------
 void MFunctionMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_RESET,_MI_SHARPNESS,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawFuncPageMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawFuncPageMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 //---------------------------------------------------------------------------
 void MFunctionEnterSubMenu(void)
@@ -6088,18 +6089,18 @@ void MFunctionEnterSubMenu(void)
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     switch(ucOsdState)
     {
-    case _MI_RESET:     
+    case _MI_RESET:
         DrawReset(_ST_ADJUST);
         EnterResetMenu();
-        ucOsdState = _MI_RESET_CANCEL;          
+        ucOsdState = _MI_RESET_CANCEL;
         break;
 
-    case _MI_DISPLAYRATIO:      
+    case _MI_DISPLAYRATIO:
         DrawDisplayRatio(_ST_ADJUST);
         EnterDisplayRatioMenu();
         break;
 
-    case _MI_AUTOPOWERDOWN: 
+    case _MI_AUTOPOWERDOWN:
         DrawAutoPowerDown(_ST_ADJUST);
         EnterADPMenu();
         break;
@@ -6117,17 +6118,17 @@ void MFunctionEnterSubMenu(void)
 #endif
     // 3. Now enter sub menu
     // Insert code to here ...
-    
+
 }
 //---------------------------------------------------------------------------
 void MFunctionReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawFuncPageMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_FUNCTION;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -6140,38 +6141,38 @@ void DrawResetMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_RESET_OK),END(_MI_RESET_CANCEL));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
-    
+
+
     switch(ucItem)
     {
     case _MI_RESET_OK:          pStr = sOK[GET_LANGUAGE()];     break;
     case _MI_RESET_CANCEL:      pStr = sCancel[GET_LANGUAGE()]; break;
     }
-    
+
     DrawAPopupMenuItem(pStr,y,_PM_RESET_ROW_START,_PM_RESET_COL_START,ucState);
-    
+
 }
 
 //---------------------------------------------------------------------------
 void EnterResetMenu(void)
 {
     CreatePopupMenu(_PM_RESET_ROW_START, _PM_RESET_ROW_HEIGHT);
-    
+
     ucOsdState = _MI_RESET_CANCEL;
-    
+
     DrawResetMenuItem(_MI_RESET_OK,_ST_NORMAL);
-    DrawResetMenuItem(_MI_RESET_CANCEL,_ST_SELECT); 
+    DrawResetMenuItem(_MI_RESET_CANCEL,_ST_SELECT);
 }
 //---------------------------------------------------------------------------
 void ClearResetMenu(void)
@@ -6195,7 +6196,7 @@ void MResetProc(void)
     case _OE_MENU_PREV:         MResetMenuAdj(_PREV);               break;
     case _OE_ENTER_SUBMENU:     MResetEnterSubMenu();               break;
     case _OE_RETURN_UPMENU:     MResetReturnUpMenu();               break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -6208,29 +6209,29 @@ void MResetValueAdj(BYTE ucMode)
 void MResetMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_RESET_OK,_MI_RESET_CANCEL,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawResetMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawResetMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 //---------------------------------------------------------------------------
 void MResetEnterSubMenu(void)
 {
     bit fDoReset = 0;
-    
+
     if(ucOsdState == _MI_RESET_OK)
         fDoReset = 1;
-    
+
     if(fDoReset)
     {
         CDoReset();
@@ -6242,10 +6243,10 @@ void MResetReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearResetMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_RESET;
-    
+
     // 3. Now Return to upmenu
     DrawFuncPage();
 }
@@ -6261,12 +6262,12 @@ void DrawDisplayRatioMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
 	y = GetShowIndex(ucItem,BEGIN(_MI_DISPLAYRATIO_FULL),END(_MI_DISPLAYRATIO_AUTO));
 
@@ -6276,21 +6277,21 @@ void DrawDisplayRatioMenuItem(BYTE ucItem,BYTE ucState)
 
 	switch(ucItem)
 	{
-		case _MI_DISPLAYRATIO_FULL:		
-			pStr = s16_9;					
+		case _MI_DISPLAYRATIO_FULL:
+			pStr = s16_9;
 			break;
-			
-		case _MI_DISPLAYRATIO_4_3:		
-			pStr = s4_3;					
+
+		case _MI_DISPLAYRATIO_4_3:
+			pStr = s4_3;
 			break;
 
 		case _MI_DISPLAYRATIO_AUTO:
 			pStr = sAuto;
 			break;
 	}
-	
+
     DrawAPopupMenuItem(pStr,y,_PM_DISPLAYRATIO_ROW_START,_PM_DISPLAYRATIO_COL_START,ucState);
-    
+
 }
 
 //---------------------------------------------------------------------------
@@ -6298,9 +6299,9 @@ void EnterDisplayRatioMenu(void)
 {
     BYTE i;
     BYTE ucMode;
-    
+
     CreatePopupMenu(_PM_DISPLAYRATIO_ROW_START, _PM_DISPLAYRATIO_ROW_HEIGHT);
-    
+
     if(GET_DISPLAYMODE() == _DISPMODE_FULL)
     {
         ucOsdState = _MI_DISPLAYRATIO_FULL;
@@ -6322,10 +6323,10 @@ void EnterDisplayRatioMenu(void)
             ucMode = _ST_SELECT;
         }
         else
-        {   
+        {
             ucMode = _ST_NORMAL;
         }
-        
+
         DrawDisplayRatioMenuItem(i,     ucMode);
     }
 }
@@ -6350,7 +6351,7 @@ void MDisplayRatioProc(void)
     case _OE_MENU_PREV:         MDisplayRatioMenuAdj(_PREV);        break;
     case _OE_ENTER_SUBMENU:     MDisplayRatioEnterSubMenu();        break;
     case _OE_RETURN_UPMENU:     MDisplayRatioReturnUpMenu();        break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -6363,17 +6364,17 @@ void MDisplayRatioValueAdj(BYTE ucMode)
 void MDisplayRatioMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_DISPLAYRATIO_FULL,_MI_DISPLAYRATIO_AUTO,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawDisplayRatioMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawDisplayRatioMenuItem(ucOsdState,_ST_SELECT);
 }
@@ -6382,27 +6383,27 @@ void MDisplayRatioEnterSubMenu(void)
 {
     switch(ucOsdState)
     {
-        case _MI_DISPLAYRATIO_FULL:       
-        	SET_DISPLAYMODE(_DISPMODE_FULL);	
+        case _MI_DISPLAYRATIO_FULL:
+        	SET_DISPLAYMODE(_DISPMODE_FULL);
         	break;
-        	
-        case _MI_DISPLAYRATIO_4_3:        
-        	SET_DISPLAYMODE(_DISPMODE_43);	
+
+        case _MI_DISPLAYRATIO_4_3:
+        	SET_DISPLAYMODE(_DISPMODE_43);
         	break;
 
         case _MI_DISPLAYRATIO_AUTO:
-        	SET_DISPLAYMODE(_DISPMODE_AUTO);	
+        	SET_DISPLAYMODE(_DISPMODE_AUTO);
         	break;
     }
-    
+
     MDisplayRatioReturnUpMenu();
-    
+
     CLR_CLEAR_OSD_EN();
     CEepromSaveSystemData();
 
-    CPowerLightPowerOff();        
+    CPowerLightPowerOff();
     CMuteOn();
-/*    
+/*
 	bDoAspectRatioFlag = _TRUE;
 	if (bSourceVideo())
     {
@@ -6418,7 +6419,7 @@ void MDisplayRatioEnterSubMenu(void)
 		CModeDisplayActiveMode();
 	}
 	bDoAspectRatioFlag = _FALSE;
-    CPowerLightPowerOn(); */       
+    CPowerLightPowerOn(); */
     ucTVSyncFailCount = 250;
     CModeResetMode();
 }
@@ -6427,10 +6428,10 @@ void MDisplayRatioReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearDisplayRatioMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_DISPLAYRATIO;
-    
+
     // 3. Now Return to upmenu
     DrawFuncPage();
 }
@@ -6447,18 +6448,18 @@ void DrawADPMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_AUTOPOWERDOWN_OFF),END(_MI_APD_120));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     switch(ucItem)
     {
     case _MI_AUTOPOWERDOWN_OFF: pStr = sOff[GET_LANGUAGE()];    break;
@@ -6471,7 +6472,7 @@ void DrawADPMenuItem(BYTE ucItem,BYTE ucState)
     case _MI_APD_105:           pStr = s105Min[GET_LANGUAGE()]; break;
     case _MI_APD_120:           pStr = s120Min[GET_LANGUAGE()]; break;
     }
-    
+
     DrawAPopupMenuItem(pStr,y,_PM_ADP_ROW_START,_PM_ADP_COL_START,ucState);
 }
 //---------------------------------------------------------------------------
@@ -6479,9 +6480,9 @@ void EnterADPMenu(void)
 {
     BYTE i;
     BYTE ucMode;
-    
+
     CreatePopupMenu(_PM_ADP_ROW_START, _PM_ADP_ROW_HEIGHT);
-    
+
     switch(_GET_POWER_DOWN_TIME())
     {
     case 0x00:          ucOsdState = _MI_AUTOPOWERDOWN_OFF;     break;
@@ -6494,18 +6495,18 @@ void EnterADPMenu(void)
     case 0x07:          ucOsdState = _MI_APD_105;               break;
     case 0x08:          ucOsdState = _MI_APD_120;               break;
     }
-    
-    
+
+
     for(i=_MI_AUTOPOWERDOWN_OFF;i<=_MI_APD_120;i++)
     {
         if(i == ucOsdState)
             ucMode = _ST_SELECT;
         else
             ucMode = _ST_NORMAL;
-        
+
         DrawADPMenuItem(i,ucMode);
     }
-    
+
 }
 //---------------------------------------------------------------------------
 void ClearADPMenu(void)
@@ -6529,7 +6530,7 @@ void MAutoPowerDownProc(void)
     case _OE_MENU_PREV:         MAutoPowerDownMenuAdj(_PREV);       break;
     case _OE_ENTER_SUBMENU:     MAutoPowerDownEnterSubMenu();       break;
     case _OE_RETURN_UPMENU:     MAutoPowerDownReturnUpMenu();       break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -6542,17 +6543,17 @@ void MAutoPowerDownValueAdj(BYTE ucMode)
 void MAutoPowerDownMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_AUTOPOWERDOWN_OFF,_MI_APD_120,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawADPMenuItem(ucOsdState, _ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawADPMenuItem(ucOsdState, _ST_SELECT);
 }
@@ -6563,13 +6564,13 @@ void MAutoPowerDownEnterSubMenu(void)
     _SET_POWER_DOWN_TIME(ucOsdState - _MI_AUTOPOWERDOWN_OFF);
     MAutoPowerDownReturnUpMenu();
     ucOsdEventMsg = _SAVE_EE_TV_DATA_MSG;
-    
+
     ucAutoPowerDownTime = _GET_POWER_DOWN_TIME() * 15;
     if (0 == ucAutoPowerDownTime) // Auto power down time off
     {
         ucAutoPowerDownTime = 0xff;
     }
-    
+
     ucMinuteCount = 0;  // Reset count
 #endif
 }
@@ -6578,10 +6579,10 @@ void MAutoPowerDownReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearADPMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_AUTOPOWERDOWN;
-    
+
     // 3. Now Return to upmenu
     DrawFuncPage();
 }
@@ -6595,58 +6596,58 @@ void DrawBlueScreenMenuItem(BYTE ucItem,BYTE ucState)
 {
     BYTE y;
     BYTE *pStr;
-    
+
     BYTE ucBlueScreenRowStart;
-    
+
     if(!g_tMenuItem[ucItem].Enable())
     {
-        ucState = _ST_DISABLE;  
+        ucState = _ST_DISABLE;
     }
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_BLUESCREEN_ON),END(_MI_BLUESCREEN_OFF));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
-    
+
+
     switch(ucItem)
     {
     case _MI_BLUESCREEN_ON:         pStr = sOn[GET_LANGUAGE()];     break;
     case _MI_BLUESCREEN_OFF:        pStr = sOff[GET_LANGUAGE()];    break;
     }
-    
+
     ucBlueScreenRowStart = GetShowIndex(_MI_BLUESCREEN,BEGIN(_MI_RESET),END(_MI_SHARPNESS));
-    
+
     ucBlueScreenRowStart = SHOWINDEX_TO_LINE(ucBlueScreenRowStart);
     DrawAPopupMenuItem(pStr,y,ucBlueScreenRowStart,_PM_BLUESCREEN_COL_START,ucState);
-    
+
 }
 //---------------------------------------------------------------------------
 void EnterBlueScreenMenu(void)
 {
     BYTE i;
     BYTE ucMode;
-    
+
     BYTE ucBlueScreenRowStart = GetShowIndex(_MI_BLUESCREEN,BEGIN(_MI_RESET),END(_MI_SHARPNESS));
     ucBlueScreenRowStart = SHOWINDEX_TO_LINE(ucBlueScreenRowStart);
-    
+
     CreatePopupMenu(ucBlueScreenRowStart, _PM_BLUESCREEN_ROW_HEIGHT);
-    
+
     if(_GET_BLUE_BACKGROUND())
         ucOsdState = _MI_BLUESCREEN_ON;
     else ucOsdState = _MI_BLUESCREEN_OFF;
-    
+
     for(i=_MI_BLUESCREEN_ON;i<=_MI_BLUESCREEN_OFF;i++)
     {
         if(i == ucOsdState)
             ucMode = _ST_SELECT;
         else
             ucMode = _ST_NORMAL;
-        
+
         DrawBlueScreenMenuItem(i,ucMode);
     }
-    
+
 }
 //---------------------------------------------------------------------------
 void ClearBlueScreenMenu(void)
@@ -6671,7 +6672,7 @@ void MBlueScreenProc(void)
     case _OE_MENU_PREV:         MBlueScreenMenuAdj(_PREV);          break;
     case _OE_ENTER_SUBMENU:     MBlueScreenEnterSubMenu();          break;
     case _OE_RETURN_UPMENU:     MBlueScreenReturnUpMenu();          break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -6684,17 +6685,17 @@ void MBlueScreenValueAdj(BYTE ucMode)
 void MBlueScreenMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_BLUESCREEN_ON,_MI_BLUESCREEN_OFF,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawBlueScreenMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawBlueScreenMenuItem(ucOsdState,_ST_SELECT);
 }
@@ -6706,7 +6707,7 @@ void MBlueScreenEnterSubMenu(void)
     case _MI_BLUESCREEN_ON:     _SET_BLUE_BACKGROUND(1);            break;
     case _MI_BLUESCREEN_OFF:    _SET_BLUE_BACKGROUND(0);            break;
     }
-    
+
     ucOsdEventMsg = _SAVE_EE_SYSTEMDATA_MSG;
     MBlueScreenReturnUpMenu();
 }
@@ -6715,10 +6716,10 @@ void MBlueScreenReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     ClearBlueScreenMenu();
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_BLUESCREEN;
-    
+
     // 3. Now Return to upmenu
     DrawFuncPage();
 }
@@ -6728,25 +6729,25 @@ void MSharpnessAdjValue(BYTE ucMode)
 {
     BYTE y;
     BYTE ucTemp = GET_PEAKING_CORING();
-                                      
+
     SET_KEYREPEATENABLE();
     // get display line
     y = GetShowIndex(_MI_SHARPNESS,BEGIN(_MI_RESET),END(_MI_SHARPNESS));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     y = SHOWINDEX_TO_LINE(y);
-    
+
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(3), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(y), HEIGHT(1), COL(_MSG_COL), WIDTH(3), 0x00, BYTE_DISPLAY);
-    
+
     ucTemp = ValueInRangeChange(0, 100, ucTemp, _NON_LOOP | ucMode);
     SET_PEAKING_CORING(ucTemp);
-    
+
     // draw
     OSDLine(ROW(y), _MSG_COL, LENGTH(10), StateColor(_ST_ADJUST), BYTE_COLOR);
-    
+
     CShowNumber(_MSG_COL, y, ucTemp);
     CAdjustPeakingCoding();
 
@@ -6762,32 +6763,32 @@ void MSharpnessProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MSharpnessAdjValue(_INC);               
+    case _OE_ADJ_INC:
+        MSharpnessAdjValue(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MSharpnessAdjValue(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MSharpnessAdjValue(_DEC);
         break;
-        
+
     case _OE_MENU_NEXT:
         MSharpnessReturnUpMenu();
         MFunctionMenuAdj(_NEXT);
         break;
-        
+
     case _OE_MENU_PREV:
         MSharpnessReturnUpMenu();
         MFunctionMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
-        
+
+    case _OE_ENTER_SUBMENU:
+
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MSharpnessReturnUpMenu(); 
+
+    case _OE_RETURN_UPMENU:
+        MSharpnessReturnUpMenu();
         break;
-        
+
     }
 }
 
@@ -6796,10 +6797,10 @@ void MSharpnessReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawSharpness(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_SHARPNESS;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -6820,7 +6821,7 @@ void MSoundProc(void)
     case _OE_ENTER_SUBMENU:     MSoundEnterSubMenu();               break;
 #endif
     case _OE_RETURN_UPMENU:     MSoundReturnUpMenu();               break;
-        
+
     }
 }
 //---------------------------------------------------------------------------
@@ -6836,28 +6837,28 @@ void MSoundValueAdj(BYTE ucMode)
     case _MI_SRS:                                                   break;
     case _MI_BBE:                                                   break;
     }
-    
-    
-    
+
+
+
 }
 //---------------------------------------------------------------------------
 void MSoundMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_VOLUME,_MI_BBE,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawSoundPageMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawSoundPageMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
@@ -6866,8 +6867,8 @@ void MSoundEnterSubMenu(void)
 {
     // 1. Before Enter SubMenu
     // Insert code to here ...
-    
-    
+
+
     // 2. Change ucOsdState
     switch(ucOsdState)
     {
@@ -6895,7 +6896,7 @@ void MSoundEnterSubMenu(void)
         //DrawBBE(_ST_ADJUST);
         //ucOsdState = _MI_BBEADJ;
         break;
-    }    
+    }
 }
 #endif
 
@@ -6904,10 +6905,10 @@ void MSoundReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawSoundPageMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_SOUND;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -6920,31 +6921,31 @@ void MVolumeProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MVolumeValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MVolumeValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MVolumeValueAdj(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MVolumeValueAdj(_DEC);
         break;
-        
+
     case _OE_MENU_NEXT:
         MVolumeReturnUpMenu();
         MSoundMenuAdj(_NEXT);
         break;
-        
+
     case _OE_MENU_PREV:
         MVolumeReturnUpMenu();
         MSoundMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
+
+    case _OE_ENTER_SUBMENU:
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MVolumeReturnUpMenu(); 
+
+    case _OE_RETURN_UPMENU:
+        MVolumeReturnUpMenu();
         break;
-        
+
     }
 }
 
@@ -6959,10 +6960,10 @@ void MVolumeReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawVolume(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_VOLUME;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -6974,31 +6975,31 @@ void MBalanceProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MBalanceValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MBalanceValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MBalanceValueAdj(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MBalanceValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:         
+
+    case _OE_MENU_NEXT:
         MBalanceReturnUpMenu();
-        MSoundMenuAdj(_NEXT);               
+        MSoundMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV:         
+
+    case _OE_MENU_PREV:
         MBalanceReturnUpMenu();
-        MSoundMenuAdj(_PREV);               
+        MSoundMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
+
+    case _OE_ENTER_SUBMENU:
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MBalanceReturnUpMenu();               
+
+    case _OE_RETURN_UPMENU:
+        MBalanceReturnUpMenu();
         break;
-        
+
     }
 }
 
@@ -7013,10 +7014,10 @@ void MBalanceReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawBalance(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_BALANCE;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -7028,31 +7029,31 @@ void MBassProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MBassValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MBassValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MBassValueAdj(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MBassValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:         
+
+    case _OE_MENU_NEXT:
         MBassReturnUpMenu();
-        MSoundMenuAdj(_NEXT);               
+        MSoundMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV:         
+
+    case _OE_MENU_PREV:
         MBassReturnUpMenu();
-        MSoundMenuAdj(_PREV);               
+        MSoundMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:    
+
+    case _OE_ENTER_SUBMENU:
         break;
-        
-    case _OE_RETURN_UPMENU:     
-        MBassReturnUpMenu();              
+
+    case _OE_RETURN_UPMENU:
+        MBassReturnUpMenu();
         break;
-        
+
     }
 }
 
@@ -7067,10 +7068,10 @@ void MBassReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawBass(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_BASS;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -7082,31 +7083,31 @@ void MTrebleProc(void)
 {
     switch(ucOsdEventMsg)
     {
-    case _OE_ADJ_INC:           
-        MTrebleValueAdj(_INC);               
+    case _OE_ADJ_INC:
+        MTrebleValueAdj(_INC);
         break;
-        
-    case _OE_ADJ_DEC:           
-        MTrebleValueAdj(_DEC);               
+
+    case _OE_ADJ_DEC:
+        MTrebleValueAdj(_DEC);
         break;
-        
-    case _OE_MENU_NEXT:         
+
+    case _OE_MENU_NEXT:
         MTrebleReturnUpMenu();
-        MSoundMenuAdj(_NEXT);              
+        MSoundMenuAdj(_NEXT);
         break;
-        
-    case _OE_MENU_PREV:         
+
+    case _OE_MENU_PREV:
         MTrebleReturnUpMenu();
         MSoundMenuAdj(_PREV);
         break;
-        
-    case _OE_ENTER_SUBMENU:     
-        
+
+    case _OE_ENTER_SUBMENU:
+
         break;
-    case _OE_RETURN_UPMENU:     
-        MTrebleReturnUpMenu();               
+    case _OE_RETURN_UPMENU:
+        MTrebleReturnUpMenu();
         break;
-        
+
     }
 }
 
@@ -7121,10 +7122,10 @@ void MTrebleReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     DrawTreble(_ST_SELECT);
-    
+
     // 2. Change ucOsdState
     ucOsdState = _MI_TREBLE;
-    
+
     // 3. Now Return to upmenu
     // Insert code to here ...
 }
@@ -7138,22 +7139,22 @@ void DrawSourceMenuItem(BYTE ucItem,BYTE ucState)
     BYTE y;
     BYTE ucColor;
     BYTE code *pStr;
-    
+
     // get display line
     y = GetShowIndex(ucItem,BEGIN(_MI_SOURCE_VGA),END(_MI_SOURCE_TV));
-    
+
     if(y == _NOT_SHOW)
         return;
-    
+
     // get display color
     ucColor = StateColor(ucState);
-    
+
     y = SHOWINDEX_TO_LINE1(y);
-    
+
     // set color
     SUBMENU_LINECOLOR1(y,ucColor);
-    // draw menu item 
-    
+    // draw menu item
+
     switch(ucItem)
     {
     case _MI_SOURCE_VGA:            pStr = sVGA;        break;
@@ -7164,10 +7165,10 @@ void DrawSourceMenuItem(BYTE ucItem,BYTE ucState)
     case _MI_SOURCE_AV:             pStr = sAV;         break;
     case _MI_SOURCE_TV:             pStr = sTV;         break;
     }
-    
-    
+
+
     SUBMENU_TEXTOUT1(pStr,y);
-    
+
     // draw select line
     if(ucState == _ST_SELECT)
     {
@@ -7180,7 +7181,7 @@ void DrawSourceMenuItem(BYTE ucItem,BYTE ucState)
 }
 
 //---------------------------------------------------------------------------
-#define _SOURCE_MENU_WIDTH              (12 * 12 - 4)           
+#define _SOURCE_MENU_WIDTH              (12 * 12 - 4)
 #define _SOURCE_MENU_HEIGHT(n)          ((2+(n * 2)) * 18 + 4)
 
 void DrawSourceMenu(void)
@@ -7188,7 +7189,7 @@ void DrawSourceMenu(void)
     BYTE i;
     BYTE ucMode;
     BYTE ucShowCount = GetShowCount(BEGIN(_MI_SOURCE_VGA),END(_MI_SOURCE_TV));
-    
+
     if (ucCurrState == _SLEEP_STATE)
     {
         ucTVSyncFailCount = 250;
@@ -7197,19 +7198,19 @@ void DrawSourceMenu(void)
         CPowerPanelOn();
         CPowerLightPowerOn();
     }
-    
+
     InitOsdFrame();
     OSDClear(ROW(14), HEIGHT(1), COL(0), WIDTH(46), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(14), HEIGHT(1), COL(0), WIDTH(46), 0x00, BYTE_DISPLAY);
     OSDClear(ROW(14), HEIGHT(1), COL(0), WIDTH(46), 0x20, BYTE_COLOR);
-    SetOSDDouble((GET_OSD_SIZE() ? 0x03 : 0x00) | OSD_WINDOWCHAR_BLENDING);   
-   
+    SetOSDDouble((GET_OSD_SIZE() ? 0x03 : 0x00) | OSD_WINDOWCHAR_BLENDING);
+
     for(i=0;i<ucShowCount;i++)
     {
         ucMode = (i * 2) + 2;
         SETCOLOR_SUBMENU_SELLINE1(ucMode);
     }
-    
+
     switch(_GET_INPUT_SOURCE())
     {
     case _SOURCE_VGA:           ucOsdState = _MI_SOURCE_VGA;        break;
@@ -7220,22 +7221,22 @@ void DrawSourceMenu(void)
     case _SOURCE_VIDEO_AV:      ucOsdState = _MI_SOURCE_AV;         break;
     case _SOURCE_VIDEO_TV:      ucOsdState = _MI_SOURCE_TV;         break;
     }
-    
+
     for(i=_MI_SOURCE_VGA;i<=_MI_SOURCE_TV;i++)
     {
         if(i == ucOsdState)
             ucMode = _ST_SELECT;
-        else 
+        else
             ucMode = _ST_NORMAL;
-        
-        DrawSourceMenuItem(i,ucMode);   
+
+        DrawSourceMenuItem(i,ucMode);
     }
-    
+
     // Draw Window
-    COsdFxDrawWindow(0,0,                                       //WORD usXStart,WORD usYStart,  
-        _SOURCE_MENU_WIDTH,_SOURCE_MENU_HEIGHT(ucShowCount),    //WORD usXEnd,WORD usYEnd,  
+    COsdFxDrawWindow(0,0,                                       //WORD usXStart,WORD usYStart,
+        _SOURCE_MENU_WIDTH,_SOURCE_MENU_HEIGHT(ucShowCount),    //WORD usXEnd,WORD usYEnd,
         tMainWindowStyle);                                      //BYTE *pStyle)
-    
+
     i = 0;
     ucMode = 0;
     if (!GET_OSD_SIZE())
@@ -7243,7 +7244,7 @@ void DrawSourceMenu(void)
         i = 3;
         ucMode = 3;
     }
-    
+
     OSDPosition(_SOURCE_MENU_WIDTH,_SOURCE_MENU_HEIGHT(ucShowCount),0+i,0+ucMode,0x03);
     COsdFxEnableOsd();
 }
@@ -7263,9 +7264,9 @@ void MSourceProc(void)
     case _OE_ENTER_SUBMENU:     MSourceEnterSubMenu();              break;
 #endif
     case _OE_RETURN_UPMENU:     MSourceReturnUpMenu();              break;
-        
+
     }
-    
+
 }
 
 //---------------------------------------------------------------------------
@@ -7273,7 +7274,7 @@ void MSourceValueAdj(BYTE ucMode)
 {
     // ucMode : _INC or _DEC
     ucMode = _GET_INPUT_SOURCE();
-    
+
     switch(ucOsdState)
     {
     case _MI_SOURCE_VGA:        _SET_INPUT_SOURCE(_SOURCE_VGA);         break;
@@ -7284,12 +7285,12 @@ void MSourceValueAdj(BYTE ucMode)
     case _MI_SOURCE_AV:         _SET_INPUT_SOURCE(_SOURCE_VIDEO_AV);    break;
     case _MI_SOURCE_TV:         _SET_INPUT_SOURCE(_SOURCE_VIDEO_TV);    break;
     }
-    
+
     COsdDispOsdTimerEvent();
     if(ucMode != _GET_INPUT_SOURCE())
-    {                
+    {
         ucCurrState   = _SEARCH_STATE;
-        ucOsdEventMsg = _CHANGE_SOURCE_MSG;        
+        ucOsdEventMsg = _CHANGE_SOURCE_MSG;
     }
 }
 
@@ -7297,20 +7298,20 @@ void MSourceValueAdj(BYTE ucMode)
 void MSourceMenuAdj(BYTE ucMode)
 {
     // ucMode : _NEXT or _Prev
-    
+
     BYTE ucNewItem = AdjustMenuItem(_MI_SOURCE_VGA,_MI_SOURCE_TV,ucMode);
     if(ucNewItem == ucOsdState)
         return;
-    
+
     // 1. Clear Current Menu
     DrawSourceMenuItem(ucOsdState,_ST_NORMAL);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
+
     // 3. Draw New Item
     DrawSourceMenuItem(ucOsdState,_ST_SELECT);
-    
+
 }
 
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
@@ -7320,49 +7321,49 @@ void MSourceEnterSubMenu(void)
     // 1. Before Enter SubMenu
     // Insert code to here ...
     BYTE ucMode = _GET_INPUT_SOURCE();
-    
-    
+
+
     // 2. Change ucOsdState
     switch(ucOsdState)
     {
     case _MI_SOURCE_VGA:
         _SET_INPUT_SOURCE(_SOURCE_VGA);
         break;
-        
+
     case _MI_SOURCE_DVI:
         _SET_INPUT_SOURCE(_SOURCE_DVI);
         break;
-        
+
     case _MI_SOURCE_HDMI:
         _SET_INPUT_SOURCE(_SOURCE_HDMI);
         break;
-        
-    case _MI_SOURCE_YPBPR:                                                
+
+    case _MI_SOURCE_YPBPR:
         _SET_INPUT_SOURCE(_SOURCE_YPBPR);
         break;
-        
+
     case _MI_SOURCE_SV:
         _SET_INPUT_SOURCE(_SOURCE_VIDEO_SV);
         break;
-        
+
     case _MI_SOURCE_AV:
         _SET_INPUT_SOURCE(_SOURCE_VIDEO_AV);
         break;
-        
+
     case _MI_SOURCE_TV:
         _SET_INPUT_SOURCE(_SOURCE_VIDEO_TV);
         break;
     }
-    
+
     // 3. Now enter sub menu
     // Insert code to here ...
-    
+
     COsdDispOsdTimerEvent();
     if(ucMode != _GET_INPUT_SOURCE())
-    {                
-        ucOsdEventMsg = _CHANGE_SOURCE_MSG;        
+    {
+        ucOsdEventMsg = _CHANGE_SOURCE_MSG;
     }
-    
+
 }
 #endif
 
@@ -7371,7 +7372,7 @@ void MSourceReturnUpMenu(void)
 {
     // 1. Before Return UpMenu
     // Insert code to here ...
-    
+
     // 2. Change ucOsdState
     // ucOsdState = _MI_MENU_NONE;
     // COsdFxDisableOsd();
@@ -7393,24 +7394,24 @@ void MSourceReturnUpMenu(void)
 void DrawShortCuteMenu(void)
 {
     InitOsdFrame();
-    SetOSDDouble((GET_OSD_SIZE() ? 0x03 : 0x00) | OSD_WINDOWCHAR_BLENDING);   
-    
+    SetOSDDouble((GET_OSD_SIZE() ? 0x03 : 0x00) | OSD_WINDOWCHAR_BLENDING);
+
     // Draw Top Line
     OSDLine(ROW(2), COL(2), LENGTH(23), 0xA6, THE_BYTE0);
     OSDLine(ROW(2), COL(2), LENGTH(23), 0xA4, THE_BYTE1);
     OSDLine(ROW(2), COL(2), LENGTH(23), 0x11, THE_BYTE2);
-    
+
     // Draw Bottom Line
     OSDLine(ROW(4), COL(2), LENGTH(23), 0xA6, THE_BYTE0);
     OSDLine(ROW(4), COL(2), LENGTH(23), 0xA4, THE_BYTE1);
     OSDLine(ROW(4), COL(2), LENGTH(23), 0x11, THE_BYTE2);
-    
+
     // Draw Window
-    COsdFxDrawWindow(0,0,                               //WORD usXStart,WORD usYStart,  
-        _SHORT_CUT_MENU_WIDTH,_SHORT_CUT_MENU_HEIGHT,       //WORD usXEnd,WORD usYEnd,  
+    COsdFxDrawWindow(0,0,                               //WORD usXStart,WORD usYStart,
+        _SHORT_CUT_MENU_WIDTH,_SHORT_CUT_MENU_HEIGHT,       //WORD usXEnd,WORD usYEnd,
         tMainWindowStyle);                  //BYTE *pStyle)
-    
-    CSetOSDPosition(_SHORT_CUT_MENU_WIDTH, _SHORT_CUT_MENU_HEIGHT, 50, 100);   
+
+    CSetOSDPosition(_SHORT_CUT_MENU_WIDTH, _SHORT_CUT_MENU_HEIGHT, 50, 100);
 }
 
 //---------------------------------------------------------------------------
@@ -7451,35 +7452,35 @@ WORD iInpuNumCount = 0;
 void EnterSCInputNum(void)
 {
     BYTE ucInputState = GET_INPUTCH_STATE() + 1;
-    
+
     COsdLoad1BitFont(FntInputState,0x7A,1,tFntVolumeCharWidth);
-    
+
     // iInputCHCount = _INPUT_CH_TIMEOUT_COUNT;
     // Reset input number and state
     ucCurrentInputNumber = 0;
     // 0: no input number   1: input one number     2: input two number    3: input three number
-    ucCurrentInputState  = _INPUT_NO_NUMBER;  
-    
+    ucCurrentInputState  = _INPUT_NO_NUMBER;
+
     if (ucInputState > 3)
     {   // Input state err reset input state to input one channel -
         ucInputState = 1;
         SET_INPUTCH_STATE(0);
         CEepromSaveTvData();
     }
-    
+
     ucOsdState = _MI_SC_INPUT_CH_NUM;
     bChangeChannel = 0;
     COsdFxDisableOsd();
 #if(_LOGO_ENABLE)
     if (bLoadLogoFont)
-    {       
+    {
         SetOsdMap(tUserMenuOsdMap);
-        
-        // Load global font 
-        // insert code to here 
+
+        // Load global font
+        // insert code to here
         COsdLoad1BitFont(FntGlobal,0x00,0x5F,tGlobalCharWidth);
         CScalerLoadHardwareVLCFont(FntMainIcon,0x80 * 2);
-        
+
     	//Load Languege Font
     	LoadLanguageFont();
         bLoadLogoFont = 0;
@@ -7488,21 +7489,21 @@ void EnterSCInputNum(void)
 
     SetOSDDouble(0x03);
     SetOsdMap(tMsgOsdMap);
-    
+
     // Init OSD Ram
     OSDClear(0, 8, 0, 10, 0x8C, BYTE_ATTRIB);
     OSDClear(0, 8, 0, 10, 0x00, BYTE_DISPLAY);
     OSDClear(0, 8, 0, 10, 0xF0, BYTE_COLOR);
-    
+
     COsdFxCodeWrite(ucCloseAllWindow);
-    
+
     OSDPosition(_MAINMENU_WIDTH,_MAINMENU_HEIGHT,64,1,0x03);
-    
-    Gotoxy(1, 0, BYTE_DISPLAY);         
+
+    Gotoxy(1, 0, BYTE_DISPLAY);
     for(; ucInputState > 0; ucInputState--)
         OutputChar(0x7A);  // Show "-"
-    
-    
+
+
     COsdFxEnableOsd();
     CTimerReactiveTimerEvent(SEC(20),COsdDispOsdTimerEvent);
     bOSDTimeOut   = 0;
@@ -7518,9 +7519,9 @@ void MScBrightnessProc(void)
     case _OE_ADJ_INC:           MScBrgithnessValueAdj(_INC);              break;
     case _OE_ADJ_DEC:           MScBrgithnessValueAdj(_DEC);              break;
     case _OE_RETURN_UPMENU:     MScBrgithnessReturnUpMenu();              break;
-        
+
     }
-    
+
 }
 
 //---------------------------------------------------------------------------
@@ -7531,8 +7532,8 @@ void MScBrgithnessValueAdj(BYTE ucMode)
     stConBriData.Brightness = ValueInRangeChange(0, 100, stConBriData.Brightness, _NON_LOOP | ucMode);
     CAdjustBrightness();
     ucOsdEventMsg = _SAVE_EE_COLORPROC0_MSG;
-    
-    SC_SLIDER(stConBriData.Brightness);    
+
+    SC_SLIDER(stConBriData.Brightness);
 }
 
 //---------------------------------------------------------------------------
@@ -7550,7 +7551,7 @@ void MScVolumeProc(void)
     case _OE_ADJ_INC:           MScVolumeValueAdj(_INC);              break;
     case _OE_ADJ_DEC:           MScVolumeValueAdj(_DEC);              break;
     case _OE_RETURN_UPMENU:     MScVolumeReturnUpMenu();              break;
-        
+
     }
 }
 
@@ -7561,7 +7562,7 @@ void MScVolumeValueAdj(BYTE ucMode)
     SET_KEYREPEATENABLE();
     stAudioData.Volume = ValueInRangeChange(0, 100, stAudioData.Volume, _NON_LOOP | ucMode);
     ucOsdEventMsg = _SAVE_EE_AUDIO_DATA_MSG;
-    SC_SLIDER(GET_VOLUME()); 
+    SC_SLIDER(GET_VOLUME());
     if (_GET_INPUT_SOURCE() == _SOURCE_VIDEO_TV && bTVNoSignal == 1)
         return;
     CSetVolume();
@@ -7578,14 +7579,14 @@ void MScInputChNumProc(void)
 {
 #if(_VIDEO_TV_SUPPORT)
     BYTE idata ucInputState = GET_INPUTCH_STATE() + 1;
-    
+
     iInpuNumCount++;
 
     if (iInpuNumCount > 900)
         ucOsdEventMsg = _OE_RETURN_UPMENU;
 
     switch(ucOsdEventMsg)
-    {        
+    {
     case _OE_SC_INPUT_NUM0:
     case _OE_SC_INPUT_NUM1:
     case _OE_SC_INPUT_NUM2:
@@ -7599,20 +7600,20 @@ void MScInputChNumProc(void)
         SInceptNumber(ucOsdEventMsg - _OE_SC_INPUT_NUM0);
         iInpuNumCount = 0;
         break;
-        
+
     case _OE_SC_INPUT_CHANGE_CH:
         //            iInputCHCount = _INPUT_CH_TIMEOUT_COUNT;
         ucInputState = ValueInRangeChange(1, 3, ucInputState, _LOOP | 0x01);
         SET_INPUTCH_STATE(ucInputState-1);
         CEepromSaveTvData();
-        
+
         // Reset input number and state
         ucCurrentInputNumber = 0;
         // 0: no input number   1: input one number     2: input two number    3: input three number
         ucCurrentInputState  = 0;
         iInpuNumCount        = 0;
         break;
-        
+
     case _OE_RETURN_UPMENU:
         if (_INPUT_NO_NUMBER == ucCurrentInputState)
             COsdDispOsdTimerEvent();
@@ -7620,18 +7621,18 @@ void MScInputChNumProc(void)
             ucInputState = ucCurrentInputState;
         break;
     }
-    
+
     SShowCurrentInputState(ucInputState);
-    
+
     if (ucInputState == ucCurrentInputState)
     {
         BYTE ucMaxChannel = CloadMaxChannelNumber();
-        
+
         CMuteOn();
         COsdDispOsdTimerEvent();
         CModeResetTVMode();
         CTimerDelayXms(200);
-        
+
 #if(_FM_DEVICE)
         if (1 == bFM)
         {
@@ -7641,7 +7642,7 @@ void MScInputChNumProc(void)
             CShowTVNumber(stTvInfo.ucFMCurrCh, _SHOW_CH_TV_NUMBER);
         }
         else
-#endif   
+#endif
         {
             ucPrevChannel =  stTvInfo.CurChn;
             stTvInfo.CurChn = (ucCurrentInputNumber > ucMaxChannel) ? ucMaxChannel : ucCurrentInputNumber;
@@ -7649,10 +7650,10 @@ void MScInputChNumProc(void)
             //            CShowTVNumber(stTvInfo.CurChn,_SHOW_CH_TV_NUMBER | _SHOW_CH_TV_TYPE | _SHOW_CH_SOUND_TYPE);
             gmi_CI2CWriteIfPllDM(ucTVType, _TUNER_MUTE_OFF, _NORMAL_MODE);
         }
-        
+
         ucOsdEventMsg = _SAVE_EE_TV_DATA_MSG;
     }
-    
+
 //    CTimerReactiveTimerEvent(SEC(10), COsdDispOsdTimerEvent);
     bOSDTimeOut = 0;
 #endif
@@ -7663,12 +7664,12 @@ void MScInputChNumProc(void)
 void SInceptNumber(const WORD ucNumber)
 {
     switch(ucCurrentInputState)
-    { 
+    {
     case _INPUT_NO_NUMBER: // not input number
         ucCurrentInputNumber = ucNumber;
         ucCurrentInputState  = _INPUT_ONE_NUMBER;
         break;
-        
+
     case _INPUT_ONE_NUMBER: // Input on number alrady
     case _INPUT_TWO_NUMBER: // Input two number alrady
         ucCurrentInputNumber = (ucCurrentInputNumber*10) + ucNumber;
@@ -7685,8 +7686,8 @@ void SInceptNumber(const WORD ucNumber)
 //---------------------------------------------------------------------------
 void SShowCurrentInputState(BYTE ucInputState)
 {
-    Gotoxy(1, 0, BYTE_DISPLAY); 
-    
+    Gotoxy(1, 0, BYTE_DISPLAY);
+
     switch(ucCurrentInputState)
     {
     case _INPUT_NO_NUMBER: // not input number
@@ -7695,15 +7696,15 @@ void SShowCurrentInputState(BYTE ucInputState)
         OutputChar(0x01);  // Show " "
         OutputChar(0x01);  // Show " "
         break;
-        
+
     case _INPUT_ONE_NUMBER: // Input on number alrady
         CShowNumber1(ucCurrentInputNumber,1);
         break;
-        
+
     case _INPUT_TWO_NUMBER: // Input two number alrady
         CShowNumber1(ucCurrentInputNumber,2);
         break;
-        
+
     case _INPUT_THREE_NUMBER: // Input three number alrady
         CShowNumber1(ucCurrentInputNumber,3);
         break;
@@ -7715,14 +7716,14 @@ bit CKeyStopAutoSearch(void)
 {
     if (_MENU_KEY_MASK == CKeyScan() || _MENU_KEY_MESSAGE == CIRKeyScan())
         return 1;
-    
+
     return 0;
 }
 
 //-----------------------------------------------------------------------
 void CShowAutoSerachTotal(BYTE ucSearchTotal)
 {
-    CShowNumber(_MSG_COL, SHOWINDEX_TO_LINE(0), ucSearchTotal);    
+    CShowNumber(_MSG_COL, SHOWINDEX_TO_LINE(0), ucSearchTotal);
 }
 
 //-----------------------------------------------------------------------
@@ -7730,33 +7731,33 @@ void CShowFreq(WORD iFreqN, BYTE x, BYTE y)
 {
     DWORD lFreqTemp = 0;
     BYTE  xx = 6;
-    
+
     // Get PIF freq
-#if(_IF_PLL_DE_CHIP == _IF_PLL_DE_1338)  
+#if(_IF_PLL_DE_CHIP == _IF_PLL_DE_1338)
     if (bFM)
         lFreqTemp = (((float)iFreqN/_FM_TUNER_BP) - ((float)_PIF_FREQ/1000))*100;
     else
 #endif
         lFreqTemp = (((float)iFreqN/_TUNER_BP) - ((float)_PIF_FREQ/1000))*100;
-    
+
     iFreqN = lFreqTemp/100;  // MHz
     Gotoxy(x, y, BYTE_DISPLAY);
     CShowNumber1(iFreqN, 0);
     OutputChar(0x5F); // "."
     if (iFreqN < 100)
         xx = 5;
-    
+
     iFreqN = lFreqTemp%100;  // KHz
     CShowNumber1(iFreqN, 2);
-    
+
     CTextOutEx(sMhz, x+xx, y);
-}     
+}
 
 //-----------------------------------------------------------------------
 void CShowAutoSearchSliderInOSD(WORD ucCurrentValue)
 {
     BYTE ucY;
-    
+
     ucY = (ucOsdState == _MI_AUTOSEARCH) ? SHOWINDEX_TO_LINE(2) : SHOWINDEX_TO_LINE(3);
     CShowFreq(ucCurrentValue, _MSG_COL, ucY);
 }
@@ -7765,7 +7766,7 @@ void CShowAutoSearchSliderInOSD(WORD ucCurrentValue)
 //---------------------------------------------------------------------------
 void CShowVGAMode(BYTE x,BYTE y)
 {
-    if (stModeInfo.IVFreq == 0) 
+    if (stModeInfo.IVFreq == 0)
         return;
 
     Gotoxy(x, y, BYTE_DISPLAY);
@@ -7791,23 +7792,23 @@ BYTE code s1080I[] = {0x31,0x30,0x38,0x30,0x1A,0x00};
 BYTE code s1080P[] = {0x31,0x30,0x38,0x30,0x23,0x00};
 
 void CShowHDMIMode(BYTE x,BYTE y,bit bShowTable)
-{        
-    if (stModeInfo.IVFreq == 0) 
+{
+    if (stModeInfo.IVFreq == 0)
         return;
 
     if(bShowTable)
     {
         BYTE *p;
-        
+
         switch(ucHDMIMode)
         {
         case _HM_480I:      p = s480I;      break;
-        case _HM_480P:      p = s480P;      break;      
+        case _HM_480P:      p = s480P;      break;
         case _HM_576I:      p = s576I;      break;
         case _HM_576P:      p = s576P;      break;
         case _HM_720P:      p = s720P;      break;
         case _HM_1080I:     p = s1080I;     break;
-        case _HM_1080P:     
+        case _HM_1080P:
         default:            p = s1080P;     break;
         }
         if(x)
@@ -7816,34 +7817,34 @@ void CShowHDMIMode(BYTE x,BYTE y,bit bShowTable)
             CTextOutEx(p, x, y);
             return;
         }
-        
+
         CTextOutEx(p, x, y);
     }
     else
-    {         
+    {
     	WORD ucLen;
     	WORD IHWidth_Tmp,IVHeight_Tmp;
-    
+
     	IHWidth_Tmp  = stModeInfo.IHWidth;
     	IVHeight_Tmp = stModeInfo.IVHeight;
-    
+
     	CScalerPageSelect(_PAGE2);
     	CScalerGetDataPortByte(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_VCR_50, 1, pData, _NON_AUTOINC);
     	stModeInfo.IVHeight = HDMI_V_Height;
-    
+
     	if((pData[0]&0x0F) == 0x01)			// 2 times
     		stModeInfo.IHWidth = HDMI_H_Width*2;
     	else if((pData[0]&0x0F) == 0x03)	// 4 times
     		stModeInfo.IHWidth = HDMI_H_Width*4;
     	else
             stModeInfo.IHWidth = HDMI_H_Width;
-    
+
     	ucLen = stModeInfo.IVHeight;
     	CScalerRead(_IPV_ACT_LEN_H_1A, 1, pData, _AUTOINC);
-    
+
     	if (pData[0] & _BIT5)
     		ucLen = stModeInfo.IVHeight*2;
-    
+
     	if (GET_INTERLACE_MODE())
         {
     		if(stModeInfo.IVFreq>=598 && stModeInfo.IVFreq<=599)			//60Hz
@@ -7851,7 +7852,7 @@ void CShowHDMIMode(BYTE x,BYTE y,bit bShowTable)
     		else if(stModeInfo.IVFreq>=498 && stModeInfo.IVFreq<=499)	//50Hz
     			stModeInfo.IVFreq += 2;
     	}
-    
+
         Gotoxy(x, y, BYTE_DISPLAY);
         CShowNumber1((stModeInfo.IHWidth > 1920) ? 1920 : stModeInfo.IHWidth, 0);
         OutputChar(0x2D);  // "X"
@@ -7861,7 +7862,7 @@ void CShowHDMIMode(BYTE x,BYTE y,bit bShowTable)
         OutputChar(0x19);  // "H"
         OutputChar(0x2F);  // "Z"
         OutputChar(0x01);  // " "
-    
+
     	stModeInfo.IHWidth  = IHWidth_Tmp;
     	stModeInfo.IVHeight = IVHeight_Tmp;
     }
@@ -7875,7 +7876,7 @@ void CShowMode(BYTE x,BYTE y)
     {
 	#if(_HDMI_SUPPORT == _ON)
     case _SOURCE_HDMI:
-//    case _SOURCE_DVI: 
+//    case _SOURCE_DVI:
         if(ucHDMIMode == _HM_OTHER)
         {
             CShowHDMIMode(x,y,0);
@@ -7885,13 +7886,13 @@ void CShowMode(BYTE x,BYTE y)
             CShowHDMIMode(x,y,1);
         }
         break;
-	#endif 
-     
+	#endif
+
 	#if(1)//_HDMI_SUPPORT == _OFF)
-    case _SOURCE_DVI: 
-	#endif 
+    case _SOURCE_DVI:
+	#endif
     case _SOURCE_VGA:
-        CShowVGAMode(x,y);     
+        CShowVGAMode(x,y);
         break;
 
 	#if(_YPBPR_SUPPORT == _ON)
@@ -7905,7 +7906,7 @@ void CShowMode(BYTE x,BYTE y)
         }
         break;
 	#endif
-        
+
 	#if(_VIDEO_SUPPORT == _ON)
     case _SOURCE_VIDEO_AV:
     case _SOURCE_VIDEO_SV:
@@ -7928,7 +7929,7 @@ void CShowMode(BYTE x,BYTE y)
         }
         break;
 	#endif
-        
+
 	#if(0)//_VIDEO_TV_SUPPORT)
     case _SOURCE_VIDEO_TV:
         {
@@ -7941,44 +7942,44 @@ void CShowMode(BYTE x,BYTE y)
         break;
 	#endif
     }
-}    
+}
 
 //---------------------------------------------------------------------------
-#define _MSG_WIDTH                  (20 * 12 + 4)   
+#define _MSG_WIDTH                  (20 * 12 + 4)
 #define _MSG_HEIGHT                 (2 * 18)
 void CDisplayCurrentSourceMessage(void)
 {
     BYTE *pStr;
-    
+
     ucOsdState = _MI_MENU_NONE;
     COsdFxDisableOsd();
 #if(_LOGO_ENABLE)
     if (bLoadLogoFont)
-    {       
+    {
         SetOsdMap(tUserMenuOsdMap);
-        
-        // Load global font 
-        // insert code to here 
+
+        // Load global font
+        // insert code to here
         COsdLoad1BitFont(FntGlobal,0x00,0x5F,tGlobalCharWidth);
         CScalerLoadHardwareVLCFont(FntMainIcon,0x80 * 2);
-        
+
     	//Load Languege Font
     	LoadLanguageFont();
         bLoadLogoFont = 0;
     }
 #endif
-    
+
     SetOsdMap(tMsgOsdMap);
     COsdFxCodeWrite(ucCloseAllWindow);
-    
+
     // Init osd
     // insert code to here
     OSDClear(ROW(0), HEIGHT(8), COL(0), WIDTH(20), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(0), HEIGHT(8), COL(0), WIDTH(20), 0x00, BYTE_DISPLAY);
     OSDClear(ROW(0), HEIGHT(8), COL(0), WIDTH(20), 0xF0, BYTE_COLOR);
-    SetOSDDouble(0x03);   
+    SetOSDDouble(0x03);
     OSDPosition(_OSD_DOUBLE_WIDTH(_MSG_WIDTH), _OSD_DOUBLE_HEIGHT(_MSG_HEIGHT), 0, 0, 0x03);
-    
+
     // TextOut
     switch(_GET_INPUT_SOURCE())
     {
@@ -7988,9 +7989,9 @@ void CDisplayCurrentSourceMessage(void)
     case _SOURCE_YPBPR:         pStr = sYPBPR;      break;
     case _SOURCE_VIDEO_SV:      pStr = sSVideo;     break;
     case _SOURCE_VIDEO_AV:      pStr = sAV;         break;
-	case _SOURCE_VIDEO_TV:		
+	case _SOURCE_VIDEO_TV:
         CShowNumber(0, 1, stTvInfo.CurChn);
-        pStr = sTV;			
+        pStr = sTV;
         break;
 	}
 	CTextOutEx(pStr,ROW(0),0);
@@ -8003,7 +8004,7 @@ void CDisplayCurrentSourceMessage(void)
 #if(_SLEEP_FUNC)
     bOSDOnScreen = 1;
 #endif
-    
+
 }
 
 //---------------------------------------------------------------------------
@@ -8017,13 +8018,13 @@ void CSetOSDPosition(WORD OSDWidth, WORD OSDHeight, BYTE PosX, BYTE PosY)
 
 //----------------------------------------------------------------------------------------------------
 #define _SLIDER_BEGIN				0x04
-void OSDSlider(BYTE row, BYTE col, BYTE length, BYTE value, BYTE range,BYTE color) small
+void OSDSlider(BYTE row, BYTE col, BYTE length, BYTE value, BYTE range,BYTE color)
 {
     unsigned int bound;
     unsigned char i,c;
     OSDLine(row, col, length + 6, color, THE_BYTE2);   // Set Slider Attribute. 4 extra columns for space/numbers/space
     bound   = length * value;
-    
+
     Gotoxy(col,row,THE_BYTE1);
     OutputChar(_SLIDER_BEGIN);          // Left Border
     for (i = 1; i <= length; i++)
@@ -8054,7 +8055,7 @@ void OSDSlider(BYTE row, BYTE col, BYTE length, BYTE value, BYTE range,BYTE colo
     }
     OutputChar(_SLIDER_BEGIN + 8);    // Right Border
     CShowNumber(col + length + 2, row,value);
-}                                      
+}
 
 //----------------------------------------------------------------------------------------------------
 void CSetItemStartEnd(void (*ReDrawPageProc)(void))
@@ -8089,12 +8090,12 @@ void CSetItemStartEnd(void (*ReDrawPageProc)(void))
 }
 
 //----------------------------------------------------------------------------------------------------
-BYTE CGetPopupMenuRow(BYTE ucBaseRowStart, ucFirstItem)
+BYTE CGetPopupMenuRow(BYTE ucBaseRowStart, BYTE ucFirstItem)
 {
     BYTE ucTemp = ucBaseRowStart-((ucStartItem-ucFirstItem)*2);
 
     return ucTemp;
-} 
+}
 
 #if(_CHINESE_FONT_TYPE == _CHINESE_1_FONT && _LOGO_ENABLE)
 //----------------------------------------------------------
@@ -8135,7 +8136,7 @@ void LoadLanguageFont(void)
 #endif
 	}
 
-}  
+}
 #endif
 
 #endif      //#if(_OSD_TYPE == _OSD003)

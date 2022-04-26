@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Power.h No.0000
 // Update Note  :
@@ -17,7 +18,7 @@
 // Global Variables
 //--------------------------------------------------
 BYTE idata ucPowerControl = 0x00;
-#if(_DE_INTERLACE_TEST_OPTION==_ENABLE)	
+#if(_DE_INTERLACE_TEST_OPTION==_ENABLE)
 bit bDIstatus=0;
 #endif
 
@@ -62,7 +63,7 @@ void CPowerUpCustomerControl(void);
 // Extern Global Variables
 //--------------------------------------------------
 extern BYTE idata ucPowerControl;
-#if(_DE_INTERLACE_TEST_OPTION==_ENABLE)	
+#if(_DE_INTERLACE_TEST_OPTION==_ENABLE)
 extern bit bDIstatus;
 #endif
 
@@ -165,14 +166,12 @@ extern void CPowerLedSleep(void);
 //--------------------------------------------------
 // Macro of Panel Power Up/Down
 //--------------------------------------------------
-#define PANELPOWER_UP()               (bPANELPOWER  = _PANEL_ON)
-#define PANELPOWER_DOWN()             (bPANELPOWER  = _PANEL_OFF)
+#define PANELPOWER_UP()               XSFRWriteByte(bPANELPOWER, _PANEL_ON)
+#define PANELPOWER_DOWN()             XSFRWriteByte(bPANELPOWER, _PANEL_OFF)
 
 
 //--------------------------------------------------
 // Macro of Light Power Up/Down
 //--------------------------------------------------
-#define LIGHTPOWER_UP()               (bLIGHTPOWER  = _LIGHT_ON)
-#define LIGHTPOWER_DOWN()             (bLIGHTPOWER  = _LIGHT_OFF)
-
-
+#define LIGHTPOWER_UP()               XSFRWriteByte(bLIGHTPOWER, _LIGHT_ON)
+#define LIGHTPOWER_DOWN()             XSFRWriteByte(bLIGHTPOWER, _LIGHT_OFF)

@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : ModeTable.h No.0001
 // Update Note  :
@@ -64,21 +65,21 @@ enum PresetModeDef
 	    _MODE_1600x1200_70HZ,           	// Mode 47:
 	    _MODE_1600x1200_75HZ,           	// Mode 48:
 	    _MODE_1600x1200_85HZ,           	// Mode 49:
-	    
+
 	    _MODE_1680x1050_60HZ,           	// Mode 50:
 	    _MODE_1680x1050_60HZ_RB,           	// Mode 51:
 	    _MODE_1680x1050_75HZ,            	// Mode 52:
 	    _MODE_1680x1050_75HZ_RB,            // Mode 53:
-	    
+
     	_MODE_1920x1200_60HZ,           	// Mode 54:
     	_MODE_1920x1200_60HZ_RB,        	// Mode 55:
     	_MODE_1920x1200_75HZ,           	// Mode 56:
-    	_MODE_1920x1440_60HZ,           	// Mode 57:	 
+    	_MODE_1920x1440_60HZ,           	// Mode 57:
 		_MODE_1440x480i_60HZ,           	// Mode 58:
     	_MODE_1920x1080i_60HZ,          	// Mode 59:
     	_MODE_1920x1080_60HZ,           	// Mode 60:
-    	_MODE_1920x1080_60HZ_RB,        	// Mode 61:    	
-    	
+    	_MODE_1920x1080_60HZ_RB,        	// Mode 61:
+
     	_MODE_1440x900_60HZ,            	// Mode 62:
         _MODE_1440x900_60HZ_RB,         	// Mode 63:
         _MODE_1440x900_75HZ,            	// Mode 64:
@@ -86,7 +87,7 @@ enum PresetModeDef
 		_MODE_1280x720_50HZ,            	// Mode 65:
 		_MODE_1920x1080i_50HZ,          	// Mode 66:
     	_MODE_1920x1080_50HZ,           	// Mode 67:
-    	
+
 	    // end
         _MAX_PRESET_MODE,
 };
@@ -616,7 +617,7 @@ ModeTableType code tINPUTMODE_PRESET_TABLE[_MAX_PRESET_MODE] =
         112, 35,                                                            // HStartPos, VStartPos,
     },
 
-    {   // Mode 54 : 1920 x 1200 x 60 Hz 
+    {   // Mode 54 : 1920 x 1200 x 60 Hz
         0 | _SYNC_HN_VN | _SYNC_HN_VP,                                      // Polarity Flags,
         1920, 1200,                                                         // InputWidth, InputHeight,
         746, 600,                                                           // HFreq in kHz, VFreq in Hz,
@@ -634,7 +635,7 @@ ModeTableType code tINPUTMODE_PRESET_TABLE[_MAX_PRESET_MODE] =
         112, 32,                                                            // HStartPos, VStartPos,
     },
 
-    {   // Mode 56 : 1920 x 1200 x 75 Hz 
+    {   // Mode 56 : 1920 x 1200 x 75 Hz
         0 | _SYNC_HN_VN | _SYNC_HN_VP,                                      // Polarity Flags,
         1920, 1200,                                                         // InputWidth, InputHeight,
         940, 750,                                                           // HFreq in kHz, VFreq in Hz,
@@ -643,7 +644,7 @@ ModeTableType code tINPUTMODE_PRESET_TABLE[_MAX_PRESET_MODE] =
         552, 52,                                                            // HStartPos, VStartPos,
     },
 
-    {   // Mode 57 : 1920 x 1440 x 60 Hz 
+    {   // Mode 57 : 1920 x 1440 x 60 Hz
         0 | _SYNC_HN_VN | _SYNC_HN_VP | _SYNC_HP_VP,                        // Polarity Flags,
         1920, 1440,                                                         // InputWidth, InputHeight,
         900, 600,                                                           // HFreq in kHz, VFreq in Hz,
@@ -652,7 +653,7 @@ ModeTableType code tINPUTMODE_PRESET_TABLE[_MAX_PRESET_MODE] =
         552, 59,                                                            // HStartPos, VStartPos,
     },
 
-    {   // Mode 58 : 1440 x 480i x 60 Hz 
+    {   // Mode 58 : 1440 x 480i x 60 Hz
         0 | _SYNC_HN_VN | _SYNC_HN_VP | _SYNC_HP_VP,                        // Polarity Flags,
         1440, 240,                                                          // InputWidth, InputHeight,
         157, 600,                                                           // HFreq in kHz, VFreq in Hz,
@@ -661,7 +662,7 @@ ModeTableType code tINPUTMODE_PRESET_TABLE[_MAX_PRESET_MODE] =
         276, 59,                                                            // HStartPos, VStartPos,
     },
 
-    {   // Mode 59 : 1920 x 1080i x 60 Hz 
+    {   // Mode 59 : 1920 x 1080i x 60 Hz
         0 | _SYNC_HN_VN | _SYNC_HN_VP | _SYNC_HP_VP,                        // Polarity Flags,
         1920, 540,                                                          // InputWidth, InputHeight,
         337, 600,                                                           // HFreq in kHz, VFreq in Hz,
@@ -724,7 +725,7 @@ ModeTableType code tINPUTMODE_PRESET_TABLE[_MAX_PRESET_MODE] =
         304, 20,                                                            // HStartPos, VStartPos,
     },
 
-	{   // Mode 66 : 1920 x 1080i x 50 Hz 
+	{   // Mode 66 : 1920 x 1080i x 50 Hz
         0 | _SYNC_HN_VN | _SYNC_HN_VP | _SYNC_HP_VP,                        // Polarity Flags,
         1920, 540,                                                          // InputWidth, InputHeight,
         283, 500,                                                           // HFreq in kHz, VFreq in Hz,
@@ -1040,4 +1041,3 @@ extern DisplayTableType code tDISPLAY_PRESET_TABLE[_MAX_PRESET_MODE];
 #endif
 
 #endif
-

@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Misc.c No.0002
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __MISC__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 //----------------------------------------------------------------------------------------------------
 // Polling Events
@@ -150,7 +151,7 @@ void CMiscApplyDoubleBuffer(void)
             		break;
         		}
     		}
-    		while(--ucTimeout);	
+    		while(--ucTimeout);
     }
 }
 
@@ -172,23 +173,23 @@ void CMiscClearStatusRegister(void)
 //--------------------------------------------------
 void CMiscSetPinShare(void)
 {
-		
-	MCU_PIN_SHARE_CTRL00_FF96 = (((BYTE)_PIN_58_59_DDC1_ENABLE<<7) | (_PIN_58<<5) | (_PIN_59<<3) | (_PIN_50));
-    MCU_PIN_SHARE_CTRL01_FF97 = (((BYTE)_PIN_51<<6) | (_PIN_64<<3) | (_PIN_65));
-    MCU_PIN_SHARE_CTRL02_FF98 = (((BYTE)_PIN_52<<6) | (_PIN_66<<3) | (_PIN_67));
-    MCU_PIN_SHARE_CTRL03_FF99 = (((BYTE)_PIN_53<<6) | (_PIN_69<<3) | (_PIN_70));
-    MCU_PIN_SHARE_CTRL04_FF9A = (((BYTE)_PIN_55<<5) | (_PIN_56_57_IIC_ENABLE<<4) | (_PIN_56<<2) | (_PIN_57));
-    MCU_PIN_SHARE_CTRL05_FF9B = (((BYTE)_PIN_68<<4) | (_PIN_71));
-    MCU_PIN_SHARE_CTRL06_FF9C = (((BYTE)_PIN_54<<6) | (_PIN_96<<3) | (_PIN_97));
-    MCU_PIN_SHARE_CTRL07_FF9D = (((BYTE)_PIN_74to83<<6) | (_PIN_99<<3) | (_PIN_100));
-    MCU_PIN_SHARE_CTRL08_FF9E = (((BYTE)_PIN_102<<3) | (_PIN_105));
-    MCU_PIN_SHARE_CTRL09_FF9F = (((BYTE)_PIN_98<<6) | (_PIN_101<<3) | (_PIN_108));
-    MCU_PIN_SHARE_CTRL0A_FFA0 = (((BYTE)_PIN_103<<4) | (_PIN_104<<1));
-    MCU_PIN_SHARE_CTRL0B_FFA1 = (((BYTE)_PIN_109<<4) | (_PIN_110));
-    MCU_PIN_SHARE_CTRL0C_FFA2 = (((BYTE)_PIN_111<<4) | (_PIN_112));
-    MCU_PIN_SHARE_CTRL0D_FFA3 = (((BYTE)_PIN_113<<4) | (_PIN_114));
-    MCU_PIN_SHARE_CTRL0E_FFA4 = (((BYTE)_PIN_124<<6) | (_PIN_123<<4) | (_PIN_122<<2) | (_PIN_121));
-	MCU_FFA6 = 0xFF;
+
+	XSFRWriteByte(MCU_PIN_SHARE_CTRL00_FF96,  (((BYTE)_PIN_58_59_DDC1_ENABLE<<7) | (_PIN_58<<5) | (_PIN_59<<3) | (_PIN_50)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL01_FF97,  (((BYTE)_PIN_51<<6) | (_PIN_64<<3) | (_PIN_65)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL02_FF98,  (((BYTE)_PIN_52<<6) | (_PIN_66<<3) | (_PIN_67)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL03_FF99,  (((BYTE)_PIN_53<<6) | (_PIN_69<<3) | (_PIN_70)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL04_FF9A,  (((BYTE)_PIN_55<<5) | (_PIN_56_57_IIC_ENABLE<<4) | (_PIN_56<<2) | (_PIN_57)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL05_FF9B,  (((BYTE)_PIN_68<<4) | (_PIN_71)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL06_FF9C,  (((BYTE)_PIN_54<<6) | (_PIN_96<<3) | (_PIN_97)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL07_FF9D,  (((BYTE)_PIN_74to83<<6) | (_PIN_99<<3) | (_PIN_100)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL08_FF9E,  (((BYTE)_PIN_102<<3) | (_PIN_105)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL09_FF9F,  (((BYTE)_PIN_98<<6) | (_PIN_101<<3) | (_PIN_108)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL0A_FFA0,  (((BYTE)_PIN_103<<4) | (_PIN_104<<1)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL0B_FFA1,  (((BYTE)_PIN_109<<4) | (_PIN_110)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL0C_FFA2,  (((BYTE)_PIN_111<<4) | (_PIN_112)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL0D_FFA3,  (((BYTE)_PIN_113<<4) | (_PIN_114)));
+    XSFRWriteByte(MCU_PIN_SHARE_CTRL0E_FFA4,  (((BYTE)_PIN_124<<6) | (_PIN_123<<4) | (_PIN_122<<2) | (_PIN_121)));
+	XSFRWriteByte(MCU_FFA6,  0xFF);
 
 }
 
@@ -218,27 +219,27 @@ void CMiscIspack(void)
                     halt = ucDdcciData[1];
                     break;
 
-                // andy extand 
+                // andy extand
                 case 0x10:
                      ucVirtualKey = ucDdcciData[1];
-                     break;                    
+                     break;
 
                 case 0x41:
-                    MCU_I2C_IRQ_CTRL2_FF2A  |= 0x20;
+                    XSFRWriteByte(MCU_I2C_IRQ_CTRL2_FF2A, XSFRReadByte(MCU_I2C_IRQ_CTRL2_FF2A) |  0x20);
                     CScalerRead(ucDdcciData[1], 1, pData, _NON_AUTOINC);
                     TxBUF= pData[0];
-                    MCU_I2C_DATA_OUT_FF26 = pData[0];
+                    XSFRWriteByte(MCU_I2C_DATA_OUT_FF26,  pData[0]);
                     break;
 
                 case 0x44:
-                    MCU_I2C_IRQ_CTRL2_FF2A  |= 0x20;
+                    XSFRWriteByte(MCU_I2C_IRQ_CTRL2_FF2A, XSFRReadByte(MCU_I2C_IRQ_CTRL2_FF2A) |  0x20);
                     CI2cRead(ucDdcciData[2], ucDdcciData[1], 1, pData);
                     TxBUF = pData[0];
-                    MCU_I2C_DATA_OUT_FF26 = TxBUF;
+                    XSFRWriteByte(MCU_I2C_DATA_OUT_FF26,  TxBUF);
                     //CUartPrintf("I2C Addr:", ucDdcciData[2]);
                     //CUartPrintf("Sub Addr:", ucDdcciData[1]);
                     //CUartPrintf("Read Data:", pData[0]);
-                    
+
                     break;
 
                 // for RTD & I2c Device
@@ -255,9 +256,9 @@ void CMiscIspack(void)
                     //CUartPrintf("I2C Addr:", ucDdcciData[2]);
                     //CUartPrintf("Sub Addr:", ucDdcciData[1]);
                     //CUartPrintf("Write Data:", ucDdcciData[3]);
-                    
+
                     break;
-                    
+
                 case 0x20:
 					CScalerSetByte(ucDdcciData[2], ucDdcciData[1]);
 					break;
@@ -304,58 +305,58 @@ void GetVirtualKey(void)
 // Input Value  : None
 // Output Value : None
 //--------------------------------------------------
-void CDdcciInitial(void) 
-{     
+void CDdcciInitial(void)
+{
 #if( (_HDMI_EDID == _ON) || _VGA_EDID )
 	UINT16 cnt;
 #endif
 
-	MCU_VGA_DDC_ENA_FF1B		= 0x00;		// close ddc1  
-    MCU_DVI_DDC_ENA_FF1E		= 0x00; 	// close ddc2
-    MCU_HDMI_DDC_ENA_FF2C		= 0x00; 	// close ddc3
+	XSFRWriteByte(MCU_VGA_DDC_ENA_FF1B,  0x00);		// close ddc1
+    XSFRWriteByte(MCU_DVI_DDC_ENA_FF1E,  0x00); 	// close ddc2
+    XSFRWriteByte(MCU_HDMI_DDC_ENA_FF2C,  0x00); 	// close ddc3
 
-	MCU_IRQ_PRIORITY_FF01		= 0x01;     // assign int1 (IRQ2)
+	XSFRWriteByte(MCU_IRQ_PRIORITY_FF01,  0x01);    // assign int1 (IRQ2)
 
-    MCU_I2C_SET_SLAVE_FF23		= 0x62;
-	MCU_I2C_IRQ_CTRL_FF28		= 0x00;
+    XSFRWriteByte(MCU_I2C_SET_SLAVE_FF23,  0x62);
+	XSFRWriteByte(MCU_I2C_IRQ_CTRL_FF28,  0x00);
 
-	MCU_I2C_IRQ_CTRL_FF28		|= 0x80;	// MCU_I2C_IRQ_CTRL_AWI_EN	(DCC1?)
-    MCU_I2C_IRQ_CTRL_FF28		|= 0x40;	// MCU_I2C_IRQ_CTRL_DWI_EN	(DCC2?)
-    MCU_I2C_IRQ_CTRL_FF28		|= 0x20;	// MCU_I2C_IRQ_CTRL_DDC_128VSI1_EN
-    MCU_I2C_IRQ_CTRL_FF28		|= 0x10;	// MCU_I2C_IRQ_CTRL_STOP1_EN
-    MCU_I2C_IRQ_CTRL_FF28		|= 0x08;	// MCU_I2C_IRQ_CTRL_DOI_EN
-    MCU_I2C_IRQ_CTRL_FF28		|= 0x04;	// MCU_I2C_IRQ_CTRL_DII_EN
-    MCU_I2C_IRQ_CTRL_FF28		|= 0x02;	// MCU_I2C_IRQ_CTRL_SUBI_EN
-    MCU_I2C_IRQ_CTRL_FF28		|= 0x01;	// MCU_I2C_IRQ_CTRL_SLVI_EN
-    
-	MCU_I2C_IRQ_CTRL2_FF2A  	= 0xC0; 	// Auto_Rst_data,Rst_Data_buf
+	XSFRWriteByte(MCU_I2C_IRQ_CTRL_FF28, XSFRReadByte(MCU_I2C_IRQ_CTRL_FF28) |  0x80);	// MCU_I2C_IRQ_CTRL_AWI_EN	(DCC1?)
+    XSFRWriteByte(MCU_I2C_IRQ_CTRL_FF28, XSFRReadByte(MCU_I2C_IRQ_CTRL_FF28) |  0x40);	// MCU_I2C_IRQ_CTRL_DWI_EN	(DCC2?)
+    XSFRWriteByte(MCU_I2C_IRQ_CTRL_FF28, XSFRReadByte(MCU_I2C_IRQ_CTRL_FF28) |  0x20);	// MCU_I2C_IRQ_CTRL_DDC_128VSI1_EN
+    XSFRWriteByte(MCU_I2C_IRQ_CTRL_FF28, XSFRReadByte(MCU_I2C_IRQ_CTRL_FF28) |  0x10);	// MCU_I2C_IRQ_CTRL_STOP1_EN
+    XSFRWriteByte(MCU_I2C_IRQ_CTRL_FF28, XSFRReadByte(MCU_I2C_IRQ_CTRL_FF28) |  0x08);	// MCU_I2C_IRQ_CTRL_DOI_EN
+    XSFRWriteByte(MCU_I2C_IRQ_CTRL_FF28, XSFRReadByte(MCU_I2C_IRQ_CTRL_FF28) |  0x04);	// MCU_I2C_IRQ_CTRL_DII_EN
+    XSFRWriteByte(MCU_I2C_IRQ_CTRL_FF28, XSFRReadByte(MCU_I2C_IRQ_CTRL_FF28) |  0x02);	// MCU_I2C_IRQ_CTRL_SUBI_EN
+    XSFRWriteByte(MCU_I2C_IRQ_CTRL_FF28, XSFRReadByte(MCU_I2C_IRQ_CTRL_FF28) |  0x01);	// MCU_I2C_IRQ_CTRL_SLVI_EN
 
-	MCU_I2C_IRQ_CTRL2_FF2A		|= 0x08;	// MCU_I2C_IRQ_CTRL2_DDC_128VSI2_EN
-    MCU_I2C_IRQ_CTRL2_FF2A		|= 0x04;	// MCU_I2C_IRQ_CTRL2_DDC_BUF_FULL_EN
-    //MCU_I2C_IRQ_CTRL2_FF2A	|= 0x02;	// MCU_I2C_IRQ_CTRL2_DDC_BUF_EMPTY_EN
-    MCU_I2C_IRQ_CTRL2_FF2A		|= 0x01;	// MCU_I2C_IRQ_CTRL2_HWI_EN	(DCC3?)
+	XSFRWriteByte(MCU_I2C_IRQ_CTRL2_FF2A,  0xC0); 	// Auto_Rst_data,Rst_Data_buf
 
-    MCU_I2C_CHANNEL_CTRL_FF2B	= 0x00; 	// ADC DDC 0-CH_SEL Control
-	
+	XSFRWriteByte(MCU_I2C_IRQ_CTRL2_FF2A, XSFRReadByte(MCU_I2C_IRQ_CTRL2_FF2A) |  0x08);	// MCU_I2C_IRQ_CTRL2_DDC_128VSI2_EN
+    XSFRWriteByte(MCU_I2C_IRQ_CTRL2_FF2A, XSFRReadByte(MCU_I2C_IRQ_CTRL2_FF2A) |  0x04);	// MCU_I2C_IRQ_CTRL2_DDC_BUF_FULL_EN
+    //XSFRWriteByte(MCU_I2C_IRQ_CTRL2_FF2A, XSFRReadByte(MCU_I2C_IRQ_CTRL2_FF2A) |  0x02);	// MCU_I2C_IRQ_CTRL2_DDC_BUF_EMPTY_EN
+    XSFRWriteByte(MCU_I2C_IRQ_CTRL2_FF2A, XSFRReadByte(MCU_I2C_IRQ_CTRL2_FF2A) |  0x01);	// MCU_I2C_IRQ_CTRL2_HWI_EN	(DCC3?)
+
+    XSFRWriteByte(MCU_I2C_CHANNEL_CTRL_FF2B,  0x00); 	// ADC DDC 0-CH_SEL Control
+
 //gary for Interior HDMI  DDC 	20070711
 
 #if(_HDMI_EDID == _ON)
 
-	for(cnt=0;cnt<256;cnt++) 
+	for(cnt=0;cnt<256;cnt++)
 		MCU_DDCRAM_HDMI[cnt] = tHDMI_EDID_DATA[cnt];
 
 #endif
 
 #if(_DVI_EDID == _ON)
 
-	for(cnt=0;cnt<128;cnt++) 
+	for(cnt=0;cnt<128;cnt++)
 		MCU_DDCRAM_DVI[cnt] = tDVI_EDID_DATA[cnt];
 
 #endif
 
 #if(_VGA_EDID == _ON)
 
-	for(cnt=0;cnt<128;cnt++) 
+	for(cnt=0;cnt<128;cnt++)
 		MCU_DDCRAM_VGA[cnt] = tVGA_EDID_DATA[cnt];
 #endif
 
@@ -363,12 +364,12 @@ void CDdcciInitial(void)
 
 	// HDMI connected to DDC2
     #if(_HDMI_DDC_CHANNEL_SELECT == _DDC2)
-		MCU_DVI_DDC_ENA_FF1E  = 0x07;  // open ddc2
+		XSFRWriteByte(MCU_DVI_DDC_ENA_FF1E,  0x07);  // open ddc2
     #endif
 
 	// HDMI connected to DDC3
     #if(_HDMI_DDC_CHANNEL_SELECT == _DDC3)
-    	MCU_HDMI_DDC_ENA_FF2C = 0x07; // open ddc3
+    	XSFRWriteByte(MCU_HDMI_DDC_ENA_FF2C,  0x07); // open ddc3
     #endif
 
 #endif // #if(_HDMI_EDID==_ON)
@@ -377,24 +378,22 @@ void CDdcciInitial(void)
 
     // DVI connected to DDC2
     #if(_DVI_DDC_CHANNEL_SELECT == _DDC2)
-		MCU_DVI_DDC_ENA_FF1E  = 0x07;  // open ddc2
+		XSFRWriteByte(MCU_DVI_DDC_ENA_FF1E,  0x07);  // open ddc2
     #endif
 
     // DVI connected to DDC3
     #if(_DVI_DDC_CHANNEL_SELECT == _DDC3)
-    	MCU_HDMI_DDC_ENA_FF2C = 0x07; // open ddc3
+    	XSFRWriteByte(MCU_HDMI_DDC_ENA_FF2C,  0x07); // open ddc3
     #endif
 
 #endif // #if(_HDMI_EDID==_ON)
-      
+
 #if(_VGA_EDID == _ON)
 
 	// VGA connected to DDC1
-    MCU_VGA_DDC_ENA_FF1B = 0x07; // open ddc1       
-  
+    XSFRWriteByte(MCU_VGA_DDC_ENA_FF1B,  0x07); // open ddc1
+
 #endif
 
     //IE |= 0x04;								// Enable INT1 Interrupt source
 }
-
-

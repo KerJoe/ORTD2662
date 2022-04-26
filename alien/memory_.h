@@ -1,6 +1,7 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : RTD2528R_Memory.h No.0000
-// Update Note  : 
+// Update Note  :
 //
 //----------------------------------------------------------------------------------------------------
 
@@ -10,12 +11,12 @@
 #define _COMPRESS_GROUP_NUMBER          0x320   //800 pixel
 
 //--------------------------------------------------
-// Definitions of OD start address 
+// Definitions of OD start address
 //--------------------------------------------------
 #define _OD_START_ADDRESS               0x000000
 
 //--------------------------------------------------
-// Definitions of Low Bit Noise Reduction Threshold 
+// Definitions of Low Bit Noise Reduction Threshold
 //--------------------------------------------------
 #define _OD_LBNRT_ENABLE                _ON
 #define _OD_LBNRT_MODE                  _NEWMODE

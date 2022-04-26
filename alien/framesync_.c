@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : FrameSync.c No.0000
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __FRAMESYNC__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 
 //--------------------------------------------------
@@ -27,16 +28,16 @@ bit CFrameSyncDetect(void)
 			return _FALSE;
 		}
 		else
-		{             
+		{
 			if(_GET_INPUT_SOURCE() == _SOURCE_YPBPR)
                return _FALSE;
 
-			if(_GET_INPUT_SOURCE() == _SOURCE_VGA)	
-			{	
+			if(_GET_INPUT_SOURCE() == _SOURCE_VGA)
+			{
 				//if(pData[0] & 0x80)
                 if((pData[0] & 0x03) == 0x00)
 					return _FALSE;
-			}	
+			}
 
 			CLR_MODESTABLE();
 			CLR_FRAMESYNCSTATUS();
@@ -121,7 +122,7 @@ bit CFrameSyncLastLineFinetune(WORD *pDelta)
     dvtotal = dclktotal / 4096;
     dvtotal = dclktotal - ((DWORD)dvtotal * 4096);
     *pDelta	= (dvtotal > (4096 - 128)) ? (*pDelta + 3) : ((dvtotal < 128) ? (*pDelta - 3) : *pDelta);
-	
+
 #if(_NEW_DV_CTRL_ENABLE)
     CScalerSetDataPortByte(_DISP_ACCESS_PORT_2A, _DISP_NEW_DV_CTRL_22, 0xa0);
 #endif
@@ -210,19 +211,19 @@ BYTE CFrameSyncSpreadSpectrumFinetune(WORD *pDelta)
 {
     //Enable the spread spectrum function
     CAdjustSpreadSpectrumRange(_DCLK_SPREAD_RANGE);
-		
+
     *pDelta = *pDelta + tDCLK_OFFSET[_DCLK_SPREAD_RANGE];
-		
+
     if(CFrameSyncTestSync(*pDelta))     return 2;
-		
+
     if(pData[0])
 	{
         //Fine-tune DCLK offset
         if(CFrameSyncTestSync((pData[0] & 0x02) ? (*pDelta - 1) : (*pDelta + 1)))     return 2;
-				
+
         if(pData[0] & 0x03)		return 1;   //Frame sync fail!
     }
-		
+
     return 0;
 }
 
@@ -238,44 +239,44 @@ WORD CFrameSyncFastDo(void)
     BYTE mcode, div;
 
     CScalerSetBit(_SYNC_SELECT_47, ~(_BIT1 | _BIT0), 0x00); // Measure input active region by xtal clk
-    
+
   	//Enable active region measure  Ken
     CScalerSetBit(_STABLE_PERIOD_H_50, ~_BIT4, _BIT4);
     CAdjustSyncProcessorMeasureStart();
-		
+
     if(CTimerPollingEventProc(60, CMiscModeMeasurePollingEvent))
 	{
-	
+
         CScalerSetBit(_MEAS_HS_PERIOD_H_52, ~_BIT6, _BIT6);
         CScalerSetByte(_MEAS_ACTIVE_REGION_59, 0x00);
-				
+
         pData[0] = 0;
-				
+
         CScalerRead(_MEAS_ACTIVE_REGION_59, 3, &pData[1], _NON_AUTOINC);
-				
+
         aclkcnt = ((DWORD *)pData)[0];
-				
+
         CScalerSetBit(_MEAS_HS_PERIOD_H_52, ~(_BIT7 | _BIT5), 0x00);
 	 	CScalerPageSelect(_PAGE1);
 		CScalerRead(_P1_DPLL_M_BF, 1, &mcode, _NON_AUTOINC);
 		mcode += 2;
 		CScalerRead(_P1_DPLL_N_C0, 1, &div, _NON_AUTOINC);
-		
+
         div = 0x01 << ((div & 0x30) >> 4);  //divider value
-        
+
         offset = (DWORD)32768 * div * 2 * _DPLL_N_CODE * stDisplayInfo.DHTotal / aclkcnt * stDisplayInfo.DVHeight / mcode;
-				
+
         offset = 32768 - offset;
-				
+
 		//CScalerSetBit(_SYNC_SELECT_47, ~(_BIT1 | _BIT0), _BIT1);
     }
     else
 	{
         offset = 0xffff;
     }
-		
+
     CScalerSetBit(_STABLE_PERIOD_H_50, ~_BIT4, 0x00);
-       
+
     return (WORD)offset;
 }
 
@@ -288,27 +289,27 @@ bit CFrameSyncTestSync(WORD usOffset)
 {
 	CScalerSetBit(_SYNC_SELECT_47, ~_BIT0, 0x00);
 	CAdjustSyncProcessorMeasureStart();
-	
+
 	// Apply Dclk frequency setting
 	CAdjustDclkOffset(usOffset);
-	
+
 	CScalerSetByte(_STATUS0_02, 0x00);                      // Clear Status
-	
+
  	CTimerWaitForEvent(_EVENT_DVS);                         // Wait for Frame End
  	CTimerWaitForEvent(_EVENT_DVS);                         // Wait for Frame End
 	//CTimerWaitForEvent(_EVENT_DVS);                         //V400 modify for Interlace mode
 	//CTimerWaitForEvent(_EVENT_IVS);                         // Wait for Frame End
-	
+
 	//CTimerWaitForEvent(_EVENT_IVS);                         // Wait for Frame End
-	
+
 	//CTimerWaitForEvent(_EVENT_IVS);                         // Wait for Frame End
 
 	CScalerRead(_STATUS0_02, 1, pData, _NON_AUTOINC);       // Read status
-	
+
 	// Input timing changed
 	if (pData[0] & 0x60)
 		return _TRUE;
-	
+
 	// Save underflow/overflow information into pData[0]
 	#if(_VIDEO_TV_SUPPORT)
 	if(_GET_INPUT_SOURCE() == _SOURCE_VIDEO_TV)
@@ -316,7 +317,7 @@ bit CFrameSyncTestSync(WORD usOffset)
     else
 	#endif
 	   pData[0] &= 0x03;
-	
+
 	return _FALSE;                                          // Success
 }
 
@@ -337,22 +338,22 @@ BYTE CFrameSyncDo(void)
     buffer  = (((WORD)pData[0] & 0x0f) << 8) | pData[1];
     // Disable the Fixed DVTOTAL & Last Line Length Fucntion
 	CScalerSetBit(_P1_EVEN_FIXED_LAST_LINE_CTRL_CA, ~_BIT1, 0x00);
-		
+
     // Disable spread spectrum
     CAdjustSpreadSpectrumRange(0);
 
     // Fast Framesync method
     delta = CFrameSyncFastDo();
-		
+
     if(CFrameSyncTestSync(delta))		return 2;
 
     if(pData[0] == 0)
 	{
         result |= _BIT0;
-				
+
         if(CFrameSyncTestSync(delta + _OFFSET_STEP))		return 2;
         if(pData[0] == 0)		result |= _BIT1;
-				
+
         if(CFrameSyncTestSync(delta - _OFFSET_STEP))		return 2;
         if(pData[0] == 0)		result |= _BIT2;
 
@@ -361,8 +362,8 @@ BYTE CFrameSyncDo(void)
           	else if(result == (_BIT0 | _BIT2))
             	delta -= _OFFSET_STEP / 2;
     }
-	//DebugPrintf("\nresult = 0x%x", result);
-	
+	//printf("\nresult = 0x%x", result);
+
     if(result == 0)		// Fast search fail, do iteration search
 	{
     	// Apply Dclk frequency setting
@@ -372,53 +373,51 @@ BYTE CFrameSyncDo(void)
         fine    = _SEARCH_TIME;
         do{
             if(CFrameSyncTestSync(buffer))		return 2;
-						
+
             if(pData[0] == 0)		break;
-						
+
             if(pData[0] & 0x02)
                 buffer  -= (result & 0x01) ? (_OFFSET_STEP / 2) : _OFFSET_STEP;  // underflow
             else
                 buffer  += (result & 0x02) ? (_OFFSET_STEP / 2) : _OFFSET_STEP;  // overflow
-                
-            result  = pData[0];  // ·|Àx¦s¤W¤@¦¸¬O over or under
+
+            result  = pData[0];  // ï¿½|ï¿½xï¿½sï¿½Wï¿½@ï¿½ï¿½ï¿½O over or under
         }
         while(--fine);
-				
+
         if(fine == 0x00)	return 1;
-				
+
         // If default offset is OK....
         if(result == 0x00)
 		{
             if(CFrameSyncTestSync(buffer + _OFFSET_STEP))     return 2;
             result  = pData[0] ? pData[0] : 0x01;       //  normal result == 0 , over/under,  resuit = pdata0
         }
-				
+
         // Search most satisfied DCLK setting for frame-sync
         delta = buffer;
         fine  = 4;
         do
 		{
           	WORD temp = (result & 0x01) ? delta + (_OFFSET_STEP / 2) : delta - (_OFFSET_STEP / 2);
-						
+
             if(CFrameSyncTestSync(temp))		return 2;
-						
+
             if(pData[0])		break;
-						
+
             delta   = temp;
         }
         while(--fine);
-				
+
         delta   = (buffer + delta) >> 1;
     }
-		                          
+
     if(!CFrameSyncLastLineFinetune(&delta))		return 2;
-		
+
     result = CFrameSyncSpreadSpectrumFinetune(&delta);
     if(result != 0)		return result;
-		
+
     SET_FRAMESYNCSTATUS();
-		
+
     return 0;
 }
-
-

@@ -1,8 +1,9 @@
+#include "alien/global_.h"
 
 
 #define __OSDPROC003__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 #if(_OSD_TYPE == _OSD003)
 
@@ -14,7 +15,7 @@ void COsdHandler(void)
     bOSDTimeOut = 1;
 
     COsdSystemFlowProc();
-    
+
     COsdEventMsgProc();
 
     if (_PWOFF_STATE == ucCurrState)
@@ -22,14 +23,14 @@ void COsdHandler(void)
 
     CKeyOSDMsgCover();
 
-    // Ö´ÐÐµ±Ç°²Ëµ¥µÄË½ÓÐ´¦Àíº¯Êý
+    // Ö´ï¿½Ðµï¿½Ç°ï¿½Ëµï¿½ï¿½ï¿½Ë½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if(CURRENT_MENU_ITEM.Proc != NULL)
     {
         CURRENT_MENU_ITEM.Proc();
     }
 
     if ((ucKeyMessage != _NONE_KEY_MESSAGE) && bOSDTimeOut && ucOsdState != _MI_SC_INPUT_CH_NUM)
-    {            
+    {
         if (GET_OSDTIMEOUT() < 5)
         	CTimerCancelTimerEvent(COsdDispOsdTimerEvent);
         else
@@ -54,7 +55,7 @@ void COsdHandler(void)
 
     if(_NOSIGNAL_STATE == ucCurrState && GET_BURNIN_STATE()==_BURNIN_ON)
     {
-		BurnInRun();		
+		BurnInRun();
     }
 
 	if(fTest)
@@ -65,7 +66,7 @@ void COsdHandler(void)
     if (bDrawMute)
     {
         bDrawMute = 0;
-        if (GET_AUDIO_MUTE()) // Mute on 
+        if (GET_AUDIO_MUTE()) // Mute on
            CDrawMuteState();
     }
 
@@ -81,7 +82,7 @@ void CKeyOSDMsgCover(void)
         CCoverKeyMsgToOsdEvent(CURRENT_MENU_ITEM.KeyMsgToOsdEvnet,CURRENT_MENU_ITEM.Option & _EN_PUB_KEYEVENT);
     }
     else
-    {	
+    {
     	if(CURRENT_MENU_ITEM.Option & _KEYMAP_EN_IN_NOSIGNAL)
 		{
         	CCoverKeyMsgToOsdEvent(CURRENT_MENU_ITEM.KeyMsgToOsdEvnet,CURRENT_MENU_ITEM.Option & _EN_PUB_KEYEVENT);
@@ -114,16 +115,16 @@ void DbgShowOSDState(void)
 void COsdSystemFlowProc(void)
 {
     switch(ucCurrState)
-    {         
+    {
         case _PWOFF_STATE:
             break;
-            
+
         case _INITIAL_STATE:
             break;
-            
+
         case _SEARCH_STATE:
             break;
-            
+
         case _ACTIVE_STATE:
             if(GET_OSD_READYFORDISPLAY() == _TRUE)
             {
@@ -137,7 +138,7 @@ void COsdSystemFlowProc(void)
 
                 CLR_OSD_READYFORDISPLAY();
                 CAdjustBackgroundColor(0x00, 0x00, 0x00);
-                
+
 				#if(_VIDEO_TV_SUPPORT)
             	ucNoSigCount = 0;
  				#if(_IF_PLL_DE_CHIP == _IF_PLL_DE_1338)
@@ -146,18 +147,18 @@ void COsdSystemFlowProc(void)
 				#endif
                 CSetVolume();
             }
-                            
+
 			#if(_VIDEO_TV_SUPPORT)
  			#if(_IF_PLL_DE_CHIP == _IF_PLL_DE_1338)
-            CAudioCtrl(); 
+            CAudioCtrl();
  			#endif
-                
+
  			#if(_SHOW_TV_NO_SIGNAL)
             CCheckTVSignal();
  			#endif
 			#endif	// #if(_VIDEO_TV_SUPPORT)
             break;
-            
+
         case _NOSUPPORT_STATE:
         	CMuteOn();
             if(GET_OSD_READYFORDISPLAY() == _TRUE)
@@ -166,12 +167,12 @@ void COsdSystemFlowProc(void)
                 CAdjustBackgroundColor(0xFF, 0x00, 0x00);
                 if (GET_FIRST_SHOW_NOTE())
                    ucOsdEventMsg = _DO_SHOW_NOTE;
-                
+
                 CTimerReactiveTimerEvent(SEC(1), CModeNoSupportEvent);
             }
-            
+
             break;
-            
+
         case _NOSIGNAL_STATE:
         	CMuteOn();
 			#if(_CHANGE_SOURCE_METHOD == _CHANGE_SOURCE_METHOD_0)
@@ -185,9 +186,9 @@ void COsdSystemFlowProc(void)
 			#endif
 
             if(GET_OSD_READYFORDISPLAY() == _TRUE)
-            {    
-                CLR_OSD_READYFORDISPLAY(); 
-    
+            {
+                CLR_OSD_READYFORDISPLAY();
+
                 if (bSourceVideo())
                    CAdjustBackgroundColor(0x00, 0x00, (_GET_INPUT_SOURCE() == _SOURCE_VIDEO_TV) ? ((_GET_BLUE_BACKGROUND()) ? 0xFF : 0x00) : 0x00);
 
@@ -198,51 +199,51 @@ void COsdSystemFlowProc(void)
                     CPowerLightPowerOn();
                 }
 
-    			if (_GET_INPUT_SOURCE() == _SOURCE_YPBPR) 
+    			if (_GET_INPUT_SOURCE() == _SOURCE_YPBPR)
     			{
     				CTimerReactiveTimerEvent(SEC(1), CModeNoSignalEvent);
     				break;
     			}
-    
+
 			    #if (_HDMI_SUPPORT == _ON)
-    			if (_GET_INPUT_SOURCE() == _SOURCE_HDMI) 
+    			if (_GET_INPUT_SOURCE() == _SOURCE_HDMI)
     			{
     				CTimerReactiveTimerEvent(SEC(5), CModeNoSignalEvent);
     				CTimerReactiveTimerEvent(SEC(20), CModePowerSavingEvent);
     				break;
-    			}		
+    			}
 			    #endif	// #if (_HDMI_SUPPORT == _ON)
 
     			// here comes for VGA, DVI input only
     			#if(_TMDS_SUPPORT == _ON)
-    			if (_GET_INPUT_SOURCE() == _SOURCE_DVI) 
+    			if (_GET_INPUT_SOURCE() == _SOURCE_DVI)
     			{
                     if (bDVICONNECT)
         				CTimerReactiveTimerEvent(SEC(1), CModeNoCableEvent);
                     else
     			    	CTimerReactiveTimerEvent(SEC(1), CModeNoSignalEvent);
-    			}		
+    			}
     			#endif	// #if(_TMDS_SUPPORT == _ON)
 
-    			if (_GET_INPUT_SOURCE() == _SOURCE_VGA) 
+    			if (_GET_INPUT_SOURCE() == _SOURCE_VGA)
     			{
         			if (bVGACONNECT)
         				CTimerReactiveTimerEvent(SEC(1), CModeNoCableEvent);
-        			else       
+        			else
         				CTimerReactiveTimerEvent(SEC(1), CModeNoSignalEvent);
     	        }
 
                 if (bSourceVideo())
         			CTimerReactiveTimerEvent(SEC(1), CModeNoSignalEvent);
 
-    			CTimerReactiveTimerEvent(SEC(20), CModePowerSavingEvent);   
+    			CTimerReactiveTimerEvent(SEC(20), CModePowerSavingEvent);
             }
-            
+
             break;
-            
+
         case _SLEEP_STATE:
             break;
-            
+
         default:
             break;
     }
@@ -266,9 +267,9 @@ void ChangeSourceState(void)
 	CScalerSetBit(_VDISP_CTRL_28, 0xff, 0x20);
     CScalerSetBit(_VDISP_CTRL_28, ~(_BIT3), _BIT5);
     CInitInputSource();
-    
+
 	#if(_VIDEO_TV_SUPPORT)
-	#if(_FM_DEVICE)  
+	#if(_FM_DEVICE)
     bFM = 0; // Close FM
 	#endif
 	#endif
@@ -284,13 +285,13 @@ void ChangeSourceState(void)
 			CVideoOutputDisable();
 			break;
 
-		#if( (_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON) )			
+		#if( (_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON) )
 		case _SOURCE_DVI:
         case _SOURCE_HDMI:
 			CVideoOutputDisable();
 			break;
 		#endif
-		    
+
 		#if(_VIDEO_TV_SUPPORT)
 		case _SOURCE_VIDEO_TV:
             CInitTV();
@@ -305,9 +306,9 @@ void ChangeSourceState(void)
 
 //-----------------------------------------------------------
 void COsdEventMsgProc(void)
-{                  
+{
     if(ucOsdEventMsg > _OE_USER_CMD)
-    {    
+    {
          ucOsdEventMsg = _NONE_MSG;
          return;
     }
@@ -320,40 +321,40 @@ void COsdEventMsgProc(void)
             ucOsdState = 0;
 
             if(GET_BURNIN_STATE() == _BURNIN_ON)
-            {				
-				CTimerCancelTimerEvent(CModePowerSavingEvent);				
+            {
+				CTimerCancelTimerEvent(CModePowerSavingEvent);
 				InitBurnIn();
             }
             else
-            {            
+            {
 				#if(_CHINESE_FONT_TYPE == _CHINESE_2_FONT)
             	LoadCHIFont(_LF_OTHER);
 				#endif
     			CShowNoSignal();
                 CTimerReactiveTimerEvent(SEC(20), COsdDispOsdTimerEvent);
-    		}    		
+    		}
             break;
-            
+
         case _SAVE_EE_MODEUSERDATA_MSG:
             CEepromSaveModeData(stModeInfo.ModeCurr);
             break;
-            
+
         case _SAVE_EE_SYSTEMDATA_MSG:
             CEepromSaveSystemData();
             break;
-            
+
         case _SAVE_EE_OSDUSERDATA_MSG:
             CEepromSaveOsdUserData();
             break;
-            
+
         case _SAVE_EE_ADCDATA_MSG:
             CEepromSaveAdcData();
             break;
-            
+
         case _SAVE_EE_COLORPROC0_MSG:
             CEepromSaveBriConData();
             break;
-            
+
         case _SAVE_EE_COLORPROC1_MSG:
             CEepromSaveColorTempData();
             break;
@@ -369,7 +370,7 @@ void COsdEventMsgProc(void)
         case _SAVE_EE_TV_DATA_MSG:
             CEepromSaveTvData();
             break;
-           
+
         case _CHANGE_SOURCE_MSG:
             ChangeSourceState();
         	CEepromSaveSystemData();
@@ -380,14 +381,14 @@ void COsdEventMsgProc(void)
             CShowNote();
             SET_FIRST_SHOW_NOTE();
             break;
-            
+
         case _DO_AUTO_CONFIG:
         	if(_GET_INPUT_SOURCE() == _SOURCE_VGA)
         	{
 				CShowAutoAdjust();
         	}
         	break;
-        	
+
         case _DO_SHOW_NOTE:
             CLR_FIRST_SHOW_NOTE();
             CShowNote();
@@ -397,27 +398,27 @@ void COsdEventMsgProc(void)
         default:
             break;
     }
-    
+
     ucOsdEventMsg = _NONE_MSG;
 }
 
 //----------------------------------------------------------------------------------------------------
 void COsdDispFirstTimeLoadFont(void)
-{       
+{
     COsdFxDisableOsd();
     COsdColorPalette(tPALETTE_0);
-    
+
     SetOsdMap(tUserMenuOsdMap);
-    
-    // Load global font 
-    // insert code to here 
+
+    // Load global font
+    // insert code to here
 #if(_CHINESE_FONT_TYPE == _CHINESE_1_FONT)
     COsdLoad1BitFont(FntGlobal,0x00,0x6E,tGlobalCharWidth);
 #else
     COsdLoad1BitFont(FntGlobal,0x00,0x5F,tGlobalCharWidth);
 #endif
     CScalerLoadHardwareVLCFont(FntMainIcon,0x80 * 2);
-    
+
 	//Load Languege Font
 	LoadLanguageFont();
 
@@ -433,7 +434,7 @@ void COsdLoad1BitFontWidth12(BYTE *pFont,WORD usOffset,BYTE ucFntCount)
      if(usOffset > 0x100)		return;
 
      if(usOffset + ucFntCount > 0x100)
-        ucFntCount = 0x100 - usOffset; 
+        ucFntCount = 0x100 - usOffset;
 
 
      for(i=0;i<ucFntCount;i++)
@@ -448,7 +449,7 @@ void COsdLoad1BitFontWidth12(BYTE *pFont,WORD usOffset,BYTE ucFntCount)
 void LoadCHI_S_Font(BYTE ucPage)
 {
 	BYTE *pFont;
-	COsdLoad1BitFontWidth12(FntPublic_CHI_S,0x80,0x20);	
+	COsdLoad1BitFontWidth12(FntPublic_CHI_S,0x80,0x20);
 	switch(ucPage)
 	{
 
@@ -461,15 +462,15 @@ void LoadCHI_S_Font(BYTE ucPage)
 		case _LF_OTHER:				pFont = FntOther_CHI_S;		break;
 	}
 
-	COsdLoad1BitFontWidth12(pFont,0xA0,0x2F);	
+	COsdLoad1BitFontWidth12(pFont,0xA0,0x2F);
 }
 
 //-----------------------------------------------------------
 void LoadCHI_T_Font(BYTE ucPage)
 {
 	BYTE *pFont;
-	COsdLoad1BitFontWidth12(FntPublic_CHI_T,0x80,0x20);	
-	
+	COsdLoad1BitFontWidth12(FntPublic_CHI_T,0x80,0x20);
+
 	switch(ucPage)
 	{
 
@@ -537,7 +538,7 @@ void LoadLanguageFont(void)
     #endif
 #endif
 	}
-}  
+}
 #endif
 
 //-----------------------------------------------------------
@@ -545,18 +546,18 @@ void COsdDispOsdTimerEvent(void)
 {
     COsdFxDisableOsd();
     ucOsdState = _MI_MENU_NONE;
-        
+
 	#if(_VIDEO_TV_SUPPORT)
 	#if(_SLEEP_FUNC)
     bOSDOnScreen = 0;
 	#endif
-         
+
 	#if(_SLEEP_FUNC)
     if(_ACTIVE_STATE == ucCurrState && (0xff == ucAutoPowerDownTime) || (0 == _GET_POWER_DOWN_TIME()))
-	#endif 
+	#endif
 	#else
     if(_ACTIVE_STATE == ucCurrState)
-	#endif 
+	#endif
     {
          bDrawMute = 1;
     }
@@ -572,7 +573,7 @@ BYTE CFoundKeyMsgToOsdEvent(SKeyToOsdEvent *tMsgTable)
           //ucOsdEventMsg = _NONE_MSG;
           return 0;
      }
-                        
+
      i = 0;
      while(1)
      {
@@ -591,7 +592,7 @@ BYTE CFoundKeyMsgToOsdEvent(SKeyToOsdEvent *tMsgTable)
          i++;
      }
      return 1;
-}                                        
+}
 //---------------------------------------------------------------------------
 
 void CShortCutKeyMsg(void)
@@ -626,14 +627,14 @@ void InitOsdFrame(void)
 
 #if(_LOGO_ENABLE)
     if (bLoadLogoFont)
-    {       
+    {
         SetOsdMap(tUserMenuOsdMap);
-        
-        // Load global font 
-        // insert code to here 
+
+        // Load global font
+        // insert code to here
         COsdLoad1BitFont(FntGlobal,0x00,0x5F,tGlobalCharWidth);
         CScalerLoadHardwareVLCFont(FntMainIcon,0x80 * 2);
-        
+
     	//Load Languege Font
     	LoadLanguageFont();
         bLoadLogoFont = 0;
@@ -644,13 +645,13 @@ void InitOsdFrame(void)
     COsdFxCodeWrite(ucCloseAllWindow);
 
 	CScalerSetBit(_OVERLAY_CTRL_6C, 0x23, ((stOsdUserData.OsdBlending & 0x07) << 2));
-    
+
     // Init osd
     // insert code to here
     OSDClear(ROW(0), HEIGHT(18), COL(0), WIDTH(46), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(0), HEIGHT(18), COL(0), WIDTH(46), 0x00, BYTE_DISPLAY);
 	OSDClear(ROW(0), HEIGHT(18), COL(0), WIDTH(46), 0x40, BYTE_COLOR);
-}     
+}
 
 
 
@@ -658,10 +659,10 @@ void InitOsdFrame(void)
 void CShowNoSignal(void)
 {
 	BYTE *pStr;
-	
+
 	InitOsdFrame();
-    SetOSDDouble((GET_OSD_SIZE() ? 0x03 : 0x00)  | OSD_WINDOWCHAR_BLENDING);   
-	
+    SetOSDDouble((GET_OSD_SIZE() ? 0x03 : 0x00)  | OSD_WINDOWCHAR_BLENDING);
+
 	// Draw Top Line
 	OSDLine(ROW(1), COL(1), LENGTH(25), 0xA6, THE_BYTE0);
 	OSDLine(ROW(1), COL(1), LENGTH(25), 0xA4, THE_BYTE1);
@@ -675,21 +676,21 @@ void CShowNoSignal(void)
 	OSDLine(ROW(3), COL(1), LENGTH(45), 0x10, BYTE_COLOR);
 
 	// Draw Window
-	COsdFxDrawWindow(0,0,								//WORD usXStart,WORD usYStart,  
-					_DIALOG_WIDTH,_DIALOG_HEIGHT,		//WORD usXEnd,WORD usYEnd,  
+	COsdFxDrawWindow(0,0,								//WORD usXStart,WORD usYStart,
+					_DIALOG_WIDTH,_DIALOG_HEIGHT,		//WORD usXEnd,WORD usYEnd,
 					tMainWindowStyle);					//BYTE *pStyle)
-	 
+
     CSetOSDPosition(_DIALOG_WIDTH, _DIALOG_HEIGHT, 50, 50);
 
 	// Text out
 	if(ucCurrState == _NOSIGNAL_STATE || _GET_INPUT_SOURCE() == _SOURCE_VIDEO_TV)
 		pStr = sNoSignal[GET_LANGUAGE()];
-		
+
 	else if(ucCurrState == _NOSUPPORT_STATE)
 		pStr = sNotSupport[GET_LANGUAGE()];
 
 	CCenterTextout(pStr,ROW(3),1,25);
-	
+
 	COsdFxEnableOsd();
 
 }
@@ -697,8 +698,8 @@ void CShowNoSignal(void)
 void CShowAutoAdjust(void)
 {
 	InitOsdFrame();
-    SetOSDDouble((GET_OSD_SIZE() ? 0x03 : 0x00)  | OSD_WINDOWCHAR_BLENDING);   
-	
+    SetOSDDouble((GET_OSD_SIZE() ? 0x03 : 0x00)  | OSD_WINDOWCHAR_BLENDING);
+
 	// Draw nosignal & set osd position
 
 	// Draw Top Line
@@ -714,34 +715,34 @@ void CShowAutoAdjust(void)
 	OSDLine(ROW(3), COL(1), LENGTH(45), 0x10, BYTE_COLOR);
 
 	// Draw Window
-	COsdFxDrawWindow(0,0,								//WORD usXStart,WORD usYStart,  
-					_DIALOG_WIDTH,_DIALOG_HEIGHT,		//WORD usXEnd,WORD usYEnd,  
+	COsdFxDrawWindow(0,0,								//WORD usXStart,WORD usYStart,
+					_DIALOG_WIDTH,_DIALOG_HEIGHT,		//WORD usXEnd,WORD usYEnd,
 					tMainWindowStyle);					//BYTE *pStyle)
 
     CSetOSDPosition(_DIALOG_WIDTH, _DIALOG_HEIGHT, 50, 50);
-#if(_CHINESE_FONT_TYPE == _CHINESE_2_FONT)	
+#if(_CHINESE_FONT_TYPE == _CHINESE_2_FONT)
 	LoadCHIFont(_LF_ADJUST_PAGE);
 #endif
 	CCenterTextout(sAutoConfig[GET_LANGUAGE()],ROW(3),1,25);
-	
+
 	COsdFxEnableOsd();
 
 	CAutoDoAutoConfig();
 
-	COsdFxDisableOsd();	
+	COsdFxDisableOsd();
 }
 //---------------------------------------------------------------------------
-#define _NOTE_WIDTH						(11 * 12 + 4)	
+#define _NOTE_WIDTH						(11 * 12 + 4)
 #define _NOTE_HEIGHT					(4 * 18)
 
 void CShowNote(void)
 {
-	BYTE code *pStr; 
-    
+	BYTE code *pStr;
+
     ucOsdState = _MI_MENU_NONE;
     InitOsdFrame();
-    SetOSDDouble(GET_OSD_SIZE() ? 0x03 : 0x00);   
-    
+    SetOSDDouble(GET_OSD_SIZE() ? 0x03 : 0x00);
+
 	// Draw Top Line
 	OSDLine(ROW(1), COL(1), LENGTH(8), 0xA6, THE_BYTE0);
 	OSDLine(ROW(1), COL(1), LENGTH(8), 0xA4, THE_BYTE1);
@@ -765,21 +766,21 @@ void CShowNote(void)
 		case _SOURCE_VIDEO_AV:		pStr = sAV;			break;
 		case _SOURCE_VIDEO_TV:		pStr = sTV;			break;
 	}
-	
+
 	CCenterTextout(pStr,ROW(2),1,8);
 
 	// Draw Window
-	COsdFxDrawWindow(0,8,								//WORD usXStart,WORD usYStart,  
-					_NOTE_WIDTH,_NOTE_HEIGHT,		    //WORD usXEnd,WORD usYEnd,  
+	COsdFxDrawWindow(0,8,								//WORD usXStart,WORD usYStart,
+					_NOTE_WIDTH,_NOTE_HEIGHT,		    //WORD usXEnd,WORD usYEnd,
 					tMainWindowStyle);					//BYTE *pStyle)
-	 
+
     if (GET_OSD_SIZE())
         OSDPosition(_OSD_DOUBLE_WIDTH(_NOTE_WIDTH), _OSD_DOUBLE_HEIGHT(_NOTE_HEIGHT), 0, 0, 0x03);
     else
         OSDPosition(_NOTE_WIDTH, _NOTE_HEIGHT, 5, 5, 0x03);
-	
+
     COsdFxEnableOsd();
-    CPowerPanelOn();  
+    CPowerPanelOn();
 
     CTimerReactiveTimerEvent(SEC(5), COsdDispOsdTimerEvent);
     bOSDTimeOut = 0;
@@ -794,7 +795,7 @@ void CShowNote(void)
 #if(_VIDEO_TV_SUPPORT)
 //---------------------------------------------------------------------------
 void CShowTVNumber(BYTE ucNumber, BYTE ucOption)
-{ 
+{
     BYTE PosX = 0;
 
     ucOsdState     = _MI_MENU_NONE;
@@ -803,14 +804,14 @@ void CShowTVNumber(BYTE ucNumber, BYTE ucOption)
 
 #if(_LOGO_ENABLE)
     if (bLoadLogoFont)
-    {       
+    {
         SetOsdMap(tUserMenuOsdMap);
-        
-        // Load global font 
-        // insert code to here 
+
+        // Load global font
+        // insert code to here
         COsdLoad1BitFont(FntGlobal,0x00,0x5F,tGlobalCharWidth);
         CScalerLoadHardwareVLCFont(FntMainIcon,0x80 * 2);
-        
+
     	//Load Languege Font
     	LoadLanguageFont();
         bLoadLogoFont = 0;
@@ -819,17 +820,17 @@ void CShowTVNumber(BYTE ucNumber, BYTE ucOption)
 
     SetOSDDouble(0x03);
     SetOsdMap(tMsgOsdMap);
-                         
+
     // Init OSD Ram
     OSDClear(0, 8, 0, 20, 0x8C, BYTE_ATTRIB);
     OSDClear(0, 8, 0, 20, 0x00, BYTE_DISPLAY);
     OSDClear(0, 8, 0, 20, 0xF0, BYTE_COLOR);
-    
+
     COsdFxCodeWrite(ucCloseAllWindow);
 
     OSDPosition(_MAINMENU_WIDTH,_MAINMENU_HEIGHT,64,1,0x03);
-                        
-    if (ucOption & _SHOW_CH_TV_NUMBER) 
+
+    if (ucOption & _SHOW_CH_TV_NUMBER)
         CShowNumber(0, 0, ucNumber);
 
     if (_SHOW_CH_TV_TYPE & ucOption)
@@ -853,7 +854,7 @@ void CShowTVNumber(BYTE ucNumber, BYTE ucOption)
     		case _TV_SECAM_LL:		pStr = sSECAM_L;		break;
         }
 
-        CTextOutEx(pStr, 0, 1);  
+        CTextOutEx(pStr, 0, 1);
     }
 
     COsdFxEnableOsd();
@@ -873,26 +874,26 @@ void Draw2bit3x2Icon(BYTE *tIcon,BYTE x,BYTE y)
 {
      Gotoxy(x,y,ALL_BYTE);
 
-     pData[0] = tIcon[0]; 
+     pData[0] = tIcon[0];
      pData[1] = tIcon[1];
      pData[2] = tIcon[2];
-     
+
      pData[3] = tIcon[0];
      pData[4] = tIcon[1] + 1;
      pData[5] = tIcon[2];
 
      pData[6] = tIcon[0];
      pData[7] = tIcon[1] + 2;
-     pData[8] = tIcon[2];     
-     
+     pData[8] = tIcon[2];
+
      CScalerWrite(_OSD_DATA_PORT_92, 9, pData, _NON_AUTOINC);
 
      Gotoxy(x,y + 1,ALL_BYTE);
 
-     pData[0] = tIcon[0]; 
+     pData[0] = tIcon[0];
      pData[1] = tIcon[1] + 3;
      pData[2] = tIcon[2];
-     
+
      pData[3] = tIcon[0];
      pData[4] = tIcon[1] + 4;
      pData[5] = tIcon[2];
@@ -900,7 +901,7 @@ void Draw2bit3x2Icon(BYTE *tIcon,BYTE x,BYTE y)
      pData[6] = tIcon[0];
      pData[7] = tIcon[1] + 5;
      pData[8] = tIcon[2];
-     
+
      CScalerWrite(_OSD_DATA_PORT_92, 9, pData, _NON_AUTOINC);
 }
 
@@ -913,14 +914,14 @@ BYTE AdjustMenuItem(BYTE ucBeginItem,BYTE ucEndItem,BYTE ucMode)
 
      CLR_KEYREPEATENABLE();
 
-     //Èç¹û²Ëµ¥Ö»ÓÐÒ»Ïî,Ö±½Ó·µ»Ø
+     //ï¿½ï¿½ï¿½ï¿½Ëµï¿½Ö»ï¿½ï¿½Ò»ï¿½ï¿½,Ö±ï¿½Ó·ï¿½ï¿½ï¿½
      ucCount = ucEndItem - ucBeginItem;
      if(ucCount < 1)
      {
           return ucOsdState;
      }
 
-     // ¼ÆËãÏÂÒ»Ïî²Ëµ¥£¬»òÊÇÉÏÒ»²Ëµ¥
+     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ëµï¿½
      i = 0;
 
      ucNewItem = ucOsdState;
@@ -958,10 +959,10 @@ BYTE GetShowIndex(BYTE ucMenuItem,BYTE ucBeginItem,BYTE ucEndItem)
 		else
 			fDisableNoShow = 1;
 
-			
+
      	if(ucBeginItem == ucMenuItem)
      	{
-     		if(fEnable)		
+     		if(fEnable)
      		{
      			return Index;
      		}
@@ -976,9 +977,9 @@ BYTE GetShowIndex(BYTE ucMenuItem,BYTE ucBeginItem,BYTE ucEndItem)
 
      	if(ucBeginItem > ucMenuItem)
      		return _NOT_SHOW;
-     		
+
        	if(!fDisableNoShow)
-       	{	
+       	{
         	Index++;
         }
         else
@@ -991,7 +992,7 @@ BYTE GetShowIndex(BYTE ucMenuItem,BYTE ucBeginItem,BYTE ucEndItem)
         ucBeginItem++;
      }
 
-     return _NOT_SHOW;     
+     return _NOT_SHOW;
 }
 //----------------------------------------------------------------------------------------------------
 BYTE GetShowCount(BYTE ucBeginItem,BYTE ucEndItem)
@@ -1007,14 +1008,14 @@ BYTE GetShowCount(BYTE ucBeginItem,BYTE ucEndItem)
      while(ucBeginItem <= ucEndItem)
      {
      	fEnable = g_tMenuItem[ucBeginItem].Enable();
-     	
+
 		if((g_tMenuItem[ucBeginItem].Option & _DISABLE_NOT_SHOW) != _DISABLE_NOT_SHOW)
 			fDisableNoShow = 0;
 		else
 			fDisableNoShow = 1;
-     		
+
        	if(!fDisableNoShow)
-       	{	
+       	{
         	ucCount++;
         }
         else
@@ -1027,7 +1028,7 @@ BYTE GetShowCount(BYTE ucBeginItem,BYTE ucEndItem)
         ucBeginItem++;
      }
 
-     return ucCount;     
+     return ucCount;
 }
 //----------------------------------------------------------------------------------------------------
 void TextOutCalcWidth(BYTE *pStr,BYTE row,BYTE col,BYTE ucMaxLength,BYTE ucDisplayPixcel)
@@ -1041,14 +1042,14 @@ void TextOutCalcWidth(BYTE *pStr,BYTE row,BYTE col,BYTE ucMaxLength,BYTE ucDispl
 
      for(;i<ucMaxLength;i++)
      {
-         *(&MCU_SCA_INF_DATA_FFF5) = (0x80 | 4);
+         XSFRWriteByte(MCU_SCA_INF_DATA_FFF5, (0x80 | 4));
          ucPixLen += 4;
      }
-     
-     // ¼ÆËã Blank ¿í¶È
+
+     // ï¿½ï¿½ï¿½ï¿½ Blank ï¿½ï¿½ï¿½ï¿½
      ucPixLen = ucDisplayPixcel - ucPixLen;
 
-     //ÉèÖÃ Blank                                                       
+     //ï¿½ï¿½ï¿½ï¿½ Blank
      Gotoxy(col + ucMaxLength,row,ALL_BYTE);
 
      pData[0] = 0x00;
@@ -1060,7 +1061,7 @@ void TextOutCalcWidth(BYTE *pStr,BYTE row,BYTE col,BYTE ucMaxLength,BYTE ucDispl
 
 void CSetMuteState(void)
 {
-    if (GET_AUDIO_MUTE()) // Mute on 
+    if (GET_AUDIO_MUTE()) // Mute on
         CLR_AUDIO_MUTE();
     else
         SET_AUDIO_MUTE();
@@ -1078,7 +1079,7 @@ void CSetMuteState(void)
 
 //-----------------------------------------------------------------------
 void CDrawMuteState(void)
-{           
+{
     ucOsdState     = _MI_MENU_NONE;
 #if(_VIDEO_TV_SUPPORT)
     bChangeChannel = 0;
@@ -1086,14 +1087,14 @@ void CDrawMuteState(void)
     COsdFxDisableOsd();
 #if(_LOGO_ENABLE)
     if (bLoadLogoFont)
-    {       
+    {
         SetOsdMap(tUserMenuOsdMap);
-        
-        // Load global font 
-        // insert code to here 
+
+        // Load global font
+        // insert code to here
         COsdLoad1BitFont(FntGlobal,0x00,0x5F,tGlobalCharWidth);
         CScalerLoadHardwareVLCFont(FntMainIcon,0x80 * 2);
-        
+
     	//Load Languege Font
     	LoadLanguageFont();
         bLoadLogoFont = 0;
@@ -1102,20 +1103,20 @@ void CDrawMuteState(void)
 
     SetOSDDouble(0x03);
     SetOsdMap(tMsgOsdMap);
-                         
+
     // Init OSD Ram
     OSDClear(0, 8, 0, 10, 0x8C, BYTE_ATTRIB);
     OSDClear(0, 8, 0, 10, 0x00, BYTE_DISPLAY);
     OSDClear(0, 8, 0, 10, 0xF0, BYTE_COLOR);
-    
-    COsdFxCodeWrite(ucCloseAllWindow); 
- 
+
+    COsdFxCodeWrite(ucCloseAllWindow);
+
     OSDPosition(6 * 12, 4 * 18, 44, 0, 0x03);
-    if (GET_AUDIO_MUTE()) // Mute on 
+    if (GET_AUDIO_MUTE()) // Mute on
        COsdLoad1BitFont(FntMute, 0x7A, 6, tFntVolumeCharWidth);
     else
-       COsdLoad1BitFont(FntVolume, 0x7A, 6, tFntVolumeCharWidth);  
-                                              
+       COsdLoad1BitFont(FntVolume, 0x7A, 6, tFntVolumeCharWidth);
+
     // Display Volume/Mute icon
     Gotoxy(0, 1, BYTE_DISPLAY);
     OutputChar(0x7A);
@@ -1125,21 +1126,21 @@ void CDrawMuteState(void)
     OutputChar(0x7D);
     OutputChar(0x7E);
     OutputChar(0x7F);
-    COsdFxDrawWindow(0,16,                               //WORD usXStart,WORD usYStart,  
-                        54,52,       //WORD usXEnd,WORD usYEnd,  
+    COsdFxDrawWindow(0,16,                               //WORD usXStart,WORD usYStart,
+                        54,52,       //WORD usXEnd,WORD usYEnd,
                         tMainWindowStyle);                  //BYTE *pStyle)
 
     COsdFxEnableOsd();
     bOSDTimeOut  = 0;
  //   ucAudioState = 1;
-    if (GET_AUDIO_MUTE()) // Mute on  
+    if (GET_AUDIO_MUTE()) // Mute on
     {
        	CTimerCancelTimerEvent(COsdDispOsdTimerEvent);
     }
-    else             
+    else
     {
        CTimerReactiveTimerEvent(SEC(5), COsdDispOsdTimerEvent);
-    } 
+    }
 
     bOSDTimeOut  = 0;
     bOSDOnScreen = 1;
@@ -1148,7 +1149,7 @@ void CDrawMuteState(void)
 //-----------------------------------------------------------------------
 #if(_VIDEO_TV_SUPPORT)
 #if(_SHOW_TV_NO_SIGNAL)
-   
+
 #if(_LOGO_ENABLE)
 #define _H_POS_MAX         ((DWORD)((Panel[ucPanelSelect]->DHWidth - _LOGO_WIDTH)/4 - 12))
 #define _V_POS_MAX         ((DWORD)((Panel[ucPanelSelect]->DVHeight - _LOGO_HEIGHT)/4 - 6))
@@ -1162,11 +1163,11 @@ void CDrawMuteState(void)
 #endif
 
 void OSDMove(WORD usOsdActWidth, WORD usOsdActHeight, WORD ucHPos, WORD ucVPos, BYTE ucPar)
-{              
-    usOsdActWidth  = _OSD_HPOSITION_OFFSET + 
+{
+    usOsdActWidth  = _OSD_HPOSITION_OFFSET +
                     (DWORD)(Panel[ucPanelSelect]->DHStartPos / 4) + ucHPos;
 
-    usOsdActHeight = _OSD_VPOSITION_OFFSET + 
+    usOsdActHeight = _OSD_VPOSITION_OFFSET +
                     (DWORD)(Panel[ucPanelSelect]->DVStartPos / 4) + ucVPos;
 
 
@@ -1182,7 +1183,7 @@ void OSDMove(WORD usOsdActWidth, WORD usOsdActHeight, WORD ucHPos, WORD ucVPos, 
 	pData[1] = (UINT8) (usOsdActWidth >> 2);
 	pData[2] = ((UINT8) (usOsdActWidth & 0x0003) << 6) |	((usOsdActHeight & 0x01) << 5) | ucPar;
 	CScalerWrite(_OSD_DATA_PORT_92, 3, pData, _NON_AUTOINC);
- 
+
     CTimerWaitForEvent(_EVENT_DEN_STOP);
     CTimerWaitForEvent(_EVENT_DEN_STOP);
     CScalerSetBit(_OSD_SCRAMBLE_93, 0xf8, 0x05);
@@ -1203,10 +1204,10 @@ void CCheckTVSignal(void)
     if (ucLogoMoveCount > 250)
         ucLogoMoveCount = 0;
     else
-        return; 
+        return;
 
     if (bTVNoSignal)
-    {         
+    {
         switch(ucSignalOSDState)
         {
         case 0:
@@ -1253,16 +1254,16 @@ void CCheckTVSignal(void)
                 if (ucPosX >= _H_POS_MAX)   ucDir = (ucDir & 0xf0) | _BIT0; // --
                 if (ucPosY >= _V_POS_MAX)   ucDir = (ucDir & 0x0f) | _BIT4; // --
             }
-            if (ucPosX == 0)            ucDir = (ucDir & 0xf0) | _BIT1; // ++           
+            if (ucPosX == 0)            ucDir = (ucDir & 0xf0) | _BIT1; // ++
             if (ucPosY == 0)            ucDir = (ucDir & 0x0f) | _BIT5; // ++
-            
+
             if (ucDir & _BIT0)          ucPosX--;
             if (ucDir & _BIT1)          ucPosX++;
             if (ucPosY < 2)             ucPosY = 2;
             if (ucDir & _BIT4)          ucPosY-=2;
             if (ucDir & _BIT5)          ucPosY+=2;
 
-#if(_LOGO_ENABLE)               
+#if(_LOGO_ENABLE)
             if (GET_OSD_SIZE())
                 OSDMove(_OSD_DOUBLE_WIDTH(_LOGO_WIDTH), _OSD_DOUBLE_HEIGHT(_LOGO_HEIGHT), ucPosX, ucPosY, 0x03);
             else
@@ -1272,7 +1273,7 @@ void CCheckTVSignal(void)
                 OSDMove(_OSD_DOUBLE_WIDTH(_DIALOG_WIDTH), _OSD_DOUBLE_HEIGHT(_DIALOG_HEIGHT), ucPosX, ucPosY, 0x03);
             else
                 OSDMove(_DIALOG_WIDTH, _DIALOG_HEIGHT, ucPosX, ucPosY, 0x03);
-#endif            
+#endif
 	        break;
         }
     }
@@ -1291,7 +1292,7 @@ void CCheckTVSignal(void)
 //----------------------------------------------------------------------------------------------------
 #if(_LOGO_ENABLE)
 BYTE code tLogoOsdMap[] =
-{ 
+{
     6,         // Row Count
     LOBYTE(0x300),HIBYTE(0x300),
     21,   // Row 0 char count
@@ -1307,7 +1308,7 @@ void CDrawLogo(BYTE ucDouble)
     BYTE x;
     BYTE y;
     BYTE ucFont = 0x00;
-	
+
     COsdFxDisableOsd();
 
     SetOsdMap(tLogoOsdMap);
@@ -1325,7 +1326,7 @@ void CDrawLogo(BYTE ucDouble)
     COsdLoad1BitFontWidth12(FntLogoDot3, 0x75, 0x04);
 
 	CScalerSetBit(_OVERLAY_CTRL_6C, 0x23, ((0x00) << 2));
-    
+
     bLoadLogoFont = 1;
 
     // Init osd
@@ -1333,8 +1334,8 @@ void CDrawLogo(BYTE ucDouble)
     OSDClear(ROW(0), HEIGHT(6), COL(0), WIDTH(21), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(0), HEIGHT(6), COL(0), WIDTH(21), 0x00, BYTE_DISPLAY);
 	OSDClear(ROW(0), HEIGHT(6), COL(0), WIDTH(21), 0xA0, BYTE_COLOR);
-    SetOSDDouble(ucDouble);   
-	
+    SetOSDDouble(ucDouble);
+
     if (ucDouble)
         OSDPosition(_OSD_DOUBLE_WIDTH(_LOGO_WIDTH), _OSD_DOUBLE_HEIGHT(_LOGO_HEIGHT), 50, 50, 0x03);
     else
@@ -1344,7 +1345,7 @@ void CDrawLogo(BYTE ucDouble)
     for(y = 0; y < 6; y++)
     {
         for(x = 0; x < 19; x++)
-        {  
+        {
             Gotoxy(x, y, BYTE_DISPLAY);
             OutputChar(ucFont);
             ucFont++;
@@ -1375,7 +1376,7 @@ void CDrawLogo(BYTE ucDouble)
     OutputChar(0x86);
     OutputChar(0x87);
     OutputChar(0x88);
-              
+
     // 2bit font 2
 	OSDClear(ROW(4), HEIGHT(2), COL(15), WIDTH(4), 0xB0, THE_BYTE0);
 	OSDClear(ROW(4), HEIGHT(2), COL(15), WIDTH(4), 0x1A, BYTE_COLOR);
@@ -1389,17 +1390,17 @@ void CDrawLogo(BYTE ucDouble)
     OutputChar(0x8E);
     OutputChar(0x8F);
     OutputChar(0x90);
-                
+
 
     // 1bit font 3
-	OSDClear(ROW(4), HEIGHT(2), COL(19), WIDTH(2), 0xB0, BYTE_COLOR); 
+	OSDClear(ROW(4), HEIGHT(2), COL(19), WIDTH(2), 0xB0, BYTE_COLOR);
     Gotoxy(19, 4, BYTE_DISPLAY);
     OutputChar(0x75);
     OutputChar(0x76);
     Gotoxy(19, 5, BYTE_DISPLAY);
     OutputChar(0x77);
     OutputChar(0x78);
-	
+
 	COsdFxEnableOsd();
 }
 
@@ -1453,7 +1454,7 @@ void CPattenChange(void)
         }
     }
 }
-   
+
 #endif
 
 
@@ -1509,11 +1510,11 @@ void CNotUse(void)
 	CVgaEnable();
 	CDviEnable();
 	CTVEnable();
-   
+
 	CHDMIEnable();
     Draw2bit3x2Icon(0,0,0);
               */
-    EnterSystemMenu(); 
+    EnterSystemMenu();
     //CSetTVSignalWidth();
     bChangeSource();
     CAdjustMZHueSat(0);

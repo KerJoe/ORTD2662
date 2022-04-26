@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : EepromDefault.h No.0001
 // Update Note  :
@@ -94,7 +95,7 @@ code StructYPbPrDataType tEEPROM_YPbPr_DATA =
 // Brightness/Contrast Default Value
 //--------------------------------------------------
 code StructColorProc0DataType tEEPROM_COLOR_PROC0_DATA[] =
-{    
+{
     // VGA
     _BRIGHTNESS_DEF,
     _CONTRAST_DEF,
@@ -235,19 +236,19 @@ code StructAudioDataType tEEPROM_AUDIO_DATA =
 code StructHueSaturationDataType tEEPROM_HUE_SAT_DATA[] =
 {
     // VGA
-    _HUE_DEF,     
+    _HUE_DEF,
     _SATURATION_DEF,
 
     // DVI/HDMI
-    _HUE_DEF,     
+    _HUE_DEF,
     _SATURATION_DEF,
 
     //VIDEO
-    _HUE_DEF,     
+    _HUE_DEF,
     _SATURATION_DEF,
 
     // YPbPr
-    _HUE_DEF,     
+    _HUE_DEF,
     _SATURATION_DEF,
 };
 
@@ -266,4 +267,3 @@ extern code StructAudioDataType tEEPROM_AUDIO_DATA;
 extern code StructHueSaturationDataType tEEPROM_HUE_SAT_DATA[];
 
 #endif
-

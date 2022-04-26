@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Auto.h No.0001
 // Update Note  :
@@ -93,7 +94,7 @@ typedef struct
 {
 	UINT8 Y_ADC_GAIN;
 	UINT8 U_ADC_GAIN;
-	UINT8 V_ADC_GAIN;	
+	UINT8 V_ADC_GAIN;
 	UINT8 Y_ADC_OFFSET;
 	UINT8 U_ADC_OFFSET;
 	UINT8 V_ADC_OFFSET;
@@ -101,14 +102,14 @@ typedef struct
 
 enum YPbPrModeDef
 {
- _MODE_576I = 0,         
- _MODE_480I,           	
+ _MODE_576I = 0,
+ _MODE_480I,
  _MODE_576P,    		// 720x 576px50HZ (802R)
  _MODE_480P,  			// 720x 480px50HZ (802R)
- _MODE_720P60,   		// 1280x 720px60HZ (802R) //forster modified 050823 
- _MODE_1080I25,    	// 1920x1080ix50HZ (802R) //forster modified 050823 
+ _MODE_720P60,   		// 1280x 720px60HZ (802R) //forster modified 050823
+ _MODE_1080I25,    	// 1920x1080ix50HZ (802R) //forster modified 050823
  _MODE_1080I30,   	// 1920x1080ix60HZ (802R) //forster modified 050823
- _MODE_720P50,   		// 1280x 720px50HZ        //forster modified 050823 
+ _MODE_720P50,   		// 1280x 720px50HZ        //forster modified 050823
  _MODE_1080P50,    	// 1920x1080px50HZ (802R) //forster modified 050823
  _MODE_1080P60 		// 1920x1080px60HZ (802R) //forster modified 050823
 };
@@ -181,5 +182,3 @@ extern void CYPbPrPorch_LevelCheck(void);
 
 #define HWAUTOSTEPNUM(x)                    x
 #define HWAUTOSTEPSTART(x)                  x
-
-

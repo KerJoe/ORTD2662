@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 /*=============================================
   * Copyright (c)      Realtek Semiconductor Corporation, 2005
   * All rights reserved.
@@ -29,6 +30,3 @@ extern void CScalerLoadFontInAbAddr(BYTE code *pArray, WORD usStartAddr, WORD us
 extern void CScalerLoadHardwareVLCFont(BYTE *pArray, WORD usOffset);
 extern BYTE CScalerGetVLD(void);
 extern bit CScalerGetBitVLD(void);
-
-
-

@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 #if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
 
 #define _FUNC_EN_CHK_KEY_DOWN       0
@@ -24,11 +25,11 @@ SKeyToOsdEvent code tKONoSignal[] =
 //------------------------------------------------------------
 // Key map
 SKeyToOsdEvent code tKOPublic[] =
-{  
+{
     // Shortcut key message
     {_SOURCE_KEY_MESSAGE,       _OE_CHANGE_SOURCE },
     {_IR_SOURCE_KEY_MESSAGE,	_OE_CHANGE_SOURCE },
-    {_MUTE_KEY_MESSAGE,         _OE_SC_MUTE       },    
+    {_MUTE_KEY_MESSAGE,         _OE_SC_MUTE       },
     {_VOL_DEC_KEY_MESSAGE,      _OE_SC_VOLUME     },
     {_VOL_INC_KEY_MESSAGE,      _OE_SC_VOLUME     },
     {_CH_DEC_KEY_MESSAGE,       _OE_SC_CH_DEC     },
@@ -47,7 +48,7 @@ SKeyToOsdEvent code tKOPublic[] =
     {_RETURN_KEY_MESSAGE,       _OE_SC_RETURN     },
     {_DISPLAY_KEY_MESSAGE,      _OE_DISPLAY       },
 
-    
+
     // End flag,not modify there
     {_NONE_KEY_MESSAGE,         _NONE_MSG         },
 };
@@ -57,18 +58,18 @@ SKeyToOsdEvent code tKOMenuNone[] =
 {
     {_IR_SOURCE_KEY_MESSAGE,	_OE_CHANGE_SOURCE      },
 	{_SOURCE_KEY_MESSAGE,		_OE_CHANGE_SOURCE      },
-	{_MENU_KEY_MESSAGE,         _OE_ENTER_SUBMENU      },	
+	{_MENU_KEY_MESSAGE,         _OE_ENTER_SUBMENU      },
 	{_RIGHT_KEY_MESSAGE,		_OE_SC_VOLUME          },
     {_LEFT_KEY_MESSAGE,         _OE_SC_VOLUME          },
-    {_UP_KEY_MESSAGE,           _OE_SC_CH_INC          },    
+    {_UP_KEY_MESSAGE,           _OE_SC_CH_INC          },
     {_DOWN_KEY_MESSAGE,         _OE_SC_CH_DEC          },
 
     {_IR_MENU_KEY_MESSAGE,		_OE_ENTER_SUBMENU      },
     {_IR_UP_KEY_MESSAGE,        _OE_SC_CH_INC          },
     {_IR_DOWN_KEY_MESSAGE,      _OE_SC_CH_DEC          },
     {_IR_LEFT_KEY_MESSAGE,      _OE_SC_VOLUME          },
-    {_IR_RIGHT_KEY_MESSAGE,     _OE_SC_VOLUME          },    
-    
+    {_IR_RIGHT_KEY_MESSAGE,     _OE_SC_VOLUME          },
+
     {_MUTE_KEY_MESSAGE,         _OE_SC_MUTE            },
     {_VOL_DEC_KEY_MESSAGE,      _OE_SC_VOLUME          },
     {_VOL_INC_KEY_MESSAGE,      _OE_SC_VOLUME          },
@@ -102,8 +103,8 @@ SKeyToOsdEvent code tKOMainMenu[] =
     {_IR_MENU_KEY_MESSAGE,		_OE_RETURN_UPMENU},
     {_IR_UP_KEY_MESSAGE,        _OE_MENU_PREV    },
     {_IR_DOWN_KEY_MESSAGE,      _OE_MENU_NEXT    },
-    {_IR_RIGHT_KEY_MESSAGE,     _OE_ENTER_SUBMENU}, 
-   
+    {_IR_RIGHT_KEY_MESSAGE,     _OE_ENTER_SUBMENU},
+
     // End flag,not modify there
     {_NONE_KEY_MESSAGE,         _NONE_MSG        },
 };
@@ -162,11 +163,11 @@ SKeyToOsdEvent code tKOAdjust[] =
 //------------------------------------------------------------
 
 SKeyToOsdEvent code tKOSource[] =
-{      
+{
     {_SOURCE_KEY_MESSAGE,       _OE_RETURN_UPMENU},
     {_LEFT_KEY_MESSAGE,         _OE_MENU_PREV    },
     {_RIGHT_KEY_MESSAGE,        _OE_MENU_NEXT    },
-    {_MENU_KEY_MESSAGE,         _OE_ENTER_SUBMENU}, 
+    {_MENU_KEY_MESSAGE,         _OE_ENTER_SUBMENU},
 
     {_IR_MENU_KEY_MESSAGE,      _OE_RETURN_UPMENU},
     {_IR_UP_KEY_MESSAGE,        _OE_MENU_PREV    },
@@ -182,7 +183,7 @@ SKeyToOsdEvent code tKOShortCut[] =
     {_MENU_KEY_MESSAGE,         _OE_RETURN_UPMENU},
     {_LEFT_KEY_MESSAGE,         _OE_ADJ_DEC      },
     {_RIGHT_KEY_MESSAGE,        _OE_ADJ_INC      },
- 
+
     {_IR_MENU_KEY_MESSAGE,      _OE_RETURN_UPMENU},
     {_IR_UP_KEY_MESSAGE,        _OE_MENU_PREV    },
     {_IR_DOWN_KEY_MESSAGE,      _OE_MENU_NEXT    },
@@ -205,7 +206,7 @@ SKeyToOsdEvent code tKOShortCutVolume[] =
 };
 //------------------------------------------------------------
 // Shortcut key inputch
-SKeyToOsdEvent code tKOShortInputCHMenu[] = 
+SKeyToOsdEvent code tKOShortInputCHMenu[] =
 {
     {_NUM_0_KEY_MESSAGE,        _OE_SC_INPUT_NUM0            },
     {_NUM_1_KEY_MESSAGE,        _OE_SC_INPUT_NUM1            },
@@ -219,8 +220,8 @@ SKeyToOsdEvent code tKOShortInputCHMenu[] =
     {_NUM_9_KEY_MESSAGE,        _OE_SC_INPUT_NUM9            },
     {_INPUT_CH_KEY_MESSAGE,     _OE_SC_INPUT_CHANGE_CH       },
     {_MENU_KEY_MESSAGE,         _OE_RETURN_UPMENU            },
-    
-    
+
+
     // End flag,not modify there
     {_NONE_KEY_MESSAGE,         _NONE_MSG                    },
 

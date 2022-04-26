@@ -1,9 +1,10 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Struct.h No.0000
 // Update Note  :
 //
 //----------------------------------------------------------------------------------------------------
-#include "Core\Header\Maindef.h"
+#include "alien/maindef_.h"
 
 #define _SET_INPUT_SOURCE(value)        (stSystemData.InputSource = value)
 #define _GET_INPUT_SOURCE()             stSystemData.InputSource
@@ -12,7 +13,7 @@
 #define _SET_BLUE_BACKGROUND(x)         stSystemData.MonitorFlag = (stSystemData.MonitorFlag & (~_BIT5)) | (x << 5)
 
 #define _BURNIN_ON						_BIT2
-#define _BURNIN_OFF						0x00	
+#define _BURNIN_OFF						0x00
 
 #define GET_BURNIN_STATE()          	(stSystemData.MonitorFlag & _BIT2)
 #define SET_BURNIN_STATE(x)             stSystemData.MonitorFlag = (stSystemData.MonitorFlag & (~_BIT2)) | (x << 2)
@@ -22,19 +23,19 @@
 #define _DISPMODE_AUTO					2
 
 #define GET_DISPLAYMODE()				(stSystemData.MonitorFlag & 0x03)
-#define SET_DISPLAYMODE(x)				stSystemData.MonitorFlag = ((stSystemData.MonitorFlag & 0xFC) | x) 
+#define SET_DISPLAYMODE(x)				stSystemData.MonitorFlag = ((stSystemData.MonitorFlag & 0xFC) | x)
 
 //------------------------------------------------------------------------------
 // Reset
 //------------------------------------------------------------------------------
-#define _RESET_SELECT_STATE                0x40  
-#define _RESET_NO_STATE                    0x00 
-#define _GET_RESET_SELECT_STATE()         (stOsdUserData.OsdSettingFlag & _BIT6)  
+#define _RESET_SELECT_STATE                0x40
+#define _RESET_NO_STATE                    0x00
+#define _GET_RESET_SELECT_STATE()         (stOsdUserData.OsdSettingFlag & _BIT6)
 #define _SET_RESET_SELECT_STATE(x)     stOsdUserData.OsdSettingFlag = (stOsdUserData.OsdSettingFlag & (~_BIT6)) | x
 //------------------------------------------------------------------------------
 
 #define GET_OSD_SIZE()   				(stSystemData.MonitorFlag & _BIT3)
-#define SET_OSD_SIZE(x)  				stSystemData.MonitorFlag = ((stSystemData.MonitorFlag & (~_BIT3)) | (x << 3)) 
+#define SET_OSD_SIZE(x)  				stSystemData.MonitorFlag = ((stSystemData.MonitorFlag & (~_BIT3)) | (x << 3))
 
 #define _GET_POWER_DOWN_TIME()          ((stTvInfo.TvSettingFlag >> 2) & 0x0F)
 #define _SET_POWER_DOWN_TIME(x)         stTvInfo.TvSettingFlag = (stTvInfo.TvSettingFlag & 0xC3) | (x << 2)
@@ -66,8 +67,8 @@
 //IR
 //------------------------------------------------------------------------------
 #define _GET_IR_MODE()				    ((bit)(stSystemData.IRStatus & _BIT1))
-#define _SET_IR_MODE()					(stSystemData.IRStatus |= _BIT1) 
-#define _CLR_IR_MODE()					(stSystemData.IRStatus &= ~_BIT1) 
+#define _SET_IR_MODE()					(stSystemData.IRStatus |= _BIT1)
+#define _CLR_IR_MODE()					(stSystemData.IRStatus &= ~_BIT1)
 //------------------------------------------------------------------------------
 
 #define _CT_9300						0
@@ -81,7 +82,7 @@
 //--------------------------------------------------
 typedef struct
 {
-    UINT8 PolarityFlag;              
+    UINT8 PolarityFlag;
     UINT16 IHWidth;                   // Input Horizontal Width
     UINT16 IVHeight;                  // Input Vertical Height
     UINT16 IHFreq;                    // Input Horizontal Frequency
@@ -252,19 +253,19 @@ typedef struct
 		//		0: ccmute
 		// 		1: CC1, 2:CC2, 3:CC3, 4:CC4,
 		//		5: TT1, 6:TT2, 7:TT3, 8:TT4
-	UINT8 Mode;//use for picture mode and audio mode  
+	UINT8 Mode;//use for picture mode and audio mode
                //-------picture mode--------
-		//bit 7~4	[0: standard			±ê×¼]
-		//			[1: bright				ÁÁÀö]
-		//			[2: MILD				ÈáºÍ]
-		//			[3: movie			    µçÓ°]
-		//			[4: user				ÓÃ»§]  
+		//bit 7~4	[0: standard			ï¿½ï¿½×¼]
+		//			[1: bright				ï¿½ï¿½ï¿½ï¿½]
+		//			[2: MILD				ï¿½ï¿½ï¿½]
+		//			[3: movie			    ï¿½ï¿½Ó°]
+		//			[4: user				ï¿½Ã»ï¿½]
 		//--------audio mode---------
-		//bit 0~3		[0: standard		±ê×¼]
+		//bit 0~3		[0: standard		ï¿½ï¿½×¼]
 		//			[1: THEATER			    Ó°Ôº]
-		//			[2: music				ÒôÀÖ]
-		//			[3: news				ÐÂÎÅ]
-		//			[3: user				ÓÃ»§]
+		//			[2: music				ï¿½ï¿½ï¿½ï¿½]
+		//			[3: news				ï¿½ï¿½ï¿½ï¿½]
+		//			[3: user				ï¿½Ã»ï¿½]
 		//---------------------------------------
 
 } StructSystemDataType;
@@ -280,7 +281,7 @@ typedef struct
 }StructICMColor;
 //------------------------------------------------------
 
-typedef struct 
+typedef struct
 {
     BYTE KeyMessage;
     BYTE OsdEvent;
@@ -360,8 +361,8 @@ typedef struct
 #define SET_MODESELECT_TYPE(x) 	            (stSystemData.Gamma =  (stSystemData.Gamma & ~_BIT7) | (x<<7))
 
 //brighty for skyworth
-#define GET_Picture_Mode()			        ((stSystemData.Mode & (_BIT7|_BIT6|_BIT5|_BIT4)) >> 4)							
-#define SET_Picture_Mode(x)			        (stSystemData.Mode = (stSystemData.Mode & ~(_BIT7|_BIT6|_BIT5|_BIT4) | (x<<4)))	
+#define GET_Picture_Mode()			        ((stSystemData.Mode & (_BIT7|_BIT6|_BIT5|_BIT4)) >> 4)
+#define SET_Picture_Mode(x)			        (stSystemData.Mode = (stSystemData.Mode & ~(_BIT7|_BIT6|_BIT5|_BIT4) | (x<<4)))
 #define GET_Sound_Mode() 			        (stSystemData.Mode & (_BIT0 | _BIT1|_BIT2|_BIT3))
 #define SET_Sound_Mode(x) 			        (stSystemData.Mode = (stSystemData.Mode & ~(_BIT0 | _BIT1|_BIT2|_BIT3)) | x)
 
@@ -476,7 +477,7 @@ typedef struct
 		// Bit 1~0: Input channel state
         //        00: Input one channel   -
         //        01: Input two channel   --
-        //        02: Input three channel ---  
+        //        02: Input three channel ---
 	UINT16 TvRating;
 		// D11 : TV-MA-V
 		// D10 : TV-MA-S
@@ -570,7 +571,7 @@ struct CTimerEventTable
     void (*Event)(void);
 };
 
-typedef struct		
+typedef struct
 {
     UINT8 Hue;
     UINT8 Saturation;

@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : SystemTable.h No.0002
 // Update Note  :
@@ -56,10 +57,10 @@ BYTE code tSCALER_RESET_TABLE[] =
 
     //6,  _AUTOINC,       _P0_ADC_SOG0_CTRL_D2,           0x20, 0x11, 0x00, //for SOG0 CTRL, DC Restore/Clamp Enable	//v003
 	// 4,  _NON_AUTOINC,   _P0_SOG1_CTRL_AC,               0x20, //for SOG1 CTRL
-		
+
     4,  _NON_AUTOINC,   _P0_ADC_POWER_C6,               0x38,
-    4,  _NON_AUTOINC,   _P0_ADC_V_BAIS1_CB,             0x00,	//v003	
-    4,  _NON_AUTOINC,   _P0_ADC_CLAMP_CTRL1_D5,         0x00, 
+    4,  _NON_AUTOINC,   _P0_ADC_V_BAIS1_CB,             0x00,	//v003
+    4,  _NON_AUTOINC,   _P0_ADC_CLAMP_CTRL1_D5,         0x00,
 
     4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGE1,	//v003
     4,  _NON_AUTOINC,   _P1_MIX_B0,                     0x00,				//v003
@@ -68,7 +69,7 @@ BYTE code tSCALER_RESET_TABLE[] =
 	//11, _AUTOINC,       _P2_TMDS_OUTPUT_CTRL_A6,        0x78,0x0f,0x03,0x00,0x31,0x70,0xe3,0x24,
 
     4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGE6,
-	4,  _NON_AUTOINC,   _P6_UZD_CTRL1_E4,        				0x00,		
+	4,  _NON_AUTOINC,   _P6_UZD_CTRL1_E4,        				0x00,
     4,  _NON_AUTOINC,   _P6_ENABLE_BIST_CTRL_A0,        0x00,//v003
     4,  _NON_AUTOINC,   _P6_PEAKING_ENABLE_C1,          0x00,//v003
     4,  _NON_AUTOINC,   _P6_YUV422_TO_YUV444_D4,        0x00,
@@ -99,15 +100,15 @@ BYTE code tSCALER_POWERUP_INITIAL[] =
 
     4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGEB,//eric 20070530
     4,  _NON_AUTOINC,   _PB_SOYCH0_CFG3_C3,             _SOY_LEVEL,
-    
+
     4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGE0,
     4,  _NON_AUTOINC,   _P0_ADC_RBG_CTRL_CE,            0x7E,
     4,  _NON_AUTOINC,   _P0_ADC_POWER_C6, 	            0x08,
    // 6,  _AUTOINC,       _P0_ADC_SOG0_CTRL_D2,           0x20, 0x11, 0xff, //for SOG0 CTRL, DC Restore/Clamp Enable
-#if(_YPBPR_SYNC_SOURCE == _SOG0)	    
-  	6,  _AUTOINC,       _P0_ADC_SOG0_CTRL_D2,           _SOY_LEVEL, 0x01,0x0F, 
+#if(_YPBPR_SYNC_SOURCE == _SOG0)
+  	6,  _AUTOINC,       _P0_ADC_SOG0_CTRL_D2,           _SOY_LEVEL, 0x01,0x0F,
 #else
-   	6,  _AUTOINC,       _P0_ADC_SOG0_CTRL_D2,           _SOY_LEVEL, 0x10,0xF0, 
+   	6,  _AUTOINC,       _P0_ADC_SOG0_CTRL_D2,           _SOY_LEVEL, 0x10,0xF0,
 #endif
 //    4,  _NON_AUTOINC,   _P0_POWER_ON_RESET_F3,          0xC0,//0x00,//eric 20070529
     4,  _NON_AUTOINC,   _P0_HS_SCHMITT_TRIGGER_CTRL_F4, 0xe9,
@@ -126,11 +127,11 @@ BYTE code tSCALER_POWERUP_INITIAL[] =
 #endif  // End of #if(_M2PLL_USE == _ON)
 
 #if(_YPBPR_HW_AUTO_SOY == _ENABLE)
-    4,  _NON_AUTOINC,   _P1_LOOP_FILTER_CAPACITOR_EB,      0xDC, 
- #endif   
+    4,  _NON_AUTOINC,   _P1_LOOP_FILTER_CAPACITOR_EB,      0xDC,
+ #endif
 
     4,  _NON_AUTOINC,   _V8_YUV_CONVERSION_1F,          0x08,
-    
+
 	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGE2,
     7,  _AUTOINC,       _P2_ADAPTIVE_EQUALIZER_B4,      0x02,0x58,0x00,0x00,
     4,  _NON_AUTOINC,   _P2_HDMI_APC_C8,                0x01,//For DVI/HDMI enable
@@ -189,9 +190,9 @@ BYTE code tLVDS_INITIAL[] =
     /*
 #if( _2660_IC_VERB)
 	9,  	_NON_AUTOINC,   	_TCON_DATA_PORT_8C,             	0x00,0xD7,0xc7,0x1c,0x80,0x80,
-#else	 
+#else
     9,  	_NON_AUTOINC,   	_TCON_DATA_PORT_8C,             	0x00,0x17,0xc7,0x1c,0x80,0x80,//cyc_LVDS_Bug
-#endif  */  
+#endif  */
 
 	9,  	_NON_AUTOINC,   	_TCON_DATA_PORT_8C,             	0x00,0xD7,0xc7,0x1c,0x80,0x80,
 
@@ -368,7 +369,7 @@ BYTE code tHDCP_CTRL[] =
 #endif  // End of #if(_HDCP_SUPPORT == _ON)
 
 #if((_DE_INTERLACE_SUPPORT == _ON) && (_TMDS_SUPPORT == _ON))	//v003_interlace_check
-BYTE code tTMDS_RGB_TO_YUV[] = 
+BYTE code tTMDS_RGB_TO_YUV[] =
 {
     4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,               0x18,
     21, _NON_AUTOINC,   _YUV_RGB_COEF_DATA_9D,          0x01,0x32,0x02,0x59,0x00,0x75,

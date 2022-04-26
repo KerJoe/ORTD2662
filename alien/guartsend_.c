@@ -1,6 +1,7 @@
+#include "alien/global_.h"
 #define __GUART__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 #if(_UART_SND_EN == _ON)
 
@@ -20,7 +21,7 @@ void CUartDelay(void)
      _nop_();
      _nop_();
      _nop_();
-     _nop_(); 
+     _nop_();
 */
 
 	_nop_();
@@ -36,43 +37,43 @@ void CUartDelay(void)
 void CUartSend(BYTE c)
 {
     ucUartSendData = c;
-    
+
     EA = 0;
     // send begin
     UART_SEND(0);
     CUartDelay();
-    
+
     UART_SEND(bSndBit0);
     CUartDelay();
-    
+
     UART_SEND(bSndBit1);
     CUartDelay();
-    
+
     UART_SEND(bSndBit2);
     CUartDelay();
-    
+
     UART_SEND(bSndBit3);
     CUartDelay();
-    
+
     UART_SEND(bSndBit4);
     CUartDelay();
-    
+
     UART_SEND(bSndBit5);
     CUartDelay();
-    
+
     UART_SEND(bSndBit6);
     CUartDelay();
-    
+
     UART_SEND(bSndBit7);
     CUartDelay();
-    
+
     // Send Stop 2 bit
     UART_SEND(1);
     CUartDelay();
-    
+
     UART_SEND(1);
     CUartDelay();
-    
+
     EA = 1;
 }
 //-------------------------------------------------------------------------
@@ -81,7 +82,7 @@ void CUartSendString(char* String)
      while(*String)
      {
          CUartSend(*String);
-         String++;         
+         String++;
      }
 }
 //-------------------------------------------------------------------------

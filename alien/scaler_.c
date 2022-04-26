@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Scaler.c No.0003
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __SCALER__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 //--------------------------------------------------
 // Description  : Get bytes from selected register in data port
@@ -21,7 +22,7 @@ void CScalerGetDataPortByte(BYTE ucAddr, BYTE ucValue, BYTE ucLength, BYTE *pArr
 {
     if(ucLength > 0)
     {
-        if((ucAddr == _SU_ACCESS_PORT_33) || (ucAddr == _HW_ACCESS_PORT_60) 
+        if((ucAddr == _SU_ACCESS_PORT_33) || (ucAddr == _HW_ACCESS_PORT_60)
         || (ucAddr == _CB_ACCESS_PORT_64) || (ucAddr == _PC_ACCESS_PORT_9A))
         {
             CScalerSetByte(ucAddr, 0x80);
@@ -47,7 +48,7 @@ void CScalerInitial(void)
     CScalerSetBit(_HOST_CTRL_01, ~_BIT0, 0x00);
     CIrdaInitial();
 	CScalerCodeW(tSCALER_POWERUP_INITIAL);
-	
+
 	#if( (_YPBPR_SUPPORT == _ON) && (_YPBPR_HW_AUTO_SOY == _ENABLE) )
 	CYPbPrHWAutoSOY();
 	#endif
@@ -56,18 +57,18 @@ void CScalerInitial(void)
 	CScalerCodeW(tSCALER_POWERUP_HDMI);
 	#else
 	CScalerCodeW(tSCALER_POWERUP_DVI);
-	#endif	
+	#endif
 
     CScalerReset();
 
 	#if(_HDCP_SUPPORT == _ON)
 	//bHPD = 0;//Hot Plug Detect Pull LOW
-	bHot_Plug = _HOT_PLUG_LOW;//bHot_Plug = 0;
+	XSFRWriteByte(bHot_Plug, _HOT_PLUG_LOW);//bHot_Plug = 0;
 	CAdjustHDCP();//HDCP1.0 for DVI
 	//bHPD = 1;//Hot Plug Detect Pull HIGH
 	CTimerDelayXms(100);//20070714 gary for HDMI compatibility problem
 //	bHot_Plug = _HOT_PLUG_HI;//bHot_Plug = 1;
-	CTimerDelayXms(100);//CTimerDelayXms(1000);		
+	CTimerDelayXms(100);//CTimerDelayXms(1000);
 	#endif
 
 //Alanli20070801###
@@ -117,20 +118,20 @@ void CScalerReset(void)
         	CScalerPageSelect(_PAGE0);
         	CScalerSetByte(_P0_ADC_DCR_CTRL_D3,0x11);
         	CScalerSetByte(_P0_ADC_CLAMP_CTRL0_D4,0x00);
-        }        
+        }
 
        	CAdjustTMDSErrorCorrectionOn();
        	//CAdjustSRGB();
 
 		#if (_GAMMA_TYPE == _COMPACT_GAMMA_NORMAL_TABLE)
        		CAdjustGamma(_COMPACT_GAMMA_NORMAL_TABLE, tGAMMA_COMPACT1, tGAMMA_COMPACT1, tGAMMA_COMPACT1);
-		#elif ( (_GAMMA_TYPE == _FULL_GAMMA_NORMAL_TABLE) || (_GAMMA_TYPE == _FULL_GAMMA_COMPRESS_TABLE2) )	
+		#elif ( (_GAMMA_TYPE == _FULL_GAMMA_NORMAL_TABLE) || (_GAMMA_TYPE == _FULL_GAMMA_COMPRESS_TABLE2) )
        		CAdjustGammaTable(GET_GAMMA());
 		#endif
 
 		if(GET_18BIT_EN() == _DISP_18_BIT)
        		CAdjustDither(tDITHER_SEQ_TABLE_0, tDITHER_TABLE_10_TO_6);
-       		
+
        	else if(GET_18BIT_EN() == _DISP_24_BIT)
        		CAdjustDither(tDITHER_SEQ_TABLE_0, tDITHER_TABLE_10_TO_8);
 
@@ -139,8 +140,8 @@ void CScalerReset(void)
 		//if(GET_INPUTSOURCE_TYPE() == _SOURCE_VGA)
 		//	CScalerSetBit(_IPH_ACT_WID_H_16, ~(_BIT6 | _BIT5 | _BIT4), ((_ADC0_INPUT_SWAP_RG << 4) | (_ADC0_INPUT_SWAP_RB << 5)| (_ADC0_INPUT_SWAP_GB << 6)));
 		//else if(GET_INPUTSOURCE_TYPE() == _SOURCE_YPBPR)
-		//	CScalerSetBit(_IPH_ACT_WID_H_16, ~(_BIT6 | _BIT5 | _BIT4), ((_ADC1_INPUT_SWAP_RG << 4) | (_ADC1_INPUT_SWAP_RB << 5)| (_ADC1_INPUT_SWAP_GB << 6)));		
-		
+		//	CScalerSetBit(_IPH_ACT_WID_H_16, ~(_BIT6 | _BIT5 | _BIT4), ((_ADC1_INPUT_SWAP_RG << 4) | (_ADC1_INPUT_SWAP_RB << 5)| (_ADC1_INPUT_SWAP_GB << 6)));
+
        	CAdjustBrightness();
 		CAdjustContrast();
 
@@ -186,7 +187,7 @@ void CScalerInitialDisplayInterface(void)
 {
     BYTE ucLVDSMapTemp;
 
-    CScalerSetByte(_TCON_ADDR_PORT_8B, _TCON_LVDS_CTRL3_A3);     
+    CScalerSetByte(_TCON_ADDR_PORT_8B, _TCON_LVDS_CTRL3_A3);
 	CScalerRead(_TCON_DATA_PORT_8C, 1, &ucLVDSMapTemp, _NON_AUTOINC);
     ucLVDSMapTemp &= 0xFE;
     if (!GET_LVDS_MAP()) // MAP2
@@ -212,7 +213,7 @@ void CScalerInitialDisplayInterface(void)
 	}
 
     // Set LVDS MAP
-    CScalerSetByte(_TCON_ADDR_PORT_8B, _TCON_LVDS_CTRL3_A3);     
+    CScalerSetByte(_TCON_ADDR_PORT_8B, _TCON_LVDS_CTRL3_A3);
 	CScalerSetByte(_TCON_DATA_PORT_8C, ucLVDSMapTemp);
 
     // Eric Lee add for IC version auto detect
@@ -228,7 +229,7 @@ void CScalerInitialDisplayOutput(void)
 {
 	// Display signal control settings
 	BYTE ucTemp = 0x00;
-	
+
 	if(GET_18BIT_EN() == _DISP_18_BIT)
 	{
 	    ucTemp |= _BIT4;
@@ -236,9 +237,9 @@ void CScalerInitialDisplayOutput(void)
 
 	if(GET_DOUBLE_PORT_EN() == _DISP_DOUBLE_PORT)
 	{
-        ucTemp |= _BIT2; 
+        ucTemp |= _BIT2;
 	}
-    
+
 	CScalerSetBit(_VDISP_CTRL_28, ~(_BIT4 | _BIT2), ucTemp);
 	CScalerSetByte(_VDISP_SIGINV_29, Panel[ucPanelSelect]->PanelConfig & (~_BIT3));
 }
@@ -278,7 +279,7 @@ void CScalerDisableDisplayOutput(void)
 void CScalerDisableNonlinearScaleUp(void)
 {
 	((DWORD*) pData)[0] = 0; //Disable non linear scale up first
-	
+
 	CScalerSetByte(_SU_ACCESS_PORT_33, 0x8c);
 	CScalerSetByte(_SU_ACCESS_PORT_33, 0x8c);
 	CScalerWrite(_SU_DATA_PORT_34, 4, pData, _NON_AUTOINC);
@@ -475,7 +476,7 @@ void CScalerNonlinearScaleDown(BYTE Option)
 	   //CScalerSetBit(_SCALE_DOWN_CTRL_23, 0xf7, 0x00);//disable non-linear scale down
        	return;
 	}
-	
+
     FlatSdFac =  68 + (10 - GET_NONLINEAR_VALUE());	//range from 68 ~ 78
 
 	if (Option & _BIT3 ) // non-linear scaling down
@@ -498,7 +499,7 @@ void CScalerNonlinearScaleDown(BYTE Option)
 
 		if (((UINT32*)pData)[3] > 0x3fff) //Accumulated factor too large
 			return;
-		
+
 		pData[3] = pData[14] & 0x3f;
 		pData[4] = pData[15];
 

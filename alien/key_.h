@@ -1,6 +1,7 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Key.h No.0000
-// Update Note  : 
+// Update Note  :
 //
 //----------------------------------------------------------------------------------------------------
 #define _ABS(VALUE1,VALUE2)      (VALUE1 > VALUE2 ? (VALUE1) - (VALUE2) : (VALUE2) - (VALUE1))
@@ -59,7 +60,7 @@ enum
 {
     _NONE_KEY_MESSAGE = 0,   				//0x00
     _POWER_KEY_MESSAGE,       				//0x01
-    
+
     _MENU_KEY_MESSAGE, 						//0x02
     _AUTO_KEY_MESSAGE, 						//0x03
     _SOURCE_KEY_MESSAGE,					//0x04
@@ -134,7 +135,7 @@ enum
     _IR_FUNC_VOL_DEC,
     _IR_FUNC_VOL_INC,
 
-    _RETURN_KEY_MESSAGE  
+    _RETURN_KEY_MESSAGE
 };
 
 
@@ -147,7 +148,7 @@ BYTE idata ucKeyControl;
 BYTE idata ucKeyMessage;
 BYTE idata ucKeyStatePrev;
 BYTE idata ucKeyStateCurr;
-  
+
 #else
 
 //--------------------------------------------------
@@ -189,5 +190,3 @@ void CGetADCValue(BYTE *pBuf);
 extern BYTE idata ucKeyADValue;
 #endif
 //----------------------------------------------------------------------------------------------------
-
-

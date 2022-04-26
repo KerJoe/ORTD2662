@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 /*===========================================================
  * Copyright (c)      Realtek Semiconductor Corporation, 2005
  * All rights reserved.
@@ -22,7 +23,7 @@
 #define _ADJUST_CUSTOMER_C
 
 /*===================== Module dependency  ================== */
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 //--------------------------------------------------
 // Description  : Adjust sharpness
@@ -69,13 +70,13 @@ void CAdjustContrast(void)
     		//pData[cnt] = (((WORD)stColorTempData.ColorTemp[cnt] * stConBriData.Contrast / 128) > 255) ? 255 : (BYTE)((WORD)stColorTempData.ColorTemp[cnt] * stConBriData.Contrast / 128);
         	pData[cnt] = (BYTE)(((WORD)stColorTempData.ColorTemp[cnt+3] * (stConBriData.Contrast+_CONTRAST_MIN) / 128) > 255) ? 255 : (BYTE)((WORD)stColorTempData.ColorTemp[cnt+3] * (stConBriData.Contrast+_CONTRAST_MIN) / 128);
 		}
-	}			
+	}
 	else
     {
 		pData[0] = (0x80 + stConBriData.Contrast - 38);
 		pData[1] = (0x80 + stConBriData.Contrast - 38);
 		pData[2] = (0x80 + stConBriData.Contrast - 38);
-	}	
+	}
 
 	CAdjustSetContrast();
 }
@@ -93,7 +94,7 @@ void CAdjustYpbprhue(BYTE  ucYPbPrhue)
 #define _YUV2RGB_k32   4
 UINT16 tYUV2RGB_COEF_601_YCbCr[] =
 {
- 
+
   0x0100, // k11
   0x0166, // k13
   0x0058, // k22
@@ -102,10 +103,10 @@ UINT16 tYUV2RGB_COEF_601_YCbCr[] =
   0x0000, // R-offset
   0x0000, // G-offset
   0x0000, // B-offset
- 
+
   0x0000, // Y Clamp (Y-16)
   0x0001, // UV Clamp (UV-512)
- 
+
 };              */
 
 void CAdjustYpbprSaturation(BYTE  ucYPbPrSaturation)
@@ -129,15 +130,15 @@ void CAdjustYpbprSaturation(BYTE  ucYPbPrSaturation)
     {
     	PR = (temp <= 50)  ? ((WORD)stYPbPrData.YPbPrGain[_RED] + ((50 - temp) << 2)) :
     	((WORD)stYPbPrData.YPbPrGain[_RED] - (temp - 50));
-    
+
     	PB = (temp <= 50)  ? ((WORD)stYPbPrData.YPbPrGain[_BLUE] + ((50 - temp) << 2)) :
     	((WORD)stYPbPrData.YPbPrGain[_BLUE] - (temp - 50));
-    
+
     	if(HIBYTE(PB)>0)
     		PB  = HIBYTE(PB) < 0x02 ? 0x00FF : 0 ;
     	if (HIBYTE(PR)>0)
     		PR  = HIBYTE(PR) < 0x02 ? 0x00FF : 0 ;
-    
+
     	#if(_ADC1_INPUT_SWAP_RG == _ON)
     	pData[1] = PR;
     	pData[0] = stYPbPrData.YPbPrGain[_GREEN];
@@ -167,20 +168,20 @@ void CAdjustYpbprSaturation(BYTE  ucYPbPrSaturation)
     new_coeffs =  (double)  tYUV2RGB_COEF_601_YCbCr[_YUV2RGB_k13] * ucYPbPrSaturation;
     new_coeffs = (new_coeffs >> 7) ;
     new_k13 = (new_coeffs > 0x1ff) ? 0x1ff: new_coeffs;
-    
+
     new_coeffs = (double)  tYUV2RGB_COEF_601_YCbCr[_YUV2RGB_k22]  * ucYPbPrSaturation;
     new_coeffs = (new_coeffs >> 7) ;
-    
+
     new_k22 = (new_coeffs > 0xff) ? 0xff: new_coeffs;
-    
+
     new_coeffs = (double)   tYUV2RGB_COEF_601_YCbCr[_YUV2RGB_k23]  * ucYPbPrSaturation;
     new_coeffs = (new_coeffs >> 7) ;
-    
+
     new_k23 = (new_coeffs > 0xff) ? 0xff: new_coeffs;
-    
+
     new_coeffs = (double)   tYUV2RGB_COEF_601_YCbCr[_YUV2RGB_k32]  * ucYPbPrSaturation;
     new_coeffs = (new_coeffs >> 7) ;
-    
+
     new_k32 = (new_coeffs > 0x3ff) ? 0x3ff: new_coeffs;
 
 
@@ -420,7 +421,7 @@ void CAdjustCustomerColorMode(void)
 		//SET_YPbPrSaturation(ColorType[2][9]);
 		//SET_YPbPrHue(ColorType[2][10]);
         SET_SATURATION(ColorType[2][9]);
-		SET_HUE(ColorType[2][10]);			
+		SET_HUE(ColorType[2][10]);
 		CEepromSaveSystemData();
 
 		CAdjustPeakingFilter(GET_PEAKING_CORING());
@@ -432,9 +433,9 @@ void CAdjustCustomerColorMode(void)
 		CScalerSetBit(_COLOR_CTRL_62, 0xFF, _BIT2);
 	}
 	else
-	{	
+	{
 		if(_GET_INPUT_SOURCE() == _SOURCE_VIDEO_TV)
-		{	
+		{
 			pData[0] = ColorType[1][0];
 			pData[1] = ColorType[1][1];
 			pData[2] = ColorType[1][2];
@@ -452,11 +453,11 @@ void CAdjustCustomerColorMode(void)
 			SET_HUE(ColorType[1][10]);
 			CVideoSetVDCBrightness(ColorType[1][8]);
 			I2CByteWrite(0x80,_VIDEO_DEVICE,ColorType[1][11]);
-			
+
 			CEepromSaveSystemData();
 		}
 		else
-		{	
+		{
 			pData[0] = ColorType[0][0];
 			pData[1] = ColorType[0][1];
 			pData[2] = ColorType[0][2];
@@ -474,13 +475,13 @@ void CAdjustCustomerColorMode(void)
 			SET_HUE(ColorType[0][10]);
 			CVideoSetVDCBrightness(ColorType[0][8]);
 		    I2CByteWrite(0x80,_VIDEO_DEVICE,ColorType[0][11]);
-			
+
 			CEepromSaveSystemData();
 		}
 		CAdjustPeakingFilter(GET_PEAKING_CORING());
 		CVideoSetContrast(GET_CONTRAST());
 		CVideoSetSaturation(GET_SATURATION());
-		kx_CAdjustVDCHue(GET_HUE());		
+		kx_CAdjustVDCHue(GET_HUE());
 	}
 	#endif
 
@@ -592,14 +593,14 @@ void CAdjustHueSatSet(BYTE color, SWORD TempU1, SWORD TempU2, SWORD TempV1, SWOR
     //CTimerWaitForEvent(_EVENT_DEN_STOP);
     CScalerSetByte(_P7_ICM_SEL_D1,value);
     CScalerSetByte(_P7_ICM_ACCESS_PORT_D2,((color & 0xf0)+0x03));
-	//CScalerSendAddr(_P7_ICM_DATA_PORT_D3, _WRITE, _NON_AUTOINC);//provisional �ȩw
-	
+	//CScalerSendAddr(_P7_ICM_DATA_PORT_D3, _WRITE, _NON_AUTOINC);//provisional �ȩw
+
     for(i=1; i<9; i++)
     {
 		u = ((TempU1+TempU2)*CAdjustColorGammaCal(value, i)/64) - ((TempU1*i)/8);
 		v = ((TempV1+TempV2)*CAdjustColorGammaCal(value, i)/64) - ((TempV1*i)/8);
-        CScalerSetByte(_P7_ICM_DATA_PORT_D3,u);	//CScalerSetByte(0xe3,u);		
-        CScalerSetByte(_P7_ICM_DATA_PORT_D3,v);	//CScalerSetByte(0xe3,v);		
+        CScalerSetByte(_P7_ICM_DATA_PORT_D3,u);	//CScalerSetByte(0xe3,u);
+        CScalerSetByte(_P7_ICM_DATA_PORT_D3,v);	//CScalerSetByte(0xe3,v);
     }
  	if(_GET_INPUT_SOURCE() == _SOURCE_VGA || _GET_INPUT_SOURCE() == _SOURCE_DVI)//CGetInputSourceNum(_GET_INPUT_SOURCE())>1)
  		CScalerSetByte(_P7_ICM_CTRL_D0,0xdf);
@@ -667,11 +668,11 @@ void CAdjustPeakingFilter(SBYTE ucPeaking)
 	else if(_GET_INPUT_SOURCE() == _SOURCE_YPBPR)
     {
 		//if(HDMI_V_Height>=720)		//720p above
-			pData[0] = 0x00;					//bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels      
+			pData[0] = 0x00;					//bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels
 		//else
-			//pData[0] = 0x00;					//bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels      
-		pData[1] = 0x7E;						//Peaking_C0 (126) 
-		pData[2] = 0xF7;						//Peaking_C1 (-19) 	
+			//pData[0] = 0x00;					//bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels
+		pData[1] = 0x7E;						//Peaking_C0 (126)
+		pData[2] = 0xF7;						//Peaking_C1 (-19)
 		pData[3] = 0x4A;						//Peaking_C2 (82)
 		pData[4] = 0x00;						//Gain_Blur
 		GainPos  = ucPeaking * 195;
@@ -681,14 +682,14 @@ void CAdjustPeakingFilter(SBYTE ucPeaking)
 		pData[7] = 0x00;						//Pos_Range(MSB)+Neg_Range(MSB)
 		pData[8] = 0x20;						//Pos_Range(LSB)(1023)
 		pData[9] = 0x40; 						//Neg_Range(LSB)(1023)
-		pData[10] = 0x0E;					//Coring(LV_min~LV_max)			
-	}	
+		pData[10] = 0x0E;					//Coring(LV_min~LV_max)
+	}
 	else
     {//AV SV TV
 	     #if 1
-		pData[0] = 0x00; //bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels        
-		pData[1] = 0x7E; //Peaking_C0 (126) 
-		pData[2] = 0xF7; //Peaking_C1 (-9)  
+		pData[0] = 0x00; //bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels
+		pData[1] = 0x7E; //Peaking_C0 (126)
+		pData[2] = 0xF7; //Peaking_C1 (-9)
 		pData[3] = 0x4A; //Peaking_C2 (74)
 		pData[4] = 0x00; //Gain_Blur
 		GainPos  = (ucPeaking*3);
@@ -700,10 +701,10 @@ void CAdjustPeakingFilter(SBYTE ucPeaking)
 		pData[9] = 0xFF;  //Neg_Range(LSB)(255)
 		pData[10] = 0x06; //Coring(LV_min~LV_max)
 	     #else
-		pData[0] = 0x00;					    //bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels      		 
-		pData[1] = 0x7E;						//Peaking_C0  
-		pData[2] = 0x0B;						//Peaking_C1 	
-		pData[3] = 0x36;						//Peaking_C2 
+		pData[0] = 0x00;					    //bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels
+		pData[1] = 0x7E;						//Peaking_C0
+		pData[2] = 0x0B;						//Peaking_C1
+		pData[3] = 0x36;						//Peaking_C2
 		pData[4] = 0x00;						//Gain_Blur
 		pData[5] = (WORD)(ucPeaking*255)/100;	//Gain_Pos(Min~Max)
 		pData[6] = (WORD)(ucPeaking*255)/100;	//Gain_Neg(Min~Max)
@@ -712,10 +713,10 @@ void CAdjustPeakingFilter(SBYTE ucPeaking)
 		pData[9] = 0x80; 						//Neg_Range(LSB)(1023)
 		pData[10] = 0x05;					    //Coring(LV_min~LV_max)
 		#endif
-	}	
-	pData[5] = (BYTE)GainPos; 
+	}
+	pData[5] = (BYTE)GainPos;
 	pData[6] = (BYTE)GainNeg;
-    // D-Domain Peaking 
+    // D-Domain Peaking
 	CScalerPageSelect(_PAGE7);
 	CScalerWrite(_P7_PEAKING_DATA00_AA, 11, pData, _AUTOINC);
 	#if(_HDMI_SUPPORT == _OFF)
@@ -752,11 +753,11 @@ void CAdjustPeakingFilter(SBYTE ucPeaking)
     case _SOURCE_HDMI:
     case _SOURCE_DVI:
 		//if(HDMI_V_Height>=720)		//720p above
-			pData[0] = 0x00;					//bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels      
+			pData[0] = 0x00;					//bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels
 		//else
-			//pData[0] = 0x00;					//bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels      
-		pData[1] = 0x7E;						//Peaking_C0 (126) 
-		pData[2] = 0xF7;						//Peaking_C1 (-19) 	
+			//pData[0] = 0x00;					//bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels
+		pData[1] = 0x7E;						//Peaking_C0 (126)
+		pData[2] = 0xF7;						//Peaking_C1 (-19)
 		pData[3] = 0x4A;						//Peaking_C2 (82)
 		pData[4] = 0x00;						//Gain_Blur
 		pData[5] = 0x14/*ucPeaking*13*/;		//Gain_Pos(Min~Max)
@@ -764,13 +765,13 @@ void CAdjustPeakingFilter(SBYTE ucPeaking)
 		pData[7] = 0x0F;						//Pos_Range(MSB)+Neg_Range(MSB)
 		pData[8] = 0xFF;						//Pos_Range(LSB)(80)
 		pData[9] = 0xFF; 						//Neg_Range(LSB)(80)
-		pData[10] = 0x09;					//Coring(LV_min~LV_max)		
+		pData[10] = 0x09;					//Coring(LV_min~LV_max)
         break;
 
     case _SOURCE_YPBPR:
-		pData[0] = 0x00;					//bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels      		   
-		pData[1] = 0x7E;						//Peaking_C0 (126) 
-		pData[2] = 0xF7;						//Peaking_C1 (-19) 	
+		pData[0] = 0x00;					//bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels
+		pData[1] = 0x7E;						//Peaking_C0 (126)
+		pData[2] = 0xF7;						//Peaking_C1 (-19)
 		pData[3] = 0x4A;						//Peaking_C2 (82)
 		pData[4] = 0x00;						//Gain_Blur
 		pData[5] = 0x14/*ucPeaking*13*/;		//Gain_Pos(Min~Max)
@@ -778,14 +779,14 @@ void CAdjustPeakingFilter(SBYTE ucPeaking)
 		pData[7] = 0x0F;						//Pos_Range(MSB)+Neg_Range(MSB)
 		pData[8] = 0xFF;						//Pos_Range(LSB)(1023)
 		pData[9] = 0xFF; 						//Neg_Range(LSB)(1023)
-		pData[10] = 0x09;					//Coring(LV_min~LV_max)			
+		pData[10] = 0x09;					//Coring(LV_min~LV_max)
         break;
 
-    default:   //AV TV SV		
+    default:   //AV TV SV
 #if 1
-		pData[0] = 0x00; //bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels     
-		pData[1] = 0x7e; //Peaking_C0 (126 
-		pData[2] = 0xf6; //Peaking_C1 (-10  
+		pData[0] = 0x00; //bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels
+		pData[1] = 0x7e; //Peaking_C0 (126
+		pData[2] = 0xf6; //Peaking_C1 (-10
 		pData[3] = 0x4b; //Peaking_C2 (75
 		pData[4] = 0x00; //Gain_Blur
 		GainPos  = ucPeaking * 4;
@@ -798,9 +799,9 @@ void CAdjustPeakingFilter(SBYTE ucPeaking)
 		pData[9] = 0x32;  //Neg_Range(LSB)(50)
 		pData[10] = 0x05;//0xFF;//0x05; //Coring(LV_min~LV_max)
 #else
-		pData[0] = 0x00;					    //bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels    		
-		pData[1] = 0x7F;						//Peaking_C0 
-		pData[2] = 0x4A;						//Peaking_C1  	
+		pData[0] = 0x00;					    //bit[3:2]->10: 9 pixels; ->01: 7 pixels; ->00: 5 pixels
+		pData[1] = 0x7F;						//Peaking_C0
+		pData[2] = 0x4A;						//Peaking_C1
 		pData[3] = 0xF6;						//Peaking_C2
 		pData[4] = 0x00;						//Gain_Blur
 		pData[5] = (WORD)(ucPeaking*255)/100;	//Gain_Pos(Min~Max)
@@ -815,7 +816,7 @@ void CAdjustPeakingFilter(SBYTE ucPeaking)
 	    pData[5] = GainPos;
 	    pData[6] = GainNeg;
 
-    // I-Domain Peaking 
+    // I-Domain Peaking
 	CScalerPageSelect(_PAGE6);
 	CScalerWrite(_P6_PEAKING_DATA00_C2, 11, pData, _AUTOINC);
 	#if(_HDMI_SUPPORT == _OFF)
@@ -841,11 +842,11 @@ void CAdjustPeakingFilter(SBYTE ucPeaking)
         }
 	}
 }
-	
+
 #else
 
 #if(_Peaking_Coring_Table == SharpnessTable1)
-                                                                                                    
+
 BYTE code PeakingCoeff[][6] =
 {
 	//Peaking_Coef0,  Peaking_Coef1,  Peaking_Coef2,  Coring_Min,  Coring_Max_Pos,  Coring_Max_Neg ,
@@ -1059,7 +1060,7 @@ void CAdjustPeakingFilter(SBYTE ucPeaking)
 		ucPeaking = 126;
 	if(ucPeaking < 14 && ucPeaking > 0)
 		ucPeaking = 14;
-		
+
 	pData[0] = ((ucPeaking +1) >> 1) << 1;
 	if((bit)(ucPeaking & 0x01))
 	{
@@ -1183,7 +1184,7 @@ void CAdjustSaturationHue(BYTE  ucValue, BOOL bSaturationIndex)
 	MATRIX_GAIN_HUE[2][2] = MATRIX_GAIN_HUE[1][1];
 
 	CAdjustMatrixMultiply(MATRIX_GAIN_HUE,RGB2YUV,temp_buff0);
-	
+
 //Lewis, this table have multiplied by 1024
 	MATRIX_GAIN_HUE[0][0] = 1024;
 	MATRIX_GAIN_HUE[0][1] = 0;
@@ -1204,9 +1205,9 @@ void CAdjustSaturationHue(BYTE  ucValue, BOOL bSaturationIndex)
     	{
     		if (i==j)
     		   temp_buff0[i][j]-=1024;
-    
+
     		temp_buff0[i][j] = temp_buff0[i][j]>>1;
-    
+
     		if (temp_buff0[i][j]>255)
     			temp_buff0[i][j] = 255;
     		else if(temp_buff0[i][j]<-256)
@@ -1422,5 +1423,3 @@ void CAdjustMZHueSat(BYTE color)
 	CScalerPageSelect(_PAGE7);
 	CScalerSetBit(_P7_ICM_CTRL_D0, ~_BIT7, _BIT7);
 }
-
-

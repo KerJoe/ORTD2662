@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // Copyright of Realtek SemiConductor Corp.
 // Model   : RTD2553V
@@ -13,7 +14,7 @@
 
 #define __MAIN__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 
 /**
@@ -80,7 +81,7 @@ void CMainSystemInitial(void)
     CPowerLightPowerOff();
     CPowerPanelPowerOff();
  	//CScalerPageSelect(_PAGE0);//eric 20070529
-	//CScalerSetByte(_P0_POWER_ON_RESET_F3,_BIT7|_BIT6);		
+	//CScalerSetByte(_P0_POWER_ON_RESET_F3,_BIT7|_BIT6);
 
     // Check eeprom and load eeprom settings
 	CEepromStartupCheck();
@@ -111,12 +112,12 @@ void CMainSystemInitial(void)
 	#if(_FAST_READ == _ON)
 	CMCUSetFlashClk();
 	#endif
-	 
+
     CIrdaInitial();
 }
 
 
-BYTE code DisplayInitTable[] =
+BYTE code DisplayInitTable_[] =
 {
     1+3, 1, 0x2A, 0x00,
     22+3, 1, 0x2B, (((1 + 32 + 1024 + 287 - 4)) >> 8), ((1 + 32 + 1024 + 287 - 4)),
@@ -162,11 +163,11 @@ BYTE code DisplayInitTable[] =
     0
 };
 
-void SetDPLLFrequncy(DWORD dclk)
+void SetDPLLFrequncy_(DWORD dclk)
 {
     BYTE dpllN, dpllDiv, dpllM, lpfMode, Ich;
 		DWORD freq, offset;
-	
+
     if (dclk < 3000000)
         return;
     else if (dclk < 10000000)
@@ -238,10 +239,10 @@ BYTE code ttSCALER_RESET_TABLE[] =
 
     //6,  _AUTOINC,       _P0_ADC_SOG0_CTRL_D2,           0x20, 0x11, 0x00, //for SOG0 CTRL, DC Restore/Clamp Enable	//v003
 	// 4,  _NON_AUTOINC,   _P0_SOG1_CTRL_AC,               0x20, //for SOG1 CTRL
-		
+
 //    4,  _NON_AUTOINC,   _P0_ADC_POWER_C6,               0x38,
-    //4,  _NON_AUTOINC,   _P0_ADC_V_BAIS1_CB,             0x00,	//v003	
-    //4,  _NON_AUTOINC,   _P0_ADC_CLAMP_CTRL1_D5,         0x00, 
+    //4,  _NON_AUTOINC,   _P0_ADC_V_BAIS1_CB,             0x00,	//v003
+    //4,  _NON_AUTOINC,   _P0_ADC_CLAMP_CTRL1_D5,         0x00,
 
     //4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGE1,	//v003
     //4,  _NON_AUTOINC,   _P1_MIX_B0,                     0x00,				//v003
@@ -250,7 +251,7 @@ BYTE code ttSCALER_RESET_TABLE[] =
 	//11, _AUTOINC,       _P2_TMDS_OUTPUT_CTRL_A6,        0x78,0x0f,0x03,0x00,0x31,0x70,0xe3,0x24,
 
     //4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGE6,
-	//4,  _NON_AUTOINC,   _P6_UZD_CTRL1_E4,        				0x00,		
+	//4,  _NON_AUTOINC,   _P6_UZD_CTRL1_E4,        				0x00,
     //4,  _NON_AUTOINC,   _P6_ENABLE_BIST_CTRL_A0,        0x00,//v003
     //4,  _NON_AUTOINC,   _P6_PEAKING_ENABLE_C1,          0x00,//v003
     //4,  _NON_AUTOINC,   _P6_YUV422_TO_YUV444_D4,        0x00,
@@ -273,15 +274,16 @@ BYTE code ttSCALER_RESET_TABLE[] =
  * @return {none}
  *
 */
-void main(void)
-{          
+void main_(void)
+{
 	volatile BYTE fTest = 1;
-    
-	
+
+
 	//CMainSystemInitial();
 
     // Initial MCU
 	//CMcuInitial();
+    #if 0
     IE      = 0x00;                         // Disable all interrupts
     TMOD    = 0x11;                         // Program Timer0 & Timer1 to Mode#1
     TR0     = 0;                            // Stop Timer0
@@ -291,15 +293,16 @@ void main(void)
     TR1     = 0;                            // Stop Timer1
     TF1     = 0;                            // Clear Timer1 Overflow Bit
     IE      = 0x8a;                         // Enable interrupts of Timer0
+    #endif
 
-	MCU_WATCHDOG_TIMER_FFEA		= 0x00; 	//dis wdt, wdt default enable
-    MCU_WATCHDOG_TIMER_FFEA		|= 0x40;	//clr wdt.//eric 20070627
-    MCU_CTRL_FFED				= 0x80; 		//FlashDIV=1
-    MCU_CLOCK_CTRL_FFEE 		|= 0x40;		    //keep mcu peripheral running while mcu stopped by spi flash access
+	XSFRWriteByte(MCU_WATCHDOG_TIMER_FFEA,  0x00); 	//dis wdt, wdt default enable
+    XSFRWriteByte(MCU_WATCHDOG_TIMER_FFEA, XSFRReadByte(MCU_WATCHDOG_TIMER_FFEA) |  0x40);	//clr wdt.//eric 20070627
+    XSFRWriteByte(MCU_CTRL_FFED,  0x80); 		//FlashDIV=1
+    XSFRWriteByte(MCU_CLOCK_CTRL_FFEE, XSFRReadByte(MCU_CLOCK_CTRL_FFEE) |  0x40);		    //keep mcu peripheral running while mcu stopped by spi flash access
     // Initial timer events
 	CTimerInitialTimerEvent();
-		  CUartInit();
-		CSwitchToUart();
+		  //CUartInit();
+		//CSwitchToUart();
 
     //_SET_INPUT_SOURCE(_SOURCE_HDMI);
 		_SET_INPUT_SOURCE(_SOURCE_VGA);
@@ -308,27 +311,27 @@ void main(void)
 	    CScalerSetBit(_HOST_CTRL_01, ~_BIT0, _BIT0);
     CTimerDelayXms(20);
     CScalerSetBit(_HOST_CTRL_01, ~_BIT0, 0x00);
-    
+
 
 		//CScalerCodeW(ttSCALER_RESET_TABLE);
 		CScalerSetByte(_HOST_CTRL_01, 0x40);
 
 	//CAdjustDisableWatchDog(_WD_ALL);
 
-	
-	
-	
-	
-	
-    
-	bLED1 = _LED_OFF;
-	bLED2 = _LED_OFF;
 
-	bHot_Plug = _HOT_PLUG_HI;
-	
-	bPANELPOWER = 1;
-	bLIGHTPOWER = 0;
-	
+
+
+
+
+
+	XSFRWriteByte(bLED1, _LED_OFF);
+	XSFRWriteByte(bLED2, _LED_OFF);
+
+	XSFRWriteByte(bHot_Plug, _HOT_PLUG_HI);
+
+	XSFRWriteByte(bPANELPOWER, 1);
+	XSFRWriteByte(bLIGHTPOWER, 0);
+
 	//CTimerDelayXms(4000);
 
 	/*while(fTest)
@@ -341,31 +344,31 @@ void main(void)
 
 		CTimerDelayXms(250);
     }*/
-		
-		//CScalerCodeW(DisplayInitTable);
-		
-		//SetDPLLFrequncy(52000000);		
 
-		
+		//CScalerCodeW(DisplayInitTable);
+
+		//SetDPLLFrequncy(52000000);
+
+
 		//CModeSetupModeVGA();
 		//CModeDetectCommon();
-		//CSyncProcess();   
+		//CSyncProcess();
 	//CScalerCodeW(tSCALER_POWERUP_INITIAL);
 		ucCurrState = _SEARCH_STATE;
-		DebugPrintf("CALL 1\n",0);
+		printf("CALL 1\n",0);
 		CModeHandler();//CModeHandler();
-		DebugPrintf("CALL 2\n",0);
+		printf("CALL 2\n",0);
 		CModeHandler();
-		DebugPrintf("CALL 3\n",0);
+		printf("CALL 3\n",0);
 		CModeHandler();
-		DebugPrintf("CALL 4\n",0);
+		printf("CALL 4\n",0);
 		CModeHandler();
-		DebugPrintf("CALL 5\n",0);
+		printf("CALL 5\n",0);
 		CModeHandler();
-		//DebugPrintf("CALL 7\n",0);
-		//sCModeHandler();				
+		//printf("CALL 7\n",0);
+		//sCModeHandler();
 		while(fTest);
-		
+
     do
 	{
 		#if(_DEBUG_EN)
@@ -374,11 +377,10 @@ void main(void)
 
 		//CTimerHandler();
         //CKeyHandler();
-		DebugPrintf("CALL %i\n",fTest++);
+		printf("CALL %i\n",fTest++);
 		CModeHandler();
 		//COsdHandler();
-	}	
+	}
 
     while(_TRUE);
 }
-

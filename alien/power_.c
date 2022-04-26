@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //-------------------------------------------------------------------------
 // ID Code      : Power.c No.0002
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __POWER__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 //---------------------------------------------------------------------------
 
@@ -29,22 +30,22 @@ bit CPowerHandler(void)
 //eric 20070531
 void CPowerLedGreen(void)
 {
-	bLED2 = _LED_OFF;
-	bLED1 = _LED_ON;
+	XSFRWriteByte(bLED2, _LED_OFF);
+	XSFRWriteByte(bLED1, _LED_ON);
 }
 
 //---------------------------------------------------------------------------
 void CPowerLedRed(void)
 {
-	bLED2 = _LED_ON;
-	bLED1 = _LED_OFF;
+	XSFRWriteByte(bLED2, _LED_ON);
+	XSFRWriteByte(bLED1, _LED_OFF);
 }
 
 //---------------------------------------------------------------------------
 void CPowerLedOrange(void)
 {
-	bLED2 = _LED_ON;
-	bLED1 = _LED_ON;
+	XSFRWriteByte(bLED2, _LED_ON);
+	XSFRWriteByte(bLED1, _LED_ON);
 }
 
 //---------------------------------------------------------------------------
@@ -77,10 +78,10 @@ void CPowerControl(void)
 	#else
     if(GET_POWERSTATUS())// Power Down Process
 	#endif
-	{  
+	{
     	//bLED1 = _LED_ON;
  		//bLED2 = _LED_OFF;
- 
+
 		CPowerDownCustomerControl();
 		// Eric 0618
 		#if(_HDMI_HOT_PLUG_OPTION)
@@ -89,17 +90,17 @@ void CPowerControl(void)
 		CPowerLedOff();//eric 20070531
 	}
 	else
-	{                        // Power Up Process		
+	{                        // Power Up Process
 		//bLED2 = _LED_ON;
  		//bLED1 = _LED_OFF;
- 
+
 		CPowerLedOn();
 		SET_POWERSTATUS();
 		CScalerReset();//Alanli 20070801
 		CPowerUpCustomerControl();
         ucTVSyncFailCount = 250;
 		CModeResetMode();
-		CEepromSaveSystemData();	
+		CEepromSaveSystemData();
 
 		#if(_VIDEO_SUPPORT == _ON)
         // Initial video settings
@@ -108,7 +109,7 @@ void CPowerControl(void)
             CInitTV();
 		#endif
        	CVideoInitial();
-    	CTimerDelayXms(10);	
+    	CTimerDelayXms(10);
     	CVideoOutputDisable();
 		#endif  // End of #if(_VIDEO_SUPPORT == _ON)
 
@@ -135,7 +136,7 @@ void CPowerPanelOn(void)
 		CTimerDelayXms(40);
         CPowerDisplayPortOn();
         CScalerEnableDisplayOutput();
-        CTimerDelayXms(500);				
+        CTimerDelayXms(500);
     }
     //CPowerLightPowerOn();
     CMiscClearStatusRegister();
@@ -215,7 +216,7 @@ void CPowerDisplayPortOn(void)
     switch(GET_PNL_OUTPUT_BUS())
     {
         case _PANEL_TTL:
-            CScalerSetByte(_DISP_ACCESS_PORT_2A, 0x20);     
+            CScalerSetByte(_DISP_ACCESS_PORT_2A, 0x20);
         	CScalerSetByte(_DISP_DATA_PORT_2B, Panel[ucPanelSelect]->TTL20);
             CPowerLVDSOn();
             break;
@@ -316,10 +317,10 @@ void CPowerADCAPLLOn(void)
     CScalerSetBit(_P1_PLL_WD_AF, ~_BIT0, 0x00);     // Power up PLL
 
     CScalerPageSelect(_PAGE0);
-    CScalerSetBit(_P0_ADC_POWER_C6, ~(_BIT2 | _BIT1 | _BIT0), (_BIT2 | _BIT1 | _BIT0));    // Power up ADC		
-	
+    CScalerSetBit(_P0_ADC_POWER_C6, ~(_BIT2 | _BIT1 | _BIT0), (_BIT2 | _BIT1 | _BIT0));    // Power up ADC
+
 		CScalerPageSelect(_PAGE1);
-	  DebugPrintf("\n\nAPLL LOCK: 0x%x\n\n", CScalerGetBit(0xB8, _BIT7 | _BIT6));	 
+	  printf("\n\nAPLL LOCK: 0x%x\n\n", CScalerGetBit(0xB8, _BIT7 | _BIT6));
 	  CScalerPageSelect(_PAGE0);
 }
 
@@ -414,7 +415,7 @@ void CPowerUpCustomerControl(void)
 	CPowerADCAPLLOn();
 	CPowerLVDSOn();
 	CPowerDPLLOff();
-	
+
 	#if((_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON))
 	CPowerTMDSOn();
 	#endif

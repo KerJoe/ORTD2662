@@ -1,10 +1,11 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Int.c No.0002
 // Update Note  :
 //
 //----------------------------------------------------------------------------------------------------
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 #if defined(CONFIG_VBI_ENABLE)
 void VBI_GetData();
@@ -13,6 +14,8 @@ void VBI_GetData();
 #endif
 
 BYTE idata ucKeyADValue;
+
+#if 0
 
 //--------------------------------------------------
 // Timer0 Interrupt (375 us)
@@ -45,22 +48,22 @@ void IntProcTimer0(void) interrupt 1
 	static BYTE data ucTimer0Cnt = 0x00;
 	static BYTE data ucTimerCnt = 10;
 
-	
+
 	EA = 0;
 	TR0 = _ON;
 
-	TL0 = _TIMER0_COUNT_LBYTE;	
+	TL0 = _TIMER0_COUNT_LBYTE;
 	TH0 = _TIMER0_COUNT_HBYTE;
-	
-	
-	if((++ucTimer0Cnt) >= _EVENT_PERIOD) 
+
+
+	if((++ucTimer0Cnt) >= _EVENT_PERIOD)
 	{
 		ucTimer0Cnt = 0;
 		bNotifyTimer0Int = _TRUE;
 		if(ucTimerCnt)
 			ucTimerCnt--;
-			
-		else if(bTimer0Ctrl == _FALSE) 
+
+		else if(bTimer0Ctrl == _FALSE)
 		{
 
 			CTimerDecreaseTimerCnt();
@@ -83,7 +86,7 @@ void IntProcTimer0(void) interrupt 1
 #endif
 		}
 		EA = 1;
-#endif	
+#endif
 }
 
 //--------------------------------------------------
@@ -92,7 +95,7 @@ void IntProcTimer0(void) interrupt 1
 //--------------------------------------------------
 void UartRxData(void)
 {
-	if (fUartStart == 0) 
+	if (fUartStart == 0)
 	{
 		pUartData[0] = SBUF0;
 		fUartStart = 1;
@@ -117,7 +120,7 @@ void UartRxData(void)
 
 		ucUartRxIndex = 1;
 	}
-	else 
+	else
 	{
 		pUartData[ucUartRxIndex] = SBUF0;
 		ucUartRxIndex++;
@@ -133,11 +136,11 @@ void UartRxData(void)
 void IntProcUart(void) interrupt 4
 {
 	ES0 = 0; // disable uart interrupt.
-	if (TI) 
+	if (TI)
 	{
 		TI = 0;
 	}
-	else if (RI) 
+	else if (RI)
 	{
 		UartRxData();
 		RI = 0;
@@ -163,28 +166,28 @@ void IntProcDdcc0(void)  interrupt 0
 	/*MCU_I2C_IRQ_CTRL2_FF2A  &= 0xDF; //host write/read enable
     if(!bRunCommand)
     {
-        tempbuf = MCU_I2C_STATUS_FF27;   
+        tempbuf = XSFRReadByte(MCU_I2C_STATUS_FF27);
 
         if(tempbuf & 0x08)
-            MCU_I2C_DATA_OUT_FF26 = TxBUF;       
+            XSFRWriteByte(MCU_I2C_DATA_OUT_FF26,  TxBUF);
 
-        if(tempbuf & 0x01) 
+        if(tempbuf & 0x01)
             ucDdcciCommandNumber = 0;
 
-        if(tempbuf & 0x02) 
+        if(tempbuf & 0x02)
             ucDdcciCommandNumber=0;
-        		
+
         if(tempbuf & 0x04)
         {
             if(ucDdcciCommandNumber==0)
-                ucDdcciData[ucDdcciCommandNumber] = MCU_I2C_SUB_IN_FF24;
+                ucDdcciData[ucDdcciCommandNumber] = XSFRReadByte(MCU_I2C_SUB_IN_FF24);
 
             ucDdcciCommandNumber++;
-            ucDdcciData[ucDdcciCommandNumber] = MCU_I2C_DATA_IN_FF25;
-            bRunCommand=_TRUE; 
+            ucDdcciData[ucDdcciCommandNumber] = XSFRReadByte(MCU_I2C_DATA_IN_FF25);
+            bRunCommand=_TRUE;
         }
 
-        MCU_I2C_STATUS_FF27 = tempbuf & 0xc0;
+        XSFRWriteByte(MCU_I2C_STATUS_FF27,  tempbuf & 0xc0);
     }*/
 
     EA=1;
@@ -196,16 +199,16 @@ void IntProcDdcci(void)  interrupt 2
 
 	EA=0;
 
-	tempbuf = MCU_IRQ_STATUS_FF00;
+	tempbuf = XSFRReadByte(MCU_IRQ_STATUS_FF00);
 
 	if (tempbuf & 0x01)					// DDC_IRQ_EVENT
-	{	
+	{
 	    MCU_IRQ_STATUS_FF00 &= ~0x01;
 
-		MCU_I2C_IRQ_CTRL2_FF2A  |= 0x20;
-	
-		tempbuf = MCU_I2C_STATUS_FF27;
-	
+		XSFRWriteByte(MCU_I2C_IRQ_CTRL2_FF2A,  0x20);
+
+		tempbuf = XSFRReadByte(MCU_I2C_STATUS_FF27);
+
 		if(tempbuf & 0x80)							// A_WR_I
 			MCU_I2C_STATUS_FF27 &= ~0x80;
 		if(tempbuf & 0x40)							// D_WR_I
@@ -214,20 +217,20 @@ void IntProcDdcci(void)  interrupt 2
 			MCU_I2C_STATUS_FF27 &= ~0x20;
 		if(tempbuf & 0x10)							// STOP_I
 			MCU_I2C_STATUS_FF27 &= ~0x10;
-	
+
 		if(tempbuf & 0x08)							// D_OUT_I
 		{
-			MCU_I2C_DATA_OUT_FF26 = ucKeyADValue;
+			XSFRWriteByte(MCU_I2C_DATA_OUT_FF26,  ucKeyADValue);
 			//bLED2 ^= 1;
 		}
 
 		if(tempbuf & 0x04)							// D_IN_I
 		{
-			tempbuf = MCU_I2C_SUB_IN_FF24;
-			tempbuf = MCU_I2C_DATA_IN_FF25;
+			tempbuf = XSFRReadByte(MCU_I2C_SUB_IN_FF24);
+			tempbuf = XSFRReadByte(MCU_I2C_DATA_IN_FF25);
 			//bLED1 ^= 1;
 		}
-	
+
 		if(tempbuf & 0x02)							// SUB_I
 		{
 			MCU_I2C_STATUS_FF27 &= ~0x02;
@@ -274,3 +277,4 @@ void VBI_GetData(void) //VBI INTERRUPT handler
 
 #endif
 
+#endif

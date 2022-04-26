@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : YPbPr.c No.0001
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __YPBPR__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 #if(_YPBPR_SUPPORT == _ON)
 
@@ -31,7 +32,7 @@ BYTE CYPbPrSearchMode(void)
         if(CYPbPrCompareMode(cnt) == _TRUE)
         {
             modetemp = cnt;
-			//DebugPrintf("\n YPbPrMode = %x\n",modetemp);			
+			//printf("\n YPbPrMode = %x\n",modetemp);
             break;
         }
     }
@@ -59,7 +60,7 @@ BYTE CYPbPrSearchMode(void)
 // Output Value : Return _TRUE if get an available mode
 //--------------------------------------------------
 bit CYPbPrCompareMode(BYTE ucModeCnt)
-{                   
+{
 	if(abs(stModeInfo.IVFreq - tYPBPR_MODE_TABLE[ucModeCnt].IVFreq) > tYPBPR_MODE_TABLE[ucModeCnt].IVFreqTolerance)
 	{
     	return _FALSE;
@@ -68,7 +69,7 @@ bit CYPbPrCompareMode(BYTE ucModeCnt)
 	if(abs(stModeInfo.IHFreq - tYPBPR_MODE_TABLE[ucModeCnt].IHFreq) > tYPBPR_MODE_TABLE[ucModeCnt].IHFreqTolerance)
 	{
     	return _FALSE;
-	}     
+	}
 
 	return _TRUE;
 }
@@ -132,10 +133,10 @@ void CYPbPrStartUp(void)
     case 5:  // 1080I 50Hz 274M
     case 6:  // 1080I 50Hz 295M
     case 7:  // 1080I 60Hz
-    case 8:  // 720P 50Hz 
+    case 8:  // 720P 50Hz
     case 9:  // 1080P 50Hz
     case 10: // 1080P 60Hz
-        break;   
+        break;
 
     case 1:  // 480I 60Hz //for panasonic 480i
 		CScalerSetByte(0xc0, 0x1d);
@@ -148,18 +149,18 @@ void CYPbPrStartUp(void)
 
     }   /*
 	if(stModeInfo.ModeCurr ==3)
-	{		
+	{
 		CScalerPageSelect(_PAGEB);
 		CScalerSetByte(0xc0, 0x1d);
 	}
 	else if(stModeInfo.ModeCurr ==1)
-	{		
+	{
 		CScalerPageSelect(_PAGEB);
 		CScalerSetByte(0xc0, 0x1d);
 		CScalerSetByte(0xc2, 0x85);
 	} */
-	
-	#endif	
+
+	#endif
 
 }
 
@@ -176,8 +177,8 @@ UINT8 code Y_CC_Init[] =
 void YPbPrADCDefault(void)
 {
 	BYTE i;
-    	static UINT8 code YPBPR_ADC_DEFAULT[10][6] =	
-    	{	    	
+    	static UINT8 code YPBPR_ADC_DEFAULT[10][6] =
+    	{
 		149,203,151,126,122,135,//576i
 		149,203,151,126,122,135,//480i
 		149,203,152,126,122,134,//576P
@@ -187,13 +188,13 @@ void YPbPrADCDefault(void)
 		149,199,151,124,121,131,//1080i60
 		151,203,151,124,121,132,//720P50
 		149,195,149,124,122,132,//1080P50
-		147,199,147,124,121,133,//1080P60		
-     	};	
+		147,199,147,124,121,133,//1080P60
+     	};
 
     	for(i=0;i<6;i++)
 		pData[i]=YPBPR_ADC_DEFAULT[stModeInfo.ModeCurr][i];
 	CScalerPageSelect(_PAGE0);
-	CScalerWrite(_P0_RED_GAIN_C0, 6, pData, _AUTOINC);		
+	CScalerWrite(_P0_RED_GAIN_C0, 6, pData, _AUTOINC);
 
 }*/
 /**
@@ -215,38 +216,38 @@ bit CYPbPrSetupMode(void)
 #if(_YPBPR_NEW_SYNC_DETECT == _ON)
 //Ypbpr issue
 /*
-	static UINT8 code SOY_CLAMP[10][3] =	
+	static UINT8 code SOY_CLAMP[10][3] =
 	{	//Clamp Start,	Clamp End,	Compare Level
-		0x10,0x18,0x1c,//0x20,		//MODE_576i   (OK )    
-		0x08,0x18,0x1c,//0x28,		//MODE_480i   (OK) D1   
-		0x10,0x18,0x1c,//0x20,		//MODE_576p   (OK )   
-		0x08,0x16,0x1c,//0x25,		//MODE_480p   (OK) D2  
-		0x22,0x3A,0x1c,//0x20,		//MODE_720p60 (OK )    
-		//0x22,0x3A,0x2a,		//MODE_1080i25(OK )    		
-        //0x22,0x3A,0x2a,		//MODE_1080i30(OK )   
-		0x22,0x3A,0x1c,//0x23,		//MODE_1080i25(OK )    		
-        0x22,0x3A,0x1c,//0x25,		//MODE_1080i30(OK )   
+		0x10,0x18,0x1c,//0x20,		//MODE_576i   (OK )
+		0x08,0x18,0x1c,//0x28,		//MODE_480i   (OK) D1
+		0x10,0x18,0x1c,//0x20,		//MODE_576p   (OK )
+		0x08,0x16,0x1c,//0x25,		//MODE_480p   (OK) D2
+		0x22,0x3A,0x1c,//0x20,		//MODE_720p60 (OK )
+		//0x22,0x3A,0x2a,		//MODE_1080i25(OK )
+        //0x22,0x3A,0x2a,		//MODE_1080i30(OK )
+		0x22,0x3A,0x1c,//0x23,		//MODE_1080i25(OK )
+        0x22,0x3A,0x1c,//0x25,		//MODE_1080i30(OK )
 
-		0x22,0x3A,0x1c,//0x20,		//MODE_720p50 (OK )    
+		0x22,0x3A,0x1c,//0x20,		//MODE_720p50 (OK )
 		0x22,0x3A,0x1c,//0x20,		//MODE_1080p50(OK )
 		0x22,0x3A,0x1c,//0x20,		//MODE_1080p60(OK )
 	};
 */
-    UINT8 code SOY_CLAMP[11][3] =	
+    UINT8 code SOY_CLAMP[11][3] =
 	{	//Clamp Start,	Clamp End,	Compare Level
-		0x10,0x25,0x27,//0x20,		//MODE_576i   (OK )    
-		0x10,0x25,0x27,//0x28,		//MODE_480i   (OK) D1   
-		0x10,0x25,0x27,//0x20,		//MODE_576p   (OK )   
-		0x10,0x25,0x27,//0x25,		//MODE_480p   (OK) D2  
-		0x70,0xA0,0x27,//0x20,		//MODE_720p60 (OK )    
-		//0x22,0x3A,0x2a,			//MODE_1080i25(OK )    		
-        //0x22,0x3A,0x2a,			//MODE_1080i30(OK )   
-		0x60,0x85,0x27,//0x23,		//MODE_1080i25(OK ) (274M)   		
-		0x60,0x85,0x27,//0x23,		//MODE_1080i25(OK ) (295M)   		
-        //0x40,0x50,0x20,//0x25,	//MODE_1080i30(OK )   
-		//0x60,0x85,0x27,//0x25,		//MODE_1080i30(OK ) 
-		0x60,0x85,0x27,//0x25,  //MODE_1080i30(OK ) 
-		0x70,0xA0,0x27,//0x20,		//MODE_720p50 (OK )    
+		0x10,0x25,0x27,//0x20,		//MODE_576i   (OK )
+		0x10,0x25,0x27,//0x28,		//MODE_480i   (OK) D1
+		0x10,0x25,0x27,//0x20,		//MODE_576p   (OK )
+		0x10,0x25,0x27,//0x25,		//MODE_480p   (OK) D2
+		0x70,0xA0,0x27,//0x20,		//MODE_720p60 (OK )
+		//0x22,0x3A,0x2a,			//MODE_1080i25(OK )
+        //0x22,0x3A,0x2a,			//MODE_1080i30(OK )
+		0x60,0x85,0x27,//0x23,		//MODE_1080i25(OK ) (274M)
+		0x60,0x85,0x27,//0x23,		//MODE_1080i25(OK ) (295M)
+        //0x40,0x50,0x20,//0x25,	//MODE_1080i30(OK )
+		//0x60,0x85,0x27,//0x25,		//MODE_1080i30(OK )
+		0x60,0x85,0x27,//0x25,  //MODE_1080i30(OK )
+		0x70,0xA0,0x27,//0x20,		//MODE_720p50 (OK )
 		0x50,0x65,0x27,//0x20,		//MODE_1080p50(OK )
 		0x50,0x65,0x27,//0x20,		//MODE_1080p60(OK )
 	};
@@ -255,17 +256,17 @@ bit CYPbPrSetupMode(void)
 	/*
 	{ //Clamp Start, Clamp End, Compare Level
 		//Clamp Start, Clamp End,  Compare Level
-		0x00,   0x1B,   0x20,  		//MODE_576i 
+		0x00,   0x1B,   0x20,  		//MODE_576i
 		0x00,   0x17,   0x20,  		//MODE_480i
 		0x00,   0x17,   0x20, 		//MODE_576p
 		0x00,   0x13,   0x20,  		//MODE_480p
 		0x14,   0x67,   0x20, 		//MODE_720p60
 		0x16,   0x4c,   0x20, 		//MODE_1080i25
 		0x16,   0x4c,   0x20,  		//MODE_1080i30
-		0x14,   0x67,   0x20, 		//MODE_720p50 
+		0x14,   0x67,   0x20, 		//MODE_720p50
 		0x16,   0x44,   0x20,  		//MODE_1080p50
 		0x16,   0x44,   0x20, 		//MODE_1080p60
-	};	
+	};
 	*/
 #endif
 
@@ -276,8 +277,8 @@ bit CYPbPrSetupMode(void)
     CModeStartUpVGA();
 
     // Start up settings of YPbPR mode.
-    CYPbPrStartUp();    
-	
+    CYPbPrStartUp();
+
     // Get scaling option, Capture window setup, Scaling setup, Display setup
     CModeSetupDisplay();
 
@@ -301,8 +302,8 @@ bit CYPbPrSetupMode(void)
     CAdjustHPosition();
     CAdjustVPosition();
     CAdjustPeakingFilter(GET_PEAKING_CORING());
-    CScalerSetByte(_P1_I_CODE_M_A1,0x00);//eric 20070613 for DVD player 	
-    CScalerSetByte(_P1_I_CODE_L_A2,0x05);	 
+    CScalerSetByte(_P1_I_CODE_M_A1,0x00);//eric 20070613 for DVD player
+    CScalerSetByte(_P1_I_CODE_L_A2,0x05);
 
 	#if(_YPBPR_NEW_SYNC_DETECT == _ON)
     //forster modified 061102
@@ -313,16 +314,16 @@ bit CYPbPrSetupMode(void)
     CScalerPageSelect(_PAGE0); //_P0_SOG0_CTRL_AB
 	#if(_YPBPR_HW_AUTO_SOY != _ENABLE)
   	#if(_YPBPR_SYNC_SOURCE == _SOG0)
-	CScalerSetByte(_P0_ADC_SOG0_CTRL_D2,SOY_CLAMP[stModeInfo.ModeCurr][2]);	
+	CScalerSetByte(_P0_ADC_SOG0_CTRL_D2,SOY_CLAMP[stModeInfo.ModeCurr][2]);
 	#else
 	CScalerPageSelect(_PAGEB);
-	CScalerSetByte(_PB_SOYCH0_CFG3_C3,SOY_CLAMP[stModeInfo.ModeCurr][2]);//20071122	
-	#endif	
-	#endif		 
+	CScalerSetByte(_PB_SOYCH0_CFG3_C3,SOY_CLAMP[stModeInfo.ModeCurr][2]);//20071122
+	#endif
+	#endif
 
  	CScalerSetDataPortByte(_SYNC_PROC_ACCESS_PORT_5C, _SYNC_CLAMP_CTRL0_04, 0x02);
 	CScalerSetDataPortByte(_SYNC_PROC_ACCESS_PORT_5C, _SYNC_CLAMP_CTRL1_05, 0x83);
-		 
+
     CScalerSetBit(_SYNC_INVERT_48, ~_BIT2, _BIT2|_BIT0);	//clamp output & HSFB						//Modify:2006.4.11A end Jerry
 	#endif
 
@@ -342,7 +343,7 @@ bit CYPbPrSetupMode(void)
 
 	CScalerSetByte(_COLOR_CTRL_62, 0x03);
 	//YPbPrADCDefault();
-	
+
     CScalerSetBit(_COLOR_CTRL_62, ~(_BIT2), _BIT2);   	//  Enable SRGB
     CAccAdjust(GET_DCC_MODE());  // set DCC mode
 
@@ -357,7 +358,7 @@ bit CYPbPrSetupMode(void)
     CScalerPageSelect(_PAGE2);
     CScalerSetBit(_P2_POWER_ON_OFF_CTRL_A7, ~(_BIT3 | _BIT2 | _BIT1 | _BIT0), 0x00);
 	CScalerPageSelect(_PAGE6);
-	CScalerSetBit(_P6_ENABLE_BIST_CTRL_A0, ~_BIT3, 0x00);		//Disable De-interlace Mode		
+	CScalerSetBit(_P6_ENABLE_BIST_CTRL_A0, ~_BIT3, 0x00);		//Disable De-interlace Mode
 
 	#if(_DE_INTERLACE_SUPPORT == _ON)
 	if(stModeInfo.ModeCurr <= 1)	// Only for 480i/576i
@@ -372,7 +373,7 @@ bit CYPbPrSetupMode(void)
 	{
        	return _FALSE;
     }
-		
+
 	#if(_YPBPR_SUPPORT == _ON)
 	if(ucCurrState == _SEARCH_STATE)
     	CYPbPrPorch_LevelCheck();
@@ -381,7 +382,7 @@ bit CYPbPrSetupMode(void)
     CTimerDelayXms(30);
     CModeSetupEtcs(_FUNCTION_ENABLE);
 
-	return _TRUE;	
+	return _TRUE;
 }
 
 #if(_YPBPR_HW_AUTO_SOY == _ENABLE)
@@ -414,4 +415,3 @@ void CYPbPrHWAutoSOY(void)
 #endif
 
 #endif  // End of #if(_YPBPR_SUPPORT == _ON)
-

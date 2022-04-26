@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : I2c.c No.0000
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __I2C__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 //#undef CONFIG_VBI_ENABLE
 //----------------------------------------------------------------------------------------------------
@@ -14,7 +15,8 @@
 //----------------------------------------------------------------------------------------------------
 void Delay5us(void)
 {
-#if(_MCU_TYPE == _REALTEK_RTD3580D_EMCU)
+    delayMS(1);
+/*#if(_MCU_TYPE == _REALTEK_RTD3580D_EMCU)
     _nop_();
     _nop_();
     _nop_();
@@ -46,7 +48,7 @@ void Delay5us(void)
     _nop_();
     _nop_();
     _nop_();
-#endif		
+#endif*/
 }
 
 BYTE CI2cStart(BYTE ucDeviceAddr)
@@ -154,7 +156,7 @@ bit CI2cWriteStart(BYTE ucDeviceAddr, BYTE ucStartAddr)
     {
 		if(timeoutcnt)
         	timeoutcnt--;
-        
+
         if(!timeoutcnt)
             return _FAIL;
 
@@ -250,4 +252,3 @@ bit CI2cWrite(BYTE ucDeviceAddr, BYTE ucStartAddr, WORD usLength, BYTE *pWriteAr
 
 
 //==============================================================================
-

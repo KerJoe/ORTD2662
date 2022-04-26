@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 #if(_OSD_TYPE == _OSD003)
 
 
@@ -71,21 +72,21 @@
 #define BEGIN(x)					x
 #define END(x)						x
 
-#define _MAINMENU_WIDTH					            (WIDTH(39)* 12)		
+#define _MAINMENU_WIDTH					            (WIDTH(39)* 12)
 #define _MAINMENU_HEIGHT				            (HEIGHT(18) * 18)
 
-                                        
+
 #define _OSD_DOUBLE_WIDTH(width)                    (width + (Panel[ucPanelSelect]->DHWidth/2) + 40)
 #define _OSD_DOUBLE_HEIGHT(height)                  (height + (Panel[ucPanelSelect]->DVHeight/2) + 8)
 
-#define _DIALOG_WIDTH				                (27 * 12) + 20		
+#define _DIALOG_WIDTH				                (27 * 12) + 20
 #define _DIALOG_HEIGHT				                (7 * 18 - 4)
 
 #define _LOGO_WIDTH                                 (21*12)
 #define _LOGO_HEIGHT                                (6*18)
 
 // 20 : SubMenuItem Str Max Length
-// 14 * 12 : SubMenuItem Str ÏÔÊ¾³¤¶ÈÎª 14 ¸ñµÄ¿í¶È
+// 14 * 12 : SubMenuItem Str ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Îª 14 ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½
 #define SUBMENU_TEXTOUT(str,row)			        TextOutCalcWidth(str,row,7,20,14 * 12)
 #define SUBMENU_TEXTOUT1(str,row)			        CTextOutEx(str, 2, row)
 
@@ -131,7 +132,7 @@ WORD code usLANGUAGE_MASK  =  ( ENGLISH_EN   << ENGLISH ) |
                               ( LNG_DEU_EN   << LNG_DEU ) |
                               ( LNG_ESP_EN   << LNG_ESP ) |
                               ( LNG_CHI_S_EN << LNG_CHI_S ) |
-                              ( LNG_CHI_T_EN << LNG_CHI_T ) |  
+                              ( LNG_CHI_T_EN << LNG_CHI_T ) |
                               ( LNG_JAP_EN   << LNG_JAP ) |
                               ( LNG_KOR_EN   << LNG_KOR ) |
                               ( LNG_RUS_EN   << LNG_RUS );
@@ -151,7 +152,7 @@ bit bLoadLogoFont = 0;
 #endif
 BYTE ucStartItem = 0;
 BYTE ucEndItem   = 0;
-    
+
 
 #else
 
@@ -219,4 +220,3 @@ void CDrawLogo(BYTE ucDouble);
 void CPattenChange(void);
 
 #endif		//#if(_OSD_TYPE == _OSD003)
-

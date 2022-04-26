@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 /*=============================================
   * Copyright (c)      Realtek Semiconductor Corporation, 2005
   * All rights reserved.
@@ -24,7 +25,7 @@ EXTERN bit bCCReceiveOK;						//VBI_INTERRUPT
 #endif
 
 
-EXTERN unsigned char xdata 	ucCC_VSyncCnt;	
+EXTERN unsigned char xdata 	ucCC_VSyncCnt;
 EXTERN BIT bVBI_INT_Enable;
 EXTERN BIT bVideoStable;
 EXTERN BIT bYPbPrStable;
@@ -40,5 +41,4 @@ void ClearVerLineCompSts(void);
 void CVbiInitial(void);
 #endif
 
-#endif 
-
+#endif

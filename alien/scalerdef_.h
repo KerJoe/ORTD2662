@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : ScalerDef.h No.0000
 // Update Note  :
@@ -89,7 +90,7 @@
 #define _DISP_ACCESS_PORT_2A              		0x2A        // Display Format Access Port
 #define _DISP_DATA_PORT_2B                  	0x2B        // Display Format Data Port
 #if(_SCALER_TYPE == _RTD3580D)
-#define _OP_CRC_CTRL_2C                     	0x2C        // Output CRC Control Register 
+#define _OP_CRC_CTRL_2C                     	0x2C        // Output CRC Control Register
 #define _OP_CRC_CHECKSUM_2D               		0x2D        // Output CRC Checksum
 #endif
 //Address: 2C~2F Reserved
@@ -284,7 +285,7 @@
 // VBI(Port)
 //--------------------------------------------------
 #define _VBI_ACCESS_PORT_9A                 	0x9A        // VBI Access Port
-#define _VBI_DATA_PORT_9B                   	0x9B        // VBI Data Port 
+#define _VBI_DATA_PORT_9B                   	0x9B        // VBI Data Port
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -309,11 +310,11 @@
 #define _P0_VADC_SOY_COMPAR_A0           		0xA0        // VADC SOY Comparator Select
 #define _P0_VADC_CTRL_A1                     	0xA1        // VADC Control Register
 #define _P0_VADC_CLOCK_A2                    	0xA2        // VADC Clock Source
-#define _P0_VADC_OUTPUT_DELAY_A3      			0xA3        // VADC Output Delay 
+#define _P0_VADC_OUTPUT_DELAY_A3      			0xA3        // VADC Output Delay
 //#define _P0_RESERVED_A4                     	0xA4        // P0 Reserved A4
-#define _P0_VADC_INPUT_BW_A5                 	0xA5        // VADC Input BW 
-#define _P0_VADC1_INPUT_PGA_A6             		0xA6        // VADC1 Input PGA 
-#define _P0_VADC0_INPUT_PGA_A7             		0xA7        // VADC0 Input PGA 
+#define _P0_VADC_INPUT_BW_A5                 	0xA5        // VADC Input BW
+#define _P0_VADC1_INPUT_PGA_A6             		0xA6        // VADC1 Input PGA
+#define _P0_VADC0_INPUT_PGA_A7             		0xA7        // VADC0 Input PGA
 #define _P0_VADC_CLAMP_A8                    	0xA8        // VADC Clamp
 #define _P0_VADC_INRANGE_A9                  	0xA9        // VADC Input Range
 //#define _P0_RESERVED_AA                     		0xAA        // P0 Reserved AA
@@ -321,7 +322,7 @@
 #define _P0_VADC_IN_CH_BIAS_CUR_AC     			0xAC        // VADC Input Channel Bias Current
 #define _P0_VADC_POS_IN_SOY_RES_AD  			0xAD        // VADC Posive Input SOY Restore Resistor
 #define _P0_VADC_CLAMP_POWER_AE         		0xAE        // VADC Clamp Power
-#define _P0_VADC_SWITCH_AF                   	0xAF        // VADC/Video8 Switch 
+#define _P0_VADC_SWITCH_AF                   	0xAF        // VADC/Video8 Switch
 
 //--------------------------------------------------
 // YPbPr ADC (Page0)
@@ -329,9 +330,9 @@
 #define _P0_RED_GAIN_C0                     	0xC0        // ADC Red Channel Gain Adjust
 #define _P0_GRN_GAIN_C1                     	0xC1        // ADC Green Channel Gain Adjust
 #define _P0_BLU_GAIN_C2                     	0xC2        // ADC Blue Channel Gain Adjust
-#define _P0_RED_OFFSET_C3                 	 	0xC3        // ADC Red Channel Offset Adjust  
+#define _P0_RED_OFFSET_C3                 	 	0xC3        // ADC Red Channel Offset Adjust
 #define _P0_GRN_OFFSET_C4                   	0xC4        // ADC Green Channel Offset Adjust
-#define _P0_BLU_OFFSET_C5                   	0xC5        // ADC Blue Channel Offset Adjust 
+#define _P0_BLU_OFFSET_C5                   	0xC5        // ADC Blue Channel Offset Adjust
 #define _P0_ADC_POWER_C6                   		0xC6        // ADC Power Control Register
 #define _P0_ADC_I_BAIS0_C7                  	0xC7        // ADC Bais Current Control Register0
 #define _P0_ADC_I_BAIS1_C8                  	0xC8        // ADC Bais Current Control Register1
@@ -405,7 +406,7 @@
 //#define _P1_PE_MAX_MEASURE_L_A9             	0xA9        // Phase Error Max MEasure LByte
 #define _P1_FAST_PLL_CTRL_AA                	0xAA        // Fast PLL Control Register
 #define _P1_FAST_PLL_ISUM_AB                	0xAB        // Fast PLL I_SUM
-	
+
 //--------------------------------------------------
 // ADC PLL (Page1)
 //--------------------------------------------------
@@ -439,7 +440,7 @@
 // DCLK Spread Spectrum (Page1)
 //--------------------------------------------------
 #define _P1_DPLL_WD_C2                      	0xC2        // DPLL Watch Dog Register
-#define _P1_DPLL_OTHER_C3                   	0xC3        // DPLL Other Register 
+#define _P1_DPLL_OTHER_C3                   	0xC3        // DPLL Other Register
 #define _P1_DCLK_FINE_TUNE_OFFSET_MSB_C4    	0xC4        // Display Clock Fine Tune Offset MSB
 #define _P1_DCLK_FINE_TUNE_OFFSET_LSB_C5    	0xC5        // Display Clock Fine Tune Offset LSB
 #define _P1_DCLK_SPREAD_SPECTRUM_C6         	0xC6        // Display Clock Spread Spectrum
@@ -809,7 +810,7 @@
 #define _P6_HORIZONTAL_ACTIVE_SIZE_LSB_AA  		0xAA        // Horizontal Active Size LSB
 #define _P6_VERTICAL_ACTIVE_SIZE_MSB_AB     	0xAB        // Vertical Active Size MSB
 #define _P6_VERTICAL_ACTIVE_SIZE_LSB_AC     	0xAC        // Vertical Active Size LSB
-#define _P6_CALCULATED_REGION_CTRL_AD       	0xAD        // Calculated Region Control Register 
+#define _P6_CALCULATED_REGION_CTRL_AD       	0xAD        // Calculated Region Control Register
 #define _P6_H1_ACTIVE_START_POINT_MSB_AE    	0xAE        // Horizontal Active Start Point 1 MSB
 #define _P6_H1_ACTIVE_START_POINT_LSB_AF    	0xAF        // Horizontal Active Start Point 1 LSB
 #define _P6_H1_ACTIVE_END_POINT_MSB_B0      	0xB0        // Horizontal Active End Point 1 MSB
@@ -833,9 +834,9 @@
 //--------------------------------------------------
 // Peaking and Coring and EMF/Chroma Lowpass (Page6)
 //--------------------------------------------------
-#define _P6_PEAKING_ENABLE_C1               	0xC1        // Peaking Enable 
-#define _P6_PEAKING_DATA00_C2               	0xC2        // Peaking Data 00  
-#define _P6_PEAKING_DATA01_C3               	0xC3        // Peaking Data 01 
+#define _P6_PEAKING_ENABLE_C1               	0xC1        // Peaking Enable
+#define _P6_PEAKING_DATA00_C2               	0xC2        // Peaking Data 00
+#define _P6_PEAKING_DATA01_C3               	0xC3        // Peaking Data 01
 #define _P6_PEAKING_DATA02_C4               	0xC4        // Peaking Data 02
 #define _P6_PEAKING_DATA03_C5               	0xC5        // Peaking Data 03
 #define _P6_PEAKING_DATA04_C6               	0xC6        // Peaking Data 04
@@ -851,22 +852,22 @@
 //--------------------------------------------------
 // YUV422 to YUV444 Conversion & 2 to 1 Setup (Page6)
 //--------------------------------------------------
-#define _P6_YUV422_TO_YUV444_D4             	0xD4        // YUV422 to YUV444 Control Register 
-#define _P6_ACTIVE_BLANK_WINDOW_CTRL_MSB_D5 	0xD5        // Active Window & Blanking Window Control Register MSB 
-#define _P6_ACTIVE_WINDOW_CTRL_LSB_D6       	0xD6        // Active Window Control Register LSB 
-#define _P6_BLANK_WINDOW_CTRL_LSB_D7        	0xD7        // Blanking Window Control Register LSB 
+#define _P6_YUV422_TO_YUV444_D4             	0xD4        // YUV422 to YUV444 Control Register
+#define _P6_ACTIVE_BLANK_WINDOW_CTRL_MSB_D5 	0xD5        // Active Window & Blanking Window Control Register MSB
+#define _P6_ACTIVE_WINDOW_CTRL_LSB_D6       	0xD6        // Active Window Control Register LSB
+#define _P6_BLANK_WINDOW_CTRL_LSB_D7        	0xD7        // Blanking Window Control Register LSB
 
 //--------------------------------------------------
 // DCTi in I-Domain (Page6)
 //--------------------------------------------------
-#define _P6_DCTI_1ST_GAIN_D8                	0xD8        // DCTi 1st Gain 
+#define _P6_DCTI_1ST_GAIN_D8                	0xD8        // DCTi 1st Gain
 #define _P6_DCTI_1ST_GAIN_THRESHOLD_D9      	0xD9        // DCTi 1st Gain Threshold
 
 //--------------------------------------------------
 // Noise Reduction in I-domain (Page6)
 //--------------------------------------------------
-#define _P6_CP_CTRL_DA                      	0xDA        // CP Control Register 
-#define _P6_SPATIAL_CTRL_DB                 	0xDB        // Spatial Control Register 
+#define _P6_CP_CTRL_DA                      	0xDA        // CP Control Register
+#define _P6_SPATIAL_CTRL_DB                 	0xDB        // Spatial Control Register
 #define _P6_SPATIAL_THLY_DC                 	0xDC        // Spatial Threshold for Luma
 #define _P6_SPATIAL_THLC_DD                 	0xDD        // Spatial Threshold for Chroma
 #define _P6_IMPULSE_PIXEL_DIFF_THL_DE       	0xDE        // Impulse Pixel Diff Threshold
@@ -878,7 +879,7 @@
 //--------------------------------------------------
 // Scale Down (Page6)
 //--------------------------------------------------
-#define _P6_UZD_CTRL0_E3                    	0xE3        // UZD Control Register 0 
+#define _P6_UZD_CTRL0_E3                    	0xE3        // UZD Control Register 0
 #define _P6_UZD_CTRL1_E4                    	0xE4        // UZD Control Register 1
 #define _P6_UZD_SCALE_HOR_FACTOR_H_E5       	0xE5        // Horizontal Scale Factor HByte
 #define _P6_UZD_SCALE_HOR_FACTOR_M_E6       	0xE6        // Horizontal Scale Factor MByte
@@ -894,7 +895,7 @@
 #define _P6_UZD_HOR_SEGMENT2_L_F0           	0xF0        // Horizontal Non-Linear Segment2 LByte
 #define _P6_UZD_HOR_INITIAL_VALUE_F1        	0xF1        // Horizontal Scaling Initial Value
 #define _P6_UZD_VER_INITIAL_VALUE_F2        	0xF2        // Vertical Scaling Initial Value
-#define _P6_UZD_FIR_COEF_INDEX_F3           	0xF3        // Filter Coefficient Index 
+#define _P6_UZD_FIR_COEF_INDEX_F3           	0xF3        // Filter Coefficient Index
 #define _P6_UZD_FIR_COEF_PORT_F4            	0xF4        // Filter Coefficient Port
 #define _P6_UZD_CRC_CTRL_F5                 	0xF5        // CRC Control Register
 #define _P6_UZD_CRC_HH_F6                   	0xF6        // CRC HHByte
@@ -920,19 +921,19 @@
 //#define _P7_RESERVED_A0                     	0xA0        // P7 Reserved A0
 #define _P7_DLTI_DCTI_ENABLE_A1             	0xA1        // DLTi DCTi Enable
 #define _P7_DLTI_HF_THRESHOLD_A2            	0xA2        // DLTi HF Threshold
-#define _P7_DLTI_GAIN_A3                    	0xA3        // DLTi Gain 
-#define _P7_DLTI_GAIN_THRESHOLD_A4       		0xA4        // DLTi Gain Threshold 
+#define _P7_DLTI_GAIN_A3                    	0xA3        // DLTi Gain
+#define _P7_DLTI_GAIN_THRESHOLD_A4       		0xA4        // DLTi Gain Threshold
 #define _P7_DLTI_OPTIONS_A5                 	0xA5        // DLTi Options
-#define _P7_DCTI_1ST_GAIN_A6                	0xA6        // DCTi 1st Gain 
-#define _P7_DCTI_1ST_GAIN_THRESHOLD_A7    		0xA7        // DCTi 1st Gain Threshold 
+#define _P7_DCTI_1ST_GAIN_A6                	0xA6        // DCTi 1st Gain
+#define _P7_DCTI_1ST_GAIN_THRESHOLD_A7    		0xA7        // DCTi 1st Gain Threshold
 //#define _P7_RESERVED_A8                     	0xA8        // P7 Reserved A0
 
 //--------------------------------------------------
 // Peaking and Coring and EMF/Chroma Lowpass (Page7)
 //--------------------------------------------------
-#define _P7_PEAKING_ENABLE_A9               	0xA9        // Peaking Enable 
-#define _P7_PEAKING_DATA00_AA               	0xAA        // Peaking Data 00  
-#define _P7_PEAKING_DATA01_AB               	0xAB        // Peaking Data 01 
+#define _P7_PEAKING_ENABLE_A9               	0xA9        // Peaking Enable
+#define _P7_PEAKING_DATA00_AA               	0xAA        // Peaking Data 00
+#define _P7_PEAKING_DATA01_AB               	0xAB        // Peaking Data 01
 #define _P7_PEAKING_DATA02_AC               	0xAC        // Peaking Data 02
 #define _P7_PEAKING_DATA03_AD               	0xAD        // Peaking Data 03
 #define _P7_PEAKING_DATA04_AE               	0xAE        // Peaking Data 04
@@ -1035,22 +1036,22 @@
 #define _P8_CLAMP_UPDN_EN_A2                 	0xA2        // ADC Switch Control
 #define _P8_AGC_GATE_TH_SWAP_A3          		0xA3        // AGC Gate TH Swap
 #define _P8_INOUT_CTRL_A4                    	0xA4        // Inout Control
-//#define _RESERVED_A5                       	0xA5        // P8 Reserved A5 
+//#define _RESERVED_A5                       	0xA5        // P8 Reserved A5
 //#define _RESERVED_A6                       	0xA6        // P8 Reserved A6
 #define _P8_OUTPUT_CTRL_A7                  	0xA7        // Output Control
-#define _P8_CONTRAST1_A8                     	0xA8        // Luma Contrast Adjust 
-#define _P8_BRIGHTNESS1_A9                   	0xA9        // Luma Brightness Adjust 
-#define _P8_SATURATION1_AA                   	0xAA        // Chroma Saturation Adjust 
+#define _P8_CONTRAST1_A8                     	0xA8        // Luma Contrast Adjust
+#define _P8_BRIGHTNESS1_A9                   	0xA9        // Luma Brightness Adjust
+#define _P8_SATURATION1_AA                   	0xAA        // Chroma Saturation Adjust
 #define _P8_HUE_AB                          	0xAB        // Chroma Hue Phase Adjust
 #define _P8_DC_HACTIVE_START_AC            		0xAC        // DC Hactive Start
 #define _P8_DC_VACTIVE_START_AD            		0xAD        // DC Vactive Start
 #define _P8_THRESHOLD_AE                     	0xAE        // DC Threshold
 #define _P8_DC_POSITIVE_GAIN_AF             	0xAF        // DC Positive Gain
 #define _P8_NEGATIVE_GAIN_B0                 	0xB0        // DC Negetive Gain
-#define _P8_YDC_STATUS_B1                    	0xB1        // YDC Status 
-#define _P8_YDC_AVERAGE_STATUS_B2       		0xB2        // YDC Average Status 
+#define _P8_YDC_STATUS_B1                    	0xB1        // YDC Status
+#define _P8_YDC_AVERAGE_STATUS_B2       		0xB2        // YDC Average Status
 #define _P8_DC_BALANCE_CTRL0_B3            		0xB3        // DC Balance Control 0
-#define _P8_DC_BALANCE_CTRL1_B4            		0xB4        // DC Balance Control 1 
+#define _P8_DC_BALANCE_CTRL1_B4            		0xB4        // DC Balance Control 1
 #define _P8_IRQ_MASK1_B5                     	0xB5        // IRQ Mask 1
 #define _P8_IRQ_MASK2_B6                     	0xB6        // IRQ Mask 2
 #define _P8_IRQ_STATUS1_B7                   	0xB7        // IRQ Status 1
@@ -1077,17 +1078,17 @@
 #define _P8_CMAG_STATUS1_CC                  	0xCC        // Chroma Gain Low Byte
 #define _P8_CORDIC_FREQ_STATUS_CD       		0xCD        // SECAM Cordic Frequency
 #define _P8_NOISE_STATUS_CE                  	0xCE        // Noise Status
-#define _P8_SOFT_RESET_CF                    	0xCF        // Video Soft Reset 
+#define _P8_SOFT_RESET_CF                    	0xCF        // Video Soft Reset
 #define _P8_PALM_COMP1_D0                    	0xD0        // Palm Flag Compensation Counter.
 #define _P8_PALM_COMP2_D1                    	0xD1        // Palm Flag Compensation Threshold
 #define _P8_MANUAL_MODE_D2                   	0xD2        // AUTO Manual Mode Setting
-#define _P8_MODE_DET_STATUS_D3             		0xD3        // Mode Detect Status 
+#define _P8_MODE_DET_STATUS_D3             		0xD3        // Mode Detect Status
 #define _P8_STA_AND_DIS_MODE_D4          		0xD4        // Statistc and Disable Mode
 #define _P8_PREFER_MODE_D5                   	0xD5        // Prefer Mode
 #define _P8_STM_FIX_MODE_D6                  	0xD6        // State Machine Fix mode
 #define _P8_ZORAN_REG_EN_D7                  	0xD7        // Zoran Register Enable
 #define _P8_AUTO_MODE_STM_STA_D8       			0xD8        // AUTO Mode State Machine Statistic
-//#define _RESERVED_D9                       	0xD9        // P8 Reserved D9 
+//#define _RESERVED_D9                       	0xD9        // P8 Reserved D9
 #define _P8_COMB_FLT_CONF_DA                 	0xDA        // COMB Filter Config
 #define _P8_COMB_FLT_TH1_DB                  	0xDB        // COMB Filter Threshold 1
 #define _P8_COMB_FLT_TH2_DC                  	0xDC        // COMB Filter Threshold 2
@@ -1101,26 +1102,26 @@
 #define _P8_ADAP_BPF_C_TH2_E4                	0xE4        // Chroma Adaptive BPF Detection Threshold 2
 #define _P8_ADAP_BPF_C_TH3_E5                	0xE5        // Chroma Adaptive BPF Detection Threshold 3
 #define _P8_ADAP_BPF_C_TH4_E6                	0xE6        // Chroma Adaptive BPF Detection Threshold 4
-#define _P8_ADAP_BPF_Y_TH1_E7                	0xE7        // Threshold 1 for Y Adaptive BPF detection 
+#define _P8_ADAP_BPF_Y_TH1_E7                	0xE7        // Threshold 1 for Y Adaptive BPF detection
 #define _P8_ADAP_BPF_Y_TH2_E8                	0xE8        // Threshold 2 for Y Adaptive BPF detection
 #define _P8_ADAP_BPF_Y_TH3_E9                	0xE9        // Threshold 3 for Y Adaptive BPF detection
 #define _P8_YC_BW_CTRL_EA                    	0xEA        // YC BandWidth Control
 #define _P8_2D_DEBUG_MODE_EB                 	0xEB        // 2D Debug Mode
 #define _P8_RESOL_LP_TH_EC                   	0xEC        // RESOL LP TH
 #define _P8_ENVELOPE_TH_ED                   	0xED        // ENVELOPE TH
-#define _P8_COMB_FLT_TH5_EE                		0xEE        // Comb Filter THR5             
+#define _P8_COMB_FLT_TH5_EE                		0xEE        // Comb Filter THR5
 //#define _RESERVED_EF                       	0xEF        // P8 Reserved EF
 #define _P8_BW_DETECTION_F0                  	0xF0        // Band Width Detection
 #define _P8_BW_EDGE_THR_F1                   	0xF1        // Band Width Edge Threshold
-#define _P8_2D_ALPHA_MOD_ENABLE_F2   			0xF2        // 2D ALPHA Mode Enable 
+#define _P8_2D_ALPHA_MOD_ENABLE_F2   			0xF2        // 2D ALPHA Mode Enable
 #define _P8_H2V_CORING_THR_F3               	0xF3        // H2V Coring Threshold
 #define _P8_H2V_Y_NOISE_THR_F4             		0xF4        // H2V Y Noise Threshold
 #define _P8_H2V_CVBS_NOISE_THR_F5       		0xF5        // H2V CVBS Noise Threshold
-#define _P8_1D_BLEND_THR_F6                  	0xF6        // 1D Blend Threshold 
+#define _P8_1D_BLEND_THR_F6                  	0xF6        // 1D Blend Threshold
 #define _P8_1D_BLEND_BPF_SEL_Y_F7       		0xF7        // 1D Blend BPF Select for Y
 #define _P8_1D_BLEND_BPF_SEL_C_F8       		0xF8        // 1D Blend BPF Select for C
-											 			 
-//Address: P8-F9 ~ P8-FF Reserved			 
+
+//Address: P8-F9 ~ P8-FF Reserved
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////   Page 9: VD  /////////////////////////////////////////
@@ -1146,13 +1147,13 @@
 #define _P9_CPUMP_ADJ_B1                     	0xB1        //Charge Pump Delay Adjustment
 #define _P9_CPUMP_DELAY_B2                   	0xB2        //Charge Pump Delay
 #define _RESERVED_B3                         	0xB3        //P9 Reserved B3
-#define _P9_CAGC_B4                          	0xB4        //Chrona AGC 
+#define _P9_CAGC_B4                          	0xB4        //Chrona AGC
 #define _P9_CKILL_B5                         	0xB5        //Chroma Kill
 #define _P9_C_LOCK_CONF_B6                   	0xB6        //Chroma Lock Configuation
 #define _P9_CLOOP_GAIN_B7                    	0xB7        //Chroma LoopFilter Gain
 #define _P9_CLOOP_STATE_B8                   	0xB8        //Chroma LoopFilter State
 #define _P9_CAUTOPOS_B9                      	0xB9        //Chroma AutoPosition
-//Address: P9-BA ~ P9-BF Reserved  			  
+//Address: P9-BA ~ P9-BF Reserved
 #define _P9_LOCK_COUNT_C0                    	0xC0        //Lock Count
 #define _P9_HLOOP_MAXSTATE_C1               	0xC1        //H Loop MaxState
 #define _P9_CLAMP_CTRL0_C2                   	0xC2        //ClampAGC Control 0
@@ -1197,7 +1198,7 @@
 #define _P9_VS_TC1_E9                        	0xE9        //Vsync Time Constant 1
 #define _P9_SERR_TH_EA                       	0xEA        //Serration Detection Threshold
 #define _P9_NO_SINGAL_DEC_EB                 	0xEB        //No Singal Counter Decrement Value
-//Address: P9-EC ~ P9-EF Reserved  		    
+//Address: P9-EC ~ P9-EF Reserved
 #define _P9_CDTO_INC4_F0                     	0xF0        //Chroma DTO INC4
 #define _P9_CDTO_INC3_F1                     	0xF1        //Chroma DTO INC3
 #define _P9_CDTO_INC2_F2                     	0xF2        //Chroma DTO INC2
@@ -1206,7 +1207,7 @@
 #define _P9_HDTO_INC3_F5                     	0xF5        //Hsync  DTO INC3
 #define _P9_HDTO_INC2_F6                     	0xF6        //Hsync  DTO INC2
 #define _P9_HDTO_INC1_F7                     	0xF7        //Hsync  DTO INC1
-//Address: P9-F8 ~ P9-FF Reserved  			 											 
+//Address: P9-F8 ~ P9-FF Reserved
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////   Page A: VD  /////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -1225,7 +1226,7 @@
 #define _PA_SECAM_FLAG_CNT_AB                	0xAB        //SECAM Flag Counter
 #define _PA_PALM_FLAG_CNT_AC                 	0xAC        //PALM Flag Counter
 #define _PA_BURST_VLD_CNT_AD                 	0xAD        //Burst Magnitude not Vaild Counter
-//Address: PA-AE ~ PA-AF Reserved  
+//Address: PA-AE ~ PA-AF Reserved
 #define _PA_MIDPT_ADJ_B0                     	0xB0        //MidPoint adjustment
 #define _PA_FREQ_FLAG_TH_B1                  	0xB1        //Frequence Flag Threshold
 #define _PA_FREQ_VLD_MAX_B2                  	0xB2        //Frequence Valid Max
@@ -1247,16 +1248,16 @@
 #define _PA_HSYNC_PULSE_WID_C2            		0xC2        //Hsync Width
 #define _PA_CRESAMP_CTRL_C3                  	0xC3        //Chroma Hresampler Control
 #define _PA_SECAM_CTRL_C4                    	0xC4        //SECAM Control
-#define _PA_SECAM_DR_OFFSET_C5             		0xC5        //SECAM DR Offset 
+#define _PA_SECAM_DR_OFFSET_C5             		0xC5        //SECAM DR Offset
 #define _PA_SECAM_DB_OFFSET_C6             		0xC6        //SECAM DB Offset
 #define _PA_SECAM_HCOUNT_RST_C7          		0xC7        //Hcount Reset
 #define _PA_PHASE_DIFF_DR_RST_C8          		0xC8        //Secam DR's Phase Diff from Cordic reset value
 #define _PA_PHASE_DIFF_DB_RST_C9          		0xC9        //Secam DB's Phase Diff from Cordic reset value
-#define _PA_DRDB_GAIN_TB_CA                  	0xCA        //Secam Gain DrDb Look Up Table 
-#define _PA_Y_GAIN_TB_CB                     	0xCB        //Secam Gain Y Look Up Table 
+#define _PA_DRDB_GAIN_TB_CA                  	0xCA        //Secam Gain DrDb Look Up Table
+#define _PA_Y_GAIN_TB_CB                     	0xCB        //Secam Gain Y Look Up Table
 #define _PA_SECAM_GAIN_DLY_CC               	0xCC        //Secam Y Delay For dr/db gain
 #define _PA_SECAM_GAIN_TB_DBG_CD        		0xCD        //SECAM Gain Table Debug
-//Address: PA-CE ~ PA-CF Reserved  
+//Address: PA-CE ~ PA-CF Reserved
 #define _PA_LDPAUSE_CTL_D0                   	0xD0        //LD pause detected
 #define _PA_VCR_OPT_D1                       	0xD1        //VCR Option
 #define _PA_CEN_LINE_COUNT_D2                	0xD2        //Cenable Line Count
@@ -1274,8 +1275,8 @@
 #define _PA_MV_BURST_END_DE                  	0xDE        //MacroVision Burst Detect Window End
 #define _PA_COLORSTRIPE_CTRL_DF            		0xDF        //ColorStripe Control
 #define _PA_DBG_MUX_E0                       	0xE0        //Debug Mux
-#define _PA_VD_DBG_ANALOG_E1                 	0xE1        //Video Debug Analog 
-#define _PA_VD_DBG_DIGITAL_E2                	0xE2        //Video Debug Digital 
+#define _PA_VD_DBG_ANALOG_E1                 	0xE1        //Video Debug Analog
+#define _PA_VD_DBG_DIGITAL_E2                	0xE2        //Video Debug Digital
 #define _PA_BIST_TEST1_E3                    	0xE3        //BIST Test 1
 #define _PA_BIST_TEST2_E4                    	0xE4        //BIST Test 2
 #define _RESERVED_E5                         	0xE5        //PA Reserved E5
@@ -1910,4 +1911,3 @@
 //----------------------------   DCC Acess Port + Page     --------------------------------
 //PAGE PAGE PAGE PAGE PAGE PAGE PAGE PAGE PAGE PAGE PAGE PAGE PAGE PAGE PAGE PAGE PAGE PAGE
 #endif
-

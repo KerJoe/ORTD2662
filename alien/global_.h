@@ -29,6 +29,7 @@
 //--------------------------------------------------
 // Data Type Redefine
 //--------------------------------------------------
+typedef unsigned char bit;
 typedef unsigned char BYTE;
 typedef unsigned char UINT8;
 typedef char SBYTE;
@@ -269,7 +270,7 @@ typedef bit BIT;
 #define USER_GREEN                  	4
 #define USER_BLUE                     	5
 
-#define _PR                            	0  
+#define _PR                            	0
 #define _SY                          	1
 #define _PB                           	2
 
@@ -302,7 +303,7 @@ typedef bit BIT;
 #define _SIG_MODE_PAL_DK            2
 #define _SIG_MODE_SECAM             3
 
-// Scaler Type 
+// Scaler Type
 #define _RTD3580D					1
 
 // Debug Tool
@@ -324,7 +325,7 @@ typedef bit BIT;
 #define _XTAL27000K                     		27000
 #define _XTAL24300K                     		24300
 
-#define _HSYNC_ONLY                     		0	
+#define _HSYNC_ONLY                     		0
 #define _HSYNC_WITH_SOG                 		1
 #define _HSYNC_WITH_SOG_SOY         			2
 
@@ -406,7 +407,7 @@ typedef bit BIT;
 //--------------------------------------------------
 // Definations of Input Port Types
 //--------------------------------------------------
-/******************************************************************* 
+/*******************************************************************
 Select V8 input path, please modify following define to change input path.
 If you select SV port, we only support,  V0 with V1 or V1 with V2 or V2 with V3.
 ********************************************************************/
@@ -447,5 +448,23 @@ If you select SV port, we only support,  V0 with V1 or V1 with V2 or V2 with V3.
 
 /*======================= Extern Functions ================== */
 
-#endif 
 
+
+
+#ifdef __SDCC
+#define code __code
+#define data __data
+#define idata __idata
+#define xdata __xdata
+#else
+#define code
+#define data
+#define idata
+#define xdata
+#endif
+
+#include <stdint.h>
+void delayMS(uint32_t ms);
+#define CTimerDelayXms(__t) delayMS(__t)
+
+#endif

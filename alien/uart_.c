@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Video.c No.0002
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __UART__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 #if(_RS232_EN)
 
@@ -23,7 +24,7 @@ BYTE xdata pUartData[9];
 BYTE code tEnterDebugMode[] = {0x01,0x02,0x03,0x04};
 BYTE code tExitDebugMode[] = {0x04,0x03,0x02,0x01};
 
-
+#if 0
 //----------------------------------------------------------------------------
 void CUartInit(void)
 {
@@ -53,41 +54,41 @@ void CSwitchToUart(void)
 {
 	BYTE i;
 	bit fTest = 0;
-	
-	MCU_PIN_SHARE_CTRL00_FF96 |= 0xF8;
+
+	XSFRWriteByte(MCU_PIN_SHARE_CTRL00_FF96, XSFRReadByte(MCU_PIN_SHARE_CTRL00_FF96) |  0xF8);
 	ES0 = 1; // Enable UART's interrupt
 	PS0 = 1; // Change UART's interrupt to high priority
 
 	fInUartMode = 1;
 
-    DebugPrintf("Swtich to Uart mode.\n",0x00);
+    printf("Swtich to Uart mode.\n",0x00);
 
     for(i=0;i<10;i++)
     {
 		bLED1 = fTest;
 		fTest = ~fTest;
-		CTimerDelayXms(20);		
+		CTimerDelayXms(20);
     }
-    
+
 }
 //----------------------------------------------------------------------------
 void CSwitchToI2C(void)
 {
 	BYTE i;
 	bit fTest = 0;
-	
-    DebugPrintf("Swtich to IIC mode.\n",0x00);
+
+    printf("Swtich to IIC mode.\n",0x00);
 	MCU_PIN_SHARE_CTRL00_FF96 &= 0x07;
 	ES0 = 0; // Enable UART's interrupt
-	PS0 = 0; // Change UART's interrupt to high priority	
+	PS0 = 0; // Change UART's interrupt to high priority
 	fInUartMode = 0;
 
     for(i=0;i<10;i++)
     {
 		bLED2 = fTest;
 		fTest = ~fTest;
-		CTimerDelayXms(20);		
-    }	
+		CTimerDelayXms(20);
+    }
 }
 //----------------------------------------------------------------------------
 /*
@@ -96,9 +97,9 @@ void CUartPrintf(char *pStr,WORD usValue)
 	while(*pStr)
 	{
 		CUartPutCharToScr(pStr);
-		pStr++;	
+		pStr++;
 	}
-	
+
 	CUartPrintfDec(usValue);
 	CUartPutCharToScr('\r');
 	CUartPutCharToScr('\n');
@@ -110,10 +111,10 @@ void CUartPrintfHex(BYTE ucValue)
 	BYTE h,l;
 	h = (ucValue & 0xf0) >> 4;
 	l = ucValue & 0x0f;
-	
+
 	if(h > 9)	h = h - 10 + 'A';
 	else		h = h + '0';
-	
+
 	if(l > 9)	l = l - 10 + 'A';
 	else		l = l + '0';
 
@@ -127,7 +128,7 @@ void CUartPrintfDec(WORD usValue)
      CUartPutCharToScr(((usValue / 1000) % 10) + '0');
      CUartPutCharToScr(((usValue / 100) % 10) + '0');
      CUartPutCharToScr(((usValue / 10) % 10) + '0');
-     CUartPutCharToScr((usValue % 10) + '0');	
+     CUartPutCharToScr((usValue % 10) + '0');
 }
 //----------------------------------------------------------------------------
 void CUartPutCharToScr(BYTE ch)
@@ -174,7 +175,7 @@ void DebugPrintf(const BYTE code* pstr,BYTE value)
 					i++;
 					p++;
 					CUartPutCharToScr(value);
-					break;	
+					break;
 				default:
 					CUartPutCharToScr(*p);
 					break;
@@ -193,26 +194,26 @@ void CUartPutToScr(const BYTE ch,const BYTE mode)
 	BYTE NO1[3];
 	BYTE i,time;
 
-	if(mode == 1) 
+	if(mode == 1)
 	{	//dec
 		NO1[2] = ch / 100;
 		NO1[1] = (ch % 100) / 10;
 		NO1[0] = (ch % 100) % 10;
-		
+
 		if (NO1[2])					time = 3;
 		else if (NO1[1])			time = 2;
 		else						time = 1;
 
-		for (i = 0; i < time; i++) 
+		for (i = 0; i < time; i++)
 		{
 			CUartPutCharToScr(NO1[time - i - 1] + '0');
 		}
 	}
-	else if (mode == 2) 
+	else if (mode == 2)
 	{	//hex
 		NO1[1] = (ch & 0x0F);
 		NO1[0] = ((ch >> 4) & 0x0F);
-		for (i = 0; i < 2; i++) 
+		for (i = 0; i < 2; i++)
 		{
 
 			if (NO1[i] > 9)
@@ -232,7 +233,7 @@ void CUartPutCharToScr(BYTE ch)
 	TI = 0;
 	SBUF0 = ch; 			// transfer UART
 	while (!TI);		// wait buffer completing.
-	
+
 	ES0 = 1;
 }
 //----------------------------------------------------------------------------
@@ -241,21 +242,21 @@ void CUartPutCharToScr(BYTE ch)
 void CUartHandler(void)
 {
 	do
-	{		
+	{
 		if (!fUartRxCmdSuccess)
 			continue;
 
 		fUartRxCmdSuccess = 0;
 
 		switch (pUartData[0])
-		{	
+		{
 			case UartCMD_DebugModeExit:
 				UartCMDDebugModeExit();
 				break;
 			case UartCMD_DebugModeEnter:
 				UartCMDDebugModeEnter();
 				break;
-			
+
 			case UartCMD_CScalerRead:
 				UartCMDScalerRead();
 				break;
@@ -325,4 +326,5 @@ void UartCMDScalerWrite(void)
 }
 //----------------------------------------------------------------------------
 
+#endif
 #endif

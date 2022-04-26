@@ -1,4 +1,5 @@
-#include "Core\Header\Include.h"
+#include "alien/global_.h"
+#include "alien/include_.h"
 
 #if(_FAC_OSD)
 
@@ -10,7 +11,7 @@
 void EnterFacBurnin(void)
 {
 	if(GET_BURNIN_STATE()==_BURNIN_ON)
-    {	
+    {
     	SET_BURNIN_STATE(0);
     	OSDClear(6, 1, 17, 5, 0x00,BYTE_DISPLAY);
     	TextOutCalcWidth(sFacOff,ROW(6),COL(17),5,5*12);
@@ -36,15 +37,15 @@ void DrawFactoryMenu()
     OSDClear(ROW(0), HEIGHT(9), COL(0), WIDTH(35), 0x8C, BYTE_ATTRIB);
     OSDClear(ROW(0), HEIGHT(9), COL(0), WIDTH(35), 0x00, BYTE_DISPLAY);
 	OSDClear(ROW(0), HEIGHT(9), COL(0), WIDTH(35), 0x20, BYTE_COLOR);
-    SetOSDDouble(0x00);  
+    SetOSDDouble(0x00);
 
 	ucOsdState = _MI_FAC_AUTOCOLOR;
-	COsdFxDrawWindow(0,0,									//WORD usXStart,WORD usYStart,  
-					450,150,	//WORD usXEnd,WORD usYEnd,  
+	COsdFxDrawWindow(0,0,									//WORD usXStart,WORD usYStart,
+					450,150,	//WORD usXEnd,WORD usYEnd,
 					tMainWindowStyle);						//BYTE *pStyle)
 
 	OSDPosition(450,150,3, 3,0x03);
-   
+
 
 	CTextOutBase(sFacAdjustColor,COL(1),ROW(1));
 /*
@@ -70,15 +71,15 @@ void DrawFactoryMenu()
 	Textout(sFacRGB);
 	Gotoxy(COL(17),ROW(5), BYTE_DISPLAY);
 	Textout(sFacRGB);
-	
+
 	CTextOutBase(sFacExit,COL(1),ROW(7));
-	
-	
+
+
 	for(;y<8;y++)
     {
 		SETCOLOR_FACMAINMENU_NORLINE(y,_MENU_NORMAL_COLOR);
     }
-		
+
 	SETCOLOR_FACMAINMENU_SELLINE(1,_MENU_SECECT_COLOR);
 	CFacShowNumber(18,2,stAdcData.AdcGain[_RED]);
 	CFacShowNumber(25,2,stAdcData.AdcGain[_GREEN]);
@@ -101,21 +102,21 @@ void DrawFactoryMenu()
 	CFacShowNumber(31,5,stColorTempData.ColorTemp[3 + _BLUE]);
 
    	if(GET_BURNIN_STATE()==_BURNIN_ON)
-    {	
+    {
     	TextOutCalcWidth(sFacOn,ROW(6),COL(17),5,5*12);
     }
     else
     {
 		TextOutCalcWidth(sFacOff,ROW(6),COL(17),5,5*12);
 	}
-	
+
 	COsdFxEnableOsd();
 	bOSDTimeOut=0;
-	
+
 }
 //---------------------------------------------------------------------------
 void MFactoryMenuAdj(BYTE ucMode)
-{    
+{
     // ucMode : _NEXT or _Prev
     BYTE ucNewItem = AdjustMenuItem(_MI_FAC_AUTOCOLOR,_MI_FAC_EXIT,ucMode);
 
@@ -123,26 +124,26 @@ void MFactoryMenuAdj(BYTE ucMode)
     {
     	return;
     }
-    
+
     // 1. Clear Current Menu
     SETCOLOR_FACMAINMENU_SELLINE(ucOsdState+1-_MI_FAC_AUTOCOLOR,_MENU_NORMAL_COLOR);
-    
+
     // 2. Change ucOsdState
     ucOsdState = ucNewItem;
-    
-    // 3. Draw New Item   
+
+    // 3. Draw New Item
     SETCOLOR_FACMAINMENU_SELLINE(ucOsdState+1-_MI_FAC_AUTOCOLOR,_MENU_SECECT_COLOR);
 
    	// 4. Change RGB
    	switch(ucOsdState)
    	{
-   		case _MI_FAC_9300:      
+   		case _MI_FAC_9300:
    		SET_COLOR_TEMP_TYPE(_CT_9300);
    		CEepromLoadColorTempData();
 		CAdjustContrast();
 		break;
-		
-   		case _MI_FAC_6500:		
+
+   		case _MI_FAC_6500:
    		SET_COLOR_TEMP_TYPE(_CT_6500);
    		CEepromLoadColorTempData();
 		CAdjustContrast();
@@ -161,12 +162,12 @@ void MFactoryEnterSub(void)
     // ucMode : _INC or _DEC
     switch(ucOsdState)
     {
-        case _MI_FAC_AUTOCOLOR:    
+        case _MI_FAC_AUTOCOLOR:
             CAutoDoWhiteBalance();
             CFacShowNumber(18,2,stAdcData.AdcGain[_RED]);
     		CFacShowNumber(25,2,stAdcData.AdcGain[_GREEN]);
     		CFacShowNumber(31,2,stAdcData.AdcGain[_BLUE]);
-    
+
     		CFacShowNumber(18,3,stAdcData.AdcOffset[_RED]);
     		CFacShowNumber(25,3,stAdcData.AdcOffset[_GREEN]);
     		CFacShowNumber(31,3,stAdcData.AdcOffset[_BLUE]);
@@ -175,33 +176,33 @@ void MFactoryEnterSub(void)
         case _MI_FAC_9300:
         	SETCOLOR_FACMAINMENU_SELLINE(ucOsdState+1-_MI_FAC_AUTOCOLOR,_MENU_NORMAL_COLOR);
         	ucOsdState=_MI_FAC_9300_R;
-        	OSDLine(ROW(4), COL(16), LENGTH(5), _MENU_SECECT_COLOR, BYTE_COLOR);			
+        	OSDLine(ROW(4), COL(16), LENGTH(5), _MENU_SECECT_COLOR, BYTE_COLOR);
             break;
 
-        case _MI_FAC_6500:             
+        case _MI_FAC_6500:
             SETCOLOR_FACMAINMENU_SELLINE(ucOsdState+1-_MI_FAC_AUTOCOLOR,_MENU_NORMAL_COLOR);
             ucOsdState=_MI_FAC_6500_R;
-            OSDLine(ROW(5), COL(16), LENGTH(5), _MENU_SECECT_COLOR, BYTE_COLOR);         
+            OSDLine(ROW(5), COL(16), LENGTH(5), _MENU_SECECT_COLOR, BYTE_COLOR);
             break;
-        	
-        case _MI_FAC_GAIN:           
+
+        case _MI_FAC_GAIN:
             SETCOLOR_FACMAINMENU_SELLINE(ucOsdState+1-_MI_FAC_AUTOCOLOR,_MENU_NORMAL_COLOR);
             ucOsdState=_MI_FAC_GAIN_R;
-            OSDLine(ROW(2), COL(16), LENGTH(5), _MENU_SECECT_COLOR, BYTE_COLOR);         
+            OSDLine(ROW(2), COL(16), LENGTH(5), _MENU_SECECT_COLOR, BYTE_COLOR);
             break;
-			
-        case _MI_FAC_OFFSET: 
+
+        case _MI_FAC_OFFSET:
 			SETCOLOR_FACMAINMENU_SELLINE(ucOsdState+1-_MI_FAC_AUTOCOLOR,_MENU_NORMAL_COLOR);
             ucOsdState=_MI_FAC_OFFSET_R;
-            OSDLine(ROW(3), COL(16), LENGTH(5), _MENU_SECECT_COLOR, BYTE_COLOR);         
+            OSDLine(ROW(3), COL(16), LENGTH(5), _MENU_SECECT_COLOR, BYTE_COLOR);
             break;
-            
-        case _MI_FAC_BURNIN:	
+
+        case _MI_FAC_BURNIN:
         	EnterFacBurnin();
 			break;
 
-        case _MI_FAC_EXIT: 		
-            ExitFacMenu();                      
+        case _MI_FAC_EXIT:
+            ExitFacMenu();
 			break;
     }
 }
@@ -221,7 +222,7 @@ void MFactoryProc()
         case _OE_RETURN_UPMENU:     						             break;
 
     }
-    
+
 }
 
 void MFac9300ReturnMenu()
@@ -237,7 +238,7 @@ void MFac9300MenuAdj(BYTE ucMode)
 
     BYTE ucNewItem;
     if(ucMode==_INC)
-    { 	
+    {
     	if(ucOsdState>_MI_FAC_9300_R-1 && ucOsdState<_MI_FAC_9300_B)
     		ucNewItem=ucOsdState+1;
     	else
@@ -280,25 +281,25 @@ void MFac9300ValAdj(BYTE ucMode)
     		stColorTempData.ColorTemp[3 + _RED]=y;
     		ucOsdEventMsg = _SAVE_EE_COLORPROC1_MSG;
     		CAdjustContrast();
-			CFacShowNumber(18,4,y); 
+			CFacShowNumber(18,4,y);
 			break;
-			
+
 		case _MI_FAC_9300_G :
     	    y= ValueInRangeChange(0, 255,stColorTempData.ColorTemp[3 + _GREEN], _NON_LOOP | ucMode);
     		stColorTempData.ColorTemp[3 + _GREEN]=y;
     		ucOsdEventMsg = _SAVE_EE_COLORPROC1_MSG;
     		CAdjustContrast();
-			CFacShowNumber(25,4,y); 
+			CFacShowNumber(25,4,y);
 			break;
-			
+
     	case _MI_FAC_9300_B:
     	    y= ValueInRangeChange(0, 255,stColorTempData.ColorTemp[3 + _BLUE], _NON_LOOP | ucMode);
     		stColorTempData.ColorTemp[3 + _BLUE]=y;
     		ucOsdEventMsg = _SAVE_EE_COLORPROC1_MSG;
     		CAdjustContrast();
-			CFacShowNumber(31,4,y); 
+			CFacShowNumber(31,4,y);
 			break;
-			
+
     }
 }
 
@@ -330,7 +331,7 @@ void MFacGainMenuAdj(BYTE ucMode)
 
     BYTE ucNewItem;
     if(ucMode==_INC)
-    { 	
+    {
     	if(ucOsdState>_MI_FAC_GAIN_R-1 && ucOsdState<_MI_FAC_GAIN_B)
     		ucNewItem=ucOsdState+1;
     	else
@@ -371,25 +372,25 @@ void MFacGainValAdj(BYTE ucMode)
     		stAdcData.AdcGain[_RED]=y;
     		ucOsdEventMsg = _SAVE_EE_ADCDATA_MSG;
     		CAdjustAdcGain();
-			CFacShowNumber(18,2,y); 
+			CFacShowNumber(18,2,y);
 			break;
-			
+
 		case _MI_FAC_GAIN_G :
     	    y= ValueInRangeChange(0, 255,stAdcData.AdcGain[_GREEN], _NON_LOOP | ucMode);
     		stAdcData.AdcGain[_GREEN]=y;
     		ucOsdEventMsg = _SAVE_EE_ADCDATA_MSG;
     		CAdjustAdcGain();
-			CFacShowNumber(25,2,y); 
+			CFacShowNumber(25,2,y);
 			break;
-			
+
     	case _MI_FAC_GAIN_B:
     	    y= ValueInRangeChange(0, 255,stAdcData.AdcGain[_BLUE], _NON_LOOP | ucMode);
     		stAdcData.AdcGain[_BLUE]=y;
     		ucOsdEventMsg = _SAVE_EE_ADCDATA_MSG;
     		CAdjustAdcGain();
-			CFacShowNumber(31,2,y); 
+			CFacShowNumber(31,2,y);
 			break;
-			
+
     }
 }
 
@@ -421,7 +422,7 @@ void MFacOffsetMenuAdj(BYTE ucMode)
 
        BYTE ucNewItem;
     if(ucMode==_INC)
-    { 	
+    {
     	if(ucOsdState>_MI_FAC_OFFSET_R-1 && ucOsdState<_MI_FAC_OFFSET_B)
     		ucNewItem=ucOsdState+1;
     	else
@@ -463,25 +464,25 @@ void MFacOffsetValAdj(BYTE ucMode)
     		stAdcData.AdcOffset[_RED]=y;
     		ucOsdEventMsg = _SAVE_EE_ADCDATA_MSG;
     		CAdjustAdcOffset();
-			CFacShowNumber(18,3,y); 
+			CFacShowNumber(18,3,y);
 			break;
-			
+
 		case _MI_FAC_OFFSET_G :
     	    y= ValueInRangeChange(0, 255,stAdcData.AdcOffset[_GREEN], _NON_LOOP | ucMode);
     		stAdcData.AdcOffset[_GREEN]=y;
     		ucOsdEventMsg = _SAVE_EE_ADCDATA_MSG;
     		CAdjustAdcOffset();
-			CFacShowNumber(25,3,y); 
+			CFacShowNumber(25,3,y);
 			break;
-			
+
     	case _MI_FAC_OFFSET_B:
     	    y= ValueInRangeChange(0, 255,stAdcData.AdcOffset[_BLUE], _NON_LOOP | ucMode);
     		stAdcData.AdcOffset[_BLUE]=y;
     		ucOsdEventMsg = _SAVE_EE_ADCDATA_MSG;
     		CAdjustAdcOffset();
-			CFacShowNumber(31,3,y); 
+			CFacShowNumber(31,3,y);
 			break;
-			
+
     }
 }
 
@@ -512,7 +513,7 @@ void MFac6500MenuAdj(BYTE ucMode)
 
        BYTE ucNewItem;
     if(ucMode==_INC)
-    { 	
+    {
     	if(ucOsdState>_MI_FAC_6500_R-1 && ucOsdState<_MI_FAC_6500_B)
     		ucNewItem=ucOsdState+1;
     	else
@@ -556,23 +557,23 @@ void MFac6500ValAdj(BYTE ucMode)
 			CFacShowNumber(18,5,y);
 			CAdjustContrast();
 			break;
-			
+
 		case _MI_FAC_6500_G :
-    	    y= ValueInRangeChange(0, 255,stColorTempData.ColorTemp[3 + _GREEN], _NON_LOOP | ucMode);    		
+    	    y= ValueInRangeChange(0, 255,stColorTempData.ColorTemp[3 + _GREEN], _NON_LOOP | ucMode);
     		stColorTempData.ColorTemp[3 + _GREEN]=y;
     		ucOsdEventMsg = _SAVE_EE_COLORPROC1_MSG;
     		CAdjustContrast();
-			CFacShowNumber(25,5,y); 
+			CFacShowNumber(25,5,y);
 			break;
-			
+
     	case _MI_FAC_6500_B:
     	    y= ValueInRangeChange(0, 255,stColorTempData.ColorTemp[3 + _BLUE], _NON_LOOP | ucMode);
     		stColorTempData.ColorTemp[3 + _BLUE]=y;
     		ucOsdEventMsg = _SAVE_EE_COLORPROC1_MSG;
     		CAdjustContrast();
-			CFacShowNumber(31,5,y); 
+			CFacShowNumber(31,5,y);
 			break;
-			
+
     }
 }
 
@@ -592,6 +593,3 @@ void MFac6500Proc(void)
 }
 
 #endif
-
-
-

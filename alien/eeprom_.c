@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Eeprom.c No.0002
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __EEPROM__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 //--------------------------------------------------
 // Eeprom Version Code
@@ -33,10 +34,10 @@ void CEepromStartupCheck(void)
     BYTE cnt;
 
 	//This delay is for Eeprom power rising time when the connector plug in (VGA_5V or DVI_5V).
-	CTimerDelayXms(500); 	//CTimerDelayXms(20); 
+	CTimerDelayXms(500); 	//CTimerDelayXms(20);
 
     for(cnt=0;cnt<2;cnt++)
-    {	
+    {
 		CEepromRead(_SYSTEM_DATA_ADDRESS + 254, 1, pData);
 		if(pData[0] == _VERSION_CODE)
 			break;
@@ -57,7 +58,7 @@ void CEepromStartupCheck(void)
 		CEepromLoadAdcData();
 		CEepromLoadBriConData();
 		CEepromLoadColorTempData();
-		CEepromLoadTvData();	
+		CEepromLoadTvData();
 		CEepromLoadHueSatData();
 		CEepromLoadAudioData();
 
@@ -93,14 +94,14 @@ void CRecallTVData(void)
     // Reset Max channel number
     pData[0] = 0;
     CI2cWrite(_TV_MAX_CHANNEL_EEPROM_ADDR, _MAX_CHANNEL_ADDR, 1, pData);
-  
+
     // Recall freq/tv type/sound type
     ucTVType = _NORMAL_TV_TYPE;
     for(ucCount = 0; ucCount < (_MAX_CHANNEL_COUNT+1); ucCount++)
     {
       //  CSaveChannelData(_MIN_FREQ | 0x8000, 0, ucCount);
         CSaveChannelData((WORD)_MIN_FREQ | 0x8000, 0, ucCount);
-    } 
+    }
 	#endif
 }
 #endif
@@ -331,7 +332,7 @@ void CEepromSaveCenterModeData(BYTE ucMode)
 {
     if(GET_MODE_SEARCH_TYPE() == _PRESET_MODE_TYPE)
     CEepromWrite(_MODE_CENTER_DATA_ADDRESS + (WORD)ucMode * 8, sizeof(StructModeUserCenterDataType), (BYTE *)&stModeUserCenterData.CenterHPos);
-    else if(GET_MODE_SEARCH_TYPE() == _USER_MODE_TYPE)   
+    else if(GET_MODE_SEARCH_TYPE() == _USER_MODE_TYPE)
         CEepromWrite(_MODE_CENTER_DATA_ADDRESS + (WORD)_MAX_PRESET_MODE * 8 + (WORD)ucMode * 8, sizeof(StructModeUserCenterDataType), (BYTE *)&stModeUserCenterData.CenterHPos);
     }
 
@@ -609,7 +610,7 @@ void CEepromLoadColorTempData(void)
 void CEepromLoadColorTempDataDefault(void)
 {
     CEepromWrite(_COLORTEMP_DATA_ADDRESS, 15 * 4, &tEEPROM_COLORTEMP_DATA[0].ColorTemp9300Red);
-    CEepromLoadColorTempData();	
+    CEepromLoadColorTempData();
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -635,7 +636,7 @@ void CEepromLoadTvData(void)
 {
 	CEepromRead(_TV_DATA_ADDRESS, sizeof(StructTvDataType), &stTvInfo.CurChn);
 }
-        
+
 //--------------------------------------------------
 // Description  : Load default system data
 // Input Value  : None
@@ -646,7 +647,7 @@ void CEepromLoadTvDataDefault(void)
     stTvInfo = tEEPROM_TV_DATA;
     CEepromSaveTvData();
 }
- 
+
 //--------------------------------------------------
 // Description  : Save tAudioData data
 // Input Value  : None
@@ -686,12 +687,12 @@ void CEepromLoadAudioDataDefault(void)
 
 void CEepromSaveHueSatData(void)
 {
-    CEepromWrite(_HueSaturation_DATA_ADDRESS + (CGetInputSourceNum(_GET_INPUT_SOURCE()) * 2), 2, &stHueSatData.Hue);	
+    CEepromWrite(_HueSaturation_DATA_ADDRESS + (CGetInputSourceNum(_GET_INPUT_SOURCE()) * 2), 2, &stHueSatData.Hue);
 }
 
 void CEepromLoadHueSatData(void)
 {
-    CEepromRead(_HueSaturation_DATA_ADDRESS + (CGetInputSourceNum(_GET_INPUT_SOURCE()) * 2), 2, &stHueSatData.Hue);	
+    CEepromRead(_HueSaturation_DATA_ADDRESS + (CGetInputSourceNum(_GET_INPUT_SOURCE()) * 2), 2, &stHueSatData.Hue);
 }
 
 //--------------------------------------------------

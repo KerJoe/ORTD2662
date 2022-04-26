@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 
 #define _OSD_HPOSITION_OFFSET           1
 #define _OSD_VPOSITION_OFFSET           2
@@ -206,7 +207,7 @@
 #define _GET_HPOSITIONRANGE_MIN         1
 
 #define GET_LANGUAGE()        			stOsdUserData.Language
-#define SET_LANGUAGE(value)    			stOsdUserData.Language = value 
+#define SET_LANGUAGE(value)    			stOsdUserData.Language = value
 
 //--------------------------------------------------
 // Definitions of Ver. Position Settings Used by COsdFxGetVPositionRange()
@@ -237,7 +238,7 @@ BYTE code ucCloseAllWindow[] =
 };
 
 //------------------------------------------------------------------------------
-BYTE xdata g_ucCharWidth[0x80] _at_ 0xFB00;
+BYTE g_ucCharWidth[0x80];
 bit bOSDTimeOut = 1;
 
 #else
@@ -254,7 +255,7 @@ extern BYTE code ucCloseAllWindow[];
 void SetOsdMap(unsigned char *tOsdMap);
 void SetOSDRamAddress();
 void DirectWOSDRam(WORD iAddress, WORD iLen, BYTE TheByte, BYTE Value);
-void SetRowCmds() small;
+void SetRowCmds();
 void Gotoxy(BYTE x, BYTE y, BYTE TheByte);
 void OutputChar(BYTE C);
 void PrintfDec(unsigned char Value);
@@ -275,8 +276,8 @@ void OSDLine(BYTE row, BYTE col, BYTE length, BYTE value, BYTE indicate);
 void OSDClear(BYTE row_start, BYTE height,
                BYTE col_start, BYTE width,
                BYTE Value, BYTE indicate);
-void OutputDisplaySize();       //ÔÚµ±Ç°µÄÎ»ÖÃÊä³öÏÔÊ¾³ß´ç
-void OutputRefrushRate();       //ÔÚµ±Ç°µÄÎ»ÖÃÊä³öË¢ÐÂÆµÂÊ
+void OutputDisplaySize();       //ï¿½Úµï¿½Ç°ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ß´ï¿½
+void OutputRefrushRate();       //ï¿½Úµï¿½Ç°ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ë¢ï¿½ï¿½Æµï¿½ï¿½
 void COsdFxCodeWrite(BYTE *pArray);
 void COsdFxEnableOsd(void);
 void COsdFxDisableOsd(void);
@@ -321,4 +322,3 @@ WORD CCalcPanelDHEnd(void);
 
 void CShowNumber1(const WORD ucNumber, BYTE ucUserDefLong);
 void CDoReset(void);
-

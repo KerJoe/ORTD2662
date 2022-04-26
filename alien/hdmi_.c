@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : RTD2528R_Hdmi.c No.0000
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __HDMI__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 
 #if(_HDMI_SUPPORT == _ON)
@@ -57,8 +58,8 @@ bit CHdmiVideoSetting(void)
 {
     CScalerPageSelect(_PAGE2);
     CScalerSetDataPortBit(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_SCR_00, ~(_BIT1 | _BIT0), _BIT1);	// Set HDMI/DVI decide condition//731301
-    CTimerDelayXms(50);//731301  
-    
+    CTimerDelayXms(50);//731301
+
    	if(CHdmiFormatDetect())//Input source is the HDMI format.
     {
         SET_HDMIINPUT();
@@ -106,19 +107,19 @@ bit CHdmiVideoSetting(void)
 						CScalerPageSelect(_PAGE6);
 						CScalerSetBit(_P6_YUV422_TO_YUV444_D4, ~_BIT7, _BIT7);//enable
 					}
-				
+
                     if((pData[1] & 0xc0) != 0xc0)//For HDMI switch between ITU601/ITU709
                     {
                         CScalerSetByte(_YUV2RGB_CTRL_9C, 0x08);
 
                         if((bit)(pData[1] & 0x40))
                         {
-                        	//DebugPrintf("\n ITU601%c ",0x20);
+                        	//printf("\n ITU601%c ",0x20);
                             CScalerCodeW(tHDMI_YPBPR_ITU601);
                         }
                         else
                         {
-                        	//DebugPrintf("\n ITU709%c ",0x20);
+                        	//printf("\n ITU709%c ",0x20);
                             CScalerCodeW(tHDMI_YPBPR_ITU709);
                         }
                         CScalerSetByte(_YUV2RGB_CTRL_9C, 0x05);
@@ -179,7 +180,7 @@ void CHdmiAudioFirstTracking(void)
 
         // Fa = (a*Fx*n)/(b*cts*128) = (1024*Fx*n)/(b*cts*128) = (8*Fx*n)/(b*cts)
         // calculate freq in 0.1kHz unit
-		freq = (DWORD)8 * 2 * 1000 * _RTD_XTAL / cts *(10*n) / ((DWORD)b * 1000);		
+		freq = (DWORD)8 * 2 * 1000 * _RTD_XTAL / cts *(10*n) / ((DWORD)b * 1000);
         freq = (freq >> 1) + (freq & 0x01);
         if((freq >= 318) && (freq <= 322))
         {
@@ -287,7 +288,7 @@ void CHdmiAudioFirstTracking(void)
             CAdjustDisableHDMIWatchDog(_WD_SET_AVMUTE_ENABLE);//Disable Set_AVMute Watch Dog //731301
             CScalerSetDataPortBit(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_AVMCR_30, ~_BIT5, _BIT5);//Enable Audio Output
             CAdjustEnableHDMIWatchDog(_WD_SET_AVMUTE_ENABLE);//Enable Set_AVMute Watch Dog //731301
-            
+
 			#if(_AUDIO_LOCK_MODE == _HARDWARE_TRACKING)
             //H/W FIFO Tracking
             CScalerSetDataPortByte(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_PSCR_15, 0x04);//Enable boundary tracking
@@ -298,7 +299,7 @@ void CHdmiAudioFirstTracking(void)
 
     	    CScalerSetDataPortByte(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_FBR_1B, 0xe2);//0xe5 for DVR team ?
             CScalerSetDataPortBit(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_WDCR0_31, ~_BIT5, _BIT5);//Enable FIFO Tracking//731301
-            
+
     	    CScalerSetDataPortByte(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_CMCR_10, 0x50);//update double buffer
 
             CScalerSetByte(_P2_HDMI_SR_CB, 0x06);//Write 1 clear
@@ -310,7 +311,7 @@ void CHdmiAudioFirstTracking(void)
 	        CScalerSetDataPortByte(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_CMCR_10, 0x50);//Update Double Buffer
 			#else
             CScalerSetDataPortByte(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_PSCR_15, 0xfe);//Enable N/CTS tracking
-            CScalerSetDataPortByte(_P2_HDMI_ADDR_PORT_C9, 0x1d, 0x05);//Set I code 
+            CScalerSetDataPortByte(_P2_HDMI_ADDR_PORT_C9, 0x1d, 0x05);//Set I code
             CScalerSetDataPortByte(_P2_HDMI_ADDR_PORT_C9, 0x1f, 0x9F);//Set P code
             CScalerSetDataPortByte(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_AAPNR_2D, 0x02);
             CScalerSetDataPortByte(_P2_HDMI_ADDR_PORT_C9, _P2_HDMI_CMCR_10, 0x50);//update double buffer
@@ -337,7 +338,7 @@ void CHdmiAudioFirstTracking(void)
 void CHdmiEnableAudioOutput(void)
 {
     CLR_AUDIOWAITINGTIMEOUT();//731301
-	//DebugPrintf("\n HA%c",0x20);
+	//printf("\n HA%c",0x20);
 	if(GET_AUDIOWAITINGFLAG())
     {
         CScalerSetByte(_P2_HDMI_SR_CB, 0x06);//Write 1 clear //731301
@@ -347,17 +348,17 @@ void CHdmiEnableAudioOutput(void)
     }
     else
     {
-    	//DebugPrintf(" b%c",0x20);
+    	//printf(" b%c",0x20);
 		if (CHdmiAudioFIFODetect() || GET_AVRESUME())//For HDMI audio pll setting
         {
-        	//DebugPrintf(" c%c",0x20);
+        	//printf(" c%c",0x20);
             CHdmiAudioFirstTracking();
             //CTimerReactiveTimerEvent(SEC(1), CHdmiAudioWaitingFlagReadyEven);//731301
             CLR_AUDIOPLLLOCKREADY();
         }
         else if (GET_AUDIOPLLLOCKREADY())
         {
-        	//DebugPrintf(" d%c",0x20);
+        	//printf(" d%c",0x20);
 			CLR_AUDIOPLLLOCKREADY();
 
 
@@ -388,18 +389,16 @@ void CHdmiAudioWaitingFlagReadyEven(void)
 }
 
 
-#if (0)//_HDMI_HOT_PLUG_OPTION == _ENABLE)	
+#if (0)//_HDMI_HOT_PLUG_OPTION == _ENABLE)
 //741001***
 void CHdmiModeChange()
 {
 	bHot_Plug = _HOT_PLUG_LOW;//bHot_Plug = 0;
     CTimerDelayXms(10);
 	bHot_Plug = _HOT_PLUG_HI;//bHot_Plug = 1;
-	//DebugPrintf("\n bHot_Plug!!!\n",'i');
+	//printf("\n bHot_Plug!!!\n",'i');
 }
 //741001###
 #endif
 
 #endif //End of #if(_HDMI_SUPPORT == _ON)
-
-

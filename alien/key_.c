@@ -1,15 +1,16 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Key.c No.0001
-// Update Note  : 
+// Update Note  :
 //
 //----------------------------------------------------------------------------------------------------
 
 #define __KEY__
 
-#include "Core\Header\include.h"
-               
+#include "alien/include_.h"
+
 //--------------------------------------------------
-// Description  : Key scan process     
+// Description  : Key scan process
 // Input Value  : None
 // Output Value : None
 //--------------------------------------------------
@@ -17,38 +18,38 @@ void CKeyHandler(void)
 {
     // Clear the key message
     ucKeyMessage = _NONE_KEY_MESSAGE;
-    
+
     if(CKeyScanReady())// || _ACTIVE_STATE != ucCurrState)
     {
         // Store previous key state
         ucKeyStatePrev = ucKeyStateCurr;
-        
+
         // Get current key state
         ucKeyStateCurr = CKeyScan();
-           
+
         // Power key process, return if power key is pressed
         if(CKeyPowerKeyProc())
             return;
-        
+
         // Convert key state to key message, store in (ucKeyNotify)
         CKeyMessageProc();
 
-    	#if(_REMOTE_CONTROLLER != _IR_NONE) 
+    	#if(_REMOTE_CONTROLLER != _IR_NONE)
         {
             if(ucKeyMessage == _NONE_KEY_MESSAGE)
-            {        
+            {
                ucKeyMessage = CIRKeyScan();
-                                         
+
                if (ucKeyMessage != _NONE_KEY_MESSAGE)
-                  ucPrevKey = ucKeyMessage;                   
+                  ucPrevKey = ucKeyMessage;
             }
         }
     	#endif
     }
-    
+
 	#if(_DEBUG_TOOL == _ISP_FOR_RTD3580D_EMCU)
     GetVirtualKey();
-    
+
     if(ucKeyMessage == _POWER_KEY_MESSAGE)
         SET_POWERSWITCH();
 	#endif
@@ -68,10 +69,10 @@ void CKeyCheckPowerKey(void)
 {
     // Store previous key state
     ucKeyStatePrev = ucKeyStateCurr;
-    
+
     // Get current key state
     ucKeyStateCurr = CKeyScan();
-    
+
     // Power key process
     CKeyPowerKeyProc();
 }
@@ -106,13 +107,13 @@ bit CKeyScanReady(void)
         SET_KEYSCANSTART();
         //CTimerReactiveTimerEvent(SEC(0.02), CKeyScanReadyTimerEvent);
         CTimerReactiveTimerEvent(SEC(0.09), CKeyScanReadyTimerEvent);
-        
+
         return _FALSE;
     }
     else
     {
         return _FALSE;
-    }  
+    }
 }
 
 //--------------------------------------------------
@@ -148,7 +149,7 @@ void CKeyMessageConvert(BYTE ucKeyMask, BYTE ucKeyMsg)
         ucKeyMessage = ucKeyMsg;
     }
     else
-    { 
+    {
         if(GET_KEYREPEATENABLE())
         {
             if(GET_KEYREPEATSTART())
@@ -177,7 +178,7 @@ bit CKeyPowerKeyProc(void)
         {
             CTimerDelayXms(25);
             ucKeyStateCurr = CKeyScan();
-            
+
             if((ucKeyStatePrev ^ ucKeyStateCurr) == _POWER_KEY_MASK)
             {
                 CKeyPowerKeyMix();
@@ -186,7 +187,7 @@ bit CKeyPowerKeyProc(void)
             }
         }
     }
-    
+
     return _FALSE;
 }
 //--------------------------------------------------
@@ -253,7 +254,7 @@ void CGetADCValue(BYTE *pBuf)
 	BYTE xdata *p;
     BYTE i = 0;
 
-	MCU_ADC_ACONTROL_FF08 = 0x82;			//start adc convert(STRT_ADC_ACKT=1) 
+	XSFRWriteByte(MCU_ADC_ACONTROL_FF08,  0x82);			//start adc convert(STRT_ADC_ACKT=1)
 
 	while(MCU_ADC_ACONTROL_FF08 & 0x80)
 	{
@@ -261,31 +262,31 @@ void CGetADCValue(BYTE *pBuf)
 	}
 
 #if(AD_KEY0 != MCU_ADC_NONE)
-	p = (0xFF09 + AD_KEY0);			
+	p = (0xFF09 + AD_KEY0);
 	pBuf[i] = *p;
     i++;
 #endif
 
 #if(AD_KEY1 != MCU_ADC_NONE)
-	p = (0xFF09 + AD_KEY1);			
+	p = (0xFF09 + AD_KEY1);
 	pBuf[i] = *p;
     i++;
 #endif
 
 #if(AD_KEY2 != MCU_ADC_NONE)
-	p = (0xFF09 + AD_KEY2);			
+	p = (0xFF09 + AD_KEY2);
 	pBuf[i] = *p;
     i++;
 #endif
 
 #if(AD_KEY3 != MCU_ADC_NONE)
-	p = (0xFF09 + AD_KEY3);			
+	p = (0xFF09 + AD_KEY3);
 	pBuf[i] = *p;
     i++;
 #endif
 
 #if(AD_KEY4 != MCU_ADC_NONE)
-	p = (0xFF09 + AD_KEY4);			
+	p = (0xFF09 + AD_KEY4);
 	pBuf[i] = *p;
 #endif
 

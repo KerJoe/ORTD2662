@@ -1,3 +1,5 @@
+#include "alien/global_.h"
+
 #if(_OSD_TYPE == _OSD003)
 
 #ifdef __OSDDRAW003__
@@ -374,7 +376,7 @@ void MScVolumeReturnUpMenu(void);
 
 //---------------------------------------------------------------------------
 // Short menu \ Input ch num
-void MScInputChNumProc(void); 
+void MScInputChNumProc(void);
 void SInceptNumber(const WORD ucNumber);
 void SShowCurrentInputState(BYTE ucInputState);
 
@@ -388,11 +390,11 @@ void CDisplayCurrentSourceMessage(void);
 
 //---------------------------------------------------------------------------
 void CSetOSDPosition(WORD OSDWidth, WORD OSDHeight, BYTE PosX, BYTE PosY);
-void OSDSlider(BYTE row, BYTE col, BYTE length, BYTE value, BYTE range,BYTE color) small;
+void OSDSlider(BYTE row, BYTE col, BYTE length, BYTE value, BYTE range,BYTE color);
 
 //---------------------------------------------------------------------------
 void CSetItemStartEnd(void (*ReDrawPageProc)(void));
-BYTE CGetPopupMenuRow(BYTE ucBaseRowStart, ucFirstItem);
+BYTE CGetPopupMenuRow(BYTE ucBaseRowStart, BYTE ucFirstItem);
 
 void LoadLanguageFont();
 

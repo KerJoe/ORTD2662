@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 /*=============================================
   * Copyright (c)      Realtek Semiconductor Corporation, 2005
   * All rights reserved.
@@ -9,7 +10,7 @@
  * 	This file is for global structure's declaration.
  *
  * @author 	$Author: kingee $
- * @date 	$Date: 2006-06-09 11:09:32 +0800 (?Ÿæ?äº? 09 ?­æ? 2006) $
+ * @date 	$Date: 2006-06-09 11:09:32 +0800 (?ï¿½ï¿½?ï¿½? 09 ?ï¿½ï¿½? 2006) $
  * @version 	$Revision: 872 $
  * @ingroup 	timer
  */
@@ -20,7 +21,8 @@
 */
 
 /*===================== Module dependency  ================== */
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
+
 
 /*======================= Private Types ===================== */
 
@@ -45,9 +47,9 @@ void CTimerHandler(void)
 {
 	BYTE timereventcnt;
 
-	for(timereventcnt=0;timereventcnt<_MAX_EVENT_AMOUNT;timereventcnt++) 
+	for(timereventcnt=0;timereventcnt<_MAX_EVENT_AMOUNT;timereventcnt++)
 	{
-		if(TimerEvent[timereventcnt].Time == 0) 
+		if(TimerEvent[timereventcnt].Time == 0)
 		{
 			bTimer0Ctrl = _TRUE;
 			TimerEvent[timereventcnt].Time = _INACTIVE_TIMER_EVENT;
@@ -74,7 +76,7 @@ void CTimerActiveTimerEvent(WORD usTime, void (*Event)())
         if((TimerEvent[timereventcnt].Time != _INACTIVE_TIMER_EVENT) && (TimerEvent[timereventcnt].Event == Event))
             return;
     }
-    
+
     for(timereventcnt=0;timereventcnt<_MAX_EVENT_AMOUNT;timereventcnt++)
     {
         if(TimerEvent[timereventcnt].Time == _INACTIVE_TIMER_EVENT)
@@ -155,7 +157,7 @@ void CTimerInitialTimerEvent(void)
     {
     	TimerEvent[timereventcnt].Time = _INACTIVE_TIMER_EVENT;
     }
-    TR0 = 1;
+    //TR0 = 1;
 }
 
 //--------------------------------------------------
@@ -208,7 +210,7 @@ void CTimerCountDownEventProc(BYTE *pEventCnt, BYTE ucWaitCnt, void (*Event)(voi
  * @return {_TRUE while polling success, _FALSE for timeout}
  *
 */
-bit CTimerPollingEventProc(BYTE ucTimeout, bit (*Event)(void)) 
+bit CTimerPollingEventProc(BYTE ucTimeout, bit (*Event)(void))
 {
 	BYTE data temp;
 
@@ -231,7 +233,7 @@ bit CTimerPollingEventProc(BYTE ucTimeout, bit (*Event)(void))
 // Input Value  : usNum     --> Delay time
 // Output Value : None
 //--------------------------------------------------
-void CTimerDelayXms(WORD usNum)
+/*void CTimerDelayXms(WORD usNum)
 {
     if(usNum)
     {
@@ -242,13 +244,13 @@ void CTimerDelayXms(WORD usNum)
             {
                 bNotifyTimer0Int = _FALSE;
                 if(--usNum)
-                    TR0 = _ON;
+                    ;//TR0 = _ON;
                 else
                     return;
             }
         }
     }
-}
+}*/
 
 /**
 * CTimerWaitForEvent
@@ -272,7 +274,7 @@ bit CTimerWaitForEvent(BYTE ucEvent)
         {
             bNotifyTimer0Int  = _FALSE;
             if(--timeoutcnt)
-                TR0 = _ON;
+                ;//TR0 = _ON;
         }
         CScalerRead(_STATUS1_03, 1, &temp, _NON_AUTOINC);
         temp &= ucEvent;
@@ -281,4 +283,3 @@ bit CTimerWaitForEvent(BYTE ucEvent)
 
     return timeoutcnt ? _FALSE : _TRUE;
 }
-

@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Eeprom.h No.0000
 // Update Note  :
@@ -166,5 +167,5 @@ extern void CEepromLoadHueSatData(void);
 extern void CEepromLoadHueSatDataDefault(void);
 
 #endif
-//yf_zhang 
+//yf_zhang
 //extern void CEepromSaveTVSystem(UINT8 chn,UINT8 picORAudio,UINT8 Value);

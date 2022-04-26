@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 ////////////////////////////////////////////////////////////////////////////
 //         Copyright of Vector Co.,Ltd.                                   //
 //                                                                        //
@@ -57,27 +58,27 @@
 
 #define _001_OSD                                1//_DISABLE
 
-#define _OSD_TYPE							_OSD003    
+#define _OSD_TYPE							_OSD003
 
 #define _FAC_OSD                                _DISABLE
 
 ///////////////////////////////////////////////////////////////////////////////
-// This part is used for display mode and color mode select,                                                                          
+// This part is used for display mode and color mode select,
 // _PANEL_MODE_16_9_ for wide panel,_PANEL_MODE_4__3_ for normal panel
 //
-// AndyLiu 20080328 for ChuangFeng                                                                           
+// AndyLiu 20080328 for ChuangFeng
 ///////////////////////////////////////////////////////////////////////////////
 #define _PANEL_MODE_16_9_       0
 #define _PANEL_MODE_4__3_       1
 
-#define _PANEL_MODE_       _PANEL_MODE_16_9_       
+#define _PANEL_MODE_       _PANEL_MODE_16_9_
 ///////////////////////////////////////////////////////////////////////////////
 // This part defined for rest and sleep function select,
-// AndyLiu 20080328 for ChuangFeng                      
+// AndyLiu 20080328 for ChuangFeng
 #define _RESET_ENABLE            0
 #define _SLEEP_ENABLE            1
 
-#define _FAST_KEY_SELECT_       _SLEEP_ENABLE   
+#define _FAST_KEY_SELECT_       _SLEEP_ENABLE
 ///////////////////////////////////////////////////////////////////////////////
 
 //--------------------------------------------------
@@ -111,7 +112,7 @@
 #define _BOUL              				     1
 
 #define _NONLINEAR_SCALEUP_METHOD             _ROOF
-                                            
+
 //--------------------------------------------------
 // Color Preference
 //--------------------------------------------------
@@ -210,10 +211,10 @@
 #define _PEAKING_CORING_SUPPORT         		_OFF
 
 //--------------------------------------------------
-// 
+//
 //--------------------------------------------------
 #define _DVI_DE_ONLY_SUPPORT            		_OFF
- 
+
 //--------------------------------------------------
 // Set Different Display Information by Mode
 //--------------------------------------------------
@@ -222,7 +223,7 @@
 //--------------------------------------------------
 // Set DClk Spread Spectrum Range
 //--------------------------------------------------
-#define _DCLK_SPREAD_RANGE              		0	//0~15, 0¡÷disable, 15¡÷7.5%
+#define _DCLK_SPREAD_RANGE              		0	//0~15, 0ï¿½ï¿½disable, 15ï¿½ï¿½7.5%
 
 //--------------------------------------------------
 // Set Last Line Finetune Method
@@ -275,7 +276,7 @@
 
 
 //--------------------------------------------------
-// YPbPr source non-check APLL unlock for DVD player 
+// YPbPr source non-check APLL unlock for DVD player
 //--------------------------------------------------
 #define _YPBPR_NONE_CHECK_APLL			   		_ENABLE
 
@@ -286,7 +287,7 @@
 #define _NEW_TYPE								1
 
 #define _YPBPR_AUTO_TYPE						_NEW_TYPE
-	
+
 //-------------------------------------------------------
 //  YPBPR support cc
 //-------------------------------------------------------
@@ -305,12 +306,12 @@
 //-------------------------------------------------------
 //  Double Scaling
 //-------------------------------------------------------
-#define _Double_Scaling							_DISABLE	
+#define _Double_Scaling							_DISABLE
 
 //-------------------------------------------------------
 //  AdjustCustomerColorMode
 //-------------------------------------------------------
-#define _AdjustCustomerColorMode				_DISABLE	
+#define _AdjustCustomerColorMode				_DISABLE
 
 //--------------------------------------------------
 // De-Interlace  TEST  OPTION
@@ -318,7 +319,7 @@
 #define _DE_INTERLACE_TEST_OPTION		 		_ENABLE
 
 //---------------------------------------------------
-//key1 and key6 function defined 
+//key1 and key6 function defined
 //---------------------------------------------------
 #define KEY1_RESET								0
 #define KEY1_TIMER								1
@@ -335,7 +336,7 @@
 //--------------------------------------------------
 // Definitions of MCU Clock Divider Number
 //--------------------------------------------------
-//_FLASH_CLK_80MHZ,_FLASH_CLK_60MHZ,_FLASH_CLK_48MHZ,_FLASH_CLK_34MHZ,_FLASH_CLK_27MHZ 
+//_FLASH_CLK_80MHZ,_FLASH_CLK_60MHZ,_FLASH_CLK_48MHZ,_FLASH_CLK_34MHZ,_FLASH_CLK_27MHZ
 #define _FLASH_CLK_DIV                  		_FLASH_CLK_48MHZ
 #define _TURBO_MODE                     		_OFF
 

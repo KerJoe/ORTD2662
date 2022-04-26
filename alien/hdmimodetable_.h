@@ -1,12 +1,13 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : HdmiModeTable.h No.0000
-// Update Note  : 
+// Update Note  :
 //
 //----------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------
 // Mode Define
-// We have two kind of mode set. One is Preset mode 
+// We have two kind of mode set. One is Preset mode
 // and another is User mode. If you have to add a new
 // mode, please add it into "Preset Mode" and modify
 // the defination of _MAX_PRESET_MODE.

@@ -1,6 +1,7 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : RTD2528R_Hdmi.h No.0000
-// Update Note  : 
+// Update Note  :
 //
 //----------------------------------------------------------------------------------------------------
 #define _HM_480I			0
@@ -42,7 +43,7 @@
 	//--------------------------------------------------
 	// Global Hdmi Table
 	//--------------------------------------------------
-	
+
 	BYTE code tHDMI_YPBPR_ITU601[] =
 	{
 	    // 9CH
@@ -51,7 +52,7 @@
 	                                                        0x04,0x00,0x07,0x16,0x00,0x00,
 	    _END
 	};
-	
+
 	BYTE code tHDMI_YPBPR_ITU709[] =
 	{
 	    // 9CH
@@ -60,7 +61,7 @@
 	                                                        0x04,0x00,0x07,0x6c,0x00,0x00,
 	    _END
 	};
-	
+
 	//--------------------------------------------------
 	// Global Variables
 	//--------------------------------------------------
@@ -68,7 +69,7 @@
 	BYTE ucHdmiTimerEvent = 0;//741001
 	BYTE ucHdmiAVMuteCnt  = 0;
 	BYTE ucHDMIMode = _HM_OTHER;
-	
+
 	//--------------------------------------------------
 	// Function Prototypes
 	//--------------------------------------------------
@@ -82,11 +83,11 @@
 	void CHdmiAudioFirstTracking(void);
 	void CHdmiEnableAudioOutput(void);
 	void CHdmiModeChange();//741001
-	
+
 	#if (_HDMI_HOT_PLUG_OPTION == _ENABLE)   //2007-8-23 15:36
 	//eric 20070326 philips DVD
 		BYTE ucHDMIChangeCnt=0;
-		BIT bHDMIFrameOk=0; //Confirm 5 times 
+		BIT bHDMIFrameOk=0; //Confirm 5 times
 		BYTE ucHDMIFrameOkCnt=0;
 		//20070409, philips DVP5960 unstable
 		#define _HDMI_OK_CNT 7
@@ -107,18 +108,18 @@
 	extern BYTE ucHdmiAVMuteCnt;
 	extern BYTE ucHDMIMode;
 	#endif //End of #if(_HDMI_SUPPORT == _ON)
-	
+
 	//--------------------------------------------------
 	// Extern Global Hdmi Edid Data
 	//--------------------------------------------------
-	
-	
+
+
 	//--------------------------------------------------
 	// Extern Global Variables
 	//--------------------------------------------------
 	extern BYTE idata ucHdmiCtrl;
 	extern BYTE ucHdmiTimerEvent;//741001
-	
+
 	//--------------------------------------------------
 	// Extern Function Prototypes
 	//--------------------------------------------------
@@ -132,12 +133,12 @@
 	extern void CHdmiAudioFirstTracking(void);
 	extern void CHdmiEnableAudioOutput(void);
 	extern void CHdmiModeChange();//741001
-	
+
 	extern void CModeHDMIChageDelay(void);
 
 #if (_HDMI_HOT_PLUG_OPTION == _ENABLE)   //2007-8-23 15:36
 extern BYTE ucHDMIChangeCnt;
-extern BIT bHDMIFrameOk; //Confirm 5 times 
+extern BIT bHDMIFrameOk; //Confirm 5 times
 extern BYTE ucHDMIFrameOkCnt;
 extern void CModeHDMIStableConfirm(void);
 #endif
@@ -204,5 +205,3 @@ extern void CModeHDMIStableConfirm(void);
 #define CLR_HDMI_CTRL()        			(bHot_Plug = 0)
 
 #endif //End of #if(_HDMI_SUPPORT == _ON)
-
-

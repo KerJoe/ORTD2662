@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 /*=============================================
   * Copyright (c)      Realtek Semiconductor Corporation, 2005
   * All rights reserved.
@@ -5,7 +6,7 @@
 
 #define __RTDACCESS__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 //----------------------------------------------------------------------------------------------------
 // Scaler communication basic function
@@ -13,11 +14,11 @@
 void CScalerSendAddr(BYTE ucAddr, bit bAutoInc)
 {
     if(bAutoInc)
-        *(&MCU_SCA_INF_CTRL_FFF3) = 0x20;
+        XSFRWriteByte(MCU_SCA_INF_CTRL_FFF3, 0x20);
     else
-        *(&MCU_SCA_INF_CTRL_FFF3) = 0x00;
+        XSFRWriteByte(MCU_SCA_INF_CTRL_FFF3, 0x00);
 
-    *(&MCU_SCA_INF_ADDR_FFF4) = ucAddr;
+    XSFRWriteByte(MCU_SCA_INF_ADDR_FFF4, ucAddr);
 }
 //--------------------------------------------------
 // Description  : Write a data array into registers of scaler
@@ -30,10 +31,10 @@ void CScalerSendAddr(BYTE ucAddr, bit bAutoInc)
 void CScalerWrite(BYTE ucAddr, WORD usLength, BYTE *pArray, bit bAutoInc)
 {
 		if (bAutoInc)
-			DebugPrintf("AI:Off", 0);
+			printf("AI:Off", 0);
 		else
-			DebugPrintf("AI:On ", 0);
-	  DebugPrintf("Write to address: 0x%x", ucAddr);	  
+			printf("AI:On ", 0);
+	  printf("Write to address: 0x%x", ucAddr);
     CScalerSendAddr(ucAddr, bAutoInc);
 
     if(usLength > 0)
@@ -41,8 +42,8 @@ void CScalerWrite(BYTE ucAddr, WORD usLength, BYTE *pArray, bit bAutoInc)
 
         do
         {
-					  DebugPrintf(" Data: 0x%x\n", *pArray);
-            *(&MCU_SCA_INF_DATA_FFF5) = *pArray++;
+					  printf(" Data: 0x%x\n", *pArray);
+            XSFRWriteByte(MCU_SCA_INF_DATA_FFF5, *pArray++);
 
         }while(--usLength);
     }
@@ -61,18 +62,18 @@ void CScalerWrite(BYTE ucAddr, WORD usLength, BYTE *pArray, bit bAutoInc)
 void CScalerRead(BYTE ucAddr, BYTE ucLength, BYTE *pArray, bit bAutoInc)
 {
 		if (bAutoInc)
-			DebugPrintf("AI:Off", 0);
+			printf("AI:Off", 0);
 		else
-			DebugPrintf("AI:On ", 0);
-		DebugPrintf("Read from address: 0x%x", ucAddr);	
+			printf("AI:On ", 0);
+		printf("Read from address: 0x%x", ucAddr);
     CScalerSendAddr(ucAddr, bAutoInc);
 
     if(ucLength > 0)
     {
         do
         {
-            *pArray = *(&MCU_SCA_INF_DATA_FFF5);
-					  DebugPrintf(" Data: 0x%x\n", *pArray++);
+            *pArray = XSFRReadByte(MCU_SCA_INF_DATA_FFF5);
+					  printf(" Data: 0x%x\n", *pArray++);
 
         }while(--ucLength);
 
@@ -93,18 +94,18 @@ void CScalerRead(BYTE ucAddr, BYTE ucLength, BYTE *pArray, bit bAutoInc)
 void CScalerWriteAmount(BYTE ucAddr, WORD usLength, BYTE ucValue, bit bAutoInc)
 {
 		if (bAutoInc)
-			DebugPrintf("AI:Off", 0);
+			printf("AI:Off", 0);
 		else
-			DebugPrintf("AI:On ", 0);
-	  DebugPrintf("Write to address: 0x%x", ucAddr);	 	
+			printf("AI:On ", 0);
+	  printf("Write to address: 0x%x", ucAddr);
     CScalerSendAddr(ucAddr, bAutoInc);
 
     if(usLength > 0)
     {
         do
         {
-					  DebugPrintf(" Data: 0x%x\n", ucValue);
-            *(&MCU_SCA_INF_DATA_FFF5) = ucValue;
+					  printf(" Data: 0x%x\n", ucValue);
+            XSFRWriteByte(MCU_SCA_INF_DATA_FFF5, ucValue);
 
         }while(--usLength);
     }
@@ -133,7 +134,7 @@ void CScalerSetByte(BYTE ucAddr, BYTE ucValue)
 //--------------------------------------------------
 void CScalerSetDataPortByte(BYTE ucAddr, BYTE ucValue1, BYTE ucValue2)
 {
-    if((ucAddr == _SU_ACCESS_PORT_33) || (ucAddr == _HW_ACCESS_PORT_60) 
+    if((ucAddr == _SU_ACCESS_PORT_33) || (ucAddr == _HW_ACCESS_PORT_60)
     || (ucAddr == _CB_ACCESS_PORT_64) || (ucAddr == _PC_ACCESS_PORT_9A))
     {
         CScalerSetByte(ucAddr, 0x80);
@@ -175,7 +176,7 @@ void CScalerSetDataPortBit(BYTE ucAddr, BYTE ucValue, BYTE ucAnd, BYTE ucOr)
 {
     BYTE value;
 
-    if((ucAddr == _SU_ACCESS_PORT_33) || (ucAddr == _HW_ACCESS_PORT_60) 
+    if((ucAddr == _SU_ACCESS_PORT_33) || (ucAddr == _HW_ACCESS_PORT_60)
     || (ucAddr == _CB_ACCESS_PORT_64) || (ucAddr == _PC_ACCESS_PORT_9A))
     {
         CScalerSetByte(ucAddr, 0x80);
@@ -186,7 +187,7 @@ void CScalerSetDataPortBit(BYTE ucAddr, BYTE ucValue, BYTE ucAnd, BYTE ucOr)
     CScalerRead(ucAddr + 1, 1, &value, _AUTOINC);
 
     value   = (value & ucAnd) | ucOr;
-    if((ucAddr == _SU_ACCESS_PORT_33) || (ucAddr == _HW_ACCESS_PORT_60) 
+    if((ucAddr == _SU_ACCESS_PORT_33) || (ucAddr == _HW_ACCESS_PORT_60)
     || (ucAddr == _CB_ACCESS_PORT_64) || (ucAddr == _PC_ACCESS_PORT_9A))
     {
         CScalerSetByte(ucAddr, 0x80);
@@ -222,7 +223,7 @@ BYTE CScalerGetBit(BYTE ucAddr, BYTE ucAnd)
 void CScalerCodeW(BYTE *pArray)
 {
 	BYTE length;
-	  DebugPrintf("Write Table\n", 0);	    
+	  printf("Write Table\n", 0);
 
 #if(_MCU_TYPE == _REALTEK_RTD3580D_EMCU)
 
@@ -235,14 +236,14 @@ void CScalerCodeW(BYTE *pArray)
 
         if((*(pArray + 1)) == _BURST)
         {
-            *(&MCU_SCA_INF_CTRL_FFF3) = 0x20;
-            *(&MCU_SCA_INF_ADDR_FFF4) = *(pArray + 2);
+            XSFRWriteByte(MCU_SCA_INF_CTRL_FFF3, 0x20);
+            XSFRWriteByte(MCU_SCA_INF_ADDR_FFF4, *(pArray + 2));
 
             pArray += 3;
-            
+
             do
             {
-                *(&MCU_SCA_INF_DATA_FFF5) = *pArray;
+                XSFRWriteByte(MCU_SCA_INF_DATA_FFF5, *pArray);
 
             }while(--length);
 
@@ -250,19 +251,19 @@ void CScalerCodeW(BYTE *pArray)
         }
         else if((*(pArray + 1) == _AUTOINC) || (*(pArray + 1) == _NON_AUTOINC))
         {
-            
-            if(*(pArray + 1) == _NON_AUTOINC)
-                *(&MCU_SCA_INF_CTRL_FFF3) = 0x20;
-            else
-                *(&MCU_SCA_INF_CTRL_FFF3) = 0x00;
 
-            *(&MCU_SCA_INF_ADDR_FFF4) = *(pArray + 2);
+            if(*(pArray + 1) == _NON_AUTOINC)
+                XSFRWriteByte(MCU_SCA_INF_CTRL_FFF3, 0x20);
+            else
+                XSFRWriteByte(MCU_SCA_INF_CTRL_FFF3, 0x00);
+
+            XSFRWriteByte(MCU_SCA_INF_ADDR_FFF4, *(pArray + 2));
 
             pArray += 3;
 
             do
             {
-                *(&MCU_SCA_INF_DATA_FFF5) = *pArray++;
+                XSFRWriteByte(MCU_SCA_INF_DATA_FFF5, *pArray++);
 
             }while(--length);
 
@@ -271,7 +272,7 @@ void CScalerCodeW(BYTE *pArray)
     }while(_TRUE);
 
 #else
-		
+
     do
     {
         if((*pArray & 0xfc) == 0)
@@ -311,7 +312,7 @@ void CScalerCodeW(BYTE *pArray)
 
     }while(_TRUE);
 
-#endif		
+#endif
 }
 
 #if(_HARDWARE_LOAD_FONT == _ON)
@@ -329,7 +330,7 @@ void CScalerLoadHardwareVLCFont(BYTE *pArray, WORD usOffset)
     pData[1] = 0x05;
     CScalerWrite(_OSD_ADDR_MSB_90, 2, pData, _AUTOINC);
     CScalerWrite(_OSD_DATA_PORT_92, 8, pArray, _NON_AUTOINC);
-    
+
 
     num = ((WORD)*(pArray + 8) << 8) | *(pArray + 9);
 
@@ -339,26 +340,26 @@ void CScalerLoadHardwareVLCFont(BYTE *pArray, WORD usOffset)
     pData[0] = 0x80;
     pData[1] = 0x07;
     pData[2] = 0x01;
-    CScalerWrite(_OSD_ADDR_MSB_90, 3, pData, _AUTOINC);    
+    CScalerWrite(_OSD_ADDR_MSB_90, 3, pData, _AUTOINC);
 
     pData[0] = (HIBYTE(usOffset) & 0x000f) | 0xd0;
     pData[1] = LOBYTE(usOffset);
-    CScalerWrite(_OSD_ADDR_MSB_90, 2, pData, _AUTOINC);    
+    CScalerWrite(_OSD_ADDR_MSB_90, 2, pData, _AUTOINC);
 
-    
+
     pArray += 10;
 
 	CScalerSendAddr(_OSD_DATA_PORT_92, _NON_AUTOINC);
 
     for(usOffset=0;usOffset<num;usOffset++)
     {
-        *(&MCU_SCA_INF_DATA_FFF5) = *pArray++;
+        XSFRWriteByte(MCU_SCA_INF_DATA_FFF5, *pArray++);
     }
 
     pData[0] = 0x80;
     pData[1] = 0x07;
     pData[2] = 0x00;
-    CScalerWrite(_OSD_ADDR_MSB_90, 3, pData, _AUTOINC);      
+    CScalerWrite(_OSD_ADDR_MSB_90, 3, pData, _AUTOINC);
 }
 #endif
 
@@ -428,7 +429,5 @@ bit CScalerGetBitVLD(void)
 //--------------------------------------------------
 void CScalerPageSelect(BYTE page)
 {
-	CScalerSetByte(_PAGE_SELECT_9F, (page & 0x0F));	
+	CScalerSetByte(_PAGE_SELECT_9F, (page & 0x0F));
 }
-
-

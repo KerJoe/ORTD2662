@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Video.h No.0001
 // Update Note  :
@@ -76,23 +77,23 @@
 unsigned char code RTD2610_NTSC_M_ini[]=
 {
 	//need modify by 263x parameters
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,
 	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,	        0x00,     // YC Seperate Control
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_Y_E1,	    0x25,     // BPF BandWidth Select Y
 	// andy av color
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_C_E2,	    0x00,     // BPF BandWidth Select C
 	// andy av color
 	4,  _NON_AUTOINC,   _P8_YC_BW_CTRL_EA,	        0x00,//0x01,     // YC BandWidth Control
-	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable 
+	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable
 	4,  _NON_AUTOINC,   _P8_H2V_CORING_THR_F3,	    0x21,     // H2V Coring Threshold
 	4,  _NON_AUTOINC,   _P8_H2V_Y_NOISE_THR_F4,	    0x01,     // H2V Y Noise Threshold	//eric 20070608
 	4,  _NON_AUTOINC,   _P8_H2V_CVBS_NOISE_THR_F5,	0x15,     // H2V CVBS Noise Threshold
-	4,  _NON_AUTOINC,   _P8_1D_BLEND_THR_F6,	    0x03,     // 1D Blend Threshold 
+	4,  _NON_AUTOINC,   _P8_1D_BLEND_THR_F6,	    0x03,     // 1D Blend Threshold
 	//
-//	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,	0x20,			//color mode reg enable	
+//	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,	0x20,			//color mode reg enable
 	4,  _NON_AUTOINC,   _P8_VIDEO_CTRL0_A0,	        0x00,					//NTSC
 
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,
 	4,  _NON_AUTOINC,   _PA_SECAM_CTRL_C4,	        0x82,     // SECAM Control
 	_END
 
@@ -102,23 +103,23 @@ unsigned char code RTD2610_NTSC_443_ini[]=
 {
 
 	//need modify by 263x parameters
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,
 	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,	        0x02,     // YC Seperate Control
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_Y_E1,	    0x25,     // BPF BandWidth Select Y
 	// andy av color
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_C_E2,	    0x00,     // BPF BandWidth Select C
 	// andy av color
 	4,  _NON_AUTOINC,   _P8_YC_BW_CTRL_EA,	        0x00,//0x49,     // YC BandWidth Control
-	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable 
+	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable
 	4,  _NON_AUTOINC,   _P8_H2V_CORING_THR_F3,	    0x21,     // H2V Coring Threshold
 	4,  _NON_AUTOINC,   _P8_H2V_Y_NOISE_THR_F4,	    0x01,     // H2V Y Noise Threshold //eric 20070608
 	4,  _NON_AUTOINC,   _P8_H2V_CVBS_NOISE_THR_F5,	0x15,     // H2V CVBS Noise Threshold
-	4,  _NON_AUTOINC,   _P8_1D_BLEND_THR_F6,	    0x03,     // 1D Blend Threshold 
+	4,  _NON_AUTOINC,   _P8_1D_BLEND_THR_F6,	    0x03,     // 1D Blend Threshold
 	//
-	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,    	0x20,     //color mode reg enable	
+	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,    	0x20,     //color mode reg enable
 	4,  _NON_AUTOINC,   _P8_VIDEO_CTRL0_A0,	        0x0A,     //NTSC443(1127 & 135 mode)
 
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,
 	4,  _NON_AUTOINC,   _PA_SECAM_CTRL_C4,	        0x82,     // SECAM Control
 	_END
 };
@@ -127,24 +128,24 @@ unsigned char code RTD2610_PAL_I_ini[]=
 {
 
 	//need modify by 263x parameters
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,
 //	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,   	    0x02,     // YC Seperate Control
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_Y_E1,	    0x25,     // BPF BandWidth Select Y
     // andy av color
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_C_E2,	    0x00,     // BPF BandWidth Select C
     // andy av color
 	4,  _NON_AUTOINC,   _P8_YC_BW_CTRL_EA,	        0x00,//0x49,     // YC BandWidth Control
-	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable 
+	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable
 	4,  _NON_AUTOINC,   _P8_H2V_CORING_THR_F3,	    0x21,     // H2V Coring Threshold
-	4,  _NON_AUTOINC,   _P8_H2V_Y_NOISE_THR_F4,	    0x06,     // H2V Y Noise Threshold 	//eric 20070608 
+	4,  _NON_AUTOINC,   _P8_H2V_Y_NOISE_THR_F4,	    0x06,     // H2V Y Noise Threshold 	//eric 20070608
 	4,  _NON_AUTOINC,   _P8_H2V_CVBS_NOISE_THR_F5,	0x15,     // H2V CVBS Noise Threshold	//eric 20070608
-	4,  _NON_AUTOINC,   _P8_1D_BLEND_THR_F6,	    0x03,     // 1D Blend Threshold 
+	4,  _NON_AUTOINC,   _P8_1D_BLEND_THR_F6,	    0x03,     // 1D Blend Threshold
 	//
-//	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,	0x20,		  //color mode reg enable	
+//	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,	0x20,		  //color mode reg enable
 	4,  _NON_AUTOINC,   _P8_VIDEO_CTRL0_A0,	        0x02,     //PAL(I,B,G,H,D,N)
 	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,	        0x00,     //5-tap adaptive comb filter
 
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,
 	4,  _NON_AUTOINC,   _PA_SECAM_CTRL_C4,	        0x82,     // SECAM Control
 	_END
 
@@ -153,24 +154,24 @@ unsigned char code RTD2610_PAL_I_ini[]=
 unsigned char code RTD2610_PAL_M_ini[]=
 {
 	//need modify by 263x parameters
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,
 //	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,	        0x02,     // YC Seperate Control
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_Y_E1,	    0x25,     // BPF BandWidth Select Y
 	// andy av color
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_C_E2,	    0x00,     // BPF BandWidth Select C
 	// andy av color
 	4,  _NON_AUTOINC,   _P8_YC_BW_CTRL_EA,	        0x00,//0x49,     // YC BandWidth Control
-	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable 
+	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable
 	4,  _NON_AUTOINC,   _P8_H2V_CORING_THR_F3,	    0x21,     // H2V Coring Threshold
 	4,  _NON_AUTOINC,   _P8_H2V_Y_NOISE_THR_F4,	    0x03,     // H2V Y Noise Threshold
 	4,  _NON_AUTOINC,   _P8_H2V_CVBS_NOISE_THR_F5,	0x15,     // H2V CVBS Noise Threshold
-	4,  _NON_AUTOINC,   _P8_1D_BLEND_THR_F6,	    0x03,     // 1D Blend Threshold 
+	4,  _NON_AUTOINC,   _P8_1D_BLEND_THR_F6,	    0x03,     // 1D Blend Threshold
 	//
-//	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,	0x20,		  //color mode reg enable	
+//	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,	0x20,		  //color mode reg enable
 	4,  _NON_AUTOINC,   _P8_VIDEO_CTRL0_A0,	        0x04,     //PAL(M)
 	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,	        0x02,     //5-tap adaptive comb filter
 
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,
 	4,  _NON_AUTOINC,   _PA_SECAM_CTRL_C4,	        0x82,     // SECAM Control
 	_END
 
@@ -179,24 +180,24 @@ unsigned char code RTD2610_PAL_M_ini[]=
 unsigned char code RTD2610_PAL_CN_ini[]=
 {
 	//need modify by 263x parameters
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,
 //	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,	        0x02,     // YC Seperate Control
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_Y_E1,	    0x25,     // BPF BandWidth Select Y
 	// andy av color
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_C_E2,	    0x00,     // BPF BandWidth Select C
 	// andy av color
 	4,  _NON_AUTOINC,   _P8_YC_BW_CTRL_EA,	        0x00,//0x49,     // YC BandWidth Control
-	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable 
+	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable
 	4,  _NON_AUTOINC,   _P8_H2V_CORING_THR_F3,	    0x21,     // H2V Coring Threshold
 	4,  _NON_AUTOINC,   _P8_H2V_Y_NOISE_THR_F4,	    0x03,     // H2V Y Noise Threshold
 	4,  _NON_AUTOINC,   _P8_H2V_CVBS_NOISE_THR_F5,	0x15,     // H2V CVBS Noise Threshold
-	4,  _NON_AUTOINC,   _P8_1D_BLEND_THR_F6,	    0x03,     // 1D Blend Threshold 
+	4,  _NON_AUTOINC,   _P8_1D_BLEND_THR_F6,	    0x03,     // 1D Blend Threshold
 	//
-//	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,	0x20,		  //color mode reg enable	
+//	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,	0x20,		  //color mode reg enable
 	4,  _NON_AUTOINC,   _P8_VIDEO_CTRL0_A0,	        0x06,     //PAL(CN)
 	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,	        0x02,     //5-tap adaptive comb filter
 
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,
 	4,  _NON_AUTOINC,   _PA_SECAM_CTRL_C4,	        0x82,     // SECAM Control
 	_END
 
@@ -205,41 +206,41 @@ unsigned char code RTD2610_PAL_CN_ini[]=
 unsigned char code RTD2610_SECAM_ini[]=
 {
 	//need modify by 263x parameters
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,
 	4,  _NON_AUTOINC,   _P8_YC_BW_CTRL_EA,	        0x00,     // YC BandWidth Control
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,
 	4,  _NON_AUTOINC,   _PA_SECAM_CTRL_C4,	        0xC0,     // SECAM Control
-	4,  _NON_AUTOINC,   _PA_DRDB_GAIN_TB_CA,	    0x00,     // Secam Gain DrDb Look Up Table 
-	4,  _NON_AUTOINC,   _PA_Y_GAIN_TB_CB,	        0x00,     // Secam Gain Y Look Up Table 		
+	4,  _NON_AUTOINC,   _PA_DRDB_GAIN_TB_CA,	    0x00,     // Secam Gain DrDb Look Up Table
+	4,  _NON_AUTOINC,   _PA_Y_GAIN_TB_CB,	        0x00,     // Secam Gain Y Look Up Table
 	//
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,         
-//	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,  0x20,           // color mode reg enable	
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,
+//	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,  0x20,           // color mode reg enable
 	4,  _NON_AUTOINC,   _P8_VIDEO_CTRL0_A0,  	    0x08,     // SECAM
-	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,  	    0x00,         
+	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,  	    0x00,
 	_END
 };
 
 unsigned char code RTD2610_PAL_60_ini[]=
 {
 	//need modify by 263x parameters
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGE8,
 //	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,	        0x02,     // YC Seperate Control
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_Y_E1,	    0x25,     // BPF BandWidth Select Y
 	// andy av color
 	4,  _NON_AUTOINC,   _P8_BPF_BW_SEL_C_E2,	    0x00,     // BPF BandWidth Select C
 	// andy av color
 	4,  _NON_AUTOINC,   _P8_YC_BW_CTRL_EA,	        0x00,//0x49,     // YC BandWidth Control
-	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable 
+	4,  _NON_AUTOINC,   _P8_2D_ALPHA_MOD_ENABLE_F2,	0xC2,     // 2D ALPHA Mode Enable
 	4,  _NON_AUTOINC,   _P8_H2V_CORING_THR_F3,	    0x21,     // H2V Coring Threshold
 	4,  _NON_AUTOINC,   _P8_H2V_Y_NOISE_THR_F4,	    0x00,     // H2V Y Noise Threshold
 	4,  _NON_AUTOINC,   _P8_H2V_CVBS_NOISE_THR_F5,	0x15,     // H2V CVBS Noise Threshold //eric 20070608
 	4,  _NON_AUTOINC,   _P8_1D_BLEND_THR_F6,	    0x03,     // 1D Blend Threshold
 	//
-	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,	    0x20,     // color mode reg enable	
-	4,  _NON_AUTOINC,   _P8_VIDEO_CTRL0_A0,     	0x0E,     // color mode reg enable	
+	4,  _NON_AUTOINC,   _P8_ZORAN_REG_EN_D7,	    0x20,     // color mode reg enable
+	4,  _NON_AUTOINC,   _P8_VIDEO_CTRL0_A0,     	0x0E,     // color mode reg enable
 	4,  _NON_AUTOINC,   _P8_YCSEP_CTRL_E0,	        0x02,     // 5-tap adaptive comb filter
 
-	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,         
+	4,  _NON_AUTOINC,   _PAGE_SELECT_9F,  		    _PAGEA,
 	4,  _NON_AUTOINC,   _PA_SECAM_CTRL_C4,	        0x82,     // SECAM Control
 	_END
 };
@@ -292,7 +293,7 @@ BYTE code tVIDEO_TABLE_SET_SCALER[] =
     4,  _NON_AUTOINC,   _IPV_ACT_STA_H_18,              0x10,
     4,  _NON_AUTOINC,   _SCALE_CTRL_32,                 0x00,
     4,  _NON_AUTOINC,   _SYNC_CTRL_49,                  0x05,
-    4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGE1,         
+    4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGE1,
 	4,  _NON_AUTOINC,   _P1_LOOP_FILTER_CAPACITOR_EB,   0xDC,
     4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGE6,
     4,  _NON_AUTOINC,   _P6_PEAKING_DATA00_C2,          0x02,		//v004
@@ -426,4 +427,4 @@ extern void CVideoDCCProcess(void);
 
 
 #endif
-#endif  
+#endif

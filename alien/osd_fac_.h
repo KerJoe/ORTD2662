@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //#if(_FACTORY_MENU_EN)
 #define _OSD_FAC_
 

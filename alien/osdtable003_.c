@@ -1,9 +1,10 @@
+#include "alien/global_.h"
 
 
 #define __OSDTABLE003__
 
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 
 #if(_OSD_TYPE == _OSD003)
@@ -12,7 +13,7 @@
 
 // Menu item's define
 // Option : _DISABLE_NOT_SHOW,_EN_PUB_KEYEVENT,_KEYMAP_EN_IN_NOSIGNAL
-code SMenuItem g_tMenuItem[] = 
+code SMenuItem g_tMenuItem[] =
 {
     // _MI_MENU_NONE
     {
@@ -119,7 +120,7 @@ code SMenuItem g_tMenuItem[] =
         tKOAdjust,              //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MContrastProc,        //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    },    
+    },
     // MainMenu\Color\Hue\HueAdj(_MI_HUEADJ)
     {
         _EN_PUB_KEYEVENT | _DISABLE_NOT_SHOW,       //BYTE Option;
@@ -155,28 +156,28 @@ code SMenuItem g_tMenuItem[] =
         tKOMainMenu,            //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MColorTempProc,         //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    },    
+    },
     // MainMenu\Color\ColorTemp\User(_MI_USER_R)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOSubMenu,             //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MColorUserProc,         //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    },    
+    },
     // MainMenu\Color\ColorTemp\User(_MI_USER_G)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOSubMenu,             //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MColorUserProc,         //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    },    
+    },
     // MainMenu\Color\ColorTemp\User(_MI_USER_B)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOSubMenu,             //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MColorUserProc,         //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    },    
+    },
 	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     //MainMenu\Color\ColorTemp\User\RAdj(_MI_USER_RADJ)
     {
@@ -199,7 +200,7 @@ code SMenuItem g_tMenuItem[] =
     	MBProc,
     	CEnable,
     },
-	#endif		
+	#endif
     // MainMenu\Adjust\AutoAdjust(_MI_AUTOADJUST)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -278,7 +279,7 @@ code SMenuItem g_tMenuItem[] =
         MAdjustClockProc,   //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
 	},
-	#endif  
+	#endif
     // MainMenu\OSD\Language(_MI_LANGUAGE)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -399,22 +400,22 @@ code SMenuItem g_tMenuItem[] =
         tKOAdjust,             //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MHPositionProc,               //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    },    
+    },
     // MainMenu\OSD\VPosition
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOAdjust,             //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MVPositionProc,               //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    },    
+    },
     // MainMenu\OSD\Timer\TimerADJ(_MI_TIMERADJ)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOAdjust,             //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MTimerProc,               //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    },  
-	#endif  
+    },
+	#endif
     // MainMenu\OSD\Double\Double_On(_MI_DOUBLE_ON)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -436,8 +437,8 @@ code SMenuItem g_tMenuItem[] =
         tKOAdjust,             	//SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MTransparentProc,       //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    }, 
-	#endif  
+    },
+	#endif
     // MainMenu\TV\Channel(_MI_CHANNEL)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -494,7 +495,7 @@ code SMenuItem g_tMenuItem[] =
         MTVProc,                //funcpProc Proc;
         CAFCEnable,             //funcpEnable Enable;
     },
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)    
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     // MainMenu\TV\Channel(_MI_CHANNEL)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -502,7 +503,7 @@ code SMenuItem g_tMenuItem[] =
         MChannelProc,           //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
     },
-	#endif    
+	#endif
     // MainMenu\TV\System\S_NTSC_M(_MI_S_NTSC_M)
     {
         _EN_PUB_KEYEVENT | _DISABLE_NOT_SHOW,       //BYTE Option;
@@ -623,7 +624,7 @@ code SMenuItem g_tMenuItem[] =
         MManualSearchProc,      //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
     },
-	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)    
+	#if(_KEY_TYPE == _KT_PCB2660_003_5KEY)
     // MainMenu\TV\Tuning(_MI_TUNING)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -631,7 +632,7 @@ code SMenuItem g_tMenuItem[] =
         MTuningProc,           //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
     },
-	#endif    
+	#endif
     // MainMenu\TV\Skip\Skip_On(_MI_SKIP_ON)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -661,7 +662,7 @@ code SMenuItem g_tMenuItem[] =
         MAFCProc,              //funcpProc Proc;
         CAFCEnable,                //funcpEnable Enable;
     },
-    
+
     // MainMenu\Function\Reset(_MI_RESET)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -818,8 +819,8 @@ code SMenuItem g_tMenuItem[] =
         tKOAdjust,              //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MSharpnessProc,         //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    },   	
-	#endif   
+    },
+	#endif
     // MainMenu\Sound\Volume(_MI_VOLUME)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -869,28 +870,28 @@ code SMenuItem g_tMenuItem[] =
         tKOAdjust,             //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MVolumeProc,             //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    },   	
+    },
    	// MainMenu\Sound\Balance\BalanceADJ(_MI_BALANCEADJ)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOAdjust,             //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MBalanceProc,             //funcpProc Proc;
         MSoundEnable,                //funcpEnable Enable;
-    },   	
+    },
    	// MainMenu\Sound\Bass\BassADJ(_MI_BASSADJ)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOAdjust,             //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MBassProc,             //funcpProc Proc;
         MSoundEnable,                //funcpEnable Enable;
-    },   	   	
+    },
    	// MainMenu\Sound\Treble\TrebleADJ(_MI_TREBLEADJ)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOAdjust,              //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MTrebleProc,            //funcpProc Proc;
         MSoundEnable,           //funcpEnable Enable;
-    },   	   	
+    },
 	#endif
 #if(_CHANGE_SOURCE_METHOD == _CHANGE_SOURCE_METHOD_0)
 	// Source
@@ -944,7 +945,7 @@ code SMenuItem g_tMenuItem[] =
         CMITVEnable,            //funcpEnable Enable;
     },
 #endif
-    
+
     // Short Cut menu\Brightness(_MI_SC_BRIGHTNESS)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -960,7 +961,7 @@ code SMenuItem g_tMenuItem[] =
         MScVolumeProc,      	//funcpProc Proc;
         CEnable,            	//funcpEnable Enable;
     },
-  
+
     // Short Cut menu\Input ch number(_MI_SC_INPUT_CH_NUM)
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -1061,35 +1062,35 @@ code SMenuItem g_tMenuItem[] =
         tKOFactorySub,            //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MFac6500Proc,        //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    }, 
+    },
  	//Factory menu/(6500_G) _MI_FAC_6500_G
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOFactorySub,            //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MFac6500Proc,        //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    }, 
+    },
     //Factory menu/(6500_B) _MI_FAC_6500_B
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOFactorySub,            //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MFac6500Proc,        //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    }, 
+    },
     //Factory menu/(GAIN_R) _MI_FAC_GAIN_R
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOFactorySub,            //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MFacGainProc,        //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    }, 
+    },
     //Factory menu/(GAIN_G) _MI_FAC_GAIN_G
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
         tKOFactorySub,            //SKeyToOsdEvent *KeyMsgToOsdEvnet;
         MFacGainProc,        //funcpProc Proc;
         CEnable,                //funcpEnable Enable;
-    }, 
+    },
     //Factory menu/(GAIN_B) _MI_FAC_GAIN_B
     {
         _EN_PUB_KEYEVENT,       //BYTE Option;
@@ -1131,4 +1132,3 @@ code SMenuItem g_tMenuItem[] =
 //------------------------------------------------------------
 
 #endif 	//#if(_OSD_TYPE == _OSD003)
-

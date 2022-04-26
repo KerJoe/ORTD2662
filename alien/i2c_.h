@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : I2c.h No.0000
 // Update Note  :
@@ -52,11 +53,11 @@ void CI2cWriteArray(unsigned char dev_addr,unsigned char *array);
 void I2CByteWrite(unsigned char index,unsigned char address,unsigned char value);
 void I2CSetBit(unsigned char addr,unsigned char and1,unsigned char or1);
 //for Audio/Tuner using
-//reserved for furture 
+//reserved for furture
 //BYTE CIICStart(BYTE ucDeviceAddr);
 void CIICStop(void);
 BYTE CIICGetAck(void);
-//reserved for furture 
+//reserved for furture
 //void CIICSendAck(void);
 //void CIICSendNoAck(void);
 BYTE CIICSendByte(BYTE ucValue);
@@ -127,15 +128,12 @@ extern BYTE CIICSendByte(BYTE ucValue);
 extern void CIICSendAddr(unsigned char addr, unsigned char index, unsigned char rd);
 
 //--------------------------------------------------
-// Macro of I2c.c for group1 
+// Macro of I2c.c for group1
 //--------------------------------------------------
-#define SETI2CSDA()                 (bI2CSDA = _TRUE)
-#define CLRI2CSDA()                 (bI2CSDA = _FALSE)
-#define CHECKI2CSDA()               (bI2CSDA)
+#define SETI2CSDA()                 (XSFRWriteByte(bI2CSDA, _TRUE))
+#define CLRI2CSDA()                 (XSFRWriteByte(bI2CSDA, _FALSE))
+#define CHECKI2CSDA()               (XSFRReadByte(bI2CSDA))
 
-#define SETI2CSCL()                 (bI2CSCL = _TRUE)
-#define CLRI2CSCL()                 (bI2CSCL = _FALSE)
-#define CHECKI2CSCL()               (bI2CSCL)
-
-
-
+#define SETI2CSCL()                 (XSFRWriteByte(bI2CSCL, _TRUE))
+#define CLRI2CSCL()                 (XSFRWriteByte(bI2CSCL, _FALSE))
+#define CHECKI2CSCL()               (XSFRReadByte(bI2CSCL))

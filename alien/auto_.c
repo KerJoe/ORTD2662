@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Auto.c No.0002
 // Update Note  :
@@ -6,7 +7,7 @@
 
 #define __AUTO__
 
-#include "Core\Header\Include.h"
+#include "alien/include_.h"
 
 //--------------------------------------------------
 // Description  : Auto clock, phase and H,V position
@@ -86,7 +87,7 @@ BYTE CAutoDoAutoConfig(void)
         CEepromSaveModeData(stModeInfo.ModeCurr);
         CAdjustUpdateCenterData();
         CEepromSaveCenterModeData(stModeInfo.ModeCurr);
-    }       
+    }
 	bDoAutoConfigFlag = _FALSE;
     CScalerSetByte(_WATCH_DOG_CTRL0_0C, watchdogtemp);
     CMiscClearStatusRegister();
@@ -104,8 +105,8 @@ BYTE CAutoDoWhiteBalance(void)
     BYTE result;
 	#if(_YPBPR_AUTO_TYPE == _NEW_TYPE)
   	#if(_YPBPR_SUPPORT == _ON)
-	if(_GET_INPUT_SOURCE() == _SOURCE_YPBPR)	
-		result = CAutoTuneBalanceNew();	
+	if(_GET_INPUT_SOURCE() == _SOURCE_YPBPR)
+		result = CAutoTuneBalanceNew();
 	else
   	#endif
 		result = CAutoTuneBalance();
@@ -143,7 +144,7 @@ BYTE CAutoWaitFinish(void)
 	//tommy liao add for prevent (ADD PC_AUTOADJUST ITEM) ERROR
 	//tommy add for prevent execute funtion of (COsdMenuAutoAdjust) error
 	//warning!!!!!!!!!!!!,don't delete the below function
-	//warning!!!!!!!!!!!!,or if you change ,can cause serious error,can cause system error 
+	//warning!!!!!!!!!!!!,or if you change ,can cause serious error,can cause system error
 	CScalerRead(_AUTO_ADJ_CTRL0_7A, 1, &valuetemp, _AUTOINC);
 	valuetemp = (valuetemp&0x03);
 	if( valuetemp == 0x03 )
@@ -372,7 +373,7 @@ DWORD CAutoPhaseSearch(BYTE ucSelColor, BYTE ucSelStep, BYTE ucSelStepNum, BYTE 
     CScalerPageSelect(_PAGE1);
 
 	CScalerSetBit(_P1_MIX_B0, ~_BIT1, 0x00);
-		
+
     CTimerWaitForEvent(_EVENT_IVS);
     pData[0] = CAutoWaitFinish();
     if(pData[0] != _ERROR_SUCCESS)
@@ -636,14 +637,14 @@ BYTE CAutoDoAutoPhase(void)
         result = best & 0x3f;
     }
     else
-    */	 
+    */
 	{
     maxsum  = CAutoPhaseSearch(_COLOR_SELECT, _HWAUTO_STEP_2, HWAUTOSTEPNUM(8), HWAUTOSTEPSTART((result - 8) & 0x3f), &result);
     if(maxsum == 0xffffffffL)
 		return _ERROR_INPUT;
     if(maxsum == 0)
 		return _ERROR_ABORT;
-	} 
+	}
     // Search phase by weighting SOD
     phase   = (result - 3) & 0x3f;
     CAdjustPhase(phase);
@@ -772,9 +773,9 @@ BYTE CAutoDoAutoPosition(void)
 #define _AUTO_COMPONENT_Y_MIN_LEVEL         12
 #define _AUTO_COMPONENT_PB_MAX_LEVEL       240
 #define _AUTO_COMPONENT_PR_MAX_LEVEL       240
-#define _AUTO_VIDEO8_Y_MAX_LEVEL                 248 
+#define _AUTO_VIDEO8_Y_MAX_LEVEL                 248
 #define _AUTO_VIDEO8_Y_MIN_LEVEL                 2//12
-#define _AUTO_VIDEO8_C_MAX_LEVEL                 236 //this value can't over 240 
+#define _AUTO_VIDEO8_C_MAX_LEVEL                 236 //this value can't over 240
 
 
 #define _CHROMA_BLACK_LEVEL             0x80
@@ -785,7 +786,7 @@ void CGetTargetValue(UINT8* max_value, UINT8* min_value, UINT8 color)
         {
                case _SOURCE_VGA:
 			  *max_value = _AUTO_VGA_MAX_LEVEL;
-			  *min_value = _AUTO_VGA_MIN_LEVEL;			  
+			  *min_value = _AUTO_VGA_MIN_LEVEL;
 			  break;
 		 case _SOURCE_YPBPR:
 		 	  if(color == _GREEN)
@@ -795,12 +796,12 @@ void CGetTargetValue(UINT8* max_value, UINT8* min_value, UINT8 color)
 		 	  }
 			  else
 			  {
-			      *max_value = (color == _RED) ? _AUTO_COMPONENT_PR_MAX_LEVEL : _AUTO_COMPONENT_PB_MAX_LEVEL;			      
+			      *max_value = (color == _RED) ? _AUTO_COMPONENT_PR_MAX_LEVEL : _AUTO_COMPONENT_PB_MAX_LEVEL;
 			      *min_value = _CHROMA_BLACK_LEVEL;
 			  }
 			  break;
-			  
-			#if(_VIDEO_AUTO_WHITE_BLANCE == _ENABLE)			  
+
+			#if(_VIDEO_AUTO_WHITE_BLANCE == _ENABLE)
 	        case _SOURCE_VIDEO_AV: //VIDEO8
 	        case _SOURCE_VIDEO_SV: //VIDEO8
 	        case _SOURCE_VIDEO_TV: //VIDEO8
@@ -815,11 +816,11 @@ void CGetTargetValue(UINT8* max_value, UINT8* min_value, UINT8 color)
 			     *min_value = _CHROMA_BLACK_LEVEL;
 			  }
 		         break;
-			#endif				 
+			#endif
         }
 }
 /*
-#define VIDEO8_Y_MAX_LEVEL          250 
+#define VIDEO8_Y_MAX_LEVEL          250
 #define VIDEO8_Y_MIN_LEVEL           6
 #define VIDEO8_C_MAX_LEVEL          240
 */
@@ -835,7 +836,7 @@ BYTE CAutoTuneBalance(void)
 	BYTE xdata ucMax_Value, ucMin_Value;
 
 	if(_GET_INPUT_SOURCE() == _SOURCE_VGA)// VGA
-	{		
+	{
        	for(count=0;count<3;count++)
 		{
        		stAdcData.AdcGain[count] = 0x80;
@@ -844,7 +845,7 @@ BYTE CAutoTuneBalance(void)
 		CAdjustAdcGainOffset();//jerry0921
 	}
 	else if(_GET_INPUT_SOURCE() == _SOURCE_YPBPR )// YPBPR
-	{	
+	{
 		for(count=0;count<3;count++)
     		{
        		stYPbPrData.YPbPrGain[count] = 0x80;
@@ -854,7 +855,7 @@ BYTE CAutoTuneBalance(void)
 	}
 	#if(_VIDEO_AUTO_WHITE_BLANCE == _ENABLE)
 	else if(bSourceVideo())// AV / SV / TV
-	{	
+	{
 		SET_CONTRAST(50);				// set OSD default value  to 50
 		SET_SATURATION(50);				// set OSD default value to 50
 		SET_VDC_GAIN(0x80);
@@ -910,9 +911,9 @@ BYTE CAutoTuneBalance(void)
                         //Chroma doesn't need to adjust the offset
 				if(color != _GREEN)
 				result1 = ucMin_Value;
-			}		
+			}
 			#endif
-            if(rev == _ERROR_ABORT)     
+            if(rev == _ERROR_ABORT)
 				return rev;
 
     		if((result0 == ucMax_Value) && (result1 == ucMin_Value))
@@ -952,11 +953,11 @@ BYTE CAutoMeasureColor(BYTE ucColor, BYTE ucPar, BYTE *pMargin)
 	if(bSourceVideo())
 	{
 		CScalerSetBit(_VGIP_HV_DELAY_1E, 0x0f, 0x00);
-		
-		pData[0] = ((HIBYTE(stModeInfo.IHStartPos) << 2) & 0x0C) |(HIBYTE(stModeInfo.IHStartPos + stModeInfo.IHWidth )  & 0x03);   
+
+		pData[0] = ((HIBYTE(stModeInfo.IHStartPos) << 2) & 0x0C) |(HIBYTE(stModeInfo.IHStartPos + stModeInfo.IHWidth )  & 0x03);
 		pData[1] = LOBYTE(stModeInfo.IHStartPos);
 		pData[2] = LOBYTE(stModeInfo.IHStartPos + stModeInfo.IHWidth);
-		pData[3] = ((HIBYTE(stModeInfo.IVStartPos) << 2) & 0x0C) |(HIBYTE(stModeInfo.IVStartPos + stModeInfo.IVHeight )  & 0x03);   
+		pData[3] = ((HIBYTE(stModeInfo.IVStartPos) << 2) & 0x0C) |(HIBYTE(stModeInfo.IVStartPos + stModeInfo.IVHeight )  & 0x03);
 		pData[4] = LOBYTE(stModeInfo.IVStartPos);
 		pData[5] = LOBYTE(stModeInfo.IVStartPos + stModeInfo.IVHeight);
 
@@ -981,7 +982,7 @@ BYTE CAutoMeasureColor(BYTE ucColor, BYTE ucPar, BYTE *pMargin)
         pData[4] = (LOBYTE(usVStartPos));
         pData[5] = (LOBYTE(usVEndPos));
     }
-	}	
+	}
     CScalerWrite(_H_BOUNDARY_H_70, 6, pData, _AUTOINC);
 
     CScalerSetByte(_AUTO_ADJ_CTRL1_7D, 0x01 | ((ucPar & 0x01) << 5));
@@ -1000,11 +1001,11 @@ BYTE CAutoMeasureColor(BYTE ucColor, BYTE ucPar, BYTE *pMargin)
 
 
 UINT8 Change_Device_Gain(UINT8 color, UINT8 delta, UINT8 inc)
-{     
+{
 	#if(_VIDEO_AUTO_WHITE_BLANCE == _ENABLE)
 	if(bSourceVideo())
 		return(Change_VDC_Gain(color, delta, inc));
-	else   
+	else
 	#endif
 		return(CAutoChangeAdcGain(color, delta, inc));
 }
@@ -1014,9 +1015,9 @@ UINT8 Change_Device_Offset(UINT8 color, UINT8 delta, UINT8 inc)
 	#if(_VIDEO_AUTO_WHITE_BLANCE == _ENABLE)
 	if(bSourceVideo())
 		return(Change_VDC_Offset(color, delta, inc));
-	else   
+	else
 	#endif
-		return(CAutoChangeAdcOffset(color, delta, inc));       
+		return(CAutoChangeAdcOffset(color, delta, inc));
 }
 
 //--------------------------------------------------
@@ -1039,13 +1040,13 @@ BYTE CAutoTuneDeviceGain(BYTE ucColor, BYTE *pMargin, BYTE ucMax_Target)
 		    {
                if(bSourceVideo())
                {
-	           if(Change_Device_Offset(ucColor, 2, 0))               // Increase Offset; Decrease Brightness	           
+	           if(Change_Device_Offset(ucColor, 2, 0))               // Increase Offset; Decrease Brightness
 		        	return _ERROR_FINISH;
 
                }
                else
                {
-	           if(Change_Device_Offset(ucColor, 4, 0))               // Increase Offset; Decrease Brightness	           
+	           if(Change_Device_Offset(ucColor, 4, 0))               // Increase Offset; Decrease Brightness
 		        	return _ERROR_FINISH;
                }
 		   	}
@@ -1058,13 +1059,13 @@ BYTE CAutoTuneDeviceGain(BYTE ucColor, BYTE *pMargin, BYTE ucMax_Target)
        		{
                if(bSourceVideo())
                {
-	           if(Change_Device_Offset(ucColor, 2, 1))               // Increase Offset; Decrease Brightness	           
+	           if(Change_Device_Offset(ucColor, 2, 1))               // Increase Offset; Decrease Brightness
 		        	return _ERROR_FINISH;
 
                }
                else
                {
-	           if(Change_Device_Offset(ucColor, 4, 1))               // Increase Offset; Decrease Brightness	           
+	           if(Change_Device_Offset(ucColor, 4, 1))               // Increase Offset; Decrease Brightness
 		        	return _ERROR_FINISH;
                }
         	}
@@ -1104,7 +1105,7 @@ BYTE CAutoTuneDeviceOffset(BYTE ucColor, BYTE *pMargin, BYTE ucMin_Target)
                           Change_Device_Offset(ucColor, temp + 4, 1);       // Increase Offset; Increase Brightness
         		else
                           Change_Device_Offset(ucColor, temp, 1);           // Increase Offset; Increase Brightness
-		}		
+		}
 	}
 	else
 	{
@@ -1114,7 +1115,7 @@ BYTE CAutoTuneDeviceOffset(BYTE ucColor, BYTE *pMargin, BYTE ucMin_Target)
 			Change_Device_Offset(ucColor, ((temp > 8) ? 8 : temp), 0);
 		}
 		else if(*pMargin < _CHROMA_BLACK_LEVEL)
-		{		
+		{
 			temp = _CHROMA_BLACK_LEVEL - *pMargin;
         		if(*pMargin == 0)
 			{
@@ -1182,7 +1183,7 @@ BYTE CAutoChangeAdcGain(BYTE ucColor, BYTE ucDelta, BYTE ucInc)
 BYTE CAutoChangeAdcOffset(BYTE ucColor, BYTE ucDelta, BYTE ucInc)
 {
 	BYTE overrange = 0;
-	BYTE Offset;	
+	BYTE Offset;
 
 	if(_GET_INPUT_SOURCE() == _SOURCE_VGA)
 		Offset = 	stAdcData.AdcOffset[ucColor];
@@ -1212,7 +1213,7 @@ BYTE CAutoChangeAdcOffset(BYTE ucColor, BYTE ucDelta, BYTE ucInc)
 	if(_GET_INPUT_SOURCE() == _SOURCE_VGA)
 		stAdcData.AdcOffset[ucColor] = Offset;
 	else if(_GET_INPUT_SOURCE() == _SOURCE_YPBPR)
-		stYPbPrData.YPbPrOffset[ucColor] = Offset;	
+		stYPbPrData.YPbPrOffset[ucColor] = Offset;
 
     	CAdjustAdcOffset();
     	return overrange;
@@ -1229,7 +1230,7 @@ UINT8 Change_VDC_Gain(UINT8 color, UINT8 delta,UINT8 inc)
 	    if(delta < 0x08)
            delta = delta >> 1;
 	}
-	
+
     pData[2] = 0;
     pData[0] = color == _LUMA ? GET_VDC_GAIN() : GET_VDC_CHROMA();
     pData[1] = inc ? (0xff - pData[0]) : pData[0];
@@ -1318,7 +1319,7 @@ BYTE ActiveRegion_2547D(UINT16 *Region)
 	Region[1] = ((pData[2]  & (0x07)) << 8) + pData[3];						//Active_HWidth
 	Region[2] = ((pData[4]  & (0x07)) << 8) + pData[5] + pData[8];	//Active_VStart
 	Region[3] = ((pData[6]  & (0x07)) << 8) + pData[7];						//Active_VLines
-	
+
 	return(1);
 }
 
@@ -1360,7 +1361,7 @@ void HistPos( UINT16 Active_HStart, UINT16 Active_HWidth, UINT16 Active_VStart, 
 
 	Y_Gain_Pos[3]	= (Active_VStart + Active_VWidth) - Active_VWidth*(0.05);
 	Y_Gain_Pos[2]	= Y_Gain_Pos[3] - Active_VWidth*(0.05);
-	
+
 	//GainPbPr(Magenta)
 	PbPr_Gain_Pos[1] = Active_HStart + Active_HWidth*(0.5) - Active_HWidth*(0.0625);
 	PbPr_Gain_Pos[0] = PbPr_Gain_Pos[1]  - Active_HWidth*(0.03125);
@@ -1375,11 +1376,11 @@ void HistPos( UINT16 Active_HStart, UINT16 Active_HWidth, UINT16 Active_VStart, 
 	//GainY(White)
 	Y_Gain_Pos[0]	= Active_HStart + Active_HWidth*(0.03125);//over 32
 	Y_Gain_Pos[1]	= Y_Gain_Pos[0] + Active_HWidth*(0.015625);//over 64
-		
+
 	//GainPbPr(Magenta)
 	PbPr_Gain_Pos[0] = (Active_HStart+Active_HWidth) - (3.5)*(Active_HWidth*(0.125));//over 8
 	PbPr_Gain_Pos[1] = PbPr_Gain_Pos[0] + Active_HWidth*(0.015625); //over 64
-		
+
 	Offset_Pos[2]	= Active_VStart + Active_VWidth*(0.03125);//over 32
 	Offset_Pos[3]	= Offset_Pos[2] + Active_VWidth*(0.03125);//over 32
 	Y_Gain_Pos[2]  = Offset_Pos[2];
@@ -1460,12 +1461,12 @@ BYTE ADC_adjust_RTD2547D(UINT16 *HistWindow, UINT8 Target, UINT8 ADC_Adds, UINT8
 	UINT8 PEAK_Level = 0;
 	UINT8 diff = 0;
 
-	CScalerPageSelect(_PAGE0);	
+	CScalerPageSelect(_PAGE0);
 	CScalerSetByte(ADC_Adds, ADC_Data);
 	do
 	{
 		PEAK_Level = FindDominant_RTD2547D_SmartFit( &HistWindow[0], HistCh);
-	
+
 		diff = YPbPr_ABS(Target, PEAK_Level);
 
 		if(diff == 0)
@@ -1481,7 +1482,7 @@ BYTE ADC_adjust_RTD2547D(UINT16 *HistWindow, UINT8 Target, UINT8 ADC_Adds, UINT8
 			max = ADC_Data;
 			ADC_Data = (max + min )*(0.5);
 			//Write ADC  Reg
-			CScalerPageSelect(_PAGE0);	
+			CScalerPageSelect(_PAGE0);
 			CScalerSetByte( ADC_Adds, ADC_Data);
 		}
 		else if (PEAK_Level < Target)
@@ -1489,10 +1490,10 @@ BYTE ADC_adjust_RTD2547D(UINT16 *HistWindow, UINT8 Target, UINT8 ADC_Adds, UINT8
 			min = ADC_Data;
 			ADC_Data = (max + min)*(0.5);
 			//Write ADC  Reg
-			CScalerPageSelect(_PAGE0);	
+			CScalerPageSelect(_PAGE0);
 			CScalerSetByte( ADC_Adds, ADC_Data);
 		}
-		//DebugPrintf("\nmax_min: ADC_Data = %x", ADC_Data);
+		//printf("\nmax_min: ADC_Data = %x", ADC_Data);
 		counter++;
 	}while(1);
 
@@ -1504,7 +1505,7 @@ BYTE ADC_adjust_RTD2547D(UINT16 *HistWindow, UINT8 Target, UINT8 ADC_Adds, UINT8
 	UINT8 Gain_Check;
 	UINT8 Offset_Check;
 	UINT8 Check_idx = 0;
-	
+
 	do{
 		//Offset adjustment Begin
 		OffsetData = ADC_adjust_RTD2547D( &OffsetPos[0], OffsetTarget, ADCOffsetAdds, OffsetData, Channel);
@@ -1518,9 +1519,9 @@ BYTE ADC_adjust_RTD2547D(UINT16 *HistWindow, UINT8 Target, UINT8 ADC_Adds, UINT8
 		if(Check_idx>9)
 			break;
 	}while((YPbPr_ABS(Offset_Check, OffsetTarget)>1  ||  YPbPr_ABS(Gain_Check, GainTarget)>1));
-	//DebugPrintf("Offset_Check=%x\n",Offset_Check);
-	//DebugPrintf("Gain_Check=%x\n",Gain_Check);
-	
+	//printf("Offset_Check=%x\n",Offset_Check);
+	//printf("Gain_Check=%x\n",Gain_Check);
+
 	if(Channel_Y == Channel){
 		stYPbPrData.YPbPrGain[_GREEN] = GainData;
 		stYPbPrData.YPbPrOffset[_GREEN] = OffsetData;
@@ -1549,7 +1550,7 @@ BYTE ADC_adjust_RTD2547D(UINT16 *HistWindow, UINT8 Target, UINT8 ADC_Adds, UINT8
 #define U_Target_Offset_HD	128
 #define V_Target_Offset_HD	128
 #define Y_Target_Gain_HD		235
-#define U_Target_Gain_HD		214 
+#define U_Target_Gain_HD		214
 #define V_Target_Gain_HD		230
 */
 
@@ -1565,7 +1566,7 @@ BYTE ADC_adjust_RTD2547D(UINT16 *HistWindow, UINT8 Target, UINT8 ADC_Adds, UINT8
 #define U_Target_Offset_HD	128
 #define V_Target_Offset_HD	128
 #define Y_Target_Gain_HD		235
-#define U_Target_Gain_HD		187 
+#define U_Target_Gain_HD		187
 #define V_Target_Gain_HD		200
 
 
@@ -1584,7 +1585,7 @@ BYTE CAutoTuneBalanceNew(void)
 		U_Target_Gain = U_Target_Gain_HD;
 		V_Target_Gain = V_Target_Gain_HD;
 	}
-	else{//SD		
+	else{//SD
 		Y_Target_Offset = Y_Target_Offset_SD;
 		U_Target_Offset = U_Target_Offset_SD;
 		V_Target_Offset = V_Target_Offset_SD;
@@ -1593,36 +1594,36 @@ BYTE CAutoTuneBalanceNew(void)
 		V_Target_Gain = V_Target_Gain_SD;
 	}
 	ActiveRegion_2547D(&Active_Region[0]);
-	#if 1//eric 200706011 reduce size				
-		#if(_ADC1_INPUT_SWAP_RG)		
+	#if 1//eric 200706011 reduce size
+		#if(_ADC1_INPUT_SWAP_RG)
 			ADC_2547D.Y_ADC_GAIN 		= _P0_RED_GAIN_C0;
-			ADC_2547D.Y_ADC_OFFSET 	= _P0_RED_OFFSET_C3;	
-			ADC_2547D.U_ADC_GAIN 		= _P0_BLU_GAIN_C2; 
-			ADC_2547D.U_ADC_OFFSET 	= _P0_BLU_OFFSET_C5; 
-			ADC_2547D.V_ADC_GAIN 		= _P0_GRN_GAIN_C1; 
-			ADC_2547D.V_ADC_OFFSET 	= _P0_GRN_OFFSET_C4; 
-		#elif(_ADC1_INPUT_SWAP_RB)		
+			ADC_2547D.Y_ADC_OFFSET 	= _P0_RED_OFFSET_C3;
+			ADC_2547D.U_ADC_GAIN 		= _P0_BLU_GAIN_C2;
+			ADC_2547D.U_ADC_OFFSET 	= _P0_BLU_OFFSET_C5;
+			ADC_2547D.V_ADC_GAIN 		= _P0_GRN_GAIN_C1;
+			ADC_2547D.V_ADC_OFFSET 	= _P0_GRN_OFFSET_C4;
+		#elif(_ADC1_INPUT_SWAP_RB)
 			ADC_2547D.Y_ADC_GAIN 		= _P0_GRN_GAIN_C1;
-			ADC_2547D.Y_ADC_OFFSET 		= _P0_GRN_OFFSET_C4;	
-			ADC_2547D.U_ADC_GAIN 		= _P0_RED_GAIN_C0; 
-			ADC_2547D.U_ADC_OFFSET 		= _P0_RED_OFFSET_C3; 
-			ADC_2547D.V_ADC_GAIN 		= _P0_BLU_GAIN_C2; 
-			ADC_2547D.V_ADC_OFFSET 		= _P0_BLU_OFFSET_C5; 
-		#elif(_ADC1_INPUT_SWAP_GB)			
+			ADC_2547D.Y_ADC_OFFSET 		= _P0_GRN_OFFSET_C4;
+			ADC_2547D.U_ADC_GAIN 		= _P0_RED_GAIN_C0;
+			ADC_2547D.U_ADC_OFFSET 		= _P0_RED_OFFSET_C3;
+			ADC_2547D.V_ADC_GAIN 		= _P0_BLU_GAIN_C2;
+			ADC_2547D.V_ADC_OFFSET 		= _P0_BLU_OFFSET_C5;
+		#elif(_ADC1_INPUT_SWAP_GB)
 			ADC_2547D.Y_ADC_GAIN 		= _P0_BLU_GAIN_C2;
-			ADC_2547D.Y_ADC_OFFSET 	= _P0_BLU_OFFSET_C5;	
-			ADC_2547D.U_ADC_GAIN 		= _P0_GRN_GAIN_C1; 
-			ADC_2547D.U_ADC_OFFSET 	= _P0_GRN_OFFSET_C4; 
-			ADC_2547D.V_ADC_GAIN 		= _P0_RED_GAIN_C0; 
-			ADC_2547D.V_ADC_OFFSET 	= _P0_RED_OFFSET_C3; 
+			ADC_2547D.Y_ADC_OFFSET 	= _P0_BLU_OFFSET_C5;
+			ADC_2547D.U_ADC_GAIN 		= _P0_GRN_GAIN_C1;
+			ADC_2547D.U_ADC_OFFSET 	= _P0_GRN_OFFSET_C4;
+			ADC_2547D.V_ADC_GAIN 		= _P0_RED_GAIN_C0;
+			ADC_2547D.V_ADC_OFFSET 	= _P0_RED_OFFSET_C3;
 		#else //non-swap
 			ADC_2547D.Y_ADC_GAIN 		=_P0_GRN_GAIN_C1;
-			ADC_2547D.Y_ADC_OFFSET 	= _P0_GRN_OFFSET_C4;	
-			ADC_2547D.U_ADC_GAIN 		= _P0_BLU_GAIN_C2; 
-			ADC_2547D.U_ADC_OFFSET 	= _P0_BLU_OFFSET_C5; 
-			ADC_2547D.V_ADC_GAIN 		= _P0_RED_GAIN_C0; 
-			ADC_2547D.V_ADC_OFFSET 	= _P0_RED_OFFSET_C3; 
-		#endif	
+			ADC_2547D.Y_ADC_OFFSET 	= _P0_GRN_OFFSET_C4;
+			ADC_2547D.U_ADC_GAIN 		= _P0_BLU_GAIN_C2;
+			ADC_2547D.U_ADC_OFFSET 	= _P0_BLU_OFFSET_C5;
+			ADC_2547D.V_ADC_GAIN 		= _P0_RED_GAIN_C0;
+			ADC_2547D.V_ADC_OFFSET 	= _P0_RED_OFFSET_C3;
+		#endif
 	#else
 	ADC_Swap_Check_2547D(&ADC_2547D);
 	#endif
@@ -1646,8 +1647,8 @@ void CYPbPrPorch_LevelCheck(void)
 	CScalerSetByte(_VGIP_HV_DELAY_1E, 0x00);
 #if 0
 	UINT16 lbound, rbound;
- 
-	rbound  = stModeUserData.Clock;                                               // Totol Clock Number 
+
+	rbound  = stModeUserData.Clock;                                               // Totol Clock Number
 	lbound  = (UINT32)rbound * stModeInfo.IHSyncPulseCount / stModeInfo.IHCount;   // Clock number in HSYNC pulse
 	lbound = lbound+10;
 	rbound = lbound+10;
@@ -1656,7 +1657,7 @@ void CYPbPrPorch_LevelCheck(void)
 //	pData[0]    = ((lbound >> 4) & 0x70) | (HIBYTE(rbound) & 0x0f);
 //	pData[1]    = (LOBYTE(lbound)+0);
 //	pData[2]    = (LOBYTE(rbound)+0);
- 
+
 	lbound = stModeInfo.IVTotal/2;
 	rbound = lbound+10;
  	Pos_Porch[2] = lbound;	// V
@@ -1674,7 +1675,7 @@ void CYPbPrPorch_LevelCheck(void)
 //			Pos_Porch[2] = Pos_Porch[2] +10;
 //			Pos_Porch[3] = Pos_Porch[2] +10;
 //		break;
-		
+
 		case _MODE_576I:
 		case _MODE_576P:
 		case _MODE_480P:
@@ -1694,15 +1695,15 @@ void CYPbPrPorch_LevelCheck(void)
 			 Pos_Porch[2] = Pos_Porch[2] +10;
 			 Pos_Porch[3] = Pos_Porch[2] +10;
 		break;
-	}		 
+	}
 #endif
 
-	
-	if((FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  0) -16) != 0 || (FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  1) -128) != 0 || (FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  2)-128) != 0 ){	
-/*		
+
+	if((FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  0) -16) != 0 || (FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  1) -128) != 0 || (FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  2)-128) != 0 ){
+/*
 		ROSPrintf("ADC_Offset=(%d,%d,%d)\n",stYPbPrData.YPbPrOffset[_RED],stYPbPrData.YPbPrOffset[_GREEN] ,stYPbPrData.YPbPrOffset[_BLUE]);
 		ROSPrintf("ADC_Gain=(%d,%d,%d)\n",stYPbPrData.YPbPrGain[_RED],stYPbPrData.YPbPrGain[_GREEN] ,stYPbPrData.YPbPrGain[_BLUE]);
-		ROSPrintf("Porch Level mismatch:diff_Y=%d,diff_U=%d, diff_V=%d\n",(FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  0)-16), (FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  1)-128),(FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  2)-128));		
+		ROSPrintf("Porch Level mismatch:diff_Y=%d,diff_U=%d, diff_V=%d\n",(FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  0)-16), (FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  1)-128),(FindDominant_RTD2547D_SmartFit(&Pos_Porch[0],  2)-128));
 		ROSPrintf("after adjustment -->\n");
 */
 		#if(_ADC1_INPUT_SWAP_RG)
@@ -1722,7 +1723,7 @@ void CYPbPrPorch_LevelCheck(void)
 			ADC_adjust_RTD2547D(&Pos_Porch[0], 128, _P0_RED_OFFSET_C3, stYPbPrData.YPbPrOffset[_RED], Channel_V);
 			ADC_adjust_RTD2547D(&Pos_Porch[0], 16, _P0_GRN_OFFSET_C4, stYPbPrData.YPbPrOffset[_GREEN], Channel_Y);
 		#endif
-		
+
 		//ADC_adjust_RTD2547D(&Pos_Porch[0], 128, _P0_BLU_OFFSET_AA, stYPbPrData.YPbPrOffset[_BLUE], 1);
 		//ADC_adjust_RTD2547D(&Pos_Porch[0], 128, _P0_RED_OFFSET_A8, stYPbPrData.YPbPrOffset[_RED], 2);
 		//ADC_adjust_RTD2547D(&Pos_Porch[0], 16, _P0_GRN_OFFSET_A9, stYPbPrData.YPbPrOffset[_GREEN], 0);
@@ -1733,12 +1734,8 @@ void CYPbPrPorch_LevelCheck(void)
 */
 	}
 	//else
-	//	DebugPrintf("\n Porch Level match %c",0x20);
-	
+	//	printf("\n Porch Level match %c",0x20);
+
 }
 #endif // #if(_YPBPR_SUPPORT)
 #endif
-
-
-
-

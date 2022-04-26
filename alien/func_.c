@@ -1,4 +1,5 @@
-#include "Core\Header\Include.h"
+#include "alien/global_.h"
+#include "alien/include_.h"
 
 //__________________________________________________________________________
 //
@@ -10,12 +11,12 @@
 //                          CMuteOn
 //==========================================================================
 void CMuteOn(void)
-{                                    
+{
     // Set Mute
     if(_VOLUME_INV)         CSetPWM(bVOLUME_PWM,0xff);
     else                    CSetPWM(bVOLUME_PWM,0x00);
 
-    bMUTE = _MUTE_ON;
+    XSFRWriteByte(bMUTE, _MUTE_ON);
 }
 
 //==========================================================================
@@ -23,7 +24,7 @@ void CMuteOn(void)
 //==========================================================================
 void CMuteOff(void)
 {
-    bMUTE = _MUTE_OFF;
+    XSFRWriteByte(bMUTE, _MUTE_OFF);
 }
 
 //==========================================================================
@@ -32,7 +33,7 @@ void CMuteOff(void)
 void CSetVolume(void)
 {
     WORD iVolume;
-                   
+
     if((GET_VOLUME() == 0) || (GET_AUDIO_MUTE()))
     {
        //  if(_VOLUME_INV)         CSetPWM(bVOLUME_PWM,0xff);
@@ -41,16 +42,16 @@ void CSetVolume(void)
          CMuteOn();
          return;
     }
-                   
+
     CMuteOff();
-                                                            
+
     iVolume = (WORD)(_MAX_VOLUME - _MIN_VOLUME) * GET_VOLUME() / 100;
 
     if(_VOLUME_INV)
         iVolume = _MAX_VOLUME - iVolume;
     else
         iVolume = _MIN_VOLUME + iVolume;
-      
+
     CSetPWM(bVOLUME_PWM,iVolume);
 }
 #endif    // #if(AUDIO_TYPE == _AUDIO_PWM)
@@ -77,7 +78,7 @@ void CMuteOff(void)
 //                             CSetVolume
 //==========================================================================
 void CSetVolume(void)
-{      
+{
 	#if(_IF_PLL_DE_CHIP == _IF_PLL_DE_1338)
      if (_SOURCE_VIDEO_TV == _GET_INPUT_SOURCE() && !kx_CVideoModeLocked() && bFM == 0)
         return;
@@ -87,14 +88,14 @@ void CSetVolume(void)
      {
          CMuteOn();
          return;
-     }   
-    
+     }
+
      CSetSc7313Volume(GET_VOLUME());
 	#if (_SOUND_PROCESSOR)
      CSetAudioProcessor(stAudioData.Balance, stAudioData.Bass, stAudioData.Treble);
 	#else
      CSetAudioProcessor(50, 50, 50);
-	#endif      
+	#endif
      if (bMUTE)
          CMuteOff();
 }
@@ -102,71 +103,71 @@ void CSetVolume(void)
 #endif          //#if(AUDIO_TYPE == _AUDIO_SC7313)
 
 //==========================================================================
-//                         CInitSoundChannel 
+//                         CInitSoundChannel
 //==========================================================================
 void CInitSoundChannel(BYTE ucChannel)
 {
 	CMuteOn();
-	
+
 	switch(ucChannel)
 	{
 	#if(_VGA_SUPPORT)
 		case _SOURCE_VGA:
 		#if(AUDIO_TYPE == _AUDIO_SC7313)
 		CSelect7313SoundChannel(0x01);
-		#elif(AUDIO_TYPE == _AUDIO_PWM)  
-		_AUDIO_A = 1;
-		_AUDIO_B = 1;
+		#elif(AUDIO_TYPE == _AUDIO_PWM)
+		XSFRWriteByte(_AUDIO_A, 1);
+		XSFRWriteByte(_AUDIO_B, 1);
 		#endif
 		break;
-	
+
 		case _SOURCE_YPBPR:
 		case _SOURCE_HDMI:
-		case _SOURCE_DVI:              
+		case _SOURCE_DVI:
 		#if(AUDIO_TYPE == _AUDIO_SC7313)
 		CSelect7313SoundChannel(0x01);
-		#elif(AUDIO_TYPE == _AUDIO_PWM) 
-		_AUDIO_A = 0;
-		_AUDIO_B = 1; 
+		#elif(AUDIO_TYPE == _AUDIO_PWM)
+		XSFRWriteByte(_AUDIO_A, 0);
+		XSFRWriteByte(_AUDIO_B, 1);
 		#endif
 		break;
 	#endif
-	
+
 	#if(_VIDEO_SUPPORT)
-		case _SOURCE_VIDEO_AV:       
+		case _SOURCE_VIDEO_AV:
 		#if(AUDIO_TYPE == _AUDIO_SC7313)
 		CSelect7313SoundChannel(0x02);
-		#elif(AUDIO_TYPE == _AUDIO_PWM) 
-		_AUDIO_A = 0;//1;
-		_AUDIO_B = 0;
+		#elif(AUDIO_TYPE == _AUDIO_PWM)
+		XSFRWriteByte(_AUDIO_A, 0);//1;
+		XSFRWriteByte(_AUDIO_B, 0);
 		#endif
 		break;
-	
-		case _SOURCE_VIDEO_SV:        
+
+		case _SOURCE_VIDEO_SV:
 		#if(AUDIO_TYPE == _AUDIO_SC7313)
 		CSelect7313SoundChannel(0x02);
-		#elif(AUDIO_TYPE == _AUDIO_PWM) 
-		_AUDIO_A = 0;//1;
-		_AUDIO_B = 1;
+		#elif(AUDIO_TYPE == _AUDIO_PWM)
+		XSFRWriteByte(_AUDIO_A, 0);//1;
+		XSFRWriteByte(_AUDIO_B, 1);
 		#endif
 		break;
-	
+
 	#endif //#if(_VIDEO_SUPPORT)
-	
+
 		case _SOURCE_VIDEO_YUV:
 		#if(AUDIO_TYPE == _AUDIO_SC7313)
 		CSelect7313SoundChannel(0x03);  // Only for PT2314
-		#elif(AUDIO_TYPE == _AUDIO_PWM)  
-		_AUDIO_A = 0;
-		_AUDIO_B = 0;
+		#elif(AUDIO_TYPE == _AUDIO_PWM)
+		XSFRWriteByte(_AUDIO_A, 0);
+		XSFRWriteByte(_AUDIO_B, 0);
 		#endif
 		break;
-	
+
 		#if(_VIDEO_TV_SUPPORT)
-		case _SOURCE_VIDEO_TV:        
+		case _SOURCE_VIDEO_TV:
 		#if(AUDIO_TYPE == _AUDIO_SC7313)
 		CSelect7313SoundChannel(0x00);
-		#elif(AUDIO_TYPE == _AUDIO_PWM)  
+		#elif(AUDIO_TYPE == _AUDIO_PWM)
 		_AUDIO_A = 0;
 		_AUDIO_B = 0;
 		#endif
@@ -198,7 +199,7 @@ BYTE CGetCurrSourcePos(void)
 }
 
 //==========================================================================
-//                          CSetCurrSource   
+//                          CSetCurrSource
 //==========================================================================
 void CSetCurrSource(const BYTE ucCurrSource)
 {
@@ -327,7 +328,7 @@ bit bChangeSource(void)
 void ChangeSourceHandler(void)
 {
 	#if(_VIDEO_TV_SUPPORT)
-	#if(_FM_DEVICE)  
+	#if(_FM_DEVICE)
     bFM = 0; // Close FM
 	#endif
 
@@ -344,7 +345,7 @@ void ChangeSourceHandler(void)
     {
         if (_SLEEP_STATE == ucCurrState)
             CPowerLVDSOn();
-                      
+
     	// close OSD first to avoid dirty screen.
     	COsdFxDisableOsd();
     	switch(_GET_INPUT_SOURCE())
@@ -357,7 +358,7 @@ void ChangeSourceHandler(void)
     			break;
 			#endif
 
-    		#if((_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON))			
+    		#if((_TMDS_SUPPORT == _ON) || (_HDMI_SUPPORT == _ON))
     		case _SOURCE_DVI:
             case _SOURCE_HDMI:
     			CVideoOutputDisable();
@@ -376,16 +377,16 @@ void ChangeSourceHandler(void)
     			break;
 			#endif
     	}
-       
+
     	COsdFxDisableOsd();
         ucOsdEventMsg = _CHANGE_SOURCE_MSG;
-/*    
+/*
         CModeResetMode();
     	CLR_SOURCE_AUTOCHANGE();
     	CEepromLoadBriConData();
     	CEepromLoadHueSatData();
     	CEepromSaveSystemData();
-    	CEepromSaveTvData();*/         
+    	CEepromSaveTvData();*/
     }
 }
 
@@ -394,7 +395,7 @@ void ChangeSourceHandler(void)
 //==========================================================================
 void CInitInputSource(void)
 {
-    switch(_GET_INPUT_SOURCE()) 
+    switch(_GET_INPUT_SOURCE())
     {
 	#if(_VGA_SUPPORT)
     case _SOURCE_VGA:
@@ -427,8 +428,8 @@ void CInitInputSource(void)
 
 	#if(_VIDEO_SCART_SUPPORT)
     case _SOURCE_VIDEO_SCART:
-        break;                  
-	#endif 
+        break;
+	#endif
 
 	#if(_HDMI_SUPPORT == _ON)
     case _SOURCE_HDMI:
@@ -439,8 +440,8 @@ void CInitInputSource(void)
     case _SOURCE_YPBPR:
         break;
 	#endif
-    }  
-    
+    }
+
     CInitSoundChannel(_GET_INPUT_SOURCE());
 
 	#if(_VIDEO_TV_SUPPORT)
@@ -455,6 +456,6 @@ void CInitInputSource(void)
     if (bSourceVideo())
         bDIstatus = 1;
     else
-        bDIstatus = 0; 
+        bDIstatus = 0;
 	#endif
 }

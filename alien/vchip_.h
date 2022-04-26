@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 /*=============================================================
  * Copyright (c)	  Realtek Semiconductor Corporation, 2005 *
  * All rights reserved. 									  *
@@ -202,4 +203,4 @@ void Vchip_InsertCharacterFunction(UINT8 data1, UINT8 data2); // Insert characte
 BIT Vchip_CheckBlocking(void);// blocking display
 BIT Vchip_NeedBlocking(void); // Compare rating
 #endif
-#endif 
+#endif

@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Mode.h No.0001
 // Update Note  :
@@ -35,13 +36,13 @@ RGB->YUV matrix : (CR9C[4] = 1, CR9C[2:1] = 00)
 	Cb = h10*R + h11*G + h12*B
 	Cr = h20*R + h21*G + h22*B
 
-	All ‘h’ coefficients are expressed as 2’s complement with 4-bit signed-extension, 2-bit integer	and 10-bit fractional number. (0x0400 means 1.0)
+	All ï¿½hï¿½ coefficients are expressed as 2ï¿½s complement with 4-bit signed-extension, 2-bit integer	and 10-bit fractional number. (0x0400 means 1.0)
 
 	When color conversion setting is YUV->RGB (CR9C[4]=0), h00, h10 and h20 is not effective(force to 1.0 internally).
 
 	Integer part is only effective for h02, h21. For other coefficients, integer part must be the same as signed- extension.
 
-	Coefficient Sequence (18-byte) : 
+	Coefficient Sequence (18-byte) :
 
 		h00 (High-byte), h00 (Low-byte),  h01 (High-byte), h01 (Low-byte),  h02 (High-byte), h02 (Low-byte),  h10 (High-byte), h10 (Low-byte),  h11 (High-byte),
 		h11 (Low-byte),  h12 (High-byte), h12 (Low-byte),  h20 (High-byte), h20 (Low-byte),  h21 (High-byte), h21 (Low-byte),  h22 (High-byte), h22 (Low-byte).
@@ -54,13 +55,13 @@ RGB->YUV matrix : (CR9C[4] = 1, CR9C[2:1] = 00)
 */
 
 //RGB -> YUV
-//RGB Source(OnSource601rgb)		
+//RGB Source(OnSource601rgb)
 //REG 9C=0x11
 //m_M11 = +0.2990 ;	m_M21 = -0.1687 ;	 m_M31 = +0.5000 ;
 //m_M12 = +0.5870 ;	m_M22 = -0.3313 ;	 m_M32 = -0.4187 ;
 //m_M13 = +0.1140 ;	m_M23 = +0.5000 ;	 m_M33 = -0.0813 ;
-//M11 = 0x01,0x32 	//M12 = 0x02,0x59 	//M13 = 0x00,0x74 
-//M21 = 0xFF,0x54 	//M22 = 0xFE,0xAD 	//M23 = 0x02,0x00 
+//M11 = 0x01,0x32 	//M12 = 0x02,0x59 	//M13 = 0x00,0x74
+//M21 = 0xFF,0x54 	//M22 = 0xFE,0xAD 	//M23 = 0x02,0x00
 //M31 = 0x02,0x00 	//M32 = 0xFE,0x54 	//M33 = 0xFF,0xAD
 
 /*
@@ -71,11 +72,11 @@ RGB->YUV matrix : (CR9C[4] = 1, CR9C[2:1] = 00)
 */
 
 BYTE code tRGB2YUV601_TABLE_FOR_RGB_SOURCE[] =
-{                   
+{
 //20080114***
 #if 0
 
-	4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,           0x00,	//reset data port addr to 0. 
+	4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,           0x00,	//reset data port addr to 0.
 	4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,           0x08,	//enable YVU/RGB coeff access
 	21, _NON_AUTOINC,   _YUV_RGB_COEF_DATA_9D,      0x01,0x32,0x02,0x59,0x00,0x74,
 													0xFF,0x54,0xFE,0xAD,0x02,0x00,
@@ -89,37 +90,37 @@ BYTE code tRGB2YUV601_TABLE_FOR_RGB_SOURCE[] =
                                                     0xFF,0x53,0xFE,0xAD,0x02,0x00,
                                                     0x02,0x00,0xFE,0x53,0xFF,0xAD,
     4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,           0x17,
-	
+
 #endif
 //20080114###
     _END
 };
 
-//RGB Source(OnSource709rgb)		
+//RGB Source(OnSource709rgb)
 //REG 9C=0x11
-//m_M11 = 0.2974;	m_M21 = -0.1690;	m_M31 = 0.5000 ;	
-//m_M12 = 0.5897;	m_M22 = -0.3310;	m_M32 = -0.4188;	
+//m_M11 = 0.2974;	m_M21 = -0.1690;	m_M31 = 0.5000 ;
+//m_M12 = 0.5897;	m_M22 = -0.3310;	m_M32 = -0.4188;
 //m_M13 = 0.1129;	m_M23 = 0.5000;		m_M33 = -0.0812;
-//M11 = 0x01,0x30	//M12 = 0x02,0x5B	//M13 = 0x00,0x73 
-//M21 = 0xFF,0x53 	//M22 = 0xFE,0xAE 	//M23 = 0x01,0xFF 
+//M11 = 0x01,0x30	//M12 = 0x02,0x5B	//M13 = 0x00,0x73
+//M21 = 0xFF,0x53 	//M22 = 0xFE,0xAE 	//M23 = 0x01,0xFF
 //M31 = 0x02,0x00 	//M32 = 0xFE,0x54 	//M33 = 0xFF,0xAD
 
 /*
-//m_M11 = 0.2215;	m_M21 = -0.1145;	m_M31 = 0.5016 ;	
-//m_M12 = 0.7154;	m_M22 = -0.3855;	m_M32 = -0.4556;	
+//m_M11 = 0.2215;	m_M21 = -0.1145;	m_M31 = 0.5016 ;
+//m_M12 = 0.7154;	m_M22 = -0.3855;	m_M32 = -0.4556;
 //m_M13 = 0.0721;	m_M23 = 0.5000;		m_M33 = -0.0459;
-//M11 = 0x01,0x30	//M12 = 0x02,0x5B	//M13 = 0x00,0x73 
-//M21 = 0xFF,0x53 	//M22 = 0xFE,0xAE 	//M23 = 0x01,0xFF 
+//M11 = 0x01,0x30	//M12 = 0x02,0x5B	//M13 = 0x00,0x73
+//M21 = 0xFF,0x53 	//M22 = 0xFE,0xAE 	//M23 = 0x01,0xFF
 //M31 = 0x02,0x00 	//M32 = 0xFE,0x54 	//M33 = 0xFF,0xAD
 
     Y'= 0.2215*R' + 0.7154*G' + 0.0721*B'
     Cb=-0.1145*R' - 0.3855*G' + 0.5000*B'
-    Cr= 0.5016*R' - 0.4556*G' - 0.0459*B'  
+    Cr= 0.5016*R' - 0.4556*G' - 0.0459*B'
 */
 
 BYTE code tRGB2YUV709_TABLE_FOR_RGB_SOURCE[] =
 {
-	4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,             0x00,	//reset data port addr to 0. 
+	4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,             0x00,	//reset data port addr to 0.
 	4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,             0x08,	//enable YVU/RGB coeff access
 	//21, _NON_AUTOINC,   _YUV_RGB_COEF_DATA_9D,        0x01,0x30,0x02,0x5B,0x00,0x73,
 	//												  0xFF,0x53,0xFE,0xAE,0x01,0xFF,
@@ -131,19 +132,19 @@ BYTE code tRGB2YUV709_TABLE_FOR_RGB_SOURCE[] =
     _END
 };
 
-	//!RGB Source(OnSource601rgb)		
+	//!RGB Source(OnSource601rgb)
 	//REG 9C = 0x00
 BYTE code tRGB2YUV601_TABLE_FOR_NON_RGB_SOURCE[] =
 {
-	4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,             0x00,	//disable RGB->YUV conv 
+	4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,             0x00,	//disable RGB->YUV conv
     _END
 };
 
-	//!RGB Source(OnSource709rgb)		
+	//!RGB Source(OnSource709rgb)
 	//REG 9C = 0x00
 BYTE code tRGB2YUV709_TABLE_FOR_NON_RGB_SOURCE[] =
 {
-	4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,             0x00,	//disable RGB->YUV conv 
+	4,  _NON_AUTOINC,   _YUV2RGB_CTRL_9C,             0x00,	//disable RGB->YUV conv
     _END
 };
 
@@ -155,19 +156,19 @@ BYTE code tRGB2YUV709_TABLE_FOR_NON_RGB_SOURCE[] =
  K13: U(11, 10) 11 bits, 1 bit integer and 10-bit fractional bits (Default: 0x048Fh)
  K22, K23: U(10, 10) 10 bits, all fractional bits (Default: K22: 0x0194h, K23: 0x0252h)
  K32: U(12, 10) 12 bits, 2 bit integer and 10-bit fractional bits (Default: 0x0820h)
- K11’: S(15,4)
+ K11ï¿½: S(15,4)
  Roffset, Goffset, Boffset: S(14,4) 14 bits, 10 bit signed integer and 4-bit fractional bits. (Default: 0x000h)
- K13’: S(15,4)
- K22’, K23’: S(11,2)
- K32’: S(13,2)
+ K13ï¿½: S(15,4)
+ K22ï¿½, K23ï¿½: S(11,2)
+ K32ï¿½: S(13,2)
  Rgain, Ggain, Bgain: U(10, 9) 10bits, 1 bit integer and 9-bit fractional bits. (Default: 0x0200h)
 
 */
 
 //YUV->RGB
 	//VGA source
-	//page7 0xc0(2) = 0 & 0xc0(3) = 1	 
-	//for 601: 
+	//page7 0xc0(2) = 0 & 0xc0(3) = 1
+	//for 601:
 	//0x04, 0x00, // k11
 	//0x05, 0x9B, // k13
 	//0x01, 0x60, // k22
@@ -186,7 +187,7 @@ BYTE code tRGB2YUV709_TABLE_FOR_NON_RGB_SOURCE[] =
 BYTE code tYUV2RGB601_TABLE_FOR_RGB_SOURCE[] =
 {
 //20080114***
-#if 1 
+#if 1
     4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGE7,
     4,  _NON_AUTOINC,   _P7_YUV2RGB_CTRL_BF,        	0x02,		//enable YUV->RGB coeff access
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,         	0x0C,0x04,	//K11 MSB
@@ -200,11 +201,11 @@ BYTE code tYUV2RGB601_TABLE_FOR_RGB_SOURCE[] =
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0x8C,0x07,	//K32 MSB
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0x9C,0x16,	//K32 LSB
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xAC,0x00,	//ROffset MSB
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xBC,0x00,	//ROffset LSB	
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xBC,0x00,	//ROffset LSB
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xCC,0x00,	//GOffset MSB
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xDC,0x00,	//GOffset LSB	
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xEC,0x00,	//BOffset MSB	
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xFC,0x00,	//GOffset LSB	
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xDC,0x00,	//GOffset LSB
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xEC,0x00,	//BOffset MSB
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xFC,0x00,	//GOffset LSB
     4,  _NON_AUTOINC,   _P7_YUV2RGB_ACCESS_C0,      	0x08,
     4,  _NON_AUTOINC,   _P7_YUV2RGB_CTRL_BF,           	0x01,		//enable YUV->RGB conv
  #else
@@ -236,7 +237,7 @@ BYTE code tYUV2RGB601_TABLE_FOR_RGB_SOURCE[] =
 BYTE code tYUV2RGB601_TABLE_FOR_DVI_SOURCE[] =
 {
 //20080114***
-#if 0 
+#if 0
     4,  _NON_AUTOINC,   _PAGE_SELECT_9F,                _PAGE7,
     4,  _NON_AUTOINC,   _P7_YUV2RGB_CTRL_BF,        	0x02,				//enable YUV->RGB coeff access
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,         	0x0C,0x04,	//K11 MSB
@@ -250,11 +251,11 @@ BYTE code tYUV2RGB601_TABLE_FOR_DVI_SOURCE[] =
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0x8C,0x07,	//K32 MSB
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0x9C,0x16,	//K32 LSB
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xAC,0x00,	//ROffset MSB
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xBC,0x00,	//ROffset LSB	
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xBC,0x00,	//ROffset LSB
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xCC,0x00,	//GOffset MSB
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xDC,0x00,	//GOffset LSB	
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xEC,0x00,	//BOffset MSB	
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xFC,0x00,	//GOffset LSB	
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xDC,0x00,	//GOffset LSB
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xEC,0x00,	//BOffset MSB
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xFC,0x00,	//GOffset LSB
     4,  _NON_AUTOINC,   _P7_YUV2RGB_ACCESS_C0,     		0x0C,
     4,  _NON_AUTOINC,   _P7_YUV2RGB_CTRL_BF,           	0x01,		//enable YUV->RGB conv
  #else
@@ -352,11 +353,11 @@ BYTE code tYUV2RGB709_TABLE_FOR_NON_RGB_SOURCE[] =
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0x8C,0x07,	//K32 MSB
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0x9C,0x6C,	//K32 LSB
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xAC,0x00,	//ROffset MSB
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xBC,0x00,	//ROffset LSB	
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xBC,0x00,	//ROffset LSB
     5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xCC,0x00,	//GOffset MSB
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xDC,0x00,	//GOffset LSB	
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xEC,0x00,	//BOffset MSB	
-    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xFC,0x00,	//GOffset LSB	
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xDC,0x00,	//GOffset LSB
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xEC,0x00,	//BOffset MSB
+    5,  _AUTOINC,       _P7_YUV2RGB_ACCESS_C0,          0xFC,0x00,	//GOffset LSB
     4,  _NON_AUTOINC,   _P7_YUV2RGB_ACCESS_C0,      	0x0C,
     4,  _NON_AUTOINC,   _P7_YUV2RGB_CTRL_BF,			0x07,				//enable YUV->RGB conv
     _END
@@ -557,4 +558,3 @@ extern void CAccAdjust (BYTE mode);
 
 
 //----------------------------------------------------------------------------------------------------
-

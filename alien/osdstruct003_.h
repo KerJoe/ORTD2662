@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 #if(_OSD_TYPE == _OSD003)
 
 
@@ -7,10 +8,10 @@ typedef bit (*funcpEnable)(void);
 
 
 
-typedef enum 
+typedef enum
 {
     _NONE_MSG,
-    
+
     // system osd event begin
     _SHOW_NOSIGNAL_MSG,
     _SHOW_NOCABLE_MSG,
@@ -30,8 +31,8 @@ typedef enum
     _CHANGE_SOURCE_MSG,
 
     // system osd event end
-    
-    
+
+
     _OE_USER_CMD,
     // user osd event begin
     _OE_MENU_NEXT,
@@ -74,18 +75,18 @@ typedef enum
 #define _DISABLE_NOT_SHOW				_BIT1
 #define _KEYMAP_EN_IN_NOSIGNAL			_BIT2
 
-typedef struct 
+typedef struct
 {
-    BYTE Option;                            
-    SKeyToOsdEvent *KeyMsgToOsdEvnet;       // 可以为NULL
-    funcpProc Proc;                         // 可以为NULL
-    funcpEnable Enable;                     // 不能为NULL,因为调用的地方多.如果为空要增加很多代码    
+    BYTE Option;
+    SKeyToOsdEvent *KeyMsgToOsdEvnet;       // 锟斤拷锟斤拷为NULL
+    funcpProc Proc;                         // 锟斤拷锟斤拷为NULL
+    funcpEnable Enable;                     // 锟斤拷锟斤拷为NULL,锟斤拷为锟斤拷锟矫的地凤拷锟斤拷.锟斤拷锟轿拷锟揭拷锟斤拷雍芏锟斤拷锟斤拷
 }SMenuItem;
 //------------------------------------------------------
 
-typedef struct 
+typedef struct
 {
-    BYTE code *Font;		//Font 
+    BYTE code *Font;		//Font
 	BYTE Width;				//Width
 }STitle;
 //------------------------------------------------------
@@ -93,4 +94,3 @@ typedef struct
 
 
 #endif		//#if(_OSD_TYPE == _OSD003)
-

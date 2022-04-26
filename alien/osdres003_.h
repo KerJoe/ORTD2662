@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 #if(_OSD_TYPE == _OSD003)
 
 
@@ -16,23 +17,23 @@ extern BYTE code tPopupMenuWindowStyle[];
 extern BYTE code tColorIco_Normal[];
 extern BYTE code tColorIco_Select[];
 extern BYTE code tColorIco_Disable[];
-      
+
 extern BYTE code tAdjustIco_Normal[];
 extern BYTE code tAdjustIco_Select[];
 extern BYTE code tAdjustIco_Disable[];
-       
+
 extern BYTE code tOsdIco_Normal[];
 extern BYTE code tOsdIco_Select[];
 extern BYTE code tOsdIco_Disable[];
-     
+
 extern BYTE code tTVIco_Normal[];
 extern BYTE code tTVIco_Select[];
 extern BYTE code tTVIco_Disable[];
-      
+
 extern BYTE code tFuncIco_Normal[];
 extern BYTE code tFuncIco_Select[];
 extern BYTE code tFuncIco_Disable[];
-    
+
 extern BYTE code tSoundIco_Normal[];
 extern BYTE code tSoundIco_Select[];
 extern BYTE code tSoundIco_Disable[];

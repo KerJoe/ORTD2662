@@ -1,3 +1,4 @@
+#include "alien/global_.h"
 #define _UART_SND_EN            _OFF
 
 
@@ -42,7 +43,7 @@ void CUartSendString(char* String);
 void CUartFormatSendByte(BYTE Value);
 void CUartFormatSendWord(WORD Value);
 void CUartFormatSendDWord(DWORD Value);
-   
+
 void CUartSendWord(WORD Value);
 void CUartPrintf(char *str,WORD Value);
 void CUartHex(BYTE Value);
