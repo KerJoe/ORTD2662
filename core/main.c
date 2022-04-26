@@ -33,5 +33,5 @@ void main()
 
 #   ifdef __SDCC
     while(1);
-#   endif    
+#   endif
 }

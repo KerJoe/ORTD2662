@@ -89,7 +89,7 @@ void ScalerWritePortBit(uint8_t dataPort, uint8_t address, uint8_t bitPosition, 
 {
     ScalerWritePortByte(dataPort, address, InsertBits8(ScalerReadPortByte(dataPort, address), bitPosition, 1, bit));
 }
-#include <unistd.h>
+
 void ScalerWriteTable(const uint8_t table[])
 {
 #   define TABLE_DATA_SIZE     (*(table + DATA_SIZE_INDEX))
@@ -103,8 +103,8 @@ void ScalerWriteTable(const uint8_t table[])
 
         XSFRWriteByte(SCALER_ADDRESS, TABLE_BASE_ADDRESS);
         for (uint16_t i = 0; i < TABLE_DATA_SIZE; i++)
-            XSFRWriteByte(SCALER_DATA, TABLE_DATA(i));            
+            XSFRWriteByte(SCALER_DATA, TABLE_DATA(i));
 
         table = table + 3 + TABLE_DATA_SIZE;
-    }    
+    }
 }

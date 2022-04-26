@@ -1,7 +1,9 @@
 ifeq ($(OS),Windows_NT) # Windows tools
-RMDIR = -cmd /C rd /S /Q # Ignore not found error
+RMDIR = -cmd /C rd /S /Q # Ignore "cannot find the file" error
+EXEC = .exe
 else # POSIX tools
 RMDIR = rm -r
+EXEC =
 endif
 
 # Add all subdirectories 1 level deep into make search path
@@ -23,12 +25,12 @@ NATIVE_OUTPUTDIR = output_native
 NATIVE_OBJFILES := $(addprefix $(NATIVE_OUTPUTDIR)/, $(notdir $(SRCFILES:.c=.o)))
 NATIVE_DFILES   := $(addprefix $(NATIVE_OUTPUTDIR)/, $(notdir $(SRCFILES:.c=.d)))
 
-native: $(NATIVE_OUTPUTDIR) $(NATIVE_OUTPUTDIR)/native
+native: $(NATIVE_OUTPUTDIR) $(NATIVE_OUTPUTDIR)/native$(EXEC)
 
 $(NATIVE_OUTPUTDIR):
 	mkdir $(NATIVE_OUTPUTDIR)
 
-$(NATIVE_OUTPUTDIR)/native: $(NATIVE_OBJFILES)
+$(NATIVE_OUTPUTDIR)/native$(EXEC): $(NATIVE_OBJFILES)
 	$(NATIVE_CC) $^ $(NATIVE_CFLAGS) $(NATIVE_LDFLAGS) -o $@
 
 $(NATIVE_OUTPUTDIR)/%.o: %.c
@@ -68,6 +70,6 @@ clean:
 	$(RMDIR) $(NATIVE_OUTPUTDIR)
 	$(RMDIR) $(SDCC_OUTPUTDIR)
 
-# Include dependency files
+# Include dependency target files
 -include $(NATIVE_DFILES)
 -include $(SDCC_DFILES)

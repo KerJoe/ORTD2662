@@ -38,7 +38,7 @@ void UploadEDID(uint8_t ddcNumber, uint8_t* data)
             case 0: XSFRWriteByte(DDC1_INDEX, i); XSFRWriteByte(DDC1_DATA, data[i]); break;
             case 1: XSFRWriteByte(DDC2_INDEX, i); XSFRWriteByte(DDC2_DATA, data[i]); break;
             case 2: XSFRWriteByte(DDC3_INDEX, i); XSFRWriteByte(DDC3_DATA, data[i]); break;
-        }        
+        }
     }
 #   endif
     // Enable DDC access to EDID
