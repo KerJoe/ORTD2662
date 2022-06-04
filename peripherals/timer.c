@@ -5,6 +5,7 @@
 #include "peripherals/pins.h"
 
 #include "core/main.h"
+#include "core/misc.h"
 #include "core/debug.h"
 
 typedef struct
@@ -29,7 +30,7 @@ void delayMS(uint32_t ms)
     if (ms == 0) return;
     delayTime = ms * 10;
     delayActive = 1;
-    while (delayActive) WDT_CONTROL = (1 << 6);
+    while (delayActive) FeedWatchdog();
 }
 
 void SysTimerIRQ() __interrupt(1) __naked

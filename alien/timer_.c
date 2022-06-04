@@ -270,14 +270,16 @@ bit CTimerWaitForEvent(BYTE ucEvent)
 
     do
     {
-        if(bNotifyTimer0Int)
+        delayMS(30);
+        /*if(bNotifyTimer0Int)
         {
             bNotifyTimer0Int  = _FALSE;
             if(--timeoutcnt)
                 ;//TR0 = _ON;
-        }
+        }*/
         CScalerRead(_STATUS1_03, 1, &temp, _NON_AUTOINC);
         temp &= ucEvent;
+        timeoutcnt = 0;
     }
     while((temp == 0) && (timeoutcnt != 0));
 

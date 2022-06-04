@@ -35,7 +35,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/include/python3.9"
+                "/usr/include/python3.10"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
@@ -47,13 +47,13 @@
             "name": "MinGW",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/MinGW/include/python310"
+                "C:/Tools/msys64/mingw32/include/python3.9"
             ],
             "defines": [],
-            "compilerPath": "C:/MinGW/bin/gcc",
+            "compilerPath": "C:/Tools/msys64/mingw32/bin/gcc",
             "cStandard": "gnu17",
             "cppStandard": "gnu++17",
-            "intelliSenseMode": "linux-gcc-x64"
+            "intelliSenseMode": "linux-gcc-x86"
         }
     ],
     "version": 4

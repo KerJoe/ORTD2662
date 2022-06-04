@@ -2,8 +2,9 @@
 // NOTE: XSFRWriteByte and XSFRReadByte declarations are in xsfr.h
 #ifndef __SDCC
 
-#define RTDMULTIPROG_PATH "/home/misha/Documents/Projects/RTD2662/RTDMultiProg"
-#define INTERFACE   "mcp2221_c"
+#if 0
+#define RTDMULTIPROG_PATH "../RTDMultiProg"
+#define INTERFACE   "i2cdev"
 #define DEVICE      0
 #define SETTINGS    ""
 
@@ -80,16 +81,72 @@ int __attribute__ ((constructor)) begin_i2c_native_iface()
 }
 
 int __attribute__ ((destructor)) end_i2c_native_iface()
-{    
+{
     XSFRWriteByte(0xEE, 0x02);
     XSFRWriteByte(0x6F, 0x01);
 
     PyObject* result = PyObject_CallMethod(pI2C, "deinit_i2c", ""); CHECK(result)
     Py_XDECREF(result);
 
-    Py_XDECREF(pI2C);    
-    //Py_Finalize(); // HACK: Avoid random segfault for mcp2221 and mcp2221_c
+    Py_XDECREF(pI2C);
+    Py_Finalize();
 
     return 0;
 }
+#else
+
+#include <sys/ioctl.h>
+#include <stdint.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+#define DEVICE "0"
+
+// Controller's address on I2C bus
+#define RTD_ISP_ADR         0x4A
+#define RTD_ISP_AUTOINC_ADR (RTD_ISP_ADR | 1)
+
+int fi2c;
+#define I2C_SLAVE 0x0703
+
+
+void XSFRWriteByte(uint8_t address, uint8_t data)
+{
+    ioctl(fi2c, I2C_SLAVE, RTD_ISP_ADR);
+    uint8_t buf[] = { address, data };
+    write(fi2c, &buf, 2);
+}
+
+uint8_t XSFRReadByte(uint8_t address)
+{
+    ioctl(fi2c, I2C_SLAVE, RTD_ISP_ADR);
+    write(fi2c, &address, 1);
+    uint8_t data;
+    read(fi2c, &data, 1);
+    return data;
+}
+
+
+int __attribute__ ((constructor)) begin_i2c_native_iface()
+{
+    fi2c = open("/dev/i2c-"DEVICE, O_RDWR);
+
+    XSFRWriteByte(0xEE, 0x02);
+    XSFRWriteByte(0x6F, 0x80);
+
+    return 0;
+}
+
+int __attribute__ ((destructor)) end_i2c_native_iface()
+{
+    XSFRWriteByte(0xEE, 0x02);
+    XSFRWriteByte(0x6F, 0x01);
+
+    close(fi2c);
+
+    return 0;
+}
+
+#endif
+
 #endif // #ifndef __SDCC

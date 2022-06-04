@@ -20,16 +20,16 @@ uint8_t ScalerReadByte(uint8_t address)
     return XSFRReadByte(SCALER_DATA);
 }
 
-void ScalerWriteBytes(uint8_t address, uint8_t data[], uint16_t count)
+void ScalerWriteBytes(uint8_t address, uint8_t *data, uint16_t count)
 {
-    for (uint16_t i = address; i < address + count; i++)
-        ScalerWriteByte(i, data[i]);
+    for (uint16_t i = 0; i < count; i++)
+        ScalerWriteByte(address, data[i]);
 }
 
-void ScalerReadBytes(uint8_t address, uint8_t data[], uint16_t count)
+void ScalerReadBytes(uint8_t address, uint8_t *data, uint16_t count)
 {
-    for (uint16_t i = address; i < address + count; i++)
-        data[i] = ScalerReadByte(i);
+    for (uint16_t i = 0; i < count; i++)
+        data[i] = ScalerReadByte(address);
 }
 
 void ScalerWriteBits(uint8_t address, uint8_t bitsPosition, uint8_t bitsLength, uint8_t bits)
@@ -64,19 +64,19 @@ uint8_t ScalerReadPortByte(uint8_t dataPort, uint8_t address)
     return ScalerReadByte(dataPort);
 }
 
-void ScalerWritePortBytes(uint8_t dataPort, uint8_t address, uint8_t data[], uint16_t count)
+void ScalerWritePortBytes(uint8_t dataPort, uint8_t address, uint8_t* data, uint16_t count)
 {
     ScalerWriteByte(dataPort - 1, address);
     EnableScalerAutoIncrement(1);
-    for (uint16_t i = address; i < address + count; i++)
+    for (uint16_t i = 0; i < count; i++)
         ScalerWriteByte(dataPort, data[i]);
 }
 
-void ScalerReadPortBytes(uint8_t dataPort, uint8_t address, uint8_t data[], uint16_t count)
+void ScalerReadPortBytes(uint8_t dataPort, uint8_t address, uint8_t* data, uint16_t count)
 {
     ScalerWriteByte(dataPort - 1, address);
     EnableScalerAutoIncrement(1);
-    for (uint16_t i = address; i < address + count; i++)
+    for (uint16_t i = 0; i < count; i++)
         data[i] = ScalerReadByte(dataPort);
 }
 

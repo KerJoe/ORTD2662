@@ -19,6 +19,5 @@
                 { "text": "-gdb-set output-radix 16", "ignoreFailures": true }
             ]
         }
-
     ]
 }

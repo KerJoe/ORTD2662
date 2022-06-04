@@ -1,8 +1,9 @@
 ifeq ($(OS),Windows_NT) # Windows tools
+PATH:=C:/tools/msys64/mingw32/bin:${PATH}
 RMDIR = -cmd /C rd /S /Q # Ignore "cannot find the file" error
 EXEC = .exe
 else # POSIX tools
-RMDIR = rm -r
+RMDIR = rm -rf
 EXEC =
 endif
 
@@ -13,14 +14,23 @@ SRCFILES := $(wildcard ./*/*.c)
 # File that has the main() function
 MAINFILE := core/main.c
 #
-PROGRAMMER := python3 ../RTDMultiProg/rtdmultiprog.py -i mcp2221_c -w
+PROGRAMMER := python3 ../RTDMultiProg/rtdmultiprog.py -i i2cdev -d 0 -w
 
 
 # Native compiler
+ifeq ($(OS),Windows_NT) # Windows tools
+NATIVE_PKGCFG    =
 NATIVE_CC        = gcc
-NATIVE_CFLAGS 	 = -I. -MMD -g $(shell pkg-config --cflags python3-embed)
-NATIVE_LDFLAGS   = $(shell pkg-config --libs python3-embed)
+NATIVE_CFLAGS 	 = -I. -MMD -ggdb3
+NATIVE_LDFLAGS   = -Lcore -lch341
 NATIVE_OUTPUTDIR = output_native
+else
+NATIVE_PKGCFG    = pkg-config
+NATIVE_CC        = gcc
+NATIVE_CFLAGS 	 = -I. -MMD -ggdb3 $(shell $(NATIVE_PKGCFG) --cflags python3-embed)
+NATIVE_LDFLAGS   = $(shell $(NATIVE_PKGCFG) --libs python3-embed)
+NATIVE_OUTPUTDIR = output_native
+endif
 
 NATIVE_OBJFILES := $(addprefix $(NATIVE_OUTPUTDIR)/, $(notdir $(SRCFILES:.c=.o)))
 NATIVE_DFILES   := $(addprefix $(NATIVE_OUTPUTDIR)/, $(notdir $(SRCFILES:.c=.d)))

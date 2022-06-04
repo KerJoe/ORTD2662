@@ -29,19 +29,19 @@
 //
 
 // Panel pixel clock (aka data clock) (Hz)
-#define PANEL_DCLK          50250000UL
+#define PANEL_DCLK          51200000UL // NOTE:  for my display 40.8 - min; 67.2 - max
 
 // Horizontal timings
-#define PANEL_H_SYNC_WIDTH  54     // HPW
-#define PANEL_H_BACK_PORCH  129    // HBP
+#define PANEL_H_SYNC_WIDTH  64     // HPW
+#define PANEL_H_BACK_PORCH  96    // HBP
 #define PANEL_H_ACTIVE      1024   // HACT, AKA: Horizontal resolution
-#define PANEL_H_FRONT_PORCH 146    // HFP
+#define PANEL_H_FRONT_PORCH 160    // HFP
 
 // Vertical timings
 #define PANEL_V_SYNC_WIDTH  5      // VPW
 #define PANEL_V_BACK_PORCH  10     // VBP
 #define PANEL_V_ACTIVE      600    // VACT, AKA: Vertical resolution
-#define PANEL_V_FRONT_PORCH 5      // VFP
+#define PANEL_V_FRONT_PORCH 20      // VFP
 
 /**
  * Panel signal polarity and data order

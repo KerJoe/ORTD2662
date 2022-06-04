@@ -23,18 +23,18 @@ void SetDPLLFrequncy(uint32_t outFreq)
     // M_VALUE = FREQUENCY_OUTPUT * N_VALUE * (1 << OUTPUT_DIVIDER) / FREQUENCY_INPUT   * 2 (?)
 
     uint8_t dpllN, dpllDiv;
-    if (outFreq < 3000000)
+    if (outFreq < 3*MHZ)
         return;
-    else if (outFreq < 10000000)
-        {dpllN = 5; dpllDiv = 3; } // dpllDiv is 1/8
-    else if (outFreq < 40000000)
-        {dpllN = 5; dpllDiv = 1; } // dpllDiv is 1/2
-    else if (outFreq < 100000000)
-        {dpllN = 6; dpllDiv = 1; } // dpllDiv is 1/2
+    else if (outFreq < 10*MHZ)
+        { dpllN = 5;  dpllDiv = 3; } // dpllDiv is 1/8
+    else if (outFreq < 40*MHZ)
+        { dpllN = 5;  dpllDiv = 1; } // dpllDiv is 1/2
+    else if (outFreq < 100*MHZ)
+        { dpllN = 6;  dpllDiv = 1; } // dpllDiv is 1/2
     else
-        {dpllN = 12; dpllDiv = 0; } // dpllDiv is 1/1
+        { dpllN = 12; dpllDiv = 0; } // dpllDiv is 1/1
 
-    uint8_t dpllM = 2 * outFreq * dpllN * (1 << dpllDiv) / BOARD_FREQ;
+    uint8_t dpllM = 2 * outFreq * dpllN * (1 << dpllDiv) / RTD_FREQ;
 
     // Datasheet insists on keeping these ratios constant:
     // If LPF_Mode = 0 (dpllN <= 5), DPM / Ich = 5.11;
@@ -58,276 +58,45 @@ void SetDPLLFrequncy(uint32_t outFreq)
     ScalerWriteByte(S1_DPLL_CURRENT, Ich | (0b10 << 6)); // Set charge pump current and use default loop filter resistor
                                                          // 20K (LPF Mode = 0), 60K (LPF Mode = 1)
     ScalerWriteBit(S1_DPLL_WDT, 0, lpfMode);
-    ScalerWriteBit(S1_DPLL_WDT, 1, BIT_ONE); // Enable DPLL Frequncy Tunning
+    ScalerWriteBit(S1_DPLL_WDT, 1, 0b1); // Enable DPLL Frequncy Tunning
 
     // Frequency offset correction
-    uint32_t freq = BOARD_FREQ * dpllM / dpllN / 2 / (1 << dpllDiv);
+    uint32_t freq = RTD_FREQ * dpllM / dpllN / 2 / (1 << dpllDiv);
     uint32_t offset = (outFreq - freq) / (freq >> 15);
     offset = MIN(offset, 0x0FFF); // Cap offset at 0x0FFF
     ScalerWriteByte(S1_DCLK_FINE_TUNE_OFFSET_HI, offset >> 8);
     ScalerWriteByte(S1_DCLK_FINE_TUNE_OFFSET_LO, offset);
-    ScalerWriteBit(S1_DCLK_FINE_TUNE_OFFSET_HI, 4, BIT_ZERO); // DPLL frequency tuning is UP
-    ScalerWriteBit(S1_DCLK_SPREAD_SPECTRUM, 2, BIT_ONE); // Update internal offset values
-    ScalerWriteBit(S1_FIXED_LASTLINE_CONTROL, 0, BIT_ONE); // Enable DPLL Offset
-
-    //ScalerWriteByte(S_VDISP_CONTROL, 0xa3); // Display control, generator start
+    ScalerWriteBit(S1_DCLK_FINE_TUNE_OFFSET_HI, 4, 0b0); // DPLL frequency tuning is UP
+    ScalerWriteBit(S1_DCLK_SPREAD_SPECTRUM, 2, 0b1); // Update internal offset values
+    ScalerWriteBit(S1_FIXED_LASTLINE_CONTROL, 0, 0b1); // Enable DPLL Offset
 }
 
-#if 0
-BYTE CAdjustGetAPLLSetting(WORD usClock)
+// pixelClock - MHZ
+// linePixelCount - number of pixels (including sync) in a horizontal line
+int8_t SetAPLLFrequncy(uint32_t pixelClock, uint16_t linePixelCount)
 {
-    BYTE ucTemp[2];
-
-	usClock -= 1;
-
-    CScalerPageSelect(_PAGE1);
-    ucTemp[0] = ScalerReadByte(_P1_PLLDIV_H_B1);
-    ucTemp[1] = ScalerReadByte(_P1_PLLDIV_L_B2);
-
-	ucTemp[0] &= 0x0f;
-
-	if((ucTemp[0] != (BYTE)(usClock >> 8)) || (ucTemp[1] != (BYTE)(usClock & 0x00ff)))
-	{
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
-}
-#define	_G_VALUE_DIVIDER_0  4
-#define	_G_VALUE_DIVIDER_1  16
-#define	_G_VALUE_DIVIDER_2  64
-#define	_G_VALUE_DIVIDER_3  128
-#define	_G_VALUE_DIVIDER_4  256
-#define	_G_VALUE_DIVIDER_5  512
-#define _APLL_N_CODE                   			3    //default = 3
-WORD usPEValue = 120;
-void CAdjustAdcClock(WORD usClock, UINT16 IHF)
-{
-	DWORD pllclock, icode;
-	BYTE mcode;
-	SBYTE STemp;
-	WORD pcode;
-	BYTE vco_divider = 2;
-    BYTE pData[2];
-
-    if(0)
-        ;//CAdjustAPLLFastLock(usClock);
-    else if(0)
-        ;//CAdjustAdcClock_OSD(usClock);
-    else
-    {
-        //CAdjustEnableWatchDog(_WD_DV_TIMEOUT);
-        CScalerPageSelect(_PAGE1);
-/********************************************************
-Fvco : Frequency of APLL
-Fxtal : Frequency of Crystal
-IHF : Input Horizontal Frequency
-usClock : Divider number of input clock
-stModeInfo.IHFreq = 10 * IHF(in KHz)
-_RTD_XTAl : Defined crystal clock unit in KHz
-
-Fvco = Fxtal*(M + K/16)/N1 = IHF * usClock * vco_divider
-Assum N1 = 2
-(M + K/16) = IHF * usClock * N1 * vco_divider / Fxtal
-stModeInfo.IHFreq UINT in 100Hz
-*********************************************************/
-     	//ADC sampling clock, UNIT in KHz
-        pllclock = (DWORD)IHF * usClock / 10;
-    	vco_divider = pllclock < 100000 ? 4 : 2;
-        //Get (M + K/16) * 1024
-        pllclock  = ((pllclock * _APLL_N_CODE * vco_divider) << 10 ) / _RTD_XTAL;
-        CScalerPageSelect(_PAGE1);
-    	CScalerSetByte(_P1_PLL_DIV_CTRL_A0, 0x08);
-    	CScalerSetByte(_P1_DDS_MIX_2_B9, 0xff);
-    	CScalerSetByte(_P1_PLL_CRNT_AE, 0x65);
-     	CScalerSetBit(_P1_PLLDIV_H_B1, ~(_BIT6 | _BIT5 | _BIT4), (vco_divider == 2) ? (_BIT6 | _BIT5) : (_BIT6 | _BIT5 | _BIT4));
-    	//Set the divide number
-    	CScalerSetBit(_P1_PLLDIV_H_B1, 0xf0, (BYTE)(((usClock - 1) >> 8) & 0x0f));
-    	CScalerSetByte(_P1_PLLDIV_L_B2, (BYTE)((usClock - 1) & 0x00ff));
-        CAdjustGetAPLLSetting(usClock);
-        //Set N code
-    	CScalerSetBit(_P1_PLL_N_AD, 0xf8, ((_APLL_N_CODE - 2) & 0x07));
-        //Get M, K code, M + K/16 = pllclock / 1024
-    	mcode = pllclock >> 10; //M is the integer part
-        //CScalerSetByte(0x04,mcode );
-        //K is the fraction part quantized by 16
-    	STemp = ((DWORD)pllclock - ((DWORD)mcode << 10)) >> 6;
-    	//K is range from -8 ~ 7
-    	if(STemp>7)
-    	{
-    		mcode +=1;
-    		STemp -= 16;
-    	}
-    	else if(STemp<(-8))
-    	{
-    		mcode -=1;
-    		STemp += 16;
-    	}
-        //set M, N, K code
-       	CScalerSetByte(_P1_PLL_M_AC, (mcode - 3));
-    	CScalerSetBit(_P1_PLL_N_AD, 0x0f, (((STemp & 0x0f) << 4) | (_APLL_N_CODE - 2)));
-        CScalerSetByte(S1_PFD_CALIBRATED_RESULTS_HI, 0x80);
-        CTimerDelayXms(1);
-        //CScalerRead(0xA4, 2, pData, _AUTOINC);
-        pData[0] = ScalerReadByte(S1_PFD_CALIBRATED_RESULTS_HI);
-        pData[1] = ScalerReadByte(S1_PFD_CALIBRATED_RESULTS_LO);
-        usPEValue =  ( ((pData[0]&0x0F)<<8) | pData[1] );
-        usPEValue = 1000000/(usPEValue*(_RTD_XTAL/1000));   // unit : ps
-/****************************************************************************
-   	Formula :
-
-   	  I_gain       Ths                    PE(UNIT)                   1
-	--------- x  ------- = ------------------------------------ x  -----
-	   2^22        Tbck        Txclk x 16N/(16M +- K) x 1/16         8
-
-	  I_gain         Ths                      PE(UNIT)                   1
-	--------- x  ----------- = ------------------------------------ x  -----
-	   2^22       Tclk x N         Txclk x 16N/(16M +- K) x 1/16         8
-
-	           2^22 x PE_U x (16M +- K)        1
-	I_gain = ----------------------------- x -----
-	                     Ths                   8
-
-	    2^19 x PE_U x (16M +- K)
-	= -----------------------------
-	              Ths
-
-	= IHF x 2^19 x PE_U x (16M +- K)
-****************************************************************************/
-// (M + K/16) = pllclock / 1024
-// 16M + K = 16 * pllclock / 1024
-// 2^19 * 2^4 / 2^10 = 2^13
-// _PE_VALUE UNIT is ps, so result has to multiply 10^(-12)
-// stModeInfo.IHFreq/10 UNIT is KHz, so result has to multiply 10^2
-    /*
-    	icode = (DWORD)((stModeInfo.IHFreq) * usPEValue * pllclock) / (DWORD)1220702;
-    	icode &= 0x00007fff;
-    	CScalerSetByte(_P1_I_CODE_M_A1,(BYTE)(icode >> 8));
-    	CScalerSetByte(_P1_I_CODE_L_A2, (BYTE)icode);
-    	// Set the P code
-        pcode = (7 * icode * _RTD_XTAL / stModeInfo.IHFreq /_APLL_N_CODE) >> 7;
-    //    pcode = 0xC0;
-    //*/
-    ///*    whhsiao 20080227 update-start
-    	icode = (DWORD)((IHF) * usPEValue * pllclock) / (DWORD)1220703;
-        //icode = icode>>2;   // n=32
-        icode = icode>>6;   // n=512
-    	icode &= 0x00007fff;
-
-    	CScalerSetByte(_P1_I_CODE_M_A1,(BYTE)(icode >> 8));
-    	CScalerSetByte(_P1_I_CODE_L_A2, (BYTE)icode);
-
-    	// Set the P code
-        //pcode = (5 * icode * _RTD_XTAL / (stModeInfo.IHFreq/10) / _APLL_N_CODE ) >> 7;    // Total gain=(1+5)/32
-        pcode = (63 * icode * _RTD_XTAL / (IHF/10) / _APLL_N_CODE ) >> 7;    // Total gain=(1+63)/512
-    //    pcode = 0xC0;
-    //*/    whhsiao 20080227 update-end
-    	if(pcode > 255)
-    	{
-    		for(pData[0] = 9; pData[0] < 15; pData[0]++)
-    		{
-    			if((pcode >> pData[0]) == 0)
-    				break;
-    		}
-            switch(pData[0]-9)//yc 20080225
-            {
-                case 0:
-            		pcode = pcode / _G_VALUE_DIVIDER_0;
-                    break;
-                case 1:
-            		pcode = pcode / _G_VALUE_DIVIDER_1;
-                    break;
-                case 2:
-            		pcode = pcode / _G_VALUE_DIVIDER_2;
-                    break;
-                case 3:
-            		pcode = pcode / _G_VALUE_DIVIDER_3;
-                    break;
-                case 4:
-            		pcode = pcode / _G_VALUE_DIVIDER_4;
-                    break;
-                case 5:
-            		pcode = pcode / _G_VALUE_DIVIDER_5;
-                    break;
-                default:
-                    break;
-            }
-    		//pcode = pcode / g_value_divider[(pData[0] - 9)];
-    		STemp = pData[0] - 7;
-    	}
-
-    	if(pcode==0)
-        pcode = 1;
-
-    	//g_value = 0x01;
-        CScalerSetByte(_P1_P_CODE_MAPPING_METHOD_B6, STemp << 2);
-
-        CScalerSetByte(_P1_DDS_MIX_2_B9, 0x05); //set the P_code_max
-        CScalerSetByte(_P1_DDS_MIX_3_BA, 0x1e);
-    	CScalerSetByte(_P1_P_CODE_A3, (BYTE)pcode);
-
-    	CScalerSetByte(_P1_PLLPHASE_CTRL1_B4, 0x00);
-
-        //CTimerWaitForEvent(_EVENT_IEN_STOP);
-        //CTimerWaitForEvent(_EVENT_IEN_STOP);
-
-        pData[0] = 32;
-        do
-        {
-            CScalerSetBit(_P1_PLLDIV_H_B1, 0xf0, (BYTE)(((usClock - 1) >> 8) & 0x0f));
-    	    CScalerSetByte(_P1_PLLDIV_L_B2, (BYTE)((usClock - 1) & 0x00ff));
-    	    CScalerSetByte(_P1_PLLPHASE_CTRL1_B4, 0x00);
-
-            //CTimerWaitForEvent(_EVENT_IEN_STOP);
-            //CTimerWaitForEvent(_EVENT_IEN_STOP);
-
-        }while(CAdjustGetAPLLSetting(usClock) && --pData[0]);
-
-    	//CPowerADCAPLLOn();
-
-
-        //CTimerWaitForEvent(_EVENT_IEN_STOP);
-        //CTimerWaitForEvent(_EVENT_IEN_STOP);
-        //CTimerWaitForEvent(_EVENT_IEN_STOP);
-
-        CAdjustGetAPLLSetting(usClock);
-
-        CScalerSetByte(_P1_FAST_PLL_CTRL_AA, 0x00);
-
-        //CMiscClearStatusRegister();
-
-    }
-}
-#endif
-
-void SetAPLLFrequncy(uint32_t pixelClock, uint16_t linePixelCount)
-{
-    linePixelCount -= 56;
     // FREQUENCY_OUTPUT = FREQUENCY_INPUT * (M_VALUE + K_VALUE / 16) / N_VALUE / (1 << OUTPUT_DIVIDER)
-    // I_CODE =
-    // P_CODE =
 
-    //       3 bit  8 bit  1 or 2
+    //       3 bit  8 bit  can be equal to 1 or 2
     uint8_t  apllN, apllM, apllDiv;
     int8_t   apllK; // 4 bit
-    uint16_t apllMK;
+    uint16_t apllMK; // Temporary value holding integer M and fractional K
     if (pixelClock < 25*MHZ)
         return;
     else if (pixelClock < 100*MHZ)
-        {apllN = 3; apllDiv = 2; } // dpllDiv is 1/2
+        { apllN = 3; apllDiv = 2; } // apllDiv is 1/4
     else if (pixelClock < 200*MHZ)
-        {apllN = 3; apllDiv = 2; } // dpllDiv is 1/4
+        { apllN = 3; apllDiv = 2; } // apllDiv is 1/4
     else
-        {apllN = 3; apllDiv = 2; } // dpllDiv is 1/4
+        { apllN = 3; apllDiv = 2; } // apllDiv is 1/4
 
-    apllMK = (pixelClock/KHZ) * apllN * (1 << apllDiv) * 16 / (BOARD_FREQ/KHZ); // Calculate (M_VALUE + K_VALUE / 16) // Multiply by 16, so as to not loose the fractional part
+    apllMK = (pixelClock/RTD_FREQ) * apllN * (1 << apllDiv) * 16; // Calculate (M_VALUE + K_VALUE / 16) // Multiply by 16, so as to not loose the fractional part
     apllM  = apllMK >> 4;     // Divide by 16 to get the integer part - M_VALUE
     apllK  = apllMK & 0b1111; // Get remainder of 16 to get fractional part - K_VALUE
     // Correct K range from [0;31] to [-16;15]
     apllK -= 16; // Integer part subtracted
     apllM += 1;  // Integer part added
+
     // Limit K between -8 and 7 // REF:RTD2660 datasheet, page 122, footnote 3 // TODO: Wrong explanation
     if (apllK > 7) // Simlar to converting 1 + 0.6 to 2 - 0.4
     {
@@ -342,105 +111,84 @@ void SetAPLLFrequncy(uint32_t pixelClock, uint16_t linePixelCount)
 
     ScalerWriteByte(S_PAGE_SELECT, 1);
 
-    ScalerWriteByte(0xAE, 0x65); // Set PLL current // TODO: Find actual DPM/Ich ratio
+    ScalerWriteBit (S1_PLL_WDT, 0, 0b0); // Power up the APLL
+
+    // TODO: Find actual DPM/Ich ratio
+    ScalerWriteBits(S1_PLL_CURRENT, 5, 3, 0b011);   // Set 23K filter resistor
+    ScalerWriteBits(S1_PLL_CURRENT, 0, 5, 0b00101); // Set 15uA charge pump current
 
     ScalerWriteBits(S1_PLL_N, 0, 3, apllN - 2); // Set N
     ScalerWriteByte(S1_PLL_M,       apllM - 3); // Set M
     ScalerWriteBits(S1_PLL_N, 4, 4, apllK);     // Set K
     ScalerWriteBit (S1_PLL_DIV_HI, 4, (1 << apllDiv)==4); // Set output divider
-    ScalerWriteByte(0xB4, 0x00); // Apply PLL output divider selection
+    ScalerWriteByte(S1_PLL_PHASE_CONTROL1, 0); // Apply output divider
 
     // Set ADC CLK divider
     ScalerWriteBits(S1_PLL_DIV_HI, 0, 4, (linePixelCount - 1) >> 8);
     ScalerWriteByte(S1_PLL_DIV_LO,       (linePixelCount - 1));
 
+    ScalerWriteBit (S_SYNC_SELECT, 6, 0b1); // HSYNC Type Detection: Automatic
 
-
-    // Measure Phase Error
     ScalerWriteBit(S1_PFD_CALIBRATED_RESULTS_HI, 7, 0b1); // Begin measurement
-    delayMS(1); // TODO: WHAT
-    uint16_t phaseError = ((ScalerReadByte(S1_PFD_CALIBRATED_RESULTS_HI) & 0x0F) << 8) | ScalerReadByte(S1_PFD_CALIBRATED_RESULTS_LO);
+    Poll(50, !ScalerReadBit(S1_PFD_CALIBRATED_RESULTS_HI, 7))
+    {
+        return -1;
+    }
+    uint16_t pfd = ((ScalerReadByte(S1_PFD_CALIBRATED_RESULTS_HI) & 0x0F) << 8) | ScalerReadByte(S1_PFD_CALIBRATED_RESULTS_LO);
 
+    uint32_t icode = ((pixelClock * 10 / linePixelCount) * pfd * (pixelClock/1000)) / 1220703;
+    icode = icode>>6;
+    icode &= 0x00007fff;
 
+    uint16_t pcode = (63 * icode * RTD_FREQ / (pixelClock / linePixelCount) / apllN ) >> 7;
+    uint8_t pmethod;
+    if(pcode > 255)
+    {
+        for(pmethod = 9; pmethod < 15; pmethod++)
+        {
+            if((pcode >> pmethod) == 0)
+                break;
+        }
+        #define	_G_VALUE_DIVIDER_0  4
+        #define	_G_VALUE_DIVIDER_1  16
+        #define	_G_VALUE_DIVIDER_2  64
+        #define	_G_VALUE_DIVIDER_3  128
+        #define	_G_VALUE_DIVIDER_4  256
+        #define	_G_VALUE_DIVIDER_5  512
+        switch(pmethod-9)
+        {
+            case 0:
+                pcode = pcode / _G_VALUE_DIVIDER_0;
+                break;
+            case 1:
+                pcode = pcode / _G_VALUE_DIVIDER_1;
+                break;
+            case 2:
+                pcode = pcode / _G_VALUE_DIVIDER_2;
+                break;
+            case 3:
+                pcode = pcode / _G_VALUE_DIVIDER_3;
+                break;
+            case 4:
+                pcode = pcode / _G_VALUE_DIVIDER_4;
+                break;
+            case 5:
+                pcode = pcode / _G_VALUE_DIVIDER_5;
+                break;
+            default:
+                break;
+        }
+        //pcode = pcode / g_value_divider[(pmethod - 9)];
+        pmethod = pmethod - 7;
+    }
+    if(pcode==0) pcode = 1;
+    pmethod = pmethod << 2;
 
-    // Calculate I, P, G values
+    ScalerWriteByte(S1_PCODE_MAPPING_METHOD, pmethod);
+    ScalerWriteByte(S1_PCODE, pcode);
+    ScalerWriteByte(S1_ICODE_HI, icode >> 8);
+    ScalerWriteByte(S1_ICODE_LO, icode);
 
-
-
-    ScalerWriteBit (S1_PLL_WDT, 0, 0); // Power up the APLL
-    //return;
-
-//ScalerWriteByte(0x49, 0x66); delayMS(1); // Select source
-ScalerWriteByte(0x47, 0x40); // HSYNC Type Detection Auto Run: Automatic
-
-//ScalerWriteByte(0x52, 0x22); delayMS(1); // Measure
-//ScalerWriteByte(0x52, 0x42); delayMS(1); // Update
-
-//ScalerWriteByte(0x58, 0x00); delayMS(1); // Start Measurement after Mode Detection Auto-mode
-
-
-// ScalerWriteByte(0x9F, 0x01);
-
-// ScalerWriteByte(0xAE, 0x65); // Set pll current // Keep Icp/DPM constant
-
-// ScalerWriteByte(0xAD, 0x21); // Set N
-// ScalerWriteByte(0xAC, 0x0E); // Set M
-// ScalerWriteByte(0xAD, 0xD1); // Set K
-
-//ScalerWriteByte(0xA4, 0x80); delayMS(1); // Start Callibration
-//ScalerWriteByte(0xA1, 0x00); delayMS(1); // Read PFD, stop callib
-
-ScalerWriteByte(0xA2, 0x09); // Set ICODE
-ScalerWriteByte(0xB6, 0x10); // G value 0
-ScalerWriteByte(0xB9, 0x05); // P CODE MAX
-ScalerWriteByte(0xBA, 0x1E); // P CODE MAX
-ScalerWriteByte(0xA3, 0x10); // P CODE
-//ScalerWriteByte(0x03, 0x00); delayMS(1); // CLEAR Status
-
-// ScalerWriteByte(0xB1, 0x73); // SET PLLDIV, Use LUT, Long path, ADC CLK=1/4 VCO CLK
-// ScalerWriteByte(0xB2, 0xE7); // SET PLLDIV
-// ScalerWriteByte(0xB4, 0x00); // Apply PLL divider selection (register 0xb1)
-
-//ScalerWriteByte(0x03, 0x00); delayMS(1); // CLEAR Status
-// ScalerWriteByte(0xAF, 0x08); // Set Watchdog, Start PLL
-
-
-
-    /*ScalerWriteByte(S_PAGE_SELECT, 1);
-    ScalerWriteBit (S1_PLL_WDT, 0, 0); // Power up the APLL
-
-    return;
-
-    ScalerWriteByte(S_PAGE_SELECT, 1);
-
-    ScalerWriteByte(S1_ICODE_HI, 0);
-    ScalerWriteByte(S1_ICODE_LO, 9);
-    ScalerWriteByte(S1_PCODE, 16);
-
-    ScalerWriteByte(S1_PLL_M, 15);
-    ScalerWriteByte(S1_PLL_N, 0xc1);
-    ScalerWriteByte(S1_PLL_CURRENT, 0x65);
-
-    ScalerWriteByte(S1_PLL_DIV_HI, 0x74);
-    ScalerWriteByte(S1_PLL_DIV_LO, 0x1f);
-
-    ScalerWriteByte(S1_PLL_PHASE_INTERPOLATION, 0x10);
-    ScalerWriteByte(S1_P_CODE_MAPPING_METHOD, 0x10);
-
-    ScalerWriteByte(S1_DDS_MIX1, 0x4d);
-    ScalerWriteByte(S1_DDS_MIX2, 0xff);
-    ScalerWriteByte(S1_DDS_MIX3, 0xff);
-
-    ScalerWriteByte(S_PAGE_SELECT, 1);
-    ScalerWriteBit (S1_PLL_WDT, 0, 0); // Power up the APLL*/
-}
-
-void SetVideoBrightness(uint8_t value)
-{
-    ScalerWriteBit(S_COLOR_CONTROL, 0, BIT_ONE);
-    ScalerWritePortByte(S_CB_PORT, 0x80, value);
-    ScalerWritePortByte(S_CB_PORT, 0x81, value);
-    ScalerWritePortByte(S_CB_PORT, 0x82, value);
 }
 
 void SetVideoContrast(uint8_t value)

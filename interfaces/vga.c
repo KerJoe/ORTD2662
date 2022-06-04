@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "config/board_config.h"
 
@@ -8,31 +9,10 @@
 #include "peripherals/timer.h"
 #include "scaler/scaler_tables.h"
 #include "scaler/scaler.h"
+#include "scaler/mode_tables.h"
 
 void InitVGA()
 {
-    #define WINDOW_HSTA 256-40
-    #define WINDOW_VSTA 27
-    #define WINDOW_HLEN 800
-    #define WINDOW_VLEN 600
-    #define WINDOW_HS_DELAY 0
-    #define WINDOW_VS_DELAY 0
-
-    ScalerWriteByte(S_IFW_HACT_STA_HI, (WINDOW_HSTA) >> 8);
-    ScalerWriteByte(S_IFW_HACT_STA_LO, WINDOW_HSTA);
-    ScalerWriteByte(S_IFW_HACT_LEN_HI, (WINDOW_HLEN) >> 8);
-    ScalerWriteByte(S_IFW_HACT_LEN_LO, WINDOW_HLEN);
-    ScalerWriteByte(S_IFW_VACT_STA_HI, (WINDOW_VSTA) >> 8);
-    ScalerWriteByte(S_IFW_VACT_STA_LO, WINDOW_VSTA);
-    ScalerWriteByte(S_IFW_VACT_LEN_HI, (WINDOW_VLEN) >> 8);
-    ScalerWriteByte(S_IFW_VACT_LEN_LO, WINDOW_VLEN);
-    ScalerWriteByte(S_IFW_HSYNC_DELAY, WINDOW_HS_DELAY);
-    ScalerWriteByte(S_IFW_VSYNC_DELAY, WINDOW_VS_DELAY);
-
-    ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRWL_BSU_HI, (((WINDOW_HLEN) >> 8) << 4) | ((WINDOW_VLEN) >> 8));
-    ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRW_BSU_LO,  (WINDOW_HLEN));
-    ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRL_BSU_LO,  (WINDOW_VLEN));
-
     ScalerWriteBit (S_VDISP_CONTROL, 3, 0b1); // Enable Frame sync
     ScalerWriteBit (S_VDISP_CONTROL, 5, 0b0); // Disable BG color
     ScalerWriteBits(S_VGIP_CONTROL, 2, 2, 0b00); // Input Format - Embedded ADC (ADC_HS)
@@ -40,6 +20,18 @@ void InitVGA()
 
     ScalerWriteByte(S_PAGE_SELECT, 0);
     ScalerWriteByte(S0_VADC_POWER, 0x0f); // Enable RGB and bandgap
+}
 
-    SetAPLLFrequncy(40000000UL, 1056);
+// Define maximum diviation for searching
+#define HOR_SEARCH_TOLERANCE 1000
+#define VER_SEARCH_TOLERANCE 2
+int8_t SearchMode(uint8_t HSPolarity, uint8_t VSPolarity, uint32_t HFreq, uint8_t VFreq)
+{
+    for (uint8_t i = 0; modeTable[i].HFreq != 0; i++) // modeTable[i].HFreq = 0 - End of array marker
+        if (HSPolarity == modeTable[i].HSPolarity &&
+            VSPolarity == modeTable[i].VSPolarity &&
+            abs(HFreq - modeTable[i].HFreq) < HOR_SEARCH_TOLERANCE &&
+            abs(VFreq - modeTable[i].VFreq) < VER_SEARCH_TOLERANCE)
+                return i;
+    return -1;
 }

@@ -83,7 +83,7 @@ int putchar(int character)
 {
     //SwitchToUART();
     SBUF = character;
-    while(!TI) WDT_CONTROL = (1 << 6);
+    while(!TI) FeedWatchdog();
     TI = 0;
     return character;
     //SwitchToI2C();
@@ -99,7 +99,7 @@ int putchar(int character)
 int getchar()
 {
     //SwitchToUART();
-    while(!RI) WDT_CONTROL = (1 << 6);
+    while(!RI) FeedWatchdog();
     int character = SBUF;
     RI = 0;
     return character;

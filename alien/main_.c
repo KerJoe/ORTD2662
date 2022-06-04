@@ -307,14 +307,14 @@ void main_(void)
     //_SET_INPUT_SOURCE(_SOURCE_HDMI);
 		_SET_INPUT_SOURCE(_SOURCE_VGA);
     //SET_POWERSTATUS();
-
-	    CScalerSetBit(_HOST_CTRL_01, ~_BIT0, _BIT0);
-    CTimerDelayXms(20);
-    CScalerSetBit(_HOST_CTRL_01, ~_BIT0, 0x00);
+    ucCurrState = 1;
+	//    CScalerSetBit(_HOST_CTRL_01, ~_BIT0, _BIT0);
+    //CTimerDelayXms(20);
+    //CScalerSetBit(_HOST_CTRL_01, ~_BIT0, 0x00);
 
 
 		//CScalerCodeW(ttSCALER_RESET_TABLE);
-		CScalerSetByte(_HOST_CTRL_01, 0x40);
+		//CScalerSetByte(_HOST_CTRL_01, 0x40);
 
 	//CAdjustDisableWatchDog(_WD_ALL);
 
@@ -324,13 +324,13 @@ void main_(void)
 
 
 
-	XSFRWriteByte(bLED1, _LED_OFF);
-	XSFRWriteByte(bLED2, _LED_OFF);
+	//XSFRWriteByte(bLED1, _LED_OFF);
+	//XSFRWriteByte(bLED2, _LED_OFF);
 
-	XSFRWriteByte(bHot_Plug, _HOT_PLUG_HI);
+	//XSFRWriteByte(bHot_Plug, _HOT_PLUG_HI);
 
-	XSFRWriteByte(bPANELPOWER, 1);
-	XSFRWriteByte(bLIGHTPOWER, 0);
+	//XSFRWriteByte(bPANELPOWER, 1);
+	//XSFRWriteByte(bLIGHTPOWER, 0);
 
 	//CTimerDelayXms(4000);
 
@@ -355,7 +355,7 @@ void main_(void)
 		//CSyncProcess();
 	//CScalerCodeW(tSCALER_POWERUP_INITIAL);
 		ucCurrState = _SEARCH_STATE;
-		printf("CALL 1\n",0);
+		/*printf("CALL 1\n",0);
 		CModeHandler();//CModeHandler();
 		printf("CALL 2\n",0);
 		CModeHandler();
@@ -364,10 +364,10 @@ void main_(void)
 		printf("CALL 4\n",0);
 		CModeHandler();
 		printf("CALL 5\n",0);
-		CModeHandler();
+		CModeHandler();*/
 		//printf("CALL 7\n",0);
 		//sCModeHandler();
-		while(fTest);
+		//while(fTest);
 
     do
 	{
@@ -377,7 +377,7 @@ void main_(void)
 
 		//CTimerHandler();
         //CKeyHandler();
-		printf("CALL %i\n",fTest++);
+		//printf("CALL %i\n",fTest++);
 		CModeHandler();
 		//COsdHandler();
 	}

@@ -106,7 +106,7 @@
 #define S_MEAS_VSYNC_PERIOD_HI                  0x54        // VSync Period Measured Result HByte
 #define S_MEAS_VSYNC_PERIOD_LO                  0x55        // VSync Period Measured Result LByte
 #define S_MEAS_HSYNC_VSYNC_HIGH_PERIOD_HI   	0x56        // HSync and VSync High Period Measured Results HByte
-#define S_MEAS_HSYNC_HIGH_PERIOD_LO          	0x57        // HSync High Period Measured Results LByte
+#define S_MEAS_HSYNC_VSYNC_HIGH_PERIOD_LO       0x57        // HSync High Period Measured Results LByte
 #define S_MEAS_HSYNC_VSYNC_HIGH_PERIOD_SELECT  	0x58        // HSync and VSync High Period Measured Select
 #define S_MEAS_ACT_REGION                 	    0x59        // Active Region Measured by Crystal Clock
 #define S_SYNC_TEST_MISC                     	0x5A        // Sync Test MISC Register
@@ -328,7 +328,7 @@
 #define S1_PLL_PHASE_CONTROL0              	    0xB3        // PLL Phase Control Register0
 #define S1_PLL_PHASE_CONTROL1              	    0xB4        // PLL Phase Control Register1
 #define S1_PLL_PHASE_INTERPOLATION     		    0xB5        // PLL Phase Interpolation
-#define S1_P_CODE_MAPPING_METHOD      		    0xB6        // P Code Mapping Method
+#define S1_PCODE_MAPPING_METHOD      		    0xB6        // P Code Mapping Method
 #define S1_PE_TRACKING_METHOD              	    0xB7        // PE Tracking Method
 #define S1_DDS_MIX1                       	    0xB8        // DDS Mix 1
 #define S1_DDS_MIX2                       	    0xB9        // DDS Mix 2

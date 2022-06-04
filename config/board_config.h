@@ -3,7 +3,7 @@
 #include "core/config_defines.h"
 
 
-#define BOARD_FREQ                      27000000UL
+#define RTD_FREQ                        27000000UL
 
 
 // GPIO Defintions

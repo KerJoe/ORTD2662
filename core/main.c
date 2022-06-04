@@ -5,6 +5,8 @@
 #include "config/misc_config.h"
 
 #include "scaler/scaler.h"
+#include "scaler/scaler_registers.h"
+#include "scaler/measure.h"
 
 #include "peripherals/pins.h"
 #include "peripherals/xsfr.h"
@@ -14,7 +16,11 @@
 
 void main()
 {
+#   ifdef __SDCC
     XSFRWriteByte(WDT_CONTROL, 0x00);
+    InitSysTimer();
+    EA = 1;
+#   endif
 
     SetGPIOShare(DISPLAY_POWER_ENABLE_PIN, PUSH_PULL_OUT);
     SetGPIO(DISPLAY_POWER_ENABLE_PIN, 1^!DISPLAY_POWER_ACTIVE_LEVEL);
@@ -27,11 +33,21 @@ void main()
     SetGPIO(MIRROR_VERTICAL_PIN, VER_MIRRROR);
 
     InitScaler();
-    SetOverlayColor(0xff, 0x00, 0xff);
+    SetOverlayColor(0xff, 0xff, 0x00);
 
-    InitHDMI(1);
+    SetCaptureWindow(216, 27, 800, 600, 0, 0);
+    InitVGA();
+    SetAPLLFrequncy(40000000UL, 1056);
+
+    ScalerWriteByte(S_SYNC_CONTROL, 0x06); // Select ADC Sync, Select SeperateHSync
+    MeasureSignal(0);
+    SetCaptureWindow(216, 27, 800, 600, 0, 0);
+    SetAPLLFrequncy(40000000UL, 1056);
+    ScaleUp(800, 600, 1024, 600);
 
 #   ifdef __SDCC
     while(1);
+#   else
+    getchar();
 #   endif
 }
