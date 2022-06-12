@@ -334,23 +334,23 @@ code PanelType Panel5 =
 	0x00,
 
 
-	40,         // Display Horizontal Start Position
+	64+96,      // Display Horizontal Start Position
 	1024,       // Display Horizontal Width
 
-	1452,       // Display Horizontal Total Clock Number in One Display Line
+	64+96+1024+160,       // Display Horizontal Total Clock Number in One Display Line
 
-	1452,       // Display Horizontal Total Clock Number in One Display Line for CVBS PAL
-	1380,       // Display Horizontal Total Clock Number in One Display Line for CVBS NTSC
+	64+96+1024+160,       // Display Horizontal Total Clock Number in One Display Line for CVBS PAL
+	64+96+1024+160,       // Display Horizontal Total Clock Number in One Display Line for CVBS NTSC
 
-	20,         // Display Vertical Start Position
+	5+10,         // Display Vertical Start Position
 	600,       // Display Vertical Height
 
-	702,       // Display Vertical Total Line Number in One Frame
+	5+10+600+20,       // Display Vertical Total Line Number in One Frame
 
-	16,         // Display H Sync Width
-	4,          // Display V Sync Height
+	64,         // Display H Sync Width
+	5,          // Display V Sync Height
 
-	104,         // Typical Pixel Clock in MHz
+	51,         // Typical Pixel Clock in MHz
 
 	1100,		// H Sync Max Freq Unit in 0.1 kHZ
 	100,		// H Sync Min Freq Unit in 0.1 kHZ

@@ -29,10 +29,10 @@ int8_t MeasureSignal(bool isDigital)
 {
     if (isDigital)
     {
-        ScalerWriteBit(S_SYNC_SELECT, 0, 0b1);
         // HFreq and VFreq can only be calculated in comparision to RTD_FREQ
         // Thus we need to measure them in analog mode
         MeasureSignal(false);
+        ScalerWriteBit(S_SYNC_SELECT, 0, 0b1);
     }
     else
         ScalerWriteBit(S_SYNC_SELECT, 0, 0b0);

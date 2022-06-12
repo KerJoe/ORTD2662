@@ -23,11 +23,11 @@ void SetDPLLFrequncy(uint32_t outFreq)
     // M_VALUE = FREQUENCY_OUTPUT * N_VALUE * (1 << OUTPUT_DIVIDER) / FREQUENCY_INPUT   * 2 (?)
 
     uint8_t dpllN, dpllDiv;
-    if (outFreq < 3*MHZ)
+    if (outFreq < 5*MHZ)
         return;
     else if (outFreq < 10*MHZ)
         { dpllN = 5;  dpllDiv = 3; } // dpllDiv is 1/8
-    else if (outFreq < 40*MHZ)
+    else if (outFreq < 50*MHZ)
         { dpllN = 5;  dpllDiv = 1; } // dpllDiv is 1/2
     else if (outFreq < 100*MHZ)
         { dpllN = 6;  dpllDiv = 1; } // dpllDiv is 1/2
@@ -81,16 +81,16 @@ int8_t SetAPLLFrequncy(uint32_t pixelClock, uint16_t linePixelCount)
     uint8_t  apllN, apllM, apllDiv;
     int8_t   apllK; // 4 bit
     uint16_t apllMK; // Temporary value holding integer M and fractional K
-    if (pixelClock < 25*MHZ)
+    if (pixelClock < 5*MHZ) // TODO: Check N codes
         return;
     else if (pixelClock < 100*MHZ)
-        { apllN = 3; apllDiv = 2; } // apllDiv is 1/4
+        { apllN = 3; apllDiv = 1; } // apllDiv is 1/2
     else if (pixelClock < 200*MHZ)
-        { apllN = 3; apllDiv = 2; } // apllDiv is 1/4
+        { apllN = 3; apllDiv = 1; } // apllDiv is 1/2
     else
-        { apllN = 3; apllDiv = 2; } // apllDiv is 1/4
+        { apllN = 3; apllDiv = 1; } // apllDiv is 1/2
 
-    apllMK = (pixelClock/RTD_FREQ) * apllN * (1 << apllDiv) * 16; // Calculate (M_VALUE + K_VALUE / 16) // Multiply by 16, so as to not loose the fractional part
+    apllMK = (pixelClock/KHZ) * apllN * (1 << apllDiv) * 16 / (RTD_FREQ/KHZ); // Calculate (M_VALUE + K_VALUE / 16) // Multiply by 16, so as not to loose the fractional part
     apllM  = apllMK >> 4;     // Divide by 16 to get the integer part - M_VALUE
     apllK  = apllMK & 0b1111; // Get remainder of 16 to get fractional part - K_VALUE
     // Correct K range from [0;31] to [-16;15]
@@ -184,6 +184,7 @@ int8_t SetAPLLFrequncy(uint32_t pixelClock, uint16_t linePixelCount)
     if(pcode==0) pcode = 1;
     pmethod = pmethod << 2;
 
+    ScalerWriteByte(S1_DDS_MIX2, 0xFF); // Clamp PLL Gain
     ScalerWriteByte(S1_PCODE_MAPPING_METHOD, pmethod);
     ScalerWriteByte(S1_PCODE, pcode);
     ScalerWriteByte(S1_ICODE_HI, icode >> 8);

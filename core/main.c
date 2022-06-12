@@ -14,6 +14,7 @@
 
 #include "interfaces/hdmi.h"
 
+#include "alien/struct_.h"
 void main()
 {
 #   ifdef __SDCC
@@ -34,16 +35,25 @@ void main()
 
     InitScaler();
     SetOverlayColor(0xff, 0xff, 0x00);
+    // InitVGA();
 
-    SetCaptureWindow(216, 27, 800, 600, 0, 0);
-    InitVGA();
-    SetAPLLFrequncy(40000000UL, 1056);
+    // ScalerWriteByte(S_SYNC_CONTROL, 0x06); // Select ADC Sync, Select SeperateHSync
+    // MeasureSignal(0);
+    // SetCaptureWindow(216, 27, 800, 600, 0, 0);
+    // SetAPLLFrequncy(40000000UL, 1056);
+    // ScaleUp(800, 600, 1024, 600);
+    // Magic formula Fdisplay = (InputHFreq)/DisplayHTotal*DisplayVTotal/InputVTotal
 
-    ScalerWriteByte(S_SYNC_CONTROL, 0x06); // Select ADC Sync, Select SeperateHSync
-    MeasureSignal(0);
-    SetCaptureWindow(216, 27, 800, 600, 0, 0);
-    SetAPLLFrequncy(40000000UL, 1056);
-    ScaleUp(800, 600, 1024, 600);
+    ScalerWriteBit(SCALER_CONTROL, 4, 0b1); // Enable Full line buffer ?
+
+    stModeInfo.IHWidth = 696;
+    stModeInfo.IHStartPos = 141;
+    stModeInfo.IHTotal = 858;
+    stModeInfo.IHFreq = 157;
+    stModeInfo.IVHeight = 232;
+    stModeInfo.IVStartPos = 26;
+    stModeInfo.IVTotal = 300;
+    stModeInfo.IVFreq = 60;
 
 #   ifdef __SDCC
     while(1);

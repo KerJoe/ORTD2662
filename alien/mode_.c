@@ -2027,7 +2027,7 @@ void CModeSetDisplay(BYTE ucOption)
 	//CTimerWaitForEvent(_EVENT_DEN_STOP);
 	// Enable display timing
 
-	CScalerSetBit(_VDISP_CTRL_28, ~(_BIT5 | _BIT3 | _BIT1 | _BIT0),	(_BIT5 | _BIT3 | _BIT1 | _BIT0));
+	//CScalerSetBit(_VDISP_CTRL_28, ~(_BIT5 | _BIT3 | _BIT1 | _BIT0),	(_BIT5 | _BIT3 | _BIT1 | _BIT0));
 	CMiscClearStatusRegister();
 }
 

@@ -10,7 +10,7 @@
 
 void InitHDMI(uint8_t tmdsIn)
 {
-    #define WINDOW_HSTA 0
+  /*  #define WINDOW_HSTA 0
     #define WINDOW_VSTA 0
     #define WINDOW_HS_DELAY 0
     #define WINDOW_VS_DELAY 0
@@ -31,7 +31,7 @@ void InitHDMI(uint8_t tmdsIn)
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRWL_BSU_HI, (((WINDOW_HLEN) >> 8) << 4) | ((WINDOW_VLEN) >> 8));
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRW_BSU_LO,  (WINDOW_HLEN));
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRL_BSU_LO,  (WINDOW_VLEN));
-
+*/
     ScalerWriteBit (S_VGIP_CONTROL, 0, 0b1);  // Sampling input pixels enable
     ScalerWriteBit (S_VGIP_CONTROL, 1, 0b1); // Sampling mode - digital
     ScalerWriteBits(S_VGIP_CONTROL, 2, 2, 0b01); // Input Format - Digital (TMDS)
