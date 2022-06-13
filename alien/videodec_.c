@@ -55,4 +55,5 @@ void kx_CSetTVFrameSync(void)
 void CVideoSetVDCSaturation(BYTE ucValue)
 {
 
-}#endif
+}
+#endif

@@ -5,6 +5,7 @@
 #include "config/board_config.h"
 #include "scaler/scaler_access.h"
 #include "scaler/measure.h"
+#include "peripherals/timer.h"
 
 _INPUT_MEAS_DATA InputMeasData;
 

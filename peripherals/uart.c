@@ -27,7 +27,7 @@ void InitUART(uint32_t baudRate, uint8_t timerSelect)
 {
     if (timerSelect == UART_TIMER1)
     {
-        uint8_t div = UART_DIV_TIMER1(BOARD_FREQ, baudRate);
+        uint8_t div = UART_DIV_TIMER1(RTD_FREQ, baudRate);
         RCLK = 0; TCLK = 0;     // Use Timer 1 as UART clock source
         TMOD  = (TMOD & 0x0f) | 0b00100000; // Timer 1, 8-bit auto reload mode
         PCON  |= SMOD;          // Double transmission speed
@@ -37,7 +37,7 @@ void InitUART(uint32_t baudRate, uint8_t timerSelect)
     }
     else
     {
-        uint16_t div16 = UART_DIV_TIMER2(BOARD_FREQ, baudRate);
+        uint16_t div16 = UART_DIV_TIMER2(RTD_FREQ, baudRate);
         RCLK = 1; TCLK = 1;     // Use Timer 2 as UART clock source
         PCON  &= ~SMOD;         // Normal transmission speed
         SCON   = 0b01010000;    // UART Mode 1, Reciever enable
@@ -55,7 +55,7 @@ void InitUART(uint32_t baudRate, uint8_t timerSelect)
 **/
 void SwitchToUART()
 {
-    PIN_SHARE_CONTROL00 |= 0b11111000; // Disconnect I2C; Set Pin58 (SCL) to RXD; Set Pin59 (SDA) to TXD
+    //PIN_SHARE_CONTROL00 |= 0b11111000; // Disconnect I2C; Set Pin58 (SCL) to RXD; Set Pin59 (SDA) to TXD
 }
 
 
@@ -66,7 +66,7 @@ void SwitchToUART()
 **/
 void SwitchToI2C()
 {
-    PIN_SHARE_CONTROL00 &= ~(0b11111000); // Connect I2C; Set Pin58 (RXD) to SCL; Set Pin59 (TXD) to SDA
+    //PIN_SHARE_CONTROL00 &= ~(0b11111000); // Connect I2C; Set Pin58 (RXD) to SCL; Set Pin59 (TXD) to SDA
 }
 
 

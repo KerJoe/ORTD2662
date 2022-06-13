@@ -6,6 +6,7 @@
 
 #include "scaler/scaler.h"
 #include "scaler/scaler_registers.h"
+#include "scaler/scaler_access.h"
 #include "scaler/measure.h"
 
 #include "peripherals/pins.h"

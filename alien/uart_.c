@@ -328,4 +328,5 @@ void UartCMDScalerWrite(void)
 //----------------------------------------------------------------------------
 
 #endif
-#endif#endif
+#endif
+#endif
