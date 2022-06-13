@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Scaler.c No.0003
@@ -575,3 +576,4 @@ void CScalerDigitalPortSwitch(void)
 #endif
 #endif
 //731301###
+#endif

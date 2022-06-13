@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 #include "alien/include_.h"
 
@@ -54,4 +55,4 @@ void kx_CSetTVFrameSync(void)
 void CVideoSetVDCSaturation(BYTE ucValue)
 {
 
-}
+}#endif

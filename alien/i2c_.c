@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : I2c.c No.0000
@@ -252,3 +253,4 @@ bit CI2cWrite(BYTE ucDeviceAddr, BYTE ucStartAddr, WORD usLength, BYTE *pWriteAr
 
 
 //==============================================================================
+#endif

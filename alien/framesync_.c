@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : FrameSync.c No.0000
@@ -421,3 +422,4 @@ BYTE CFrameSyncDo(void)
 
     return 0;
 }
+#endif

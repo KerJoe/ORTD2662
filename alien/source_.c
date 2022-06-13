@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Source.c No.0003
@@ -523,3 +524,4 @@ bit CSourceScanInputPortDVI(BYTE ucPar)
 	return _FALSE;
 }
 #endif  // End of #if(_TMDS_SUPPORT == _ON)
+#endif

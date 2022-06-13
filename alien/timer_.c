@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 /*=============================================
   * Copyright (c)      Realtek Semiconductor Corporation, 2005
@@ -285,3 +286,4 @@ bit CTimerWaitForEvent(BYTE ucEvent)
 
     return timeoutcnt ? _FALSE : _TRUE;
 }
+#endif

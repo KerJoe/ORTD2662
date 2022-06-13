@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : RTD2528R_Hdmi.c No.0000
@@ -402,3 +403,4 @@ void CHdmiModeChange()
 #endif
 
 #endif //End of #if(_HDMI_SUPPORT == _ON)
+#endif

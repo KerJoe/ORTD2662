@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 #define __GUART__
 
@@ -152,3 +153,4 @@ void CUartHex(BYTE Value)
 
 
 #endif          //#if(_UART_SND_EN == _ON)
+#endif

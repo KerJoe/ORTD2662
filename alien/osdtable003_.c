@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 
 
@@ -1132,3 +1133,4 @@ code SMenuItem g_tMenuItem[] =
 //------------------------------------------------------------
 
 #endif 	//#if(_OSD_TYPE == _OSD003)
+#endif

@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 /*===========================================================
  * Copyright (c)      Realtek Semiconductor Corporation, 2005
@@ -1423,3 +1424,4 @@ void CAdjustMZHueSat(BYTE color)
 	CScalerPageSelect(_PAGE7);
 	CScalerSetBit(_P7_ICM_CTRL_D0, ~_BIT7, _BIT7);
 }
+#endif

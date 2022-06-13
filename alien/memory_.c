@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : RTD2528R_Memory.c No.0000
@@ -8,3 +9,4 @@
 #define __RTD2528R_MEMORY__
 
 #include "alien/include_.h"
+#endif

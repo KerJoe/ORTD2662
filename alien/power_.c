@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //-------------------------------------------------------------------------
 // ID Code      : Power.c No.0002
@@ -436,3 +437,4 @@ void CPowerUpCustomerControl(void)
 	}
 	#endif //#if( _HDMI_SUPPORT == _ON)
 }
+#endif

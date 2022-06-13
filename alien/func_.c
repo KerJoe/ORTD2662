@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 #include "alien/include_.h"
 
@@ -459,3 +460,4 @@ void CInitInputSource(void)
         bDIstatus = 0;
 	#endif
 }
+#endif

@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // Copyright of Realtek SemiConductor Corp.
@@ -384,3 +385,4 @@ void main_(void)
 
     while(_TRUE);
 }
+#endif

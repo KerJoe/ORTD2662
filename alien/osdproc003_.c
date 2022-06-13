@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 
 
@@ -1539,3 +1540,4 @@ void CNotUse(void)
 //--------------------------------------------------
 
 #endif			//#if(_OSD_TYPE == _OSD003)
+#endif

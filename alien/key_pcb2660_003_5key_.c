@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 #include "alien/include_.h"
 
@@ -123,3 +124,4 @@ void CKeyMessageProc(void)
 //--------------------------------------------------
 
 #endif      //#if(_KEY_TYPE == _KT_PCB2660_003)
+#endif

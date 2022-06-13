@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Mcu.c No.0002
@@ -157,4 +158,5 @@ void CMCUClkDiv(BYTE clkdiv)  // _MCUClkDiv(x=0-15): 8051 Clock Generator (Flash
 }
 #endif //End of #if(_FAST_READ == _ON)
 
+#endif
 #endif

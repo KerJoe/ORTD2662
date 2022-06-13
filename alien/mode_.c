@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code  	: Mode.c No.0002
@@ -2972,4 +2973,5 @@ void CModeHdmiHP(void)
 	WD_RESET();
 	#endif */
 }
+#endif
 #endif

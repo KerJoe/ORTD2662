@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Misc.c No.0002
@@ -397,3 +398,4 @@ void CDdcciInitial(void)
 
     //IE |= 0x04;								// Enable INT1 Interrupt source
 }
+#endif

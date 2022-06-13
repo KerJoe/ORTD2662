@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 #define __OSDRES003__
 
@@ -4488,3 +4489,4 @@ BYTE code FntLogoDot3[] =
 //-----------------------------------------------------------------
 
 #endif			//#if(_OSD_TYPE == _OSD003)
+#endif

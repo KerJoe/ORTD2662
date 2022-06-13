@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Struct.c No.0000
@@ -25,3 +26,4 @@ DisplayTableType                	idata   stDisplayInfo;
 StructTvDataType					xdata	stTvInfo;
 StructAudioDataType					xdata   stAudioData;
 StructHueSaturationDataType        	xdata   stHueSatData;
+#endif

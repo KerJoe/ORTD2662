@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 #define _IR_C
 
@@ -115,3 +116,4 @@ static void CIrdaReadData(void)
 	ucIrQueue[2] =	XSFRReadByte(MCU_IR_DATA4_FF8E);
 	ucIrQueue[3] =	XSFRReadByte(MCU_IR_DATA5_FF8F);
 }
+#endif

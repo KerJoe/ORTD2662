@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : YPbPr.c No.0001
@@ -415,3 +416,4 @@ void CYPbPrHWAutoSOY(void)
 #endif
 
 #endif  // End of #if(_YPBPR_SUPPORT == _ON)
+#endif

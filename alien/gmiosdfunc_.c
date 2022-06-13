@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 #define __OSD_FUNC__
 #include "alien/include_.h"
@@ -1160,3 +1161,4 @@ GRADIENT_FUNCTION_EN(1) |
   WINDOW_ENABLE(1),
 
 */
+#endif

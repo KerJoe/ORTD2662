@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 /*===========================================================
  * Copyright (c)      Realtek Semiconductor Corporation, 2005
@@ -2664,3 +2665,4 @@ void CAdjustGammaTable(BYTE index)
 #endif
 
 //-------------------------------------------------
+#endif

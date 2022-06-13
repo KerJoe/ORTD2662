@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Int.c No.0002
@@ -277,4 +278,4 @@ void VBI_GetData(void) //VBI INTERRUPT handler
 
 #endif
 
-#endif
+#endif#endif

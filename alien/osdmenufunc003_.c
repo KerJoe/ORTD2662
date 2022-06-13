@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 
 #define __OSDDRAW003__
@@ -8140,3 +8141,4 @@ void LoadLanguageFont(void)
 #endif
 
 #endif      //#if(_OSD_TYPE == _OSD003)
+#endif

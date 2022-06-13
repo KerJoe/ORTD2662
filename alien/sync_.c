@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Sync.c No.0003
@@ -1158,3 +1159,4 @@ bit bCNoCheckSyncMode(void)
 
     return _FALSE;
 }
+#endif

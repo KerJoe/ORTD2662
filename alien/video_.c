@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Video.c No.0002
@@ -730,3 +731,4 @@ void bTVSigChange(void)
 #endif
 
 #endif  // End of #if(_VIDEO_SUPPORT == _ON)
+#endif

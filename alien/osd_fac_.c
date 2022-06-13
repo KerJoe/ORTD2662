@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 #include "alien/include_.h"
 
@@ -592,4 +593,5 @@ void MFac6500Proc(void)
     }
 }
 
+#endif
 #endif

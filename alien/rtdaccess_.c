@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 /*=============================================
   * Copyright (c)      Realtek Semiconductor Corporation, 2005
@@ -431,3 +432,4 @@ void CScalerPageSelect(BYTE page)
 {
 	CScalerSetByte(_PAGE_SELECT_9F, (page & 0x0F));
 }
+#endif

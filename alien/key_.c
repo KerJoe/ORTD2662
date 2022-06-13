@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Key.c No.0001
@@ -296,4 +297,5 @@ void CGetADCValue(BYTE *pBuf)
 	pBuf[3] >>= 2;
 	pBuf[4] >>= 2;
 }
+#endif
 #endif

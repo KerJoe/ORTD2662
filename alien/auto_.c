@@ -1,3 +1,4 @@
+#ifndef __SDCC
 #include "alien/global_.h"
 //----------------------------------------------------------------------------------------------------
 // ID Code      : Auto.c No.0002
@@ -1738,4 +1739,5 @@ void CYPbPrPorch_LevelCheck(void)
 
 }
 #endif // #if(_YPBPR_SUPPORT)
+#endif
 #endif
