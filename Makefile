@@ -53,8 +53,10 @@ SDCC_CFLAGS    = -I. -MMD --model-large --stack-auto
 SDCC_LDFLAGS   = --xram-loc 0xFB00 --xram-size 640
 SDCC_OUTPUTDIR = output
 
-SDCC_RELFILES := $(addprefix $(SDCC_OUTPUTDIR)/, $(notdir $(SRCFILES:.c=.rel)))
-SDCC_DFILES   := $(addprefix $(SDCC_OUTPUTDIR)/, $(notdir $(SRCFILES:.c=.d)))
+# Remove _.c files
+SDCC_SRCFILES := $(filter-out %_.c, $(SRCFILES))
+SDCC_RELFILES := $(addprefix $(SDCC_OUTPUTDIR)/, $(notdir $(SDCC_SRCFILES:.c=.rel)))
+SDCC_DFILES   := $(addprefix $(SDCC_OUTPUTDIR)/, $(notdir $(SDCC_SRCFILES:.c=.d)))
 
 firmware: $(SDCC_OUTPUTDIR) $(SDCC_OUTPUTDIR)/firmware.bin
 
