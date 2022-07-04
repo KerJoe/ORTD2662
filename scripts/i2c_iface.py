@@ -5,7 +5,7 @@ import rtdmultiprog
 
 
 interface = "i2cdev"
-device = 0
+device = 2
 settings = ""
 
 

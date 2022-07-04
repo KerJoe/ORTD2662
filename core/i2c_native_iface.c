@@ -100,7 +100,7 @@ int __attribute__ ((destructor)) end_i2c_native_iface()
 #include <unistd.h>
 #include <fcntl.h>
 
-#define DEVICE "0"
+#define DEVICE "2"
 
 // Controller's address on I2C bus
 #define RTD_ISP_ADR         0x4A

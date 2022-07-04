@@ -14,7 +14,7 @@ SRCFILES := $(wildcard ./*/*.c)
 # File that has the main() function
 MAINFILE := core/main.c
 #
-PROGRAMMER := python3 ../RTDMultiProg/rtdmultiprog.py -i i2cdev -d 0 -w
+PROGRAMMER := python3 ../RTDMultiProg/rtdmultiprog.py -i i2cdev -d 2 -w
 
 
 # Native compiler
@@ -49,8 +49,8 @@ $(NATIVE_OUTPUTDIR)/%.o: %.c
 
 # Firmware compiler
 SDCC_CC        = sdcc
-SDCC_CFLAGS    = -I. -MMD --model-large
-SDCC_LDFLAGS   = --xram-loc 0xFB00 --xram-size 1024
+SDCC_CFLAGS    = -I. -MMD --model-large --stack-auto
+SDCC_LDFLAGS   = --xram-loc 0xFB00 --xram-size 640
 SDCC_OUTPUTDIR = output
 
 SDCC_RELFILES := $(addprefix $(SDCC_OUTPUTDIR)/, $(notdir $(SRCFILES:.c=.rel)))

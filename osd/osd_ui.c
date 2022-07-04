@@ -195,7 +195,7 @@ void OSDCreateMenu(char* title, char* menuItems[], uint8_t menuItemsNum)
     cursorPos = 0;
     cursorMax = menuItemsNum - 1;
 
-    SetOSDOffset(400, 50);
+    SetOSDOffset(200, 50);
 
     OSDWriteCenteredRow(&MenuRow, &MenuBarChar,   0, title);
     uint8_t i;

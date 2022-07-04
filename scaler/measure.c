@@ -29,12 +29,7 @@ _INPUT_MEAS_DATA InputMeasData;
 int8_t MeasureSignal(bool isDigital)
 {
     if (isDigital)
-    {
-        // HFreq and VFreq can only be calculated in comparision to RTD_FREQ
-        // Thus we need to measure them in analog mode
-        MeasureSignal(false);
         ScalerWriteBit(S_SYNC_SELECT, 0, 0b1);
-    }
     else
         ScalerWriteBit(S_SYNC_SELECT, 0, 0b0);
 
@@ -62,6 +57,8 @@ int8_t MeasureSignal(bool isDigital)
     ScalerWriteBit(S_MEAS_HSYNC_VSYNC_HIGH_PERIOD_SELECT, 0, 0b1); // Read VSYNC High period measurement result
     InputMeasData.VSync = (ScalerReadBits(S_MEAS_HSYNC_VSYNC_HIGH_PERIOD_HI, 4, 4) << 8) | ScalerReadByte(S_MEAS_HSYNC_VSYNC_HIGH_PERIOD_LO);
 
+    // HFreq and VFreq can only be calculated in comparision to RTD_FREQ
+    // Thus they can be measured only in analog mode
     if (!isDigital)
         InputMeasData.HFreq = RTD_FREQ / InputMeasData.HTotal;
         InputMeasData.VFreq = RTD_FREQ / InputMeasData.HTotal / InputMeasData.VTotal;
