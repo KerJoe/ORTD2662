@@ -185,6 +185,13 @@ void OSDWriteLeftRow(OSDRow* row, OSDCharacter1* ch, uint8_t rowNumber, char* st
 
 void OSDCreateMenu(char* title, char* menuItems[], uint8_t menuItemsNum)
 {
+    /*SetOSDOffset(30, 18);
+    OSDSetRow(&MenuRow, 0);
+    OSDSetChar1(&MenuBarChar, 0);
+    OSDEndRow(1);
+    return;*/
+
+
     cursorPos = 0;
     cursorMax = menuItemsNum - 1;
 

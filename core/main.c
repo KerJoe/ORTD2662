@@ -15,10 +15,16 @@
 
 #include "interfaces/hdmi.h"
 
+#include "osd/osd.h"
+#include "osd/osd_ui.h"
+
 #include "alien/struct_.h"
 void main()
 {
 #   ifdef __SDCC
+    XSFRWriteByte(DDC1_CONTROL0, InsertBits8(DDC1_CONTROL0, 0, 1, 0b0));
+    XSFRWriteByte(DDC2_CONTROL0, InsertBits8(DDC2_CONTROL0, 0, 1, 0b0));
+    XSFRWriteByte(DDC3_CONTROL0, InsertBits8(DDC3_CONTROL0, 0, 1, 0b0));
     XSFRWriteByte(WDT_CONTROL, 0x00);
     InitSysTimer();
     EA = 1;
@@ -36,6 +42,14 @@ void main()
 
     InitScaler();
     SetOverlayColor(0xff, 0xff, 0x00);
+    SetCaptureWindow(216, 27, 800, 600, 0, 0);
+    SetFIFOWindow(800, 600);
+
+    /*OSDInit();
+    char* entries[]= { "scaling", "other" };
+    OSDCreateMenu("Settings", entries, 2);
+    SetOverlayColor(0x00, 0xff, 0xff);*/
+
     // InitVGA();
 
     // ScalerWriteByte(S_SYNC_CONTROL, 0x06); // Select ADC Sync, Select SeperateHSync
@@ -45,8 +59,10 @@ void main()
     // ScaleUp(800, 600, 1024, 600);
     // Magic formula Fdisplay = (InputHFreq)/DisplayHTotal*DisplayVTotal/InputVTotal
 
+
     ScalerWriteBit(SCALER_CONTROL, 4, 0b1); // Enable Full line buffer ?
 
+    #ifndef __SDCC
     stModeInfo.IHWidth = 696;
     stModeInfo.IHStartPos = 141;
     stModeInfo.IHTotal = 858;
@@ -55,6 +71,7 @@ void main()
     stModeInfo.IVStartPos = 26;
     stModeInfo.IVTotal = 300;
     stModeInfo.IVFreq = 60;
+    #endif
 
 #   ifdef __SDCC
     while(1);

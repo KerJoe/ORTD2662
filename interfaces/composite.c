@@ -36,7 +36,7 @@ const uint16_t yuv2rgb_default[] =
 
 void InitComposite(uint8_t videoIn)
 {
-    /*// TODO: DITHERING
+    // TODO: DITHERING
     // #define WINDOW_HSTA 34
     // #define WINDOW_VSTA 5
     // #define WINDOW_HLEN 726
@@ -65,7 +65,10 @@ void InitComposite(uint8_t videoIn)
     // Setup FIFO window
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRWL_BSU_HI, (((WINDOW_HLEN) >> 8) << 4) | ((WINDOW_VLEN) >> 8));
     ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRW_BSU_LO,  (WINDOW_HLEN));
-    ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRL_BSU_LO,  (WINDOW_VLEN));*/
+    ScalerWritePortByte(S_FIFO_WIN_PORT, SP_FIFO_DWRL_BSU_LO,  (WINDOW_VLEN));
+
+
+
 
     ScalerWriteBit (S_VGIP_CONTROL, 1, 0b0);
 

@@ -44,7 +44,7 @@
 #define _VIDEO_TV_SUPPORT                       _OFF
 #define _VIDEO_YUV_SUPPORT                      _OFF
 #define _VIDEO_SCART_SUPPORT                    _OFF
-#define _YPBPR_SUPPORT                  		_OFF
+#define _YPBPR_SUPPORT                  		_ON
 
 //--------------------------------------------------
 // YPbPr New Sync Detected
@@ -136,7 +136,7 @@ _SOURCE_YPBPR,     _SOURCE_NONE
 //--------------------------------------------------
 #define _ADC1_INPUT_SWAP_RG              		_OFF
 #define _ADC1_INPUT_SWAP_RB              		_OFF
-#define _ADC1_INPUT_SWAP_GB              		_ON
+#define _ADC1_INPUT_SWAP_GB              		_OFF
 
 //--------------------------------------------------
 // Definitions of MAIN_TYPE

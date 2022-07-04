@@ -160,7 +160,7 @@ void SetOSDOffset(uint16_t hor, uint16_t ver)
     OSDWriteByte1(OSD_FRAME_CONTROL0, hor >> 2);
     OSDWriteByte2(OSD_FRAME_CONTROL0, InsertBits8(OSDReadByte2(OSD_FRAME_CONTROL0),
                   3, 5, ((hor & 0b11) << 3) | (ver & 0b111)));
-    delayMS(4); // HACK: Really crappy solution, find a better way to insure reading of OSD_FRAME_CONTROL0 is done after its double buffer is empty
+    delayMS(10); // HACK: Really crappy solution, find a better way to insure reading of OSD_FRAME_CONTROL0 is done after its double buffer is empty
     // TODO: Try address 003h, byte 2, bit 5
 }
 
@@ -169,14 +169,14 @@ void OSDEnable(uint8_t state)
     EnableOverlay(1);
     OSDWriteByte2(OSD_FRAME_CONTROL0, InsertBits8(OSDReadByte2(OSD_FRAME_CONTROL0),
                   0, 1, state));
-    delayMS(4); // HACK: Really crappy solution, find a better way to insure reading of OSD_FRAME_CONTROL0 is done after its double buffer is empty
+    delayMS(10); // HACK: Really crappy solution, find a better way to insure reading of OSD_FRAME_CONTROL0 is done after its double buffer is empty
 }
 
 void SetOSDCharAlignment(uint8_t state)
 {
     OSDWriteByte2(OSD_FRAME_CONTROL0, InsertBits8(OSDReadByte2(OSD_FRAME_CONTROL0),
                   1, 2, state));
-    delayMS(4); // HACK: Really crappy solution, find a better way to insure reading of OSD_FRAME_CONTROL0 is done after its double buffer is empty
+    delayMS(10); // HACK: Really crappy solution, find a better way to insure reading of OSD_FRAME_CONTROL0 is done after its double buffer is empty
 }
 
 void OSDSetWindow(OSDWindow* window, uint8_t windowNumber)

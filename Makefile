@@ -50,7 +50,7 @@ $(NATIVE_OUTPUTDIR)/%.o: %.c
 # Firmware compiler
 SDCC_CC        = sdcc
 SDCC_CFLAGS    = -I. -MMD --model-large
-SDCC_LDFLAGS   = --xram-loc 0xFB00 --xram-size 640
+SDCC_LDFLAGS   = --xram-loc 0xFB00 --xram-size 1024
 SDCC_OUTPUTDIR = output
 
 SDCC_RELFILES := $(addprefix $(SDCC_OUTPUTDIR)/, $(notdir $(SRCFILES:.c=.rel)))

@@ -11,15 +11,26 @@
 #include "scaler/scaler.h"
 #include "scaler/mode_tables.h"
 
-void InitVGA()
+void InitVGA(uint8_t videoIn)
 {
     ScalerWriteBit (S_VDISP_CONTROL, 3, 0b1); // Enable Frame sync
     ScalerWriteBit (S_VDISP_CONTROL, 5, 0b0); // Disable BG color
     ScalerWriteBits(S_VGIP_CONTROL, 2, 2, 0b00); // Input Format - Embedded ADC (ADC_HS)
     ScalerWriteBit (S_VGIP_CONTROL, 0, 0b1);  // Sampling input pixels enable
 
-    ScalerWriteByte(S_PAGE_SELECT, 0);
-    ScalerWriteByte(S0_VADC_POWER, 0x0f); // Enable RGB and bandgap
+
+    if (videoIn == 0)
+    {
+        ScalerWriteByte(S_PAGE_SELECT, 0);
+        ScalerWriteByte(S0_VADC_POWER, 0b00001111); // Enable RGB and bandgap
+        ScalerWriteBit (S0_VADC_RGB_CONTROL, 3, 0b0); // Set ADC 0
+    }
+    else
+    {
+        ScalerWriteByte(S_PAGE_SELECT, 0);
+        ScalerWriteByte(S0_VADC_POWER, 0b00011111); // Enable RGB and bandgap
+        ScalerWriteBit (S0_VADC_RGB_CONTROL, 3, 0b1); // Set ADC 1
+    }
 }
 
 // Define maximum diviation for searching

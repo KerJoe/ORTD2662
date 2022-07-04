@@ -131,6 +131,7 @@ int __attribute__ ((constructor)) begin_i2c_native_iface()
 {
     fi2c = open("/dev/i2c-"DEVICE, O_RDWR);
 
+    XSFRWriteByte(0x6F, 0x80);
     XSFRWriteByte(0xEE, 0x02);
     XSFRWriteByte(0x6F, 0x80);
 

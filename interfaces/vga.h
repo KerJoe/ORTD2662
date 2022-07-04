@@ -1,3 +1,3 @@
 #pragma once
 
-void InitVGA();
+void InitVGA(uint8_t videoIn);

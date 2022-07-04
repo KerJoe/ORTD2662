@@ -23,7 +23,7 @@ def convertRTD(data_in):
     for i in range(len(data_in) // 2):
         data_out[i*3+0] = (data_in[i*2+1] << 4) & 0xF0
         data_out[i*3+1] = (data_in[i*2+1] >> 4) & 0x0F
-        data_out[i*3+2] = data_in[i*2] & 0xFF
+        data_out[i*3+2] = data_in[i*2]  & 0xFF
     return data_out
 
 # Fill dictionary with characters

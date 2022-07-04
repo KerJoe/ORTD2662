@@ -2,6 +2,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
             "name": "Debug Native Build",
             "type": "cppdbg",
             "request": "launch",
@@ -14,9 +22,18 @@
             "MIMode": "gdb",
             "preLaunchTask": "Compile native",
             "setupCommands": [
-                { "text": "-enable-pretty-printing", "ignoreFailures": true },
-                { "text": "-gdb-set disassembly-flavor intel", "ignoreFailures": true },
-                { "text": "-gdb-set output-radix 16", "ignoreFailures": true }
+                {
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                },
+                {
+                    "text": "-gdb-set output-radix 16",
+                    "ignoreFailures": true
+                }
             ]
         }
     ]
